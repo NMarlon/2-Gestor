@@ -178,3 +178,8 @@ real em disco é **21.482**.
 (`find | wc -l` estável entre duas medições com 1 min de intervalo). Mesmo
 assim, toda varredura longa precisa de uma segunda passada com `--resume` antes
 de ser declarada completa — o resume é barato e cobre adições tardias.
+
+**Verificação:** `tar -tf` conta 30.656 entradas, das quais 30.530 são arquivos
+(as outras 126 são diretórios). O disco tem exatamente **30.530 arquivos**, então
+os avisos `empty or unreadable filename` são só entradas de diretório — nenhum
+arquivo do acervo foi perdido.
