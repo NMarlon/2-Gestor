@@ -186,6 +186,25 @@ arquivo do acervo foi perdido.
 
 ---
 
+## E-015 · Número medido logo depois do purge não vale (2026-11-20)
+
+**O que aconteceu:** medi a home e as 3 subpáginas assim que limpei WPFC + proxy.
+A home deu o valor final e correto; as 3 subpáginas deram **+46 B** cada. Passei
+esse número para o registro e o OpenCode, ao conferir, achou outro valor — e
+concluiu que "o HTML varia por requisição". Nós dois estávamos errados: repeti 3×
+por página e os bytes são **idênticos**. O estado pós-purge ainda estava mudando
+(tags de preload/minify do plugin se reorganizando).
+
+**Regra:** depois de limpar cache, a primeira leitura serve para saber *se*
+mudou, não *quanto*. Medir, esperar, medir de novo e registrar o valor estável —
+com duas leituras iguais. Se as leituras divergirem, a causa é o cache, não o
+site, até prova em contrário.
+
+**Corolário:** quando o executor contradiz um número meu, o contradito pode ser
+eu. Reprovar a premissa dele sem refazer a medição é a mesma falta de rigor.
+
+---
+
 ## E-014 · Peso morto de plugin se mede no HTML, não no painel (2026-11-20)
 
 **O que aconteceu:** a home da P-03 entrega 577.745 B de HTML. A maior parte não

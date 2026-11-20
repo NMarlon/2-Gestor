@@ -147,9 +147,17 @@ conferindo por SHA256, cache do WPFC e do proxy limpos.
 | Página | Antes | Depois | Δ |
 |---|---|---|---|
 | `/` | 577.433 B | **183.203 B** | −68% |
-| `/privacy-policy/` | 541.533 | 147.349 | −394.184 |
-| `/obrigado/` | 533.649 | 139.465 | −394.184 |
-| `/politica-de-cookies/` | 528.522 | 134.333 | −394.189 |
+| `/privacy-policy/` | 541.533 | 147.303 | −394.230 |
+| `/obrigado/` | 533.649 | 139.419 | −394.230 |
+| `/politica-de-cookies/` | 528.522 | 134.287 | −394.235 |
+
+Os bytes foram repetidos 3× por página e são idênticos. A primeira leitura (46 B
+maiores nas subpáginas) foi transiente de pós-purge: **número medido logo depois
+de limpar cache não vale — medir de novo.**
+
+**Sobra conhecida:** a página de 404 ainda servia o bloco (534.150 B), porque a
+condição preserva CSS em qualquer página não singular. Brief `T-009-b` pede
+`is_404()` e vira o 1.3.6.
 
 Verificação própria antes de publicar: o bloco removido tem **0** seletores
 globais (`html`, `body`, `*`, `:root` puro), **0** `@font-face`, 18 `@keyframes`
