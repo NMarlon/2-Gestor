@@ -228,23 +228,33 @@ site fica com o que está — sem placeholder inventado.
 
 ---
 
-## T-012 · P-02: otimizar `similar` e `export/people` ⚪ (brief pendente)
+## T-012 · P-02: otimizar `similar` e `export/people` 🟢 CONCLUÍDA (2026-11-20)
 
 Medido com o acervo cheio (21.482 imagens / 52.726 rostos):
 
-| endpoint | medido | meta |
-|---|---|---|
-| `GET /api/faces/{id}/similar` | **1,40 s** | < 300 ms |
-| `GET /api/export/people` | **103,7 s** (8,3 MB) | < 10 s |
+| endpoint | antes | depois (verificado pelo gestor) | meta |
+|---|---|---|---|
+| `GET /api/faces/{id}/similar` | 1,40 s | **0,028–0,040 s** | < 300 ms ✅ |
+| `GET /api/export/people` | 103,7 s | **1,68 s** (8.366.924 B) | < 10 s ✅ |
 
-**Hipóteses (a confirmar no brief, não afirmar como causa):**
-- `similar` recarrega a matriz inteira de embeddings a cada chamada → cache em
-  memória invalidado por `POST /api/cluster`.
-- `export` faz N+1: uma consulta por pessoa para buscar as imagens.
+**Causa real, medida no profiling** (não é hipótese):
+- `similar`: `load_embedding_matrix` relia os 52.726 blobs (0,604 s) e normalizava
+  a matriz inteira a cada request (0,129 s).
+- `export/people`: **45.238 statements SQL**, dos quais 45.237 lazy loads
+  (`Person.faces`, `Person.tags`, `Face.image`).
 
-**Brief:** OpenCode mede antes/depois, mostra o perfil com `cProfile` e só então
-otimiza. Aceite: os dois tempos acima batidos, com o mesmo resultado numérico
-(mesmos vizinhos, mesmo JSON).
+**Correção pelo OpenCode (commit `644331c` do repo do P-02):** cache da matriz já
+normalizada (~108 MB) validado por `(COUNT, MAX(id))` e invalidado em
+`POST /api/cluster`; export com 4 consultas em lote.
+
+**Verificação do gestor:** API da 8011 reiniciada no código novo; 3 medições de
+`similar` e 1 de export; comparação do JSON antes/depois → **17.470 pessoas,
+0 divergências** em `name`/`face_count`/`tags`, mesmos `image_paths`, mesmo
+tamanho de resposta.
+
+**Ressalva:** a linha de base registrada pelo OpenCode foi menor (0,74 s / 22,0 s)
+porque o banco já estava em cache de página do SO. Os números da tabela "antes"
+são os medidos antes de qualquer otimização; a proporção se mantém.
 
 ---
 
