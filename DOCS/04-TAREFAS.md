@@ -88,7 +88,7 @@ novo, orientação EXIF corrigida (`app/image_io.py`), `scripts/scan_cli.py`
 
 **Conclusão:** escala aprovada para clustering; busca unitária e export precisam
 de otimização (cache da matriz de embeddings e eliminação de N+1 no export).
-Ambos viram brief ao OpenCode (ver T-006).
+Ambos viram brief ao OpenCode (ver T-012).
 
 ---
 
@@ -225,3 +225,23 @@ CAU/registro, áreas de obra, prazos, faixas de preço, texto da seção "Prova"
 
 **Falta:** o Marlon levar a lista consolidada para a cliente. Enquanto isso, o
 site fica com o que está — sem placeholder inventado.
+
+---
+
+## T-012 · P-02: otimizar `similar` e `export/people` ⚪ (brief pendente)
+
+Medido com o acervo cheio (21.482 imagens / 52.726 rostos):
+
+| endpoint | medido | meta |
+|---|---|---|
+| `GET /api/faces/{id}/similar` | **1,40 s** | < 300 ms |
+| `GET /api/export/people` | **103,7 s** (8,3 MB) | < 10 s |
+
+**Hipóteses (a confirmar no brief, não afirmar como causa):**
+- `similar` recarrega a matriz inteira de embeddings a cada chamada → cache em
+  memória invalidado por `POST /api/cluster`.
+- `export` faz N+1: uma consulta por pessoa para buscar as imagens.
+
+**Brief:** OpenCode mede antes/depois, mostra o perfil com `cProfile` e só então
+otimiza. Aceite: os dois tempos acima batidos, com o mesmo resultado numérico
+(mesmos vizinhos, mesmo JSON).
