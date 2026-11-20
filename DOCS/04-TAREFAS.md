@@ -40,6 +40,12 @@ plugin de push).
    `python scripts/scan_cli.py --dir "C:/AREA DE POUSO/Fotos da Missão" --resume`.
 4. Medição real: **0,29 s por rosto**. O custo é por rosto, não por imagem — há
    pastas com 28 rostos por foto (colagens do WhatsApp).
+5. Vazão medida com a máquina livre: **0,97 img/s** → ETA ~6 h para as 21.651.
+   Contenção de CPU (outro processo pesado) derruba para 0,13 img/s — por isso
+   nada pesado roda em paralelo enquanto a varredura estiver de pé.
+6. API no ar em `127.0.0.1:8011` lendo o banco parcial: 530 imagens, 1.721
+   rostos, 0 pessoas (clustering propositalmente adiado para o fim da varredura,
+   para não disputar o SQLite com o scanner).
 
 **Falta:**
 1. Acompanhar o log até o fim e confirmar que fecha sem erro.
