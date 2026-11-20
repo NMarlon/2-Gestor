@@ -43,9 +43,17 @@ plugin de push).
 5. Vazão medida com a máquina livre: **0,97 img/s** → ETA ~6 h para as 21.651.
    Contenção de CPU (outro processo pesado) derruba para 0,13 img/s — por isso
    nada pesado roda em paralelo enquanto a varredura estiver de pé.
-6. API no ar em `127.0.0.1:8011` lendo o banco parcial: 530 imagens, 1.721
-   rostos, 0 pessoas (clustering propositalmente adiado para o fim da varredura,
-   para não disputar o SQLite com o scanner).
+6. **Ressalva de cobertura:** a extração do tar terminou às 01:24, *depois* de a
+   varredura começar (01:05). O `rglob` do `scan_cli` é preguiçoso, então pastas
+   visitadas antes disso podem ter ficado incompletas. Por isso a varredura terá
+   **duas passadas** com `--resume`: a segunda só completa o que faltou (pula o
+   já processado por caminho+tamanho+mtime). O cron `reconhecedor-pos-varredura`
+   controla isso pelo marcador `.scan_pass2_done`.
+   Total real em disco: **21.482 imagens** (o 21.651 anterior foi contado com a
+   extração ainda em curso).
+7. API no ar em `127.0.0.1:8011` lendo o banco parcial durante a varredura (só
+   leitura — o clustering fica para o fim, para não disputar o SQLite com o
+   scanner).
 
 **Falta:**
 1. Acompanhar o log até o fim e confirmar que fecha sem erro.

@@ -161,3 +161,20 @@ nunca criado).
 `System.IO.StreamWriter` com `UTF8Encoding($false)` e `AutoFlush`, encaminhando
 o pipe com `ForEach-Object`. Validar o wrapper com um brief de teste depois de
 qualquer mudança nele — erro de parâmetro só aparece em execução.
+
+---
+
+## E-013 · Varredura iniciada com a extração do acervo ainda rodando (2026-11-20)
+
+**O que aconteceu:** disparei a varredura às 01:05 achando que o tar de 14,7 GB
+já estava extraído. A extração só terminou às 01:24 (`exit=0`, com avisos
+`Archive entry has empty or unreadable filename ... skipping`). Como
+`scan_cli.py` usa `Path.rglob("*")` — gerador preguiçoso, não snapshot —, as
+pastas visitadas entre 01:05 e 01:24 podem ter sido lidas pela metade. Também
+descobri que a contagem "21.651 imagens" foi feita durante a extração; o total
+real em disco é **21.482**.
+
+**Regra:** só disparar varredura depois de confirmar o fim da extração
+(`find | wc -l` estável entre duas medições com 1 min de intervalo). Mesmo
+assim, toda varredura longa precisa de uma segunda passada com `--resume` antes
+de ser declarada completa — o resume é barato e cobre adições tardias.
