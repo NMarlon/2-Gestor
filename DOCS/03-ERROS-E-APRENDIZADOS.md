@@ -252,3 +252,18 @@ geração **anterior** da API. Ausência na API 1 não é ausência no produto.
 
 **Corolário:** limitação registrada sem data e sem a chamada que falhou vira
 dogma. Toda limitação na doc precisa do erro exato que a comprova.
+
+---
+
+## E-017 · Medição de performance contaminada por tarefa pesada paralela (2026-11-20)
+
+**O que aconteceu:** disparei o brief T-012 (medir e otimizar `similar` e
+`export/people` do Reconhecedor) e, no mesmo minuto, comecei a indexar hash
+perceptual de 21.482 imagens para investigar duplicatas. As duas tarefas brigam
+por disco e CPU. Qualquer número que o OpenCode medisse naquele intervalo sairia
+inflado — e o brief inteiro é sobre número.
+
+**Regra:** enquanto houver tarefa de **medição** em curso (perf, bench, contagem
+de tempo), nada pesado de I/O ou CPU roda em paralelo. Medir e varrer são filas
+separadas. Se já estiver rodando, mate a tarefa pesada — o dado de performance
+vale mais e é mais barato repetir o hash depois.
