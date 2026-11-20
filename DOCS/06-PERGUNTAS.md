@@ -181,3 +181,45 @@ da Microsoft. Só que:
 **O que eu faço por padrão:** deixo como está e registro. Desligar é um clique no
 painel do Clarity (Brand Agents → disconnect), mas é decisão de marketing da
 cliente. Se ninguém usa, é peso e superfície de risco de graça.
+
+---
+
+## Q-014 · P-02 · Qual `eps` fica valendo para o agrupamento?
+
+Medido em 52.726 rostos, sem gravar nada:
+
+| eps | grupos | ≥10 rostos | 1 rosto | maior grupo |
+|---|---|---|---|---|
+| 0,25 | 31.733 | 516 | 27.087 | 220 |
+| 0,30 | 27.159 | 570 | 22.482 | 627 |
+| 0,35 | 23.373 | 592 | 18.751 | 363 |
+| 0,40 | 20.095 | 659 | 15.566 | 465 |
+| **0,45** | **17.470** | **687** | **13.125** | **597** |
+| 0,50 | 15.241 | 712 | 11.083 | 793 |
+
+O tamanho do maior grupo **não cai de forma monótona** quando o eps aperta
+(220 → 627 → 363 → 465 → 597 → 793), o que é assinatura de encadeamento no
+algoritmo guloso: quem entra primeiro define o centróide e puxa o resto.
+
+Coerência interna dos 3 maiores grupos: com eps 0,45 o grupo de 597 tem
+similaridade média 0,661 entre pares, mas mínimo 0,258 — abaixo do próprio
+limiar de 0,55. Ou seja, há rosto de outra pessoa dentro. Com eps 0,30 o grupo
+de 627 tem média 0,698 e mínimo 0,439.
+
+**Decisão pendente (minha sugestão):** manter 0,45 para "não perder gente" é
+ilusório — o ganho é mistura. Prefiro eps 0,35 com um passo de reatribuição
+(cada rosto vai para o centróide mais próximo entre os grupos existentes, depois
+de formados), o que estabiliza o resultado sem fundir identidades.
+
+## Q-015 · P-02 · Duplicatas: vale investir?
+
+- Duplicata exata (mesmo md5): **37 arquivos** no acervo inteiro. Irrelevante.
+- Hash perceptual (dHash 64 bits) não serve para este acervo: três ilustrações
+  diferentes casaram com o mesmo arquivo do Takeout na distância 0. Colisão em
+  imagem de baixo detalhe.
+
+Consequência: as 13.015 "cópias comprimidas" **não foram provadas** como
+duplicatas. Se quiser medir de verdade, é projeto: pHash 256 bits + proporção de
+dimensão + revisão visual dos pares. Custo estimado: um brief médio.
+Enquanto isso, os números de rostos por pessoa podem estar inflados por
+reimpressão da mesma foto — mas eu não sei em quanto, e não vou chutar.
