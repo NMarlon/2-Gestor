@@ -151,13 +151,16 @@ conferindo por SHA256, cache do WPFC e do proxy limpos.
 | `/obrigado/` | 533.649 | 139.419 | −394.230 |
 | `/politica-de-cookies/` | 528.522 | 134.287 | −394.235 |
 
-Os bytes foram repetidos 3× por página e são idênticos. A primeira leitura (46 B
-maiores nas subpáginas) foi transiente de pós-purge: **número medido logo depois
-de limpar cache não vale — medir de novo.**
+Medido **servido** (cache do WPFC, sem query string), 3× por página, idêntico.
+Existe também um render dinâmico que é 46 B maior — ver E-015.
 
-**Sobra conhecida:** a página de 404 ainda servia o bloco (534.150 B), porque a
-condição preserva CSS em qualquer página não singular. Brief `T-009-b` pede
-`is_404()` e vira o 1.3.6.
+**Sobra corrigida no 1.3.6:** a 404 entregava 534.150 B porque a condição
+preservava CSS em qualquer página não singular. Com `is_404()`: **139.919 B**
+(−394.231, −74%), 3× estável. Verificado no `body` da 404 antes do brief: 0
+classes utilitárias, 0 `wp-block-uagb`, 0 `gs-*`.
+
+**Perda zero:** home segue 183.203 B (idêntica antes e depois do 1.3.6), as 3
+subpáginas idem, 31 folhas de estilo, mesmo rodapé, validador OK.
 
 Verificação própria antes de publicar: o bloco removido tem **0** seletores
 globais (`html`, `body`, `*`, `:root` puro), **0** `@font-face`, 18 `@keyframes`

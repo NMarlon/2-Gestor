@@ -186,22 +186,31 @@ arquivo do acervo foi perdido.
 
 ---
 
-## E-015 · Número medido logo depois do purge não vale (2026-11-20)
+## E-015 · O WPFC serve DUAS versões da mesma página (2026-11-20)
 
-**O que aconteceu:** medi a home e as 3 subpáginas assim que limpei WPFC + proxy.
-A home deu o valor final e correto; as 3 subpáginas deram **+46 B** cada. Passei
-esse número para o registro e o OpenCode, ao conferir, achou outro valor — e
-concluiu que "o HTML varia por requisição". Nós dois estávamos errados: repeti 3×
-por página e os bytes são **idênticos**. O estado pós-purge ainda estava mudando
-(tags de preload/minify do plugin se reorganizando).
+**O que aconteceu, em três atos:** medi as páginas logo após limpar o cache e
+registrei 147.349 B. O OpenCode mediu 147.303 B e concluiu "o HTML varia por
+requisição". Repeti 3× e os números vieram idênticos — então eu "corrigi" a
+conclusão dele: não varia, é transiente. **Errei também.**
 
-**Regra:** depois de limpar cache, a primeira leitura serve para saber *se*
-mudou, não *quanto*. Medir, esperar, medir de novo e registrar o valor estável —
-com duas leituras iguais. Se as leituras divergirem, a causa é o cache, não o
-site, até prova em contrário.
+**O que é de verdade:** existem dois HTMLs para a mesma URL. O cópia servida
+pelo cache do WPFC (a que o visitante recebe) e o render dinâmico, que aparece
+com `Cache-Control: no-cache` ou com query string. Diferença medida:
 
-**Corolário:** quando o executor contradiz um número meu, o contradito pode ser
-eu. Reprovar a premissa dele sem refazer a medição é a mesma falta de rigor.
+| URL | servido (cache) | dinâmico |
+|---|---|---|
+| `/` | 183.203 B | 197.842 B |
+| `/privacy-policy/` | 147.303 B | 147.349 B |
+| `/obrigado/` | 139.419 B | 139.465 B |
+| 404 | 139.919 B | 139.919 B (não é cacheado) |
+
+**Regra:** o número que vale é o **servido**, medido **sem** `Cache-Control:
+no-cache` e **sem** query string. E toda medição tem que dizer qual dos dois foi.
+Nunca registrar um byte sem dizer como foi pedido — foi assim que nos
+contradissemos duas vezes em uma hora.
+
+**Corolário:** quando o executor e eu discordamos de um número, é mais provável
+que estejamos medindo coisas diferentes do que um dos dois estar mentindo.
 
 ---
 
