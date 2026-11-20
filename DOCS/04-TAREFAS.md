@@ -307,3 +307,16 @@ quem liga o editor, onde a opção é gravada, se há filtro oficial e quanto sa
 muda o que o visitante vê e depende de aprovação (Q-11).
 
 ---
+
+**Resultado (verificado por mim):** o purge melhorado passou a regenerar os bundles
+(`27xaf` → `2o3dz`/`2o3dx`/`2o7ec`) — funciona. Mas o dashicons **continua** no
+bundle: o editor imprime `editor-buttons`/`dashicons` dentro do próprio markup
+(`class-wp-editor.php:213`) e enfileira o resto no footer (`:330`); nenhum dequeue
+alcança. E a regeneração **engordou** o site: HTML de 183.203 → **189.427 B** na
+home (+6,2 KB de CSS inline em todas as páginas) e CSS externo 94.357 → 95.429 gz.
+Diagnóstico do executor correto; a estimativa dele de "201 KB gzip" vale só para a
+variante que carrega TinyMCE (render dinâmico). Na página **servida** (html-active,
+sem TinyMCE) o pacote do editor é ~22 KB gz de JS + 35,6 KB do dashicons ≈ **58 KB
+gzip**. Ordem de grandeza: a decisão da Q-11 vale ~58 KB, não 201.
+
+---

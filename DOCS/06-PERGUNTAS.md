@@ -155,3 +155,29 @@ O container `GT-TBVGGKRR` chega em **545.320 B raw / 181.289 B gzip** — mais q
 todo o CSS do site somado. Não é problema do tema nem do WordPress: é o que está
 configurado dentro do GTM. Vale perguntar à cliente (ou a quem montou as tags) se
 todas aquelas tags ainda são usadas.
+
+---
+
+## Q-13 · P-03: um "Brand Agent" da Microsoft Clarity carrega em todas as páginas 🟡
+
+Achei, auditando o JS, um módulo de terceiro que carrega **em todas as páginas**:
+
+```html
+<script id="brand-agent-frontend-js-module"
+  src="https://adsagentclientafd-b7hqhjdrf3fpeqh2.b01.azurefd.net/frontendInjection.js"
+  type="module"></script>
+```
+
+Fui atrás antes de gritar malware: **não é**. É o **Microsoft Clarity "Brand
+Agents"** (assistente de compras com IA, em beta), servido pelo Azure Front Door
+da Microsoft. Só que:
+
+- 12.655 B de código **ofuscado**, em toda página, para um escritório de
+  arquitetura que não vende nada online;
+- é um recurso pensado para e-commerce (Shopify/WooCommerce);
+- conversa mal com LGPD/Complianz: é um script de IA que observa a navegação e
+  não passa pelo banner de consentimento.
+
+**O que eu faço por padrão:** deixo como está e registro. Desligar é um clique no
+painel do Clarity (Brand Agents → disconnect), mas é decisão de marketing da
+cliente. Se ninguém usa, é peso e superfície de risco de graça.
