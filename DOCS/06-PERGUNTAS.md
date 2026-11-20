@@ -124,3 +124,34 @@ divergentes, 0 órfãos, EXIT=0**.
 
 **Sobra para você:** a lixeira não tem UI nem expurgo neste cPanel — o arquivo
 fica em `~/.trash/` até apagar no File Manager. É 1 arquivo de teste, não pesa.
+
+---
+
+## Q-11 · P-03: tirar o editor visual da caixa de mensagem do formulário? 🟡
+
+A home carrega o **editor do WordPress inteiro** para visitante deslogado
+(TinyMCE + quicktags + wplink + core.min + `editor.min.css` + dashicons):
+**~136 KB gzip por visita**, só para o visitante digitar uma mensagem. É o maior
+item que está sob nosso controle — o GTM é decisão de marketing da cliente.
+
+**O que muda se desligar:** a caixa de mensagem vira um campo de texto simples
+(sem negrito, itálico, link). O visitante que só quer escrever "gostaria de um
+orçamento" não perde nada; quem escreve em parágrafos perde formatação.
+
+**Opções:** (a) desligar o editor no campo — ganho imediato de ~136 KB gzip;
+(b) manter e conviver com o peso; (c) manter o editor e tentar carregá-lo só ao
+focar o campo — invisível para o visitante, mas depende de gambiarra no
+Forminator, que eu não recomendo de saída.
+
+**O que eu faço por padrão:** não mexo. É mudança visível ao visitante e a
+palavra final é sua (ou da cliente). O diagnóstico do T-014 segue em paralelo e
+não depende disso.
+
+---
+
+## Q-12 · P-03: o GTM da home (181 KB gzip) é isso mesmo? ⚪
+
+O container `GT-TBVGGKRR` chega em **545.320 B raw / 181.289 B gzip** — mais que
+todo o CSS do site somado. Não é problema do tema nem do WordPress: é o que está
+configurado dentro do GTM. Vale perguntar à cliente (ou a quem montou as tags) se
+todas aquelas tags ainda são usadas.

@@ -245,3 +245,55 @@ Medido com o acervo cheio (21.482 imagens / 52.726 rostos):
 **Brief:** OpenCode mede antes/depois, mostra o perfil com `cProfile` e só então
 otimiza. Aceite: os dois tempos acima batidos, com o mesmo resultado numérico
 (mesmos vizinhos, mesmo JSON).
+
+---
+
+## T-013 · P-03: G3-c — dashicons fora do front (release 1.3.7) 🟡 publicado, efeito ainda não medido
+
+**Medido antes:** a home tinha 31 `<link>` de CSS no HTML, mas só **6** são
+baixados — os outros 25 estão dentro de comentários (sobra do minify do WPFC).
+Total real: **494.284 B raw / 94.357 B gzip**. O maior bundle
+(`wpfc-minified/lywa7anf/27xaf.css`, 87.052 B) era **76% dashicons**: 350 regras
+`.dashicons-*:before` e 42.793 B de fonte em base64. Na página entregue: 0
+classes `.dashicons-*`, 0 `#wpadminbar`.
+
+**Feito:** gate `jhw_should_keep_dashicons()` (admin e logado mantêm, filtro
+`jhw_keep_dashicons` como escape), dequeue em `wp_enqueue_scripts` 9999 e
+`wp_print_styles` 9999. Release **1.3.7**, deploy exit 0, 11 arquivos conferidos,
+purge aplicado.
+
+**Não funcionou como esperado — e o motivo importa:** a home carrega o **editor
+do WordPress no front** (textarea do Forminator com editor visual), que
+enfileira `dashicons` **depois** do tema e imprime em `print_late_styles`. O
+dequeue não alcança enfileiramento tardio. As subpáginas, que não têm editor,
+ficaram com 0 dashicons. O bundle continua com os 59 KB porque o cache de
+minificação do WPFC não foi regenerado — o `jhw-purge.php` publicado limpa só o
+HTML.
+
+**Próximo:** T-014.
+
+---
+
+## T-014 · P-03: o editor do WordPress no front custa ~136 KB gzip 🟡 (diagnóstico em curso)
+
+**Medido na home (servida, 1.3.7):** **1.759.286 B de JS / 560.361 B gzip** em 35
+scripts únicos — seis vezes o CSS (94 KB gzip). O que se destaca:
+
+| item | raw | gzip | observação |
+|---|---|---|---|
+| GTM (`js?id=GT-TBVGGKRR`) | 545.320 | 181.289 | container grande; decisão da cliente |
+| `tinymce.min.js` | 365.570 | 124.604 | **só para a caixa de mensagem do formulário** |
+| editor.min + quicktags + wplink + core.min | 55.658 | 16.639 | idem |
+| `editor.min.css` + `dashicons.min.css` | — | ~35.000 | idem |
+
+O editor está no HTML por causa do campo `textarea-1` do formulário `168`
+(`class="wp-core-ui wp-editor-wrap tmce-active"`). Só o editor responde por
+**~136 KB gzip** por visita.
+
+**Brief T-014 (duas partes):** (1) publicar o `jhw-purge.php` que limpa HTML **e**
+minificado — o publicado só limpa HTML; (2) diagnóstico com arquivo e linha de
+quem liga o editor, onde a opção é gravada, se há filtro oficial e quanto sai.
+**Proibido mexer em configuração de formulário/conteúdo** — desligar o editor
+muda o que o visitante vê e depende de aprovação (Q-11).
+
+---
