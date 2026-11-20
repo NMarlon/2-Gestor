@@ -186,6 +186,27 @@ arquivo do acervo foi perdido.
 
 ---
 
+## E-014 · Peso morto de plugin se mede no HTML, não no painel (2026-11-20)
+
+**O que aconteceu:** a home da P-03 entrega 577.745 B de HTML. A maior parte não
+é conteúdo: um `<style id="spectra-gs-utility-classes-inline-css">` de
+**394.171 B**, byte-idêntico nas 4 páginas, com 2.755 seletores utilitários do
+Spectra — e **nenhuma** das 4 páginas usa uma sequer dessas classes, nem tem
+`wp-block-uagb`. O plugin está ativo, mas o bloco nunca foi usado.
+
+**Por que dói:** 394 KB em 100% das visitas em celular, em troca de nada. Nenhum
+painel mostra isso; só o HTML entregue mostra.
+
+**Regra:** antes de acusar "WordPress é pesado", listar os `<style>` inline e os
+`<link rel=stylesheet>` da própria página e medir cada um. Para decidir se um CSS
+utilitário é morto, comparar **token exato** de `class="…"` com o seletor —
+`includes(".block")` casa com `wp-block` e dá falso positivo.
+
+**Corolário:** remoção tem que ser condicional (`has_block('uagb/...')`), não
+dequeue cego — senão o próximo bloco Spectra nasce sem estilo.
+
+---
+
 ## E-015 · O WPFC serve DUAS versões da mesma página (2026-11-20)
 
 **O que aconteceu, em três atos:** medi as páginas logo após limpar o cache e
@@ -214,21 +235,20 @@ que estejamos medindo coisas diferentes do que um dos dois estar mentindo.
 
 ---
 
-## E-014 · Peso morto de plugin se mede no HTML, não no painel (2026-11-20)
+---
 
-**O que aconteceu:** a home da P-03 entrega 577.745 B de HTML. A maior parte não
-é conteúdo: um `<style id="spectra-gs-utility-classes-inline-css">` de
-**394.171 B**, byte-idêntico nas 4 páginas, com 2.755 seletores utilitários do
-Spectra — e **nenhuma** das 4 páginas usa uma sequer dessas classes, nem tem
-`wp-block-uagb`. O plugin está ativo, mas o bloco nunca foi usado.
+## E-016 · "A API não faz isso" costuma ser "a API 1 não faz" (2026-11-20)
 
-**Por que dói:** 394 KB em 100% das visitas em celular, em troca de nada. Nenhum
-painel mostra isso; só o HTML entregue mostra.
+**O que aconteceu:** a doc do projeto afirmava, com todas as letras, que "a UAPI
+do cPanel não tem `delete_file`". Isso travou a limpeza de um arquivo órfão por
+dias e manteve o deploy em `exit 1`. Na conta real: a UAPI (API 1) responde
+`The system could not find the function` para `trash_file`, `restore_from_trash`
+e `move_files` — mas a **API 2** faz o mesmo por `Fileman::fileop op=trash`.
+Um comando, trinta segundos, resolvido.
 
-**Regra:** antes de acusar "WordPress é pesado", listar os `<style>` inline e os
-`<link rel=stylesheet>` da própria página e medir cada um. Para decidir se um CSS
-utilitário é morto, comparar **token exato** de `class="…"` com o seletor —
-`includes(".block")` casa com `wp-block` e dá falso positivo.
+**Regra:** quando uma doc interna afirma que uma plataforma "não suporta" algo,
+checar em ordem: (1) a doc oficial, (2) a lista de funções da conta, (3) a
+geração **anterior** da API. Ausência na API 1 não é ausência no produto.
 
-**Corolário:** remoção tem que ser condicional (`has_block('uagb/...')`), não
-dequeue cego — senão o próximo bloco Spectra nasce sem estilo.
+**Corolário:** limitação registrada sem data e sem a chamada que falhou vira
+dogma. Toda limitação na doc precisa do erro exato que a comprova.

@@ -50,7 +50,7 @@ custaram caro:
 |---|---|
 | Cache | WP Fastest Cache serve HTML velho e faz a medição mentir. Limpar antes de medir. |
 | Purge | Na prática: `https://jessicahaguiwara.arq.br/jhw-purge.php?k=<chave>` (chave em `backups/`, nunca no chat) e depois `curl -X PURGE` em cada URL → 204. Sem isso a medição mostra o HTML antigo. |
-| Deploy | Sai `exit 1` por 1 órfão conhecido (`assets/css/save-probe.css`). Exit 1 aqui não significa envio errado. Prova boa: `N igual(is), 0 divergente(s), 0 novo(s)`. |
+| Deploy | **Sai 0** desde 2026-11-20 (órfão foi para `~/.trash/`). Prova boa: `N igual(is), 0 divergente(s), 0 novo(s), 0 orfao(s)` e nenhum envio. Se voltar a sair 1, é divergência real ou órfão novo — não ignorar. |
 | Gate de versão | Bump em `style.css` + `functions.php` + `scripts/release.json`, senão o deploy recusa. |
 | MCP WordPress | Não é fonte de verdade sobre o que está no ar. Sempre abrir a URL pública. |
 | `custom_css` | Gravação pela REST responde vazio; o CSS foi movido para o `style.css` do child. Não voltar a usar o Customizer. |

@@ -104,8 +104,9 @@ Commit `79013d5`. Verificação independente depois do commit:
   Home: **577.433 → 183.203 B (−68%)**; as outras 3 páginas caíram ~394 KB cada.
   O bloco tinha 0 seletores globais (`html`/`body`/`:root` puro) e 0 `@font-face`
   — por isso a remoção não custa pixel. Rollback: commit `723548c`.
-- `deploy-theme.mjs` sai **exit 1** por 1 órfão no servidor
-  (`assets/css/save-probe.css`, não referenciado em lugar nenhum do repo). T5.
+- `deploy-theme.mjs` **sai 0** desde 2026-11-20: o órfão `assets/css/save-probe.css`
+  foi para `~/.trash/` via `fileop op=trash`. Estado atual: 11 iguais, 0
+  divergentes, 0 órfãos.
 
 **Riscos/armadilhas registradas:**
 

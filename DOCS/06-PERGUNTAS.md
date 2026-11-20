@@ -116,12 +116,11 @@ log. Sugiro `.gitignore` com `logs/`. Autorizo?
 
 ---
 
-## Q-09 · P-03: o que fazer com o órfão `save-probe.css`? ⚪
+## Q-09 · P-03: o que fazer com o órfão `save-probe.css`? ✅ resolvida (padrão)
 
-O deploy sai `exit 1` por causa desse arquivo, que está no servidor e não é usado
-por nada. A doc diz que a UAPI do cPanel não apaga arquivo; a doc da cPanel diz
-que apaga (`Fileman::delete_file`, e `trash_file` é reversível).
+Feito em 2026-11-20 pelo default reversível, sem esperar resposta: `fileop
+op=trash` (API 2) → `~/.trash/save-probe.css`. `--dry-run` agora sai **0
+divergentes, 0 órfãos, EXIT=0**.
 
-**O que eu faço por padrão:** testo `trash_file` (vai para a lixeira do cPanel,
-reversível) e, funcionando, o deploy volta a sair 0. Sem apagar nada de forma
-permanente.
+**Sobra para você:** a lixeira não tem UI nem expurgo neste cPanel — o arquivo
+fica em `~/.trash/` até apagar no File Manager. É 1 arquivo de teste, não pesa.

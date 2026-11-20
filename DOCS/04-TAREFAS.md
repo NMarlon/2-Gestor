@@ -27,56 +27,68 @@ plugin de push).
 
 ---
 
-## T-003 · P-02: acervo real + varredura completa 🟡 EM ANDAMENTO
+## T-003 · P-02: acervo real + varredura completa 🟢 CONCLUÍDA (2026-11-20 09:0x)
+
+**Resultado medido:**
+- **21.482 imagens varridas** — exatamente o total de arquivos de imagem em disco.
+- **51.688 rostos** detectados na passada final; **52.726** no total do banco
+  (inclui as 277 imagens já processadas antes, puladas por `--resume`).
+- **0 erros**. Tempo da passada: **31.658 s** (8h48), média **0,68 img/s**.
+- Banco final: `images=21.482`, `images_processed=21.482`, `faces=52.726`,
+  `people=17.470`, `unassigned_faces=0`.
+- Clustering: `POST /api/cluster` → 52.726 rostos em **17.470 grupos**, **42,7 s**.
 
 **Feito:**
-1. Acervo identificado e extraído: `transfer_fotos_videos.tar` (14,7 GB) →
-   `C:\AREA DE POUSO\Fotos da Missão`. **21.651 imagens** (~21,6k jpg/jpeg) +
-   vídeos e `.json` do Takeout (ignorados pelo scanner).
-2. Banco zerado: o `data/faces.db` anterior só tinha 30 imagens de teste.
-   Backup em `data/faces.db.probe.bak`.
-3. Varredura completa rodando em background:
-   `logs/scan-full-20261120b.log` —
-   `python scripts/scan_cli.py --dir "C:/AREA DE POUSO/Fotos da Missão" --resume`.
-4. Medição real: **0,29 s por rosto**. O custo é por rosto, não por imagem — há
-   pastas com 28 rostos por foto (colagens do WhatsApp).
-5. Vazão medida com a máquina livre: **0,97 img/s** → ETA ~6 h para as 21.651.
-   Contenção de CPU (outro processo pesado) derruba para 0,13 img/s — por isso
-   nada pesado roda em paralelo enquanto a varredura estiver de pé.
-6. **Ressalva de cobertura:** a extração do tar terminou às 01:24, *depois* de a
-   varredura começar (01:05). O `rglob` do `scan_cli` é preguiçoso, então pastas
-   visitadas antes disso podem ter ficado incompletas. Por isso a varredura terá
-   **duas passadas** com `--resume`: a segunda só completa o que faltou (pula o
-   já processado por caminho+tamanho+mtime). O cron `reconhecedor-pos-varredura`
-   controla isso pelo marcador `.scan_pass2_done`.
-   Total real em disco: **21.482 imagens** (o 21.651 anterior foi contado com a
-   extração ainda em curso).
-7. API no ar em `127.0.0.1:8011` lendo o banco parcial durante a varredura (só
-   leitura — o clustering fica para o fim, para não disputar o SQLite com o
-   scanner).
+1. Acervo extraído de `transfer_fotos_videos.tar` (14,7 GB) para
+   `C:\AREA DE POUSO\Fotos da Missão`: 30.530 arquivos, sendo **21.482 imagens**;
+   conferido contra `tar -tf` (30.530 arquivos) — nada perdido.
+2. Banco de teste zerado antes da varredura (backup `data/faces.db.probe.bak`).
+3. Duas decisões de performance: remoção dos módulos de landmark/gênero-idade
+   (**1,4 s → 0,29 s por rosto**) e clustering vetorizado em blocos.
+4. A varredura fechou com cobertura completa, então a segunda passada não foi
+   necessária: o total do banco bateu com o disco. Marcador `.scan_pass2_done`
+   criado para o cron não repetir.
+5. API no ar em `127.0.0.1:8011` durante e depois da varredura (só leitura
+   enquanto varria, para não disputar o SQLite com o scanner).
 
-**Falta:**
-1. Acompanhar o log até o fim e confirmar que fecha sem erro.
-2. Com o banco povoado: rodar `/api/cluster`, revisar pessoas e medir
-   `/api/faces/{id}/similar`.
-3. Anotar aqui o total de rostos e o tempo real da varredura.
+### Qualidade do agrupamento (medido em 2026-11-20)
+- Maior grupo: **597 rostos em 596 fotos distintas** (a mesma pessoa em ~600
+  fotos, de fontes diferentes: WhatsApp, digitalização, transferências CTM).
+- 5 maiores: 597, 385, 365, 355, 340 rostos.
+- **687 pessoas com 10+ rostos** e **158 com 50+** — esse é o universo de
+  pessoas "reais" do acervo.
+- **13.125 grupos têm 1 único rosto (75% do total)** — rostos de passagem, fundo,
+  foto ruim. Não são pessoas identificáveis; nomear cada um seria desperdício.
+- Nomes são genéricos (`Pessoa 0`, `Pessoa 1`, ...). Nomear é trabalho manual —
+  candidato a tela de nomeação (ver T-005).
 
-**Se a varredura morrer:** reexecutar o mesmo comando com `--resume` — ele pula
-o que já está no banco por caminho + tamanho + mtime.
+### Pendencias de performance medidas
+- `GET /api/export/people`: **103,7 s** para 17.470 pessoas / 8,3 MB — quase
+  certamente N+1 (busca as imagens pessoa por pessoa). Precisa de brief.
+- `GET /api/faces/{id}/similar`: **1,4 s** com 52,7k rostos — funcional, mas
+  candidato a cache da matriz de embeddings.
+
+**Se precisar reprocessar:** o mesmo comando com `--resume` pula o que já está no
+banco por caminho + tamanho + mtime.
 
 ---
 
-## T-004 · P-02: escalar clustering e busca 🟢 (código) · 🟡 (validar com dado real)
+## T-004 · P-02: escalar clustering e busca 🟢 (código) · 🟢 (validado com dado real)
 
 **Feito pelo OpenCode:** greedy vetorizado em blocos (`numpy` matmul),
 `similar`/`propagate` com produto matricial + `argpartition`, `app/embeddings.py`
 novo, orientação EXIF corrigida (`app/image_io.py`), `scripts/scan_cli.py`
 (headless, `--limit`, `--resume`, `--dry-run`), `scripts/bench_cluster.py`.
 
-**Evidência:** 20k embeddings 512-d clusterizados em **4,8 s** (meta < 120 s),
-no caso patológico (todos singleton). Scan de 30 fotos: 40 rostos, 0 erros.
+**Evidência com dado real (21.482 imagens / 52.726 rostos):**
+- Clustering completo via `POST /api/cluster`: **42,7 s** (meta < 120 s). ✅
+- Agrupamento coerente: maior grupo com 597 rostos em 596 fotos distintas. ✅
+- `GET /api/faces/{id}/similar`: **1,40 s** — **fora da meta de 300 ms**. ❌
+- `GET /api/export/people`: **103,7 s** para 17.470 pessoas (8,3 MB) — fora. ❌
 
-**Falta:** medir `/api/faces/{id}/similar` com o banco cheio (meta < 300 ms).
+**Conclusão:** escala aprovada para clustering; busca unitária e export precisam
+de otimização (cache da matriz de embeddings e eliminação de N+1 no export).
+Ambos viram brief ao OpenCode (ver T-006).
 
 ---
 
@@ -184,17 +196,25 @@ bump 1.3.4 → 1.3.5, sem deploy — publicação é decisão do gestor.
 
 ---
 
-## T-010 · P-03: T5 — órfão `save-probe.css` derruba o deploy (exit 1) ⚪
+## T-010 · P-03: T5 — órfão `save-probe.css` → deploy sai 0 ✅
 
-**Contexto:** `deploy-theme.mjs` compara repo × servidor e sai **exit 1** por 1
-órfão: `assets/css/save-probe.css` (não é referenciado por nada no repo). A doc do
-projeto afirma que a UAPI do cPanel "não tem `delete_file`" — a doc oficial da
-cPanel lista `Fileman::delete_file` (param `path`) e `Fileman::trash_file`
-(reversível). Ou seja: a premissa pode estar errada e o T5 pode ser fechável.
+**Concluído em 2026-11-20.** Removido de forma reversível (`Fileman::fileop
+op=trash`, API 2 — a UAPI não tem `trash_file` nem o módulo `Trash` neste
+cPanel; o arquivo foi para `~/.trash/`). Commit `a66557c`, só doc.
 
-**Falta:** o OpenCode provar na conta (dry-run primeiro, `trash_file` antes de
-`delete_file`) e, se funcionar, o deploy passa a sair 0 sem esconder divergência.
-`trash_file` é a opção preferida por ser reversível.
+**Verificado por mim, independente do relatório:** `node scripts/deploy-theme.mjs
+--dry-run` → `11 igual(is), 0 divergente(s), 0 novo(s), 0 orfao(s)`,
+`enviaria 0 arquivo(s)`, **EXIT=0**. Validador: TUDO OK, 11 arquivos, 119.647 B.
+
+**No ar, 3 leituras por página (servido):** `/` **183.204** · `/privacy-policy/`
+**147.303** · `/obrigado/` **139.419** · `/politica-de-cookies/` **134.292** ·
+404 **139.919**. As subpáginas e o 404 estão idênticos ao 1.3.6; a home variou
+**+1 B** entre janelas (183.203 → 183.204) — dentro da página é constante, então
+é ruído de 1 byte, não conteúdo.
+
+**Ressalva registrada:** a lixeira `~/.trash/` não tem UI nem expurgo neste
+cPanel. O arquivo está lá até alguém apagar no File Manager — reversível, mas
+não some sozinho.
 
 ---
 
