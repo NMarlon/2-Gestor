@@ -117,3 +117,34 @@ Commit `79013d5`. Verificação independente depois do commit:
 - Nunca inventar CAU, preço, prazo, obra ou área.
 
 **Próximo passo:** ver `04-TAREFAS.md` (T-004 em diante).
+
+---
+
+## P-04 · Portfólio Profissional Marlon Viana
+
+| Campo | Valor |
+|---|---|
+| Caminho | `C:\MarlonScripts\4-Portfolio` (a criar) |
+| Repo | Próprio (git), sem remote ainda — **não publicar sem aprovação** |
+| Objetivo do Marlon | Site próprio para divulgar trabalho e atrair contratação: software, jogos, sites |
+| Estado | 🟡 Em construção — conteúdo levantado, brief v1 escrito, executor ainda não acionado |
+| Stack | HTML + CSS + JS estáticos, sem build; alvo de publicação GitHub Pages |
+| Papel do gestor | Inventário, copy, direção de arte, verificação. **Não escreve o código** — o OpenCode escreve |
+| Caderno do gestor | `DOCS/P-04-Portfolio/GESTOR.md` (inventário verificado e decisões) |
+| Brief | `briefs/2026-11-20-p04-portfolio-v1.md` |
+
+**Levantamento (2026-11-20, verificado):**
+
+- GitHub público `NMarlon`: 42 repos, **31 próprios** e 11 forks. Forks excluídos.
+- Projetos locais mapeados em `1-Mini-Projetos` (7 com README próprio) e no
+  currículo canônico em `Currículos/INFO/`.
+- Seis cases escolhidos para o site: FileFuse, Reconhecedor de Rostos,
+  Jessica Haguiwara, PDF TTS, Terabox Auto-Backuper, Face The Fake.
+- Números reais que sustentam o site: 21.651 fotos / 0,29 s por rosto / −68% de
+  HTML na home da Jessica / desde 2019 no GitHub.
+
+**Bloqueio:** `FileFuse` e `Bot-Creator` (e os demais privados) não foram lidos —
+o device flow do `gh` expirou sem autorização do Marlon. O case do FileFuse está
+descrito por evidência indireta (`filefuse-estado.json`); o de Bot-Creator não
+existe ainda e **não deve ser escrito** até o repo ser lido.
+

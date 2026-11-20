@@ -223,3 +223,47 @@ duplicatas. Se quiser medir de verdade, é projeto: pHash 256 bits + proporção
 dimensão + revisão visual dos pares. Custo estimado: um brief médio.
 Enquanto isso, os números de rostos por pessoa podem estar inflados por
 reimpressão da mesma foto — mas eu não sei em quanto, e não vou chutar.
+
+---
+
+# Bloco P-04 · Portfólio (aberto em 2026-11-20)
+
+Estas cinco não bloqueiam o começo: assumi defaults reversíveis e segui. Se
+discordar de algum, o custo de refazer é uma tarde.
+
+## Q-016 · P-04 · Onde publicar?
+
+Assumi **GitHub Pages** em `marlonrviana.github.io` — zero custo, sai hoje.
+Alternativas: (a) comprar `marlonrviana.com.br` (~R$ 40/ano) e apontar para o
+Pages; (b) subdomínio no cPanel que já usamos na Jessica. Só a (a) custa dinheiro
+e depende de você.
+
+## Q-017 · P-04 · Posso citar FileFuse e Bot-Creator publicamente?
+
+Assumi **sim, nome + print + descrição, código continua privado**. Se algum
+desses produtos tiver cláusula de confidencialidade ou cliente envolvido, me diga
+e eu tiro do site antes de qualquer publicação.
+
+## Q-018 · P-04 · Existe foto profissional?
+
+Não achei nenhuma no acervo (procurei imagem recente na pasta Pessoal). Sem foto,
+o site fica tipográfico — funciona, mas rosto humano converte mais para
+freelancer. Se tiver uma, é só jogar em `assets/img/`.
+
+## Q-019 · P-04 · Desde quando você é instrutor no CTM?
+
+Preciso da data de início para a linha do tempo e para a ficha "Hoje". Hoje o
+site diz só "Instrutor no Centro de Treinamento Missionário", sem data — sem
+inventar.
+
+## Q-020 · P-04 · A Jessica e o Alexandre autorizam o case?
+
+O site vai mostrar o trabalho deles como case, com link para o site no ar. É
+cliente real e o ganho de credibilidade é grande, mas precisa de aval dos dois.
+
+## Q-021 · P-04 · Acesso ao GitHub privado
+
+O device code `EDB1-0670` expirou sem autorização. Quando quiser, eu gero outro —
+você abre `https://github.com/login/device` e digita o código. Sem isso, FileFuse
+tem só a descrição indireta e Bot-Creator não entra no site.
+

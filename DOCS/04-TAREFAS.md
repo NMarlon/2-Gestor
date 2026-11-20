@@ -7,6 +7,27 @@ Legenda: 🟢 feito e verificado · 🟡 em andamento · 🔴 bloqueado · ⚪ n
 
 ---
 
+## T-050 · P-04: construir o site de portfólio 🟢
+
+**Brief:** `briefs/2026-11-20-p04-portfolio-v1.md`
+**Dir:** `C:\MarlonScripts\4-Portfolio` (criado 2026-11-20)
+**Executor:** OpenCode via `scripts/oc-brief.ps1`
+
+**Feito até aqui (gestor):** inventário verificado em
+`DOCS/P-04-Portfolio/GESTOR.md`; seis cases escolhidos com números reais; copy
+completa e direção de arte no brief; P-04 registrado em `02-PROJETOS.md`.
+
+**Critério de aceite:** sete páginas respondendo `200` em servidor local, nenhum
+link interno quebrado, nenhuma imagem inexistente, sem dependência além de Google
+Fonts.
+
+**Não autorizado:** publicar, criar repo no GitHub, inventar dado.
+
+**Pendente de terceiro:** leitura do GitHub privado (Q-021), foto (Q-018),
+autorização dos clientes (Q-020).
+
+---
+
 ## T-001 · Estruturar workspace do gestor 🟢
 
 **Feito:** `DOCS/00` a `06`, `.gitignore`, repo git, commit inicial.
