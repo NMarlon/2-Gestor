@@ -13,13 +13,17 @@
 | "O que eu faço agora?" | [`04-TAREFAS.md`](04-TAREFAS.md) |
 | "O que ficou para depois?" | [`05-BACKLOG-E-IDEIAS.md`](05-BACKLOG-E-IDEIAS.md) |
 | "O que está esperando o Marlon?" | [`06-PERGUNTAS.md`](06-PERGUNTAS.md) |
+| "Peguei o projeto X: o que é só meu e o que está no repo dele?" | [`P-03-Jessica-Haguiwara/GESTOR.md`](P-03-Jessica-Haguiwara/GESTOR.md) |
+
+Cadernos por projeto ficam em `DOCS/P-<numero>-<nome>/GESTOR.md` e contêm apenas o
+que é exclusivo do gestor. O que é do projeto mora no repo do projeto.
 
 ## Documentos externos ao workspace (referência)
 
 | Caminho | O que é |
 |---|---|
 | `../PROJETOS_APROVADOS.md` | Lista de projetos que o Marlon autorizou. Fonte de escopo. |
-| `../Definições Oficiais Manuais/Principal.md` | Princípios do Marlon. **Somente leitura.** |
+| `../Definições Oficiais Manuais/Principais Regras e Princípios.md` | Princípios do Marlon. **Somente leitura.** |
 | `../IDEA.md` | O que este workspace deve ser. |
 | `../scripts/oc-brief.ps1` | Canal oficial gestor → OpenCode. |
 | `../briefs/` | Histórico de briefs enviados ao OpenCode. |

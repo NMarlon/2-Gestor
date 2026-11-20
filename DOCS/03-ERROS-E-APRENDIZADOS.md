@@ -183,3 +183,24 @@ de ser declarada completa — o resume é barato e cobre adições tardias.
 (as outras 126 são diretórios). O disco tem exatamente **30.530 arquivos**, então
 os avisos `empty or unreadable filename` são só entradas de diretório — nenhum
 arquivo do acervo foi perdido.
+
+---
+
+## E-014 · Peso morto de plugin se mede no HTML, não no painel (2026-11-20)
+
+**O que aconteceu:** a home da P-03 entrega 577.745 B de HTML. A maior parte não
+é conteúdo: um `<style id="spectra-gs-utility-classes-inline-css">` de
+**394.171 B**, byte-idêntico nas 4 páginas, com 2.755 seletores utilitários do
+Spectra — e **nenhuma** das 4 páginas usa uma sequer dessas classes, nem tem
+`wp-block-uagb`. O plugin está ativo, mas o bloco nunca foi usado.
+
+**Por que dói:** 394 KB em 100% das visitas em celular, em troca de nada. Nenhum
+painel mostra isso; só o HTML entregue mostra.
+
+**Regra:** antes de acusar "WordPress é pesado", listar os `<style>` inline e os
+`<link rel=stylesheet>` da própria página e medir cada um. Para decidir se um CSS
+utilitário é morto, comparar **token exato** de `class="…"` com o seletor —
+`includes(".block")` casa com `wp-block` e dá falso positivo.
+
+**Corolário:** remoção tem que ser condicional (`has_block('uagb/...')`), não
+dequeue cego — senão o próximo bloco Spectra nasce sem estilo.

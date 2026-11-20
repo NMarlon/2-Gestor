@@ -45,7 +45,7 @@ Confirma que P-01 pode ir para "encerrado, em manutenção" e o foco vira P-02?
 
 ## Q-04 · Prioridade: ordem da lista ou rentabilidade? 🔴 decide o próximo projeto
 
-`Definições Oficiais Manuais/Principal.md` diz: "prioridade para os projetos de
+`Definições Oficiais Manuais/Principais Regras e Princípios.md` diz: "prioridade para os projetos de
 maior rentabilidade e maiores chances de sucesso". Sua instrução de hoje diz:
 "comece pelo primeiro projeto aprovado da lista".
 
@@ -57,7 +57,7 @@ diga que eu reorganizo a fila e justifico caso a caso.
 
 ## Q-05 · Feedback dos projetos publicados 📝
 
-O `Principal.md` pede canal de feedback nos projetos que vão ao ar, com seu
+O `Principais Regras e Princípios.md` pede canal de feedback nos projetos que vão ao ar, com seu
 e-mail (`marlonrviana@gmail.com`). Vale para os projetos locais (P-01, P-02) ou só
 para os que tiverem usuário externo? Sugiro: só nos publicados.
 
@@ -76,3 +76,36 @@ no banco, marcando duplicata por hash de conteúdo, e **escondo duplicatas nas
 listagens**. Assim nada se perde e a leitura fica limpa.
 
 Diga se prefere o contrário (apagar duplicatas do acervo) ou ignorar o assunto.
+
+---
+
+## Q-07 · P-03: publicar a remoção de 394 KB de CSS morto? 🟡
+
+O site carrega, em toda página, 394 KB de CSS utilitário do Spectra que
+**nenhuma** página usa (medi: 0 classes em 4 páginas, 0 bloco Spectra). Removi no
+tema e a home cai de ~578 KB para menos de 200 KB.
+
+Não há mudança visual esperada — é peso morto. Mas é alteração no ar.
+
+**Se você não disser nada:** publico como 1.3.5 e meço o antes/depois na URL
+pública, com rollback pronto (é um commit).
+
+---
+
+## Q-08 · P-03: `logs/` do projeto entra no `.gitignore`? ⚪
+
+O repo do site tem `logs/` (saída dos briefs do OpenCode) aparecendo como `??` em
+todo `git status`. Isso suja o `git add -A` do executor e pode acabar commitando
+log. Sugiro `.gitignore` com `logs/`. Autorizo?
+
+---
+
+## Q-09 · P-03: o que fazer com o órfão `save-probe.css`? ⚪
+
+O deploy sai `exit 1` por causa desse arquivo, que está no servidor e não é usado
+por nada. A doc diz que a UAPI do cPanel não apaga arquivo; a doc da cPanel diz
+que apaga (`Fileman::delete_file`, e `trash_file` é reversível).
+
+**O que eu faço por padrão:** testo `trash_file` (vai para a lixeira do cPanel,
+reversível) e, funcionando, o deploy volta a sair 0. Sem apagar nada de forma
+permanente.

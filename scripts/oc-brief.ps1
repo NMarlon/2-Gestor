@@ -15,6 +15,8 @@ param(
   [Parameter(Mandatory = $true)][string]$Dir,
   [Parameter(Mandatory = $true)][string]$Brief,
   [string]$LogPath,
+  [string]$Agent,
+  [switch]$NoAuto,
   [switch]$Standalone,
   [switch]$PrintLogs
 )
@@ -41,7 +43,10 @@ if (-not $LogPath) {
   $LogPath = Join-Path $logDir ("oc-" + (Get-Date -Format 'yyyyMMdd-HHmmss') + ".log")
 }
 
-$args = @('run', '--auto', '--archived')
+$args = @('run')
+if (-not $NoAuto) { $args += '--auto' }
+if ($Agent) { $args += @('--agent', $Agent) }
+$args += '--archived'
 if ($Standalone) { $args += '--standalone' }
 if ($PrintLogs) { $args += '--print-logs' }
 $args += $prompt

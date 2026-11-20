@@ -110,3 +110,66 @@ o padrão numerado quebraria os links do `AGENTS.md` dele sem ganho real.
 1. Clusterizar e conferir, por amostra visual, se os grupos fazem sentido.
 2. Exportar QUEM ↔ CADA foto (`/api/export/people`) e conferir o formato.
 3. Clicar num rosto na UI e ver todas as fotos daquela pessoa.
+
+---
+
+## T-008 · P-03: auditoria da doc do projeto — 4 contradições verificadas 🟡
+
+**Feito (gestor, 2026-11-20):** li `AGENTS.md`, `DOCS/12-PLANO-EXECUCAO.md` e
+`DOCS/04-TAREFAS.md` do projeto e comparei com o site no ar. A doc tem afirmações
+que já não são verdade:
+
+1. `04-TAREFAS.md` (§ "Como retomar" item 3) diz **"hoje 2 FAILs (T8/T17)"**.
+   Falso: `node scripts/validate-theme.mjs` → **TUDO OK** nesta data.
+2. `04-TAREFAS.md` § "Estado atual (2026-11-09)" — 11 dias velho, e o site mudou
+   (1.3.2 → 1.3.4).
+3. **T10 se contradiz:** `12-PLANO-EXECUCAO.md` linha 177 diz "concluído: CSS no
+   style.css (1.2.4), custom_css zerado"; linha 179 diz "custom_css não pôde ser
+   gravado — CSS segue no Customizer". Medição: o `style.css` do child está no ar
+   com 53.041 B e tem `jhw-home-v2`/`jhw-hero`/`forminator-module-168`. A linha
+   179 é a errada.
+4. **T12** diz "falta regenerar o documento de cookies". O `/politica-de-cookies/`
+   existe, está no sitemap e é linkado de `/privacy-policy/`. O que a doc diz não
+   bate com o site.
+
+**Falta:** o OpenCode corrigir as 4 afirmações (uma passada só, sem tocar em
+código) e o gestor reconferir contra a URL pública.
+
+---
+
+## T-009 · P-03: G3-b — eliminar 394 KB de CSS morto em toda página 🟡
+
+**Achado do gestor (2026-11-20):** `<style id="spectra-gs-utility-classes-inline-css">`
+= **394.171 B**, byte-idêntico nas 4 páginas, com 2.755 seletores utilitários do
+Spectra. As 4 páginas têm **zero** classes dessas no `<body>` (match exato de
+token) e **nenhum** `wp-block-uagb`. É peso morto em 100% das visitas.
+
+**Brief enviado:** `%TEMP%\opencode\brief-2026-11-20-spectra-css.md` (G3-b).
+Exige remoção **condicional** (só em página sem bloco Spectra) via filtro oficial,
+bump 1.3.4 → 1.3.5, sem deploy — publicação é decisão do gestor.
+
+**Meta:** HTML da home de 577.745 B para < 200.000 B, visual idêntico.
+
+---
+
+## T-010 · P-03: T5 — órfão `save-probe.css` derruba o deploy (exit 1) ⚪
+
+**Contexto:** `deploy-theme.mjs` compara repo × servidor e sai **exit 1** por 1
+órfão: `assets/css/save-probe.css` (não é referenciado por nada no repo). A doc do
+projeto afirma que a UAPI do cPanel "não tem `delete_file`" — a doc oficial da
+cPanel lista `Fileman::delete_file` (param `path`) e `Fileman::trash_file`
+(reversível). Ou seja: a premissa pode estar errada e o T5 pode ser fechável.
+
+**Falta:** o OpenCode provar na conta (dry-run primeiro, `trash_file` antes de
+`delete_file`) e, se funcionar, o deploy passa a sair 0 sem esconder divergência.
+`trash_file` é a opção preferida por ser reversível.
+
+---
+
+## T-011 · P-03: dados que só a cliente pode dar 🔴
+
+Bloqueado até a cliente responder. Não inventar em hipótese alguma:
+CAU/registro, áreas de obra, prazos, faixas de preço, texto da seção "Prova".
+
+**Falta:** o Marlon levar a lista consolidada para a cliente. Enquanto isso, o
+site fica com o que está — sem placeholder inventado.

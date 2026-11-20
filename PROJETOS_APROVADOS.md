@@ -5,3 +5,5 @@
 		1. Reconhecer e distinguir rostos de cada pessoa em dezenas de milhares de imagens.
 		2. Ter uma lista com correlação de QUEM com CADA respectiva FOTO
 		3. Ter um visual para poder visualizar e clicar num rosto e selecionar todas as fotos com aquela pessoa do rosto.
+3. C:\MarlonScripts\Jessica Haguiwara
+	1. OBJETIVO: Construir um site profissional de arquitetura para um cliente (Alexandre e Jéssica Haguiwara), para que eles consigam clientes para arquitetura. 

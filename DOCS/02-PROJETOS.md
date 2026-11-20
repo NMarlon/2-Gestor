@@ -68,3 +68,48 @@ Commit `79013d5`. Verificação independente depois do commit:
 5. Nada de teste automatizado; nenhuma medição de tempo/imagem.
 
 **Próximo passo:** ver `04-TAREFAS.md` (T-003 em diante).
+
+---
+
+## P-03 · Site Jessica Haguiwara Arquitetura
+
+| Campo | Valor |
+|---|---|
+| Caminho | `C:\MarlonScripts\Jessica Haguiwara` |
+| Repo | Próprio (git), último commit `fc38a81` — árvore limpa em 2026-11-20 |
+| Objetivo do Marlon | Site institucional no ar, editorial, sem dado inventado; base técnica que aguente cliente real |
+| Estado | 🟢 **No ar e aprovado pela cliente**; faltam dados que dependem dela |
+| Site | `https://jessicahaguiwara.arq.br` |
+| Stack | WordPress + tema pai `extendable` + child `jessica-haguiwara-child` (1.3.4), Spectra, Forminator, Complianz, WP Fastest Cache |
+| Papel do gestor | Decide prioridade, aprova publicação, verifica no ar. **Não escreve no repo** — o OpenCode escreve |
+| Doc do projeto | `DOCS/00-INDICE.md` → `AGENTS.md` é o contrato; `DOCS/12-PLANO-EXECUCAO.md` é o plano vigente |
+
+**Evidência coletada (2026-11-20, medição própria):**
+
+- 4 páginas do sitemap respondem `200`: `/`, `/privacy-policy/`, `/obrigado/`,
+  `/politica-de-cookies/`.
+- Home: **577.745 B** de HTML, 39 `<script src>`, 31 `<link rel=stylesheet>`.
+- `validate-theme.mjs` → **TUDO OK**; `check-live-footer.mjs` → **rodapé do ar OK**.
+- `jessica-haguiwara-child/style.css` = 53.041 B no ar (`?ver=1.3.4`), enfileirado,
+  com `jhw-home-v2`, `jhw-hero`, `forminator-module-168`, `jhw-pendente`.
+  Ou seja: o T10 está **concluído** — a doc que diz "CSS segue no Customizer" está velha.
+- `/politica-de-cookies/` existe, está no sitemap e é linkada de `/privacy-policy/`.
+  O banner de cookies oferece "Política de Privacidade" → `/privacy-policy/`;
+  os links de gerenciamento usam `#`. O T12 como descrito na doc está **resolvido**,
+  mas a doc ainda pede "regenerar o documento de cookies".
+- **Achado novo (394 KB mortos):** `<style id="spectra-gs-utility-classes-inline-css">`
+  = 394.171 B, **idêntico nas 4 páginas**, com 2.755 seletores utilitários e
+  **zero classes usadas** no `<body>` de qualquer página (match exato de token);
+  nenhuma página tem `wp-block-uagb`. Tarefa `G3-b` aberta com o OpenCode.
+- `deploy-theme.mjs` sai **exit 1** por 1 órfão no servidor
+  (`assets/css/save-probe.css`, não referenciado em lugar nenhum do repo). T5.
+
+**Riscos/armadilhas registradas:**
+
+- O canal com o OpenCode é `scripts/oc-brief.ps1`; para deploy real exigir
+  revisão do diff antes (`-NoAuto` disponível desde 2026-11-20).
+- Não confiar no MCP de WordPress para dizer o que está no ar: medir a URL pública.
+- Cache do WP Fastest Cache mascara medição — limpar antes de medir.
+- Nunca inventar CAU, preço, prazo, obra ou área.
+
+**Próximo passo:** ver `04-TAREFAS.md` (T-004 em diante).
