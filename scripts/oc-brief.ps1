@@ -51,14 +51,49 @@ Push-Location -LiteralPath $Dir
 # /c/... e o binario nativo falha em "change directory". Normalizamos.
 $env:PWD = (Get-Location).ProviderPath
 $env:OLDPWD = $env:PWD
+# PATH do processo pai pode ter o git do WindowsApps (MSIX) na frente; esse
+# binario nega execucao fora do package ("Acesso negado"), quebrando qualquer
+# comando git do agente. Colocamos o Git for Windows real na frente do PATH.
+$gitCmd = 'C:\Program Files\Git\cmd'
+if (Test-Path -LiteralPath (Join-Path $gitCmd 'git.exe')) {
+  $env:PATH = $gitCmd + ';' + (($env:PATH -split ';' | Where-Object { $_ -and $_ -notlike '*WindowsApps*HermesAgent*\git*' }) -join ';')
+}
 try {
   Write-Host "[oc-brief] exe=$exe"
   Write-Host "[oc-brief] dir=$Dir"
   Write-Host "[oc-brief] brief=$Brief ($($prompt.Length) chars)"
   Write-Host "[oc-brief] log=$LogPath"
   Write-Host '[oc-brief] ---- inicio da resposta do OpenCode ----'
-  & $exe @args 2>&1 | Tee-Object -FilePath $LogPath
-  $code = $LASTEXITCODE
+  # stderr vai para arquivo temporario: com 2>&1 o PowerShell 5.1 transforma
+  # cada linha de stderr em ErrorRecord e, com ErrorActionPreference=Stop, aborta
+  # o pipeline inteiro (NativeCommandError). Isso matava o canal sem log.
+  $errFile = [System.IO.Path]::GetTempFileName()
+  # PS 5.1 tambem dispara NativeCommandError mesmo com 2> arquivo quando
+  # ErrorActionPreference=Stop. Suspende o Stop so durante a chamada nativa.
+  $prevEap = $ErrorActionPreference
+  # SilentlyContinue durante a chamada nativa: o PS 5.1 transforma cada linha
+  # que o CLI escreve em stderr em um bloco "NativeCommandError" no console. O
+  # stderr continua indo para $errFile e para o log, entao nada se perde.
+  $ErrorActionPreference = 'SilentlyContinue'
+  # Tee-Object do PS 5.1 nao tem -Encoding e grava UTF-16 (grep ve bytes nulos).
+  # StreamWriter em UTF-8 sem BOM: log legivel e ainda transmite ao vivo.
+  $sw = New-Object System.IO.StreamWriter($LogPath, $true, (New-Object System.Text.UTF8Encoding($false)))
+  $sw.AutoFlush = $true
+  try {
+    & $exe @args 2> $errFile | ForEach-Object { $sw.WriteLine($_); Write-Output $_ }
+    $code = $LASTEXITCODE
+    $errText = Get-Content -LiteralPath $errFile -Raw -ErrorAction SilentlyContinue
+    if ($errText) {
+      Write-Host $errText
+      $sw.WriteLine('---- stderr ----')
+      $sw.WriteLine($errText)
+    }
+  }
+  finally {
+    $sw.Close()
+    $ErrorActionPreference = $prevEap
+    Remove-Item -LiteralPath $errFile -Force -ErrorAction SilentlyContinue
+  }
   Write-Host '[oc-brief] ---- fim da resposta do OpenCode ----'
   Write-Host "[oc-brief] exit=$code"
   exit $code

@@ -71,3 +71,93 @@ servidor do app desktop, não uma sessão de trabalho.
 
 **Regra:** checar `CommandLine` do processo antes de concluir que há escritor
 concorrente. `serve --service` não conta como sessão.
+
+---
+
+## E-006 · Canal do executor morre calado com `$ErrorActionPreference='Stop'` (2026-11-20)
+
+**O que aconteceu:** o wrapper `scripts/oc-brief.ps1` usava
+`& $exe @args 2>&1 | Tee-Object`. No PowerShell 5.1 cada linha de stderr de um
+nativo vira `ErrorRecord`; com `Stop` o pipeline aborta antes do log ser escrito.
+
+**Regra:** stderr do nativo vai para arquivo temporário (`GetTempFileName`),
+`$ErrorActionPreference='Continue'` só durante a chamada, restaurado no
+`finally`, e `Tee-Object -Encoding utf8` (sem isso o log sai em UTF-16 e o
+`grep` vê bytes nulos).
+
+---
+
+## E-007 · Timeout de foreground mata o executor e deixa órfão (2026-11-20)
+
+**O que aconteceu:** brief do Reconhecedor rodou 600 s, o `terminal` estourou, o
+PowerShell pai morreu — e o `opencode-cli.exe` continuou vivo, parado, sem
+escrever log. Os arquivos ficaram meio-editados e eu não sabia se ainda havia
+escritor.
+
+**Regra:** tarefa de executor que passa de ~2 min roda com `background=true` e
+`notify=true`. Se estourar: antes de tocar em arquivo, checar CPU e **mtime**
+dos arquivos por ~30 s para saber se o órfão ainda escreve; matar por
+`Stop-Process -Id` (não `taskkill //PID`, que o MSYS reescreve).
+
+---
+
+## E-008 · O `git` do PATH é o MSIX do HermesAgent (2026-11-20)
+
+**O que aconteceu:** dentro do shell do OpenCode, `git` resolvia para um binário
+em `WindowsApps` e devolvia "Acesso negado" — os commits do subagente falhavam
+em silêncio.
+
+**Regra:** o wrapper prepend `C:\Program Files\Git\cmd` no `PATH` e filtra
+entradas `*WindowsApps*HermesAgent*\git*`. Vale para qualquer subagente que
+precise commitar.
+
+---
+
+## E-009 · Caminho POSIX quebra binário nativo (2026-11-20)
+
+**O que aconteceu:** `--dir "$TMPDIR/sample30"` (que expande para `/tmp/...`)
+chegou ao Python como `\tmp\sample30` → "não encontrado". Mesma origem do
+`Failed to change directory to /c/...` do CLI (que lê `PWD`).
+
+**Regra:** para `python`, `node`, `git` e `opencode-cli`, passar caminho nativo
+`C:/...` (barra normal). Para o CLI, exportar também `PWD` no formato Windows.
+
+---
+
+## E-010 · Custo é por rosto, não por imagem (2026-11-20)
+
+**O que aconteceu:** medi 27 s/imagem e quase concluí que o modelo era inviável.
+O perfil (`cProfile`) mostrou: a pasta tinha colagens com 28 rostos por foto, e
+cada rosto pagava ArcFace (1,02 s) + landmark 2d/3d (0,32 s) + gênero/idade —
+dois modelos que o app **não usa**.
+
+**Regra:** em pipeline de visão, medir por estágio (`cProfile` + contagem de
+objetos detectados) antes de acusar o modelo ou a máquina. Modelos não usados
+saem do `FaceAnalysis` (`allowed_modules` é **construtor**, não `prepare()` no
+insightface 2.1). Ganho: 1,4 s → 0,29 s por rosto.
+
+---
+
+## E-011 · Medir com o job rodando contamina o número (2026-11-20)
+
+**O que aconteceu:** rodei benchmarks de InsightFace enquanto a varredura cheia
+usava os mesmos 10 núcleos. Todo número daquela janela (27 s/img, 2 img/min) é
+lixo.
+
+**Regra:** medição e carga não correm juntos. Antes de medir, checar CPU dos
+processos concorrentes (`Get-Process` / `% Processor Performance`).
+
+---
+
+## E-012 · `Tee-Object` não aceita `-Encoding` no PowerShell 5.1 (2026-11-20)
+
+**O que aconteceu:** para corrigir o log em UTF-16 eu troquei
+`Tee-Object -FilePath $Log` por `Tee-Object -FilePath $Log -Encoding utf8`. No
+PS 5.1 esse parâmetro **não existe** — o wrapper passou a morrer com
+`ParameterBindingException` e o canal Hermes→OpenCode ficou mudo (exit=1, log
+nunca criado).
+
+**Regra:** para gravar log de processo nativo em UTF-8, usar
+`System.IO.StreamWriter` com `UTF8Encoding($false)` e `AutoFlush`, encaminhando
+o pipe com `ForEach-Object`. Validar o wrapper com um brief de teste depois de
+qualquer mudança nele — erro de parâmetro só aparece em execução.

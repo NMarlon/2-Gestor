@@ -26,9 +26,10 @@
 **Pendências reais:** só backlog e upstream — aviso de versão do Mono Hermes
 (0.22 × 0.23.x) e plugin de push. Nada bloqueante.
 
-**Deriva de documentação encontrada:** `DOCS/10-TAREFAS.md` marca a Fase 2
-(Tailscale `:8443`) como ⚪ não iniciada, mas o `tailscale serve status` mostra
-`8443` ativo. A doc está atrasada em relação à realidade.
+**Doc sincronizada (2026-11-20):** o OpenCode corrigiu a deriva em 14 arquivos
+`.md` (versão 0.23.1 → 0.23.2, Fase 2 concluída com evidência, Fase 5 parkeada).
+Commit `79013d5`. Verificação independente depois do commit:
+`https://<tailnet>:8443/api/status` → `200`, `version: 0.23.2`.
 
 ---
 
@@ -39,19 +40,20 @@
 | Caminho | `C:\MarlonScripts\1-Mini-Projetos\Reconhecedor de Rostos de  Imagens` (dois espaços antes de "Imagens") |
 | Repo | Próprio (`git` aninhado; aparece como `??` no repo pai) |
 | Objetivo do Marlon | (1) reconhecer/distinguir rostos em dezenas de milhares de imagens; (2) lista QUEM ↔ CADA foto; (3) visual para clicar num rosto e ver todas as fotos daquela pessoa |
-| Estado | 🟡 **Código pronto, nunca rodou com foto real** |
+| Estado | 🟡 **Rodando com acervo real** — varredura completa em andamento |
 | Stack | Python 3.11, FastAPI, InsightFace `buffalo_l` (CPU), SQLAlchemy 2.1.8, SQLite |
 
 **Evidência coletada (2026-11-20):**
 
 - API sobe em `127.0.0.1:8011`; `/api/stats`, `/api/people`, `/api/cluster`,
   `/api/export/people`, `/api/scan/status` respondem `200`.
-- Banco `data/faces.db`: **0 imagens, 0 rostos, 0 pessoas**. O app nunca processou
-  um acervo real.
-- `C:\AREA DE POUSO\Fotos da Missão` existe e está **vazia** (0 arquivos).
-- Há um arquivo `C:\Users\Marlon\Downloads\Fotos\transfer_fotos_videos.tar` de
-  **14,7 GB** — candidato ao acervo real (inspeção em andamento).
-- Modelo `buffalo_l` já está em cache (`~/.insightface/models`, 289 MB).
+- Acervo real extraído do tar (14,7 GB) para `C:\AREA DE POUSO\Fotos da Missão`:
+  **21.651 imagens**. Varredura completa rodando em background.
+- `scripts/scan_cli.py --limit 30` (acervo real): **40 rostos, 0 erros**.
+- Custo medido: **0,29 s por rosto** (era 1,4 s antes de remover os modelos de
+  landmark e gênero/idade, que o app não usa).
+- Banco `data/faces.db` povoado pela varredura em andamento.
+- Modelo `buffalo_l` em cache (`~/.insightface/models`, 289 MB).
 
 **Riscos técnicos identificados (leitura de código):**
 

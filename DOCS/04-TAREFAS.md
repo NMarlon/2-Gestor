@@ -14,67 +14,85 @@ Legenda: 🟢 feito e verificado · 🟡 em andamento · 🔴 bloqueado · ⚪ n
 
 ---
 
-## T-002 · Verificar e fechar P-01 (Hermes-Mobile) 🟡
+## T-002 · Verificar e fechar P-01 (Hermes-Mobile) 🟢
 
-**Feito:** servidor `:80` responde `0.23.2`; Tailscale `443/8443/8444` ativos;
-repo limpo. Estado registrado em `02-PROJETOS.md`.
+**Feito:** doc sincronizada com a realidade pelo OpenCode (14 arquivos `.md`,
+versão 0.23.1 → 0.23.2, Fase 2 concluída, Fase 5 parkeada).
+
+**Evidência:** commit `79013d5` no repo `1-Mini-Projetos`, escopo `Hermes-Mobile/`.
+Verificação independente: `https://<tailnet>:8443/api/status` → `200`, `0.23.2`.
+
+**Pendências:** nenhuma bloqueante. Só backlog (aviso de versão do Mono Hermes,
+plugin de push).
+
+---
+
+## T-003 · P-02: acervo real + varredura completa 🟡 EM ANDAMENTO
+
+**Feito:**
+1. Acervo identificado e extraído: `transfer_fotos_videos.tar` (14,7 GB) →
+   `C:\AREA DE POUSO\Fotos da Missão`. **21.651 imagens** (~21,6k jpg/jpeg) +
+   vídeos e `.json` do Takeout (ignorados pelo scanner).
+2. Banco zerado: o `data/faces.db` anterior só tinha 30 imagens de teste.
+   Backup em `data/faces.db.probe.bak`.
+3. Varredura completa rodando em background:
+   `logs/scan-full-20261120b.log` —
+   `python scripts/scan_cli.py --dir "C:/AREA DE POUSO/Fotos da Missão" --resume`.
+4. Medição real: **0,29 s por rosto**. O custo é por rosto, não por imagem — há
+   pastas com 28 rostos por foto (colagens do WhatsApp).
 
 **Falta:**
-1. Corrigir a deriva da doc: `Hermes-Mobile/DOCS/10-TAREFAS.md` — Fase 2 marcar 🟢
-   com a evidência do `tailscale serve status`; Fase 6 marcar como parkeada.
-2. Atualizar `DOCS/01-VISAO-GERAL.md` e `AGENTS.md` do projeto com a versão real
-   (`0.23.2`) e a data 2026-11-20.
-3. Commit no repo `1-Mini-Projetos`, escopo `Hermes-Mobile/`.
+1. Acompanhar o log até o fim e confirmar que fecha sem erro.
+2. Com o banco povoado: rodar `/api/cluster`, revisar pessoas e medir
+   `/api/faces/{id}/similar`.
+3. Anotar aqui o total de rostos e o tempo real da varredura.
 
-**Como proceder:** brief `briefs/2026-11-20-hermes-mobile-doc-sync.md` para o
-OpenCode. Não reabrir o que já funciona; é sincronização de documentação.
+**Se a varredura morrer:** reexecutar o mesmo comando com `--resume` — ele pula
+o que já está no banco por caminho + tamanho + mtime.
 
 ---
 
-## T-003 · P-02: acervo real + medição 🔴 (depende de Q-01)
+## T-004 · P-02: escalar clustering e busca 🟢 (código) · 🟡 (validar com dado real)
 
-**Objetivo:** ter o acervo real acessível e medir o app atual contra ele.
+**Feito pelo OpenCode:** greedy vetorizado em blocos (`numpy` matmul),
+`similar`/`propagate` com produto matricial + `argpartition`, `app/embeddings.py`
+novo, orientação EXIF corrigida (`app/image_io.py`), `scripts/scan_cli.py`
+(headless, `--limit`, `--resume`, `--dry-run`), `scripts/bench_cluster.py`.
+
+**Evidência:** 20k embeddings 512-d clusterizados em **4,8 s** (meta < 120 s),
+no caso patológico (todos singleton). Scan de 30 fotos: 40 rostos, 0 erros.
+
+**Falta:** medir `/api/faces/{id}/similar` com o banco cheio (meta < 300 ms).
+
+---
+
+## T-005 · Revisar e commitar as mudanças do OpenCode no Reconhecedor 🟡
+
+**Contexto:** a sessão do OpenCode foi interrompida pelo meu timeout de 600 s e
+deixou ~10 arquivos alterados (`app/main.py`, `embeddings.py`, `image_io.py`,
+`processor.py`, `services.py`, `models.py`, `db.py`, `config.py`,
+`scripts/scan_cli.py`, `scripts/bench_cluster.py`, mais `DOCS/`).
 
 **Falta:**
-1. Confirmar com o Marlon qual é o acervo
-   (`C:\AREA DE POUSO\Fotos da Missão` está vazio; há
-   `C:\Users\Marlon\Downloads\Fotos\transfer_fotos_videos.tar` com 14,7 GB).
-2. Definir destino de extração com espaço em disco suficiente.
-3. Rodar scan de amostra (500 imagens) e medir segundos/imagem, rostos/imagem,
-   erros de leitura.
-
-**Como proceder:** não extrair 14 GB sem autorização de destino. Com amostra,
-medir com `time` e registrar em `Reconhecedor/DOCS/`.
+1. Revisar o `git diff` (atenção em `services.py` e em mudança de schema).
+2. Commitar no repo do projeto, escopo próprio.
+3. Registrar no `DOCS/ERRORS_LEARNINGS.md` do projeto o que mudou.
 
 ---
 
-## T-004 · P-02: escalar clustering e busca ⚪
+## T-006 · P-02: documentação no padrão do Marlon ⚪ (rebaixada)
 
-**Objetivo:** aguentar ~50k rostos sem travar.
+**Reavaliação:** o `DOCS/` do projeto já tem os quatro documentos exigidos
+(`TASKS`, `ERRORS_LEARNINGS`, `BACKLOG` e `AGENTS.md` como índice). Renomear para
+o padrão numerado quebraria os links do `AGENTS.md` dele sem ganho real.
 
-**Problema:** `services.py` faz greedy `O(n·k)` em Python puro; `main.py`
-carrega a tabela inteira em `similar`/`propagate`.
-
-**Direção:** vetorizar o greedy em blocos com matriz `numpy` (matmul em chunks,
-não loop por cluster); avaliar FAISS/HNSW para busca aproximada; paginar
-`similar`/`propagate`; guardar embeddings em `.npy`/memmap em vez de BLOB por
-linha, se a leitura virar gargalo.
-
-**Critério de aceite:** clustering de 20k embeddings sintéticos em < 2 min;
-`/api/faces/{id}/similar` responde < 300 ms com 20k rostos.
-
-**Como proceder:** brief com os números medidos em T-003. Sem medição, não otimizar.
+**Decisão:** não renomear; só manter o conteúdo atualizado. Vai para o backlog.
 
 ---
 
-## T-005 · P-02: documentação no padrão do Marlon ⚪
+## T-007 · P-02: validar o fluxo completo com dado real ⚪
 
-**Problema:** `DOCS/` do projeto está em inglês, com 6 arquivos curtos
-(`TASKS.md`, `ERRORS_LEARNINGS.md`...), fora do padrão numerado usado nos outros
-projetos.
-
-**Feito quando:** existirem `00-INDICE`, `01-VISAO-GERAL`, `09-ERROS-E-APRENDIZADOS`,
-`10-TAREFAS`, `11-BACKLOG-E-IDEIAS`, e `AGENTS.md` apontando para eles.
-
-**Como proceder:** migrar o conteúdo existente (não jogar fora), em português,
-mantendo histórico no git.
+**Objetivo:** provar os três requisitos do Marlon com o acervo real.
+1. Clusterizar e conferir, por amostra visual, se os grupos fazem sentido.
+2. Exportar QUEM ↔ CADA foto (`/api/export/people`) e conferir o formato.
+3. Clicar num rosto na UI e ver todas as fotos daquela pessoa.

@@ -5,16 +5,18 @@
 
 ---
 
-## Q-01 · Onde está o acervo real de fotos? 🔴 bloqueia T-003
+## Q-01 · Acervo real — RESOLVIDA em 2026-11-20 ✅
 
-`C:\AREA DE POUSO\Fotos da Missão` existe e está **vazia**.
-Há um `C:\Users\Marlon\Downloads\Fotos\transfer_fotos_videos.tar` de **14,7 GB**.
+**O que fiz:** listei o tar sem extrair (30.873 entradas), confirmei que eram as
+fotos da missão e extraí para `C:\AREA DE POUSO\Fotos da Missão` — exatamente a
+pasta que o app já usa como `PHOTOS_DIR` default. 21.651 imagens, 14 GB, disco
+com 303 GB livres. Operação reversível (é cópia; o tar original continua em
+`Downloads\Fotos`).
 
-- É esse o tar com as fotos da missão?
-- Posso extrair? Para onde? (precisa de espaço em disco — verificar antes)
-- Ou você vai copiar as fotos para `C:\AREA DE POUSO\Fotos da Missão`?
+**Se estiver errado:** delete a pasta `C:\AREA DE POUSO\Fotos da Missão` e me
+avise; o tar não foi tocado.
 
-Sem acervo não há como validar o requisito "dezenas de milhares de imagens".
+**Sub-pergunta aberta (Q-06).**
 
 ---
 
@@ -58,3 +60,19 @@ diga que eu reorganizo a fila e justifico caso a caso.
 O `Principal.md` pede canal de feedback nos projetos que vão ao ar, com seu
 e-mail (`marlonrviana@gmail.com`). Vale para os projetos locais (P-01, P-02) ou só
 para os que tiverem usuário externo? Sugiro: só nos publicados.
+
+---
+
+## Q-06 · Acervo tem duplicatas — o que fazer com elas? 🟡
+
+O tar trouxe três árvores: `CÓPIAS COMPRIMIDAS DAS FOTOS`, `CÓPIAS COMPRIMIDAS
+DOS VÍDEOS` e `Takeout` (Google). A mesma foto pode aparecer em mais de uma.
+
+Consequência: o mesmo rosto entra duas vezes no banco, e a lista "fotos desta
+pessoa" mostra a mesma cena repetida.
+
+**O que eu faço por padrão (se você não disser nada):** mantenho todas as fotos
+no banco, marcando duplicata por hash de conteúdo, e **escondo duplicatas nas
+listagens**. Assim nada se perde e a leitura fica limpa.
+
+Diga se prefere o contrário (apagar duplicatas do acervo) ou ignorar o assunto.
