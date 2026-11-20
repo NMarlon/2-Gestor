@@ -79,7 +79,11 @@ Diga se prefere o contrário (apagar duplicatas do acervo) ou ignorar o assunto.
 
 ---
 
-## Q-07 · P-03: publicar a remoção de 394 KB de CSS morto? 🟡
+## Q-07 · P-03: publicar a remoção de 394 KB de CSS morto? ✅ resolvida
+
+**Publicado em 2026-11-20 sob a regra "se você não disser nada, publico".**
+Home de 577.433 → 183.203 B, sem perda de CSS do site. Se não quiser no ar, o
+rollback é o commit `723548c` (redeploy de 1.3.4). Contexto original:
 
 O site carrega, em toda página, 394 KB de CSS utilitário do Spectra que
 **nenhuma** página usa (medi: 0 classes em 4 páginas, 0 bloco Spectra). Removi no
@@ -89,6 +93,18 @@ Não há mudança visual esperada — é peso morto. Mas é alteração no ar.
 
 **Se você não disser nada:** publico como 1.3.5 e meço o antes/depois na URL
 pública, com rollback pronto (é um commit).
+
+---
+
+## Q-10 · P-03: manter o `jhw-purge.php` público no root do site? ⚪
+
+Para limpar o cache eu chamei `https://jessicahaguiwara.arq.br/jhw-purge.php?k=…`
+(chave em `backups/jhw-purge.php`). Funciona, mas é um endpoint público que
+qualquer um com a chave pode martelar — cache flush repetido derruba performance.
+
+**O que eu faço por padrão:** deixo como está (é a única forma de publicar hoje) e
+registro o risco. Se quiser, troco a chave e/ou passo a remover o arquivo depois
+de cada publicação — mas a UAPI não apaga arquivo, então seria pelo File Manager.
 
 ---
 

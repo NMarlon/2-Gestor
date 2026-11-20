@@ -49,6 +49,7 @@ custaram caro:
 | Armadilha | Fato |
 |---|---|
 | Cache | WP Fastest Cache serve HTML velho e faz a medição mentir. Limpar antes de medir. |
+| Purge | Na prática: `https://jessicahaguiwara.arq.br/jhw-purge.php?k=<chave>` (chave em `backups/`, nunca no chat) e depois `curl -X PURGE` em cada URL → 204. Sem isso a medição mostra o HTML antigo. |
 | Deploy | Sai `exit 1` por 1 órfão conhecido (`assets/css/save-probe.css`). Exit 1 aqui não significa envio errado. Prova boa: `N igual(is), 0 divergente(s), 0 novo(s)`. |
 | Gate de versão | Bump em `style.css` + `functions.php` + `scripts/release.json`, senão o deploy recusa. |
 | MCP WordPress | Não é fonte de verdade sobre o que está no ar. Sempre abrir a URL pública. |
@@ -56,6 +57,11 @@ custaram caro:
 | Spectra | O plugin injeta **394 KB** de CSS utilitário inline em toda página e **nenhuma** página usa essas classes. Ver T-009. |
 
 ## Decisões tomadas
+
+- **2026-11-20 (executada)** — 1.3.5 no ar: removidos 394 KB de CSS utilitário
+  morto do Spectra em cada página. Home 577.433 → **183.203 B**. Medido na URL
+  pública depois de limpar WPFC + proxy. Rollback = commit `723548c`.
+  Antes de publicar conferi que o bloco não tinha seletor global nem `@font-face`.
 
 - **2026-11-20** — Publicar 1.3.5 removendo o CSS utilitário morto do Spectra,
   condicionado a página sem bloco Spectra. Meta: home < 200 KB. Visual idêntico.

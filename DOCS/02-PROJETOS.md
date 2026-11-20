@@ -97,10 +97,13 @@ Commit `79013d5`. Verificação independente depois do commit:
   O banner de cookies oferece "Política de Privacidade" → `/privacy-policy/`;
   os links de gerenciamento usam `#`. O T12 como descrito na doc está **resolvido**,
   mas a doc ainda pede "regenerar o documento de cookies".
-- **Achado novo (394 KB mortos):** `<style id="spectra-gs-utility-classes-inline-css">`
-  = 394.171 B, **idêntico nas 4 páginas**, com 2.755 seletores utilitários e
-  **zero classes usadas** no `<body>` de qualquer página (match exato de token);
-  nenhuma página tem `wp-block-uagb`. Tarefa `G3-b` aberta com o OpenCode.
+- **394 KB mortos removidos (1.3.5, 2026-11-20):** o Spectra injetava
+  `<style id="spectra-gs-utility-classes-inline-css">` = 394.171 B, idêntico nas
+  4 páginas, com 2.755 seletores utilitários e **zero classes usadas** em
+  qualquer página. Removido por handle, condicional a página sem bloco Spectra.
+  Home: **577.433 → 183.203 B (−68%)**; as outras 3 páginas caíram ~394 KB cada.
+  O bloco tinha 0 seletores globais (`html`/`body`/`:root` puro) e 0 `@font-face`
+  — por isso a remoção não custa pixel. Rollback: commit `723548c`.
 - `deploy-theme.mjs` sai **exit 1** por 1 órfão no servidor
   (`assets/css/save-probe.css`, não referenciado em lugar nenhum do repo). T5.
 

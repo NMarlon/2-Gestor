@@ -137,7 +137,28 @@ código) e o gestor reconferir contra a URL pública.
 
 ---
 
-## T-009 · P-03: G3-b — eliminar 394 KB de CSS morto em toda página 🟡
+## T-009 · P-03: G3-b — eliminar 394 KB de CSS morto em toda página ✅
+
+**Concluído em 2026-11-20, no ar e medido.** O OpenCode removeu o bloco por handle
+(`spectra-gs-utility-classes`), condicionado a página sem bloco Spectra, com
+filtro de escape `jhw_keep_spectra_utility_css`. Tema em **1.3.5**, 11 arquivos
+conferindo por SHA256, cache do WPFC e do proxy limpos.
+
+| Página | Antes | Depois | Δ |
+|---|---|---|---|
+| `/` | 577.433 B | **183.203 B** | −68% |
+| `/privacy-policy/` | 541.533 | 147.349 | −394.184 |
+| `/obrigado/` | 533.649 | 139.465 | −394.184 |
+| `/politica-de-cookies/` | 528.522 | 134.333 | −394.189 |
+
+Verificação própria antes de publicar: o bloco removido tem **0** seletores
+globais (`html`, `body`, `*`, `:root` puro), **0** `@font-face`, 18 `@keyframes`
+usados só por utilitários mortos; o preflight é escopado em
+`.spectra-is-root-container`. Os 31 `<link rel=stylesheet>` continuam os mesmos e
+o `style.css` do child está intacto no ar. Commit de rollback: `723548c`.
+
+**Ressalva:** não fiz diff de pixels — não há navegador headless configurado. A
+prova é a análise do CSS removido, não comparação visual.
 
 **Achado do gestor (2026-11-20):** `<style id="spectra-gs-utility-classes-inline-css">`
 = **394.171 B**, byte-idêntico nas 4 páginas, com 2.755 seletores utilitários do

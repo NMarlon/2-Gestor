@@ -47,3 +47,5 @@ Meu objetivo é deixar a criação de projetos o mais autônoma que possível, a
 2. É DEVER ler as respectivas docs do GESTOR <-> PROJETO (da pasta das docs do Gestor)
 3. Se encontrar contradição nas docs, adicione no fluxo de tarefas ela deve ser corrigida e atualizada, o aprendizado ou progresso deve relatado num arquivo de histórico do projeto
 4. Cada problema ou surpresa que encontrar, verifique o grau de urgência e prioridade, ajuste a lista de tarefas desenvolvendo um bom plano para que tudo se desenvolva de forma organizada, e economizando tokens (por isso também os registros e estarem bem organizados).
+5. Lembre-se que MAIS de uma IA GESTOR vai estar trabalhando em múltiplos projetos, certifique-se de ter distinção entre docs que tem as mesmas regras para TODOS os GESTORES vs DOCS que são exclusivos para um ou outro GESTOR ou especialmente para PROJETOS ESPECÍFICOS. 
+6. Tarefas exclusivas de cada projeto devem estar nas tasks do projeto ou provavelmente devem estar nas pastas exclusivas do projeto nas docs do Gestor, pois então isso, para diferenciar dentre as tasks específicas de um projeto de algo que é pra TODOS os gestores saberem ou cumprirem.
