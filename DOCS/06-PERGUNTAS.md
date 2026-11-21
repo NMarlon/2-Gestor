@@ -57,6 +57,11 @@ Confirma que P-01 pode ir para "encerrado, em manutenção" e o foco vira P-02?
  ele precisa, com urgência mas sem pressa. Terminar tudo que o site permite;
  depois os outros projetos, **sem ficar pulando** entre eles.
 
+**Complemento (2026-11-20):** as "outras sessões do Hermes" que ele mencionou são
+**outros gestores**, não executores. Cada gestor fica com um projeto, roda dentro
+ do `2-Gestor`, segue estas DOCS e briefa o OpenCode para programar. O modelo está
+ em [`07-GESTORES.md`](07-GESTORES.md) — regra "um projeto, um gestor, um escritor".
+
 
 `Definições Oficiais Manuais/Principais Regras e Princípios.md` diz: "prioridade para os projetos de
 maior rentabilidade e maiores chances de sucesso". Sua instrução de hoje diz:

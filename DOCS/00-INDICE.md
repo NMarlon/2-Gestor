@@ -14,6 +14,7 @@
 | "O que ficou para depois?" | [`05-BACKLOG-E-IDEIAS.md`](05-BACKLOG-E-IDEIAS.md) |
 | "O que está esperando o Marlon?" | [`06-PERGUNTAS.md`](06-PERGUNTAS.md) |
 | "Peguei o projeto X: o que é só meu e o que está no repo dele?" | [`P-03-Jessica-Haguiwara/GESTOR.md`](P-03-Jessica-Haguiwara/GESTOR.md) |
+| "Somos vários gestores: quem é de quê e como não colidir?" | [`07-GESTORES.md`](07-GESTORES.md) |
 
 Cadernos por projeto ficam em `DOCS/P-<numero>-<nome>/GESTOR.md` e contêm apenas o
 que é exclusivo do gestor. O que é do projeto mora no repo do projeto.

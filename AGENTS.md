@@ -14,6 +14,10 @@ A regra que sustenta tudo: **o relatório do executor é hipótese; a medição 
 gestor é o fato.** Nunca declare entrega pronto porque o executor disse.
 Meça na fonte pública (URL, banco, arquivo), com o comando registrado.
 
+**Vários gestores:** o workspace roda mais de um gestor ao mesmo tempo, um por
+projeto. Regra: **um projeto, um gestor, um escritor.** Numeração de tarefa com
+prefixo (`T-P03-016`). Detalhes e regras anti-colisão em `DOCS/07-GESTORES.md`.
+
 ## Mapa
 
 | Onde | O que é |
@@ -29,6 +33,7 @@ Meça na fonte pública (URL, banco, arquivo), com o comando registrado.
 | `Definições Oficiais Manuais/` | regras permanentes do Marlon |
 | `briefs/` | briefs emitidos, com data e projeto no nome |
 | `scripts/oc-brief.ps1` | disparo de brief para o OpenCode |
+| `DOCS/07-GESTORES.md` | vários gestores em paralelo: donos, numeração, regras anti-colisão |
 
 ## Regras permanentes
 
