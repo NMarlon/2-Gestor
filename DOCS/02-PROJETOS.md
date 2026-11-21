@@ -77,11 +77,12 @@ Commit `79013d5`. Verificação independente depois do commit:
 | Campo | Valor |
 |---|---|
 | Caminho | `C:\MarlonScripts\Jessica Haguiwara` |
-| Repo | Próprio (git), último commit `fc38a81` — árvore limpa em 2026-11-20 |
+| Repo | Próprio (git), último commit `f7ffce7` — árvore limpa em 2026-11-20 |
 | Objetivo do Marlon | Site institucional no ar, editorial, sem dado inventado; base técnica que aguente cliente real |
 | Estado | 🟢 **No ar e aprovado pela cliente**; faltam dados que dependem dela |
 | Site | `https://jessicahaguiwara.arq.br` |
-| Stack | WordPress + tema pai `extendable` + child `jessica-haguiwara-child` (1.3.4), Spectra, Forminator, Complianz, WP Fastest Cache |
+| Peso servido (2026-11-20, 22h) | HTML 178.559 B · CSS 5 folhas 420.591 B · JS 21 scripts 1.275.704 B → **481 KB gzip/visita** em 27 requisições (HTML + CSS + JS) |
+| Stack | WordPress + tema pai `extendable` + child `jessica-haguiwara-child` (1.3.7), Spectra, Forminator, Complianz, WP Fastest Cache |
 | Papel do gestor | Decide prioridade, aprova publicação, verifica no ar. **Não escreve no repo** — o OpenCode escreve |
 | Doc do projeto | `DOCS/00-INDICE.md` → `AGENTS.md` é o contrato; `DOCS/12-PLANO-EXECUCAO.md` é o plano vigente |
 
