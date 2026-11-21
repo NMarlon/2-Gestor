@@ -20,7 +20,11 @@ avise; o tar não foi tocado.
 
 ---
 
-## Q-02 · Aprovar a criação do `AGENTS.md` na raiz 🟡
+## Q-02 · Aprovar a criação do `AGENTS.md` na raiz ✅ aprovada
+
+**Resposta (2026-11-20):** "pode criar AGENTS.md na raiz do 2-Gestor". Feito —
+`AGENTS.md`, 3.122 B, papel, mapa, regras e protocolo de medição.
+
 
 A escrita em `AGENTS.md` foi bloqueada pela proteção de arquivo de instrução de
 agente (o prompt de aprovação expirou enquanto você estava fora). Não vou
@@ -33,7 +37,11 @@ Até lá, a documentação funciona por `DOCS/00-INDICE.md`.
 
 ---
 
-## Q-03 · P-01 (Hermes-Mobile) está encerrado? 🟡
+## Q-03 · P-01 (Hermes-Mobile) está encerrado? ✅ arquivado
+
+**Resposta (2026-11-20):** "sim! está funcionando. Pode arquivar". `02-PROJETOS.md`
+→ 🔵 encerrado, em manutenção; fora da fila ativa.
+
 
 O servidor responde `0.23.2`, Tailscale ativo nos três ports e você marcou "está
 funcionando". Restam só o aviso de versão do Mono Hermes (upstream) e o plugin de
@@ -43,7 +51,12 @@ Confirma que P-01 pode ir para "encerrado, em manutenção" e o foco vira P-02?
 
 ---
 
-## Q-04 · Prioridade: ordem da lista ou rentabilidade? 🔴 decide o próximo projeto
+## Q-04 · Prioridade: ordem da lista ou rentabilidade? ✅ decidida em 2026-11-20
+
+**Resposta (2026-11-20):** foco no **P-03 (site da Jéssica)** — está pago, é o que
+ ele precisa, com urgência mas sem pressa. Terminar tudo que o site permite;
+ depois os outros projetos, **sem ficar pulando** entre eles.
+
 
 `Definições Oficiais Manuais/Principais Regras e Princípios.md` diz: "prioridade para os projetos de
 maior rentabilidade e maiores chances de sucesso". Sua instrução de hoje diz:
@@ -55,7 +68,10 @@ diga que eu reorganizo a fila e justifico caso a caso.
 
 ---
 
-## Q-05 · Feedback dos projetos publicados 📝
+## Q-05 · Feedback dos projetos publicados ✅
+
+**Resposta (2026-11-20):** "sim, faz sentido" — feedback só em projeto publicado.
+
 
 O `Principais Regras e Princípios.md` pede canal de feedback nos projetos que vão ao ar, com seu
 e-mail (`marlonrviana@gmail.com`). Vale para os projetos locais (P-01, P-02) ou só
@@ -63,7 +79,11 @@ para os que tiverem usuário externo? Sugiro: só nos publicados.
 
 ---
 
-## Q-06 · Acervo tem duplicatas — o que fazer com elas? 🟡
+## Q-06 · Acervo tem duplicatas — o que fazer com elas? ✅ substituída pela Q-015
+
+**Resposta (2026-11-20):** o Marlon pediu o que são as duplicatas. A Q-015 é a
+versão medida desta pergunta; vale a resposta dela.
+
 
 O tar trouxe três árvores: `CÓPIAS COMPRIMIDAS DAS FOTOS`, `CÓPIAS COMPRIMIDAS
 DOS VÍDEOS` e `Takeout` (Google). A mesma foto pode aparecer em mais de uma.
@@ -96,7 +116,11 @@ pública, com rollback pronto (é um commit).
 
 ---
 
-## Q-10 · P-03: manter o `jhw-purge.php` público no root do site? ⚪
+## Q-10 · P-03: manter o `jhw-purge.php` público no root do site? ✅ mantido
+
+**Resposta (2026-11-20):** "deixa publicado". Mantido; a chave fica só no arquivo
+local em `backups/` e nunca vai para o chat ou o git.
+
 
 Para limpar o cache eu chamei `https://jessicahaguiwara.arq.br/jhw-purge.php?k=…`
 (chave em `backups/jhw-purge.php`). Funciona, mas é um endpoint público que
@@ -108,7 +132,10 @@ de cada publicação — mas a UAPI não apaga arquivo, então seria pelo File M
 
 ---
 
-## Q-08 · P-03: `logs/` do projeto entra no `.gitignore`? ⚪
+## Q-08 · P-03: `logs/` do projeto entra no `.gitignore`? ✅ aprovada
+
+**Resposta (2026-11-20):** "sim!". Entrou no brief T-015 (`.gitignore` com `logs/`).
+
 
 O repo do site tem `logs/` (saída dos briefs do OpenCode) aparecendo como `??` em
 todo `git status`. Isso suja o `git add -A` do executor e pode acabar commitando
@@ -127,7 +154,13 @@ fica em `~/.trash/` até apagar no File Manager. É 1 arquivo de teste, não pes
 
 ---
 
-## Q-11 · P-03: tirar o editor visual da caixa de mensagem do formulário? 🟡
+## Q-11 · P-03: tirar o editor visual da caixa de mensagem do formulário? ✅ aprovada
+
+**Resposta (2026-11-20):** "ok, detalhe pequeno, mas pode fazer". Brief **T-015**
+ escritado e disparado: desmarcar Rich-Text no campo `textarea-1` do form 168.
+ Critério: HTML sem `wp-editor-wrap`, sem `quicktags`, sem `dashicons`; contador de
+ 120 palavras funcionando; sem entrada de teste (dispara e-mail para a cliente).
+
 
 A home carrega o **editor do WordPress inteiro** para visitante deslogado
 (TinyMCE + quicktags + wplink + core.min + `editor.min.css` + dashicons):
@@ -149,7 +182,16 @@ não depende disso.
 
 ---
 
-## Q-12 · P-03: o GTM da home (181 KB gzip) é isso mesmo? ⚪
+## Q-12 · P-03: o GTM da home (181 KB gzip) é isso mesmo? ✅ lido em 2026-11-20
+
+**Resposta (2026-11-20):** "ok! pode ler!". Lido: o container `GT-TBVGGKRR` tem
+**um único destino**, a propriedade GA4 `G-NGGYW0ZYHP`, mais Consent Mode e
+medição aprimorada (download, formulário, clique externo, página, rolagem, busca,
+vídeo). **180.242 B gzip é o motor do GTM**, não um amontoado de etiquetas
+ esquecidas. Não há o que podar dentro dele. O que existe de verdade no site, além
+ dele: Clarity, HubSpot (`52118817.js`), WonderPush, Metricool e Sentry — cinco
+ scripts de terceiros carregados por fora do GTM.
+
 
 O container `GT-TBVGGKRR` chega em **545.320 B raw / 181.289 B gzip** — mais que
 todo o CSS do site somado. Não é problema do tema nem do WordPress: é o que está
@@ -158,7 +200,15 @@ todas aquelas tags ainda são usadas.
 
 ---
 
-## Q-13 · P-03: um "Brand Agent" da Microsoft Clarity carrega em todas as páginas 🟡
+## Q-13 · P-03: Brand Agent da Microsoft Clarity em todas as páginas ✅ (decisão do gestor)
+
+**Decisão (2026-11-20, "faça como achar melhor"):** **fica**. Não removo script de
+ terceiro no braço por filtro no tema: o recurso é ligado na conta Clarity da
+ cliente, e o desligamento correto é um clique no painel de quem administra essa
+ conta. Fica registrado como peso e superfície desnecessários (12.655 B ofuscados,
+ assistente de compras num portfólio de arquitetura). Se um dia alguém do marketing
+ reclamar de peso, é o primeiro a cair.
+
 
 Achei, auditando o JS, um módulo de terceiro que carrega **em todas as páginas**:
 
@@ -184,7 +234,14 @@ cliente. Se ninguém usa, é peso e superfície de risco de graça.
 
 ---
 
-## Q-014 · P-02 · Qual `eps` fica valendo para o agrupamento?
+## Q-014 · P-02 · Qual `eps` fica valendo para o agrupamento? ⏸ adiada (foco no P-03)
+
+**Resposta (2026-11-20):** o Marlon não sabia o que é `eps`. Explicado (ver
+ glossário abaixo). Decisão adiada: foco no site da Jéssica até esgotar.
+ **Glossário:** `eps` é o **raio de tolerância** do agrupamento — dois rostos cuja
+ "distância" fica abaixo dele caem no mesmo grupo. `eps` pequeno separa demais
+ (uma pessoa vira cinco grupos); grande junta demais (duas pessoas viram uma).
+
 
 Medido em 52.726 rostos, sem gravar nada:
 
@@ -211,7 +268,11 @@ ilusório — o ganho é mistura. Prefiro eps 0,35 com um passo de reatribuiçã
 (cada rosto vai para o centróide mais próximo entre os grupos existentes, depois
 de formados), o que estabiliza o resultado sem fundir identidades.
 
-## Q-015 · P-02 · Duplicatas: vale investir?
+## Q-015 · P-02 · Duplicatas: vale investir? ⏸ adiada (foco no P-03)
+
+**Resposta (2026-11-20):** o Marlon perguntou que duplicatas são essas. Ver a
+ explicação na seção "O que são as duplicatas do acervo" no fim deste arquivo.
+
 
 - Duplicata exata (mesmo md5): **37 arquivos** no acervo inteiro. Irrelevante.
 - Hash perceptual (dHash 64 bits) não serve para este acervo: três ilustrações
@@ -266,4 +327,35 @@ cliente real e o ganho de credibilidade é grande, mas precisa de aval dos dois.
 O device code `EDB1-0670` expirou sem autorização. Quando quiser, eu gero outro —
 você abre `https://github.com/login/device` e digita o código. Sem isso, FileFuse
 tem só a descrição indireta e Bot-Creator não entra no site.
+
+---
+
+## O que são as duplicatas do acervo (explicação, não pergunta)
+
+O pacote de fotos da cliente não veio uma vez só. Veio em **três árvores
+diferentes**, e as mesmas fotos aparecem em mais de uma:
+
+| árvore | o que é |
+|---|---|
+| `CÓPIAS COMPRIMIDAS DAS FOTOS` | versões reduzidas das fotos, geradas para enviar por WhatsApp/e-mail |
+| `CÓPIAS COMPRIMIDAS DOS VÍDEOS` | o mesmo, para vídeo |
+| `Takeout Google` | exportação do Google Fotos: muitas vezes traz a mesma imagem com outro nome (`IMG_1234.JPG` × `IMG_1234(1).JPG`) e outro tamanho |
+
+Medido em 2026-11-20 (21.482 imagens, 14 GB):
+
+1. **Duplicata exata — 37 arquivos.** Mesmo conteúdo byte a byte (mesmo md5), só
+   com nome ou pasta diferente. É o caso fácil: `IMG_0421.JPG` e
+   `IMG_0421(1).JPG`. **37 em 21.482 é 0,17%** — não move o ponteiro.
+2. **"Cópias comprimidas" — 13.015 arquivos** com assinatura de tamanho igual à de
+   outra imagem: a mesma foto em resolução menor. É a hipótese mais provável, mas
+   **não está provada**: duas fotos diferentes do mesmo assunto podem ter as mesmas
+   dimensões. Provar exige comparação visual (hash perceptual ou revisão humana).
+3. **O dHash de 64 bits não serve para decidir.** Ele colide em imagem de baixo
+   detalhe — parede lisa, céu — e chamaria de "duplicata" o que não é.
+
+**Por que isso importa:** se a duplicata não for removida, a mesma pessoa pode
+aparecer duas vezes na mesma lista, e a contagem por pessoa infla. Mas o tamanho do
+problema **provável** (0,17% de duplicata exata) não justifica um projeto inteiro
+agora. O caminho barato, quando voltarmos ao P-02: marcar, esconder nas listagens e
+manter o arquivo — nada é apagado.
 

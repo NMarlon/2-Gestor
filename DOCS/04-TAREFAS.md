@@ -345,3 +345,29 @@ sem TinyMCE) o pacote do editor é ~22 KB gz de JS + 35,6 KB do dashicons ≈ **
 gzip**. Ordem de grandeza: a decisão da Q-11 vale ~58 KB, não 201.
 
 ---
+
+---
+
+## T-015 · P-03: desligar o editor visual do formulário + `.gitignore` 🟡 em execução
+
+**Brief:** `briefs/2026-11-20-p03-t015-editor-off.md` · **Origem:**
+`%TEMP%/opencode/brief-2026-11-20-t015-editor-off.md` · **Agente:** build ·
+**Disparo:** 2026-11-20 21:56, exit 0.
+
+Aprovado pelo Marlon na rodada de respostas ("ok, detalhe pequeno, mas pode fazer"
+e "Q-08, sim!"). Escopo duplo, mas ambos no mesmo repo e sem código de tema:
+
+1. desmarcar **Rich-Text editor** no campo `textarea-1` do form **168**;
+2. `.gitignore` com `logs/`.
+
+**Linha de base a bater:** home 189.427 B; 6 folhas de CSS / 95.429 B gzip;
+`dashicons` presente no bundle; `quicktags`, `wplink`, `editor.min.css` carregados;
+`wp-editor-wrap` no markup.
+
+**Critério de aceite:** HTML sem `wp-editor-wrap`/`quicktags-toolbar`; nenhum dos
+quatro recursos do editor; contador de 120 palavras funcionando; sem entrada de
+teste; `.gitignore` aplicado; reversão em uma frase.
+
+**Não delegado ao executor:** desligar o Brand Agent da Clarity (é painel da
+cliente) e podar GTM (não há o que podar — um destino GA4 só).
+

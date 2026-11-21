@@ -12,7 +12,8 @@
 | Caminho | `C:\MarlonScripts\1-Mini-Projetos\Hermes-Mobile` |
 | Repo | `C:\MarlonScripts\1-Mini-Projetos` (pasta filha; não tem `.git` próprio) |
 | Objetivo do Marlon | Usar o Hermes do PC no celular (Pomelu / Mono Hermes) via Tailscale |
-| Estado | 🟢 **Funcional** (confirmado pelo Marlon em 2026-11-20) |
+| Estado | 🔵 **Encerrado, em manutenção** (arquivado por decisão do Marlon em 2026-11-20) |
+| Foco | Fora da fila ativa. Só volta se quebrar ou se o Marlon pedir. Backlog: aviso de versão do Mono Hermes e plugin de push. |
 | Documentação | Completa: `DOCS/00` a `DOCS/13` |
 
 **Evidência coletada (2026-11-20):**
