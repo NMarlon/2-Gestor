@@ -348,7 +348,7 @@ gzip**. Ordem de grandeza: a decisão da Q-11 vale ~58 KB, não 201.
 
 ---
 
-## T-015 · P-03: desligar o editor visual do formulário + `.gitignore` 🟡 em execução
+## T-015 · P-03: desligar o editor visual do formulário + `.gitignore` ✅ concluída (2026-11-20)
 
 **Brief:** `briefs/2026-11-20-p03-t015-editor-off.md` · **Origem:**
 `%TEMP%/opencode/brief-2026-11-20-t015-editor-off.md` · **Agente:** build ·
@@ -370,4 +370,44 @@ teste; `.gitignore` aplicado; reversão em uma frase.
 
 **Não delegado ao executor:** desligar o Brand Agent da Clarity (é painel da
 cliente) e podar GTM (não há o que podar — um destino GA4 só).
+
+### Medição do gestor (2026-11-20, URL pública, UA Chrome/122, sem cache-bust)
+
+Método: `gzip` local nível 9; HTML servido, 2 leituras idênticas (178.559 B duas
+vezes). "Antes" = HTML servido às **10:33** (snapshot `home-now.html`), não às 21h:
+entre os dois pontos houve o purge do T-014 e o desligamento do editor, então o
+delta **não é atribuível só ao editor**.
+
+| | antes (10:33) | agora | delta |
+|---|---|---|---|
+| HTML | 189.427 B / 36.965 gz | 178.559 B / 33.987 gz | −10.868 B |
+| CSS | 6 folhas · 420.611 / 53.189 gz | 5 folhas · 420.591 / 53.161 gz | −20 B |
+| JS | 32 scripts · 1.375.362 / 428.160 gz | 21 scripts · 1.275.704 / 393.832 gz | −99.658 B / **−34.328 gz** |
+| **página** | **518.314 gz** | **480.980 gz** | **−37.334 gz (−7,2%)** |
+
+Prova no markup: `wp-editor-wrap`, `quicktags-toolbar`, `dashicons`, `wplink`,
+`editor.min.css` → **0 ocorrências** (antes: 1 cada). O textarea passou de
+`forminator-wp-editor-required wp-editor-area` para `forminator-textarea` puro.
+Saíram 12 scripts do core (`quicktags`, `wplink`, `core.min`, `common.min`,
+`dom-ready`, `autocomplete`, `a11y`, `i18n`, `hoverIntent`, `menu`, `utils` e o
+bundle `2o3dz.js`).
+
+**Correção de número meu:** eu havia estimado ~58 KB gzip de ganho e citado
+1.759.286 B de JS no "antes". As duas coisas estavam erradas: aquele total era da
+variante `tmce-active` servida a outro UA, não da página que o visitante recebe.
+O ganho real, medido no mesmo método dos dois lados, é **~37 KB gzip/visita e 12
+requisições a menos**.
+
+**Achado do executor (premissa desatualizada):** às 22:11 o campo 168 **já estava**
+com `editor-type:false`. Quem desligou não ficou documentado — o disparo das 21:55
+morreu com `exit=1` e 75 B de log. O executor não editou às cegas: detectou,
+purgou e comprovou no HTML público. **Atribuição honesta: o crédito do desligamento
+é indeterminado; o crédito da prova é dele.**
+
+**Regressão observada (não bloqueante):** o textarea perdeu `required="true"`,
+`do-validate` e `aria-required`. O `*` do rótulo continua. Validação server-side do
+Forminator **não testada** pelo executor (admitido no relatório) nem por mim.
+
+**Commits no repo do site:** `3a4cbad` (form + `.gitignore`), `30e6efd` (§26),
+`f7ffce7` (§32). Árvore limpa.
 

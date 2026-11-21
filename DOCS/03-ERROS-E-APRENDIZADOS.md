@@ -267,3 +267,23 @@ inflado — e o brief inteiro é sobre número.
 de tempo), nada pesado de I/O ou CPU roda em paralelo. Medir e varrer são filas
 separadas. Se já estiver rodando, mate a tarefa pesada — o dado de performance
 vale mais e é mais barato repetir o hash depois.
+
+---
+
+## E-018 · Timeout do `execute_code` mata o kernel, não o processo filho (2026-11-20)
+
+**O que aconteceu:** reenviei o T-015 em **foreground** por `execute_code` para ver
+o log ao vivo. O kernel do `execute_code` morre aos **300 s** — mas o PowerShell e
+o `opencode-cli` que ele disparou **continuam rodando**. Resultado: dois escritores
+no mesmo repositório ao mesmo tempo. O executor detectou sozinho ("outro processo
+está editando estes docs de forma concorrente") e reconciliou os números antes de
+commitar, mas por sorte.
+
+**Regra:** brief para o OpenCode **nunca** roda em foreground por `execute_code`.
+Sempre `terminal(background=True, notify=True)`, com o log do `oc-brief.ps1` como
+fonte. Se precisar acompanhar, leia o arquivo de log em `logs/oc-*.log` — não
+segure a chamada.
+
+**Sintoma a reconhecer:** executor relatando "outro processo está mexendo nos
+arquivos". Quase sempre é um disparo anterior ainda vivo. Antes de investigar
+fantasma, `Get-Process opencode-cli` e conferir `StartTime`.
