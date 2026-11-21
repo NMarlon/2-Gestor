@@ -26,6 +26,10 @@ Fonts.
 **Pendente de terceiro:** leitura do GitHub privado (Q-021), foto (Q-018),
 autorização dos clientes (Q-020).
 
+**Histórico:** v1 `84e5a59` (13 arquivos). v2 `dd561fb` — seis correções da
+revisão visual (bloco vazio do case, réguas, ficha de números, hero, campo Ano,
+fallback do reveal). Ver `DOCS/P-04-Portfolio/GESTOR.md` §7.
+
 ---
 
 ## T-001 · Estruturar workspace do gestor 🟢

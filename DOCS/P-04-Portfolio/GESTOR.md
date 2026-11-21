@@ -187,3 +187,46 @@ Fraunces + Inter + JetBrains Mono; modo escuro automático por
   do Reconhecedor mostra rostos de terceiros e não pode ir ao ar sem
   anonimização; o FileFuse é app desktop e precisa de captura de tela local.
 
+---
+
+## 7. Revisão visual independente e correção v2 (2026-11-20)
+
+Revisão feita por um subagente com visão, sobre render real em Edge headless,
+imagem por imagem. Veredito da v1: **7/10 na home, 6/10 nos cases.** Nenhum erro
+estrutural, seis defeitos concretos.
+
+**Dois "defeitos" eram artefato da captura, não do site** — anotado para não
+repetir:
+
+1. `--window-size` **não é respeitado** no Edge headless desta máquina: o print de
+   390 px foi layoutado a 495 px e recortado. O site não tem overflow horizontal;
+   num viewport real de 390 px, `scrollWidth == 390`.
+2. `.js .reveal { opacity: 0 }` deixa tudo abaixo da dobra invisível no print. A
+   página não estava em branco; a captura estava.
+
+**Defeitos reais, todos corrigidos em `dd561fb`:**
+
+| # | Defeito | Correção |
+|---|---|---|
+| C-1 | `.case__viz` com 1068 × 458 px **vazios** no case do Reconhecedor — o maior bloco da página lia como imagem quebrada | Diagrama de pipeline em CSS puro (detecção → embedding → agrupamento); blocos dos outros cases limitados a 240 px com status |
+| C-2 | `.stats` com `border-top: ink` (16:1) e `border-bottom: rule` (1,4:1) — duas gramáticas no mesmo bloco | Ambos em `--rule` |
+| C-3 | `.hero__note` a 10,56 px | `0.78rem`, `line-height: 1.6` |
+| C-4 | `.case__numbers` com linhas de 51/51/65 px | Grid de 2 colunas, baseline alinhada, `min-height: 4.15rem` |
+| C-5 | Hero com ~45% da largura vazia | Ficha lateral no hero (o `hero__note` virou `dl`) |
+| C-6 | Campo "Ano —" em cinco cases | Trocado por `Status`; único ano mantido é Face The Fake (2022, verificado) |
+
+Acrescentado, não pedido pelo Marlon mas necessário: **fallback de 1,5 s** no
+`IntersectionObserver` (`site.js:118`). Sem ele, se o observer não disparar, a
+seção fica invisível para sempre.
+
+**Verificação do gestor na v2:** 8 URLs em `200`, 0 links quebrados, 0 `PENDENTE`,
+`node --check` limpo, seis blocos de status no lugar, CSS 29.821 bytes.
+Prints: `prints/v2-home-1440{,-dark}.png`, `v2-home-390{,-dark}.png`,
+`v2-case-reconhecedor-{1440,1440-dark,390}.png` — claro e escuro, porque o site
+segue a preferência do sistema e a maioria dos devs roda em tema escuro.
+
+**Nota para mim:** revisão visual é o ponto cego deste fluxo. Eu não enxergo
+pixels; toda entrega visual precisa passar por um subagente com visão ou pelo
+Marlon antes de eu chamar de pronta.
+
+
