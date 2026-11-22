@@ -283,7 +283,25 @@ são os medidos antes de qualquer otimização; a proporção se mantém.
 
 ---
 
-## T-016 · P-02: fluxo de pessoas por foto (lista distinta → fotos → rostos) 🟡 em execução
+## T-016 · P-02: fluxo de pessoas por foto (lista distinta → fotos → rostos) ✅ CONCLUÍDA (2026-11-22)
+
+**Entrega:** commit `190cb4c` no repo do P-02 ("feat: fluxo pessoas -> fotos -> foto").
+
+**Medição do gestor** (2026-11-22 16:0x, API reiniciada em `:8011` no código novo,
+script `verif_t016.py`, contra o banco real):
+
+| Critério | Medido | Esperado |
+|---|---|---|
+| `GET /api/people?page_size=100` | **62 ms**, total 10.416, 100 itens, com `thumb` | < 500 ms |
+| total com `min_face_px=48` / `0` | 10.416 / 17.470 | igual ao banco |
+| `GET /api/people/116/photos` | 596 fotos, **0 repetidas** (47 ms) | 596 distintas |
+| `GET /api/images/14764` | 739 rostos, 0 sem bbox | 739 no banco |
+| `GET /api/photo/14764` | 1ª 79 ms · 2ª 16 ms · `mtime` igual · 70.435 B | < 1 s / < 100 ms |
+| renomear pessoa 33 | gravou e restaurou | persiste |
+| 404 em id inexistente | 404 nos 3 endpoints | 404 |
+
+Miniatura representativa confere: pessoa 116 → `face_4479`, que é de fato o rosto
+de maior área do grupo (2.280.380 px²).
 
 Brief: `briefs/2026-11-22-p02-fluxo-pessoas-por-foto.md` · disparado 2026-11-22.
 
