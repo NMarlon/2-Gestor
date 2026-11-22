@@ -283,6 +283,34 @@ são os medidos antes de qualquer otimização; a proporção se mantém.
 
 ---
 
+## T-016 · P-02: fluxo de pessoas por foto (lista distinta → fotos → rostos) 🟡 em execução
+
+Brief: `briefs/2026-11-22-p02-fluxo-pessoas-por-foto.md` · disparado 2026-11-22.
+
+Pedido do Marlon: a aba "Todos" hoje repete a mesma pessoa milhares de vezes —
+inservível para procurar e nomear. O fluxo passa a ser:
+
+1. lista de **pessoas distintas**, com miniatura do rosto, busca e renomear inline;
+2. clicar numa pessoa → grade de **fotos inteiras** onde ela aparece;
+3. clicar numa foto → lightbox com a foto inteira e **todas** as caixas dos rostos
+   detectados, cada uma indo para a pessoa correspondente.
+
+Contexto medido antes do brief: 52.726 rostos, 17.470 grupos; **10.416** grupos têm
+ao menos um rosto ≥ 48 px e 2.915 têm ≥ 2 rostos com um ≥ 48 px. Daí o filtro
+`só rostos ≥ 48 px` ligado por padrão — os outros ~7 mil são fundo de foto
+(rosto de 20–30 px não gera assinatura confiável; foi o caso dos rostos 11 e 115,
+mesma pessoa com similaridade medida de 0,072 por um dos lados ter 20×24 px).
+
+O que muda no repo do P-02: `person_stats` (tabela derivada), `GET /api/people`
+reescrito sem N+1 com miniatura, `GET /api/people/{pid}/photos`,
+`GET /api/images/{iid}`, `GET /api/photo/{iid}` (miniatura de foto, cache em
+`data/photos/`), `GET /api/image/{iid}/file`, e a UI em três níveis.
+
+Proibido no brief: mexer em detecção/embeddings/clustering, rodar `/api/cluster`,
+alterar schema existente ou escrever no acervo.
+
+---
+
 ## T-013 · P-03: G3-c — dashicons fora do front (release 1.3.7) 🟡 publicado, efeito ainda não medido
 
 **Medido antes:** a home tinha 31 `<link>` de CSS no HTML, mas só **6** são
