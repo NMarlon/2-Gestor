@@ -329,7 +329,45 @@ alterar schema existente ou escrever no acervo.
 
 ---
 
-## T-017 · P-02: mesclar pessoas + flags coloridas por pessoa 🟡 em execução
+## T-019 · P-02: editar o nome do rosto direto na foto ✅ concluída (2026-11-22)
+
+Brief: `briefs/2026-11-22-p02-renomear-rosto-na-foto.md` · commit `1681d3b`.
+
+No lightbox, o nome dentro da caixa virou `span.lb-name` editável. Clique no nome →
+input com o nome atual; `Enter`/blur salva por `PUT /api/people/{pid}`; `Esc` cancela
+sem fechar a foto; `409` abre o diálogo de mesclar por cima da imagem; clique na caixa
+fora do nome continua abrindo o conjunto. Rosto sem grupo: `pointer-events:none`.
+
+**Medido por mim** no Edge headless via CDP (`cdp_run.py` + `teste_nome.js`) contra o
+app real na 8011 — não é screenshot do executor:
+
+| passo | resultado |
+|---|---|
+| clique no nome | input abre com `Pessoa 10`, foco no campo |
+| `Enter` com `Teste Gestor` | rótulo vira `Teste Gestor`, **lightbox segue aberto**, input removido |
+| banco | `people.name` = `Teste Gestor` → persistiu; restaurado para `Pessoa 10` (PUT 200) |
+| `Esc` com `Nao Deve Salvar` | rótulo intacto, nada gravado |
+| nome que já existe (`Elder Viana`) | diálogo "Já existe" com 8 miniaturas e botões Cancelar/Mesclar |
+| **Cancelar** | nome, banco e lightbox como estavam |
+| clique na caixa de outro rosto (pessoa 116) | lightbox fecha, abre o conjunto (60 fotos na 1ª página) |
+
+0 erro de JS no console. Toast (`#toast`) não exercitado no meu teste — o texto
+`Renomeado: X → Y` está no código (linha 874) e aparece nas capturas do executor.
+
+## T-018 · P-02: atrito nas flags e no diálogo de mesclar ✅ concluída (2026-11-22)
+
+Brief: `briefs/2026-11-22-p02-correcoes-flags.md` · commit `3f29393`.
+
+Criar flag com nome já existente passou a **reaproveitar** a existente em vez de
+estourar `400 tag exists`; o erro `detail not found` virou mensagem em português
+explicando servidor desatualizado; contagem por pessoa no diálogo de mesclar não
+devolve mais `0 rostos`; nomes no toast de merge em vez de IDs.
+
+**Verificado por mim:** `/api/people?page_size=100` 50 ms, banco íntegro
+(`people=17467`, `faces=52726`, 0 órfão, `tags=1`). **Não testei** o reaproveitamento
+da flag pela UI nem o texto novo do erro — só o relatório do executor cobre isso.
+
+## T-017 · P-02: mesclar pessoas + flags coloridas por pessoa ✅ concluída (2026-11-22)
 
 Brief: `briefs/2026-11-22-p02-mesclar-e-flags.md` · disparado 2026-11-22 16:1x.
 

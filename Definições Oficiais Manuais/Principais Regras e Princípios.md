@@ -4,6 +4,9 @@
 Meu objetivo é deixar a criação de projetos o mais autônoma que possível, a ideia é: Eu vou trabalhar, enquanto a IA cria um projeto INTEIRO do zero, quando eu voltar, gostaria de ver pronto, com todos os detalhes no nível de um "AAA" (pegando exemplo do termo de jogos, "triplo A"), pra então eu só ajustar o que precisar.
 
 
+2026-11-22
+Eu estou contente com o resultado, vou continuar usando o Hermes Agent como sendo o gestor e o OpenCode como sendo o executor. Isso está funcionando de forma incrivelmente bem e está realmente exigindo menos do meu contato humano e funcionando mais de forma mais autônoma, sem a minha intervenção constante.
+
 
 
 
@@ -31,6 +34,7 @@ Meu objetivo é deixar a criação de projetos o mais autônoma que possível, a
 2. Por isso também DEVE-SE ter SEMPRE registrado TODO erro e seus aprendizados de cada erro, para que assim, as próximas IAs NÃO caiam no mesmo erro.
 3. Mantenha as DOCS ATUALIZADAS
 4. O GESTOR pode ler as docs do projeto da raiz do respectivo projeto
+5. O DEV DEVE ser avisado (pode ser à posteriori, mas deve) de quaisquer limitações em relação ao propósito, objetivo do projeto, limitações ou entraves em relação à direção a qual deveria seguir e onde está, ou à quaisquer coisas que ache que o DEV não sabe, mas deveria saber para trazer o melhor para a humanidade, ao próximo, ao DEV e para o projeto.
 
 
 

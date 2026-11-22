@@ -287,3 +287,22 @@ segure a chamada.
 **Sintoma a reconhecer:** executor relatando "outro processo está mexendo nos
 arquivos". Quase sempre é um disparo anterior ainda vivo. Antes de investigar
 fantasma, `Get-Process opencode-cli` e conferir `StartTime`.
+
+## E-019 · O executor deixa processo torto na porta do usuário (2026-11-22)
+
+Depois de fechar o T-019, a 8011 não respondia a nada: `/api/stats` e `/api/people`
+devolviam `000` (timeout), enquanto o HTML estático continuava 200. Causa: às 17:00 o
+harness de teste do executor subiu um `uvicorn` na 8011 com o **Python 3.11 do sistema**
+(`C:\Users\Marlon\AppData\Local\Programs\Python\Python311\python.exe`), não com o
+`.venv` do projeto, e o processo ficou pendurado. O servidor que eu havia subido às
+16:45 não estava mais lá. O app do Marlon ficou ~18 min carregando lista vazia.
+
+**Regra:** antes de verificar qualquer entrega, conferir **quem** está na porta e
+**com qual interpretador**: `netstat -ano | grep :8011` e depois
+`Get-CimInstance Win32_Process -Filter 'ProcessId=<pid>' | fl CommandLine`. Subir com
+`env -u PYTHONPATH -u PYTHONHOME ./.venv/Scripts/python.exe -m uvicorn ...` e só
+começar o teste quando `/api/stats` devolver 200.
+
+**Por que ninguém vê:** o relatório diz "banco real inalterado" — verdade — mas não
+diz que o processo do usuário foi derrubado e substituído. O sintoma que o usuário vê
+é "o app abriu, mas não carrega nada".
