@@ -329,6 +329,26 @@ alterar schema existente ou escrever no acervo.
 
 ---
 
+## T-017 · P-02: mesclar pessoas + flags coloridas por pessoa 🟡 em execução
+
+Brief: `briefs/2026-11-22-p02-mesclar-e-flags.md` · disparado 2026-11-22 16:1x.
+
+Dois pedidos do Marlon:
+
+1. **Mesclar**: quando ele renomeia uma pessoa para um nome que já existe, a API
+   devolve 409 e a UI oferece juntar as duas, mostrando 6 miniaturas de cada lado.
+   `POST /api/people/{pid}/merge {into}` move os rostos, apaga a origem e refaz
+   `person_stats`. Teste obrigatório em **cópia** do banco (`data/test_merge.db`,
+   porta 8014) — o banco real não é tocado.
+2. **Flags**: `tags(id,name,color)` e `person_tag(person_id,tag_id)` já existem no
+   banco, vazias e sem uso. Viram flags por pessoa: nome e cor editáveis, fundo da
+   linha tingido com a cor, filtro "esconder marcadas". Uso real: marcar os grupos
+   que a detecção juntou errado para não gastar tempo com eles.
+
+Sem schema novo, sem cluster, sem tocar no acervo.
+
+---
+
 ## T-013 · P-03: G3-c — dashicons fora do front (release 1.3.7) 🟡 publicado, efeito ainda não medido
 
 **Medido antes:** a home tinha 31 `<link>` de CSS no HTML, mas só **6** são
