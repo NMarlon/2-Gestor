@@ -29,7 +29,7 @@ ou entram os reais, ou a seção sai.
 | 1 | **Número do CAU** (e UF: CAU/BR ou CAU/SP) | rodapé de todas as páginas + política de privacidade | registro profissional é o lastro legal da arquiteta; hoje a linha legal está com bracket | T-011 |
 | 2 | **3 depoimentos reais**: frase, primeiro nome, tipo de projeto e autorização para publicar | home, seção Depoimentos | prova social é o que converte visita em contato; sem autorização não publica | Depoimentos |
 | 3 | **Projetos reais**: 6 a 8 fotos + nome, bairro/cidade, ano, área em m², tipo (residencial/comercial/interiores) e quem detém os direitos das fotos | home, `#projetos` | portfólio é o produto do escritório; área e ano não podem ser inventados | Portfólio |
-| 4 | **Foto profissional dela** (alta resolução, com direito de uso) | `#quem-somos` | hoje a seção é só texto; rosto humano ancora confiança | Foto |
+| 4 | ~~Foto profissional dela~~ **resolvido** — 4 arquivos em `img/img of own Jéssica Haguiwara/` | `#quem-somos` | escolhida a (2): plano médio frontal, fundo branco, sorriso aberto. Fundo branco precisa ser harmonizado com o tom quente do site. Limite técnico: 784 px de largura → exibir a no máximo ~390 CSS px para não amolecer em tela retina. A (3) serve para avatar/OG (editorial, expressão séria); a (4) é casual com fundo azul, não serve para o site | Foto |
 | 5 | **Instagram** (perfil) | rodapé (hoje "em breve") + feed no fim da home | canal vivo de prova e de tráfego; o rodapé está com marcador provisório | Instagram |
 | 6 | **Formação e credenciais**: curso, ano de formação, especializações, tempo de atuação | "Sobre o escritório" / bio | autoridade técnica; hoje o texto é genérico porque não temos o dado | Bio |
 | 7 | **Confirmar ou corrigir** as faixas do formulário: metragem (até 100 / 100–300 / acima de 300 m²) e orçamento (até 50 mil / 50–150 / 150–300 / acima de 300 mil) | formulário da home | valor provisório errado filtra o lead errado e queima a primeira conversa | Formulário |
@@ -55,7 +55,7 @@ Já medido: backup WPvivid ativo, último 2026-11-22 21:17, destino OneDrive.
 > 1. Seu número de registro no CAU (e se é CAU/BR ou CAU/SP).
 > 2. Três depoimentos de clientes: uma frase de cada, primeiro nome, tipo de projeto, e se autorizam publicar.
 > 3. Fotos dos seus projetos (6 a 8, boa resolução) com nome do projeto, bairro/cidade, ano, metragem e tipo.
-> 4. Uma foto sua profissional, de boa resolução.
+> 4. Confirma que posso usar as fotos que você já mandou (a de fundo branco no site e a de perfil no Instagram)?
 > 5. Seu Instagram.
 > 6. Sua formação: curso, ano de formação, especializações.
 > 7. Confirma se as faixas do formulário estão certas: metragem até 100 / 100 a 300 / acima de 300 m² e
