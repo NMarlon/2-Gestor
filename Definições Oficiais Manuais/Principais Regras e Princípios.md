@@ -35,6 +35,27 @@ Eu estou contente com o resultado, vou continuar usando o Hermes Agent como send
 3. Mantenha as DOCS ATUALIZADAS
 4. O GESTOR pode ler as docs do projeto da raiz do respectivo projeto
 5. O DEV DEVE ser avisado (pode ser à posteriori, mas deve) de quaisquer limitações em relação ao propósito, objetivo do projeto, limitações ou entraves em relação à direção a qual deveria seguir e onde está, ou à quaisquer coisas que ache que o DEV não sabe, mas deveria saber para trazer o melhor para a humanidade, ao próximo, ao DEV e para o projeto.
+6. Sempre fazer Commit após cada término funcional de uma tarefa, ou quando acharem melhor. Para que, quando tiver um problema, tenha como voltar, sem preocupações.
+	1. Cuidado com commitar arquivos muito grandes (como vídeos, muitas fotos), uso plano gratuito do GitHub, ele não foi feito pra isso.
+7. SE é um sistema sem GitHub (como sites em wordpress), tem que ter uma forma de fazer backup do projeto, se não houver nada na documentação falando sobre isso, pergunte ao DEV onde deve estar os backups daquele projeto. 
+	1. Porém, ainda assim, a documentação do projeto e outros arquivos base desse tipo, scripts que a IA usa etc, DEVE estar num repositório do GitHub, deve ser criado um se não houver.
+8. SEMPRE tenha certeza que tem um último backup/commit feito antes de começar à modificar, para não perder nada do que já foi feito, antes do próximo trabalho. O executor (OpenCode), deve manter atualizado um arquivo com os backups, para que assim também, não precise reabrir no navegador e gastar tokens e tempo verificando algo que já foi registrado e é só ler.
+
+
+#### Para Sites Wordpress
+---
+1. Entra no Backup do GitHub: 
+	1. TEMA: wp-content/themes/{o-tema}/
+	2. Plugins próprios (se houver): `wp-content/plugins/seu-plugin/`, `wp-content/mu-plugins/`
+	3. Um **`.gitignore` rigoroso** 
+		1. Core do WordPress (`wp-admin/`, `wp-includes/`, arquivos raiz do WP)
+		2. Plugins e temas de terceiros (a menos que você faça um patch pontual muito específico e controlado)
+		3. `wp-content/uploads/` (imagens/mídia pesadas)
+		4. `wp-config.php`, arquivos `.env`, caches, `node_modules/` e `vendor/` (se usar build)
+	4. um _manifest_ leve de versão/notas de alteração (ex.: `CHANGELOG.md` ou snapshot estrutural leve).
+2. Para os backups do Wordpress, eles DEVEM estar linkados à uma conta na nuvem, provavelmente Google Drive ou OneDrive (ou se autorizado pelo DEV para o projeto, TAMBÉM no próprio computador local aqui). 
+3. SE houver backups no servidor local do próprio site, remova-o, para que a hospedagem tenha espaço para as coisas do próprio site. (À menos que o DEV tenha autorizado diferente disso (como apenas backup na hospedagem local))
+
 
 
 
