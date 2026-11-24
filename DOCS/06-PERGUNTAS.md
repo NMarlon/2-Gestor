@@ -493,22 +493,22 @@ origin/master..master --stat` e colo o resumo aqui.
 
 ---
 
-## Q-029 · workspace · Aplicar os parâmetros de compactação no app?
+## Q-029 · workspace · Aplicar os parâmetros de compactação no app? — **PARCIAL 24/11**
 
-`08-GERENTE/COMPACTACAO.md` fixa a regra: uma tarefa por sessão, teto de ~90k
-tokens, resumo guardando 25%, últimas 24 mensagens intactas. Para isso valer no
-Hermes, é preciso mudar `config.yaml` do perfil (`threshold` 0.75 → 0.70,
-`target_ratio` 0.20 → 0.25, `protect_last_n` 20 → 24) e o teto usado pelo
-compressor (65.500 → ~131.000). A segunda parte é a que muda de verdade: sem ela, o
-gatilho sai de 49k para 46k e nada melhora.
+Feito: as três chaves seguras foram aplicadas pelo caminho sancionado do app
+(`hermes config set`), e verificadas com `hermes config get`:
+`compression.threshold` 0.75 → **0.70**, `target_ratio` 0.20 → **0.25**,
+`protect_last_n` 20 → **24**. Reverter: os mesmos comandos com o valor antigo.
 
-(a) Aplico as três chaves seguras agora e deixo o teto para quando houver teste
-    (recomendado).
-(b) Aplico tudo de uma vez, incluindo o teto de 131.000.
-(c) Não mexe na configuração; só documenta a regra.
+Falta decidir: **`context_length` do compressor, 65.500 → ~131.000**, que é o que
+levaria o gatilho de ~46k para ~90k tokens. Não apliquei porque não há teste local —
+se o modelo auxiliar não aceitar 131k, o resumo falha no meio da tarefa.
 
-**Default:** (a). O teto do compressor não tem teste local: se o modelo auxiliar não
-aceitar 131k, o resumo falha em silêncio no meio de uma tarefa.
+(a) Deixo como está (46k) e reavalio depois de uma semana de medição (recomendado).
+(b) Subo para 131.000 e observo a primeira compactação.
+(c) Subo só até 98.000, meio-termo.
+
+**Default:** (a).
 
 ---
 

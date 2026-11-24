@@ -65,21 +65,28 @@ quebre na próxima. Compactação é exceção: alvo ≤ 1 por tarefa.
 que é onde o custo por chamada ainda é baixo e o "context rot" ainda não cobrou.
 Não use 75% de 1 M (750k): paga 20× mais por chamada para o modelo ficar pior.
 
-**3.3 Parâmetros — gestor (Hermes).** `config.yaml` do perfil, seção `compression`:
+**3.3 Parâmetros — gestor (Hermes).** `config.yaml` do perfil, seção `compression`.
+Aplicado em 24/11 via `hermes config set` (o agente não edita o arquivo direto — o
+app bloqueia, corretamente):
 
 ```yaml
 compression:
   enabled: true
-  threshold: 0.70        # era 0.75
-  target_ratio: 0.25     # era 0.20 (resumo guarda mais, refaz menos)
-  protect_last_n: 24     # era 20
+  threshold: 0.70        # era 0.75 — aplicado
+  target_ratio: 0.25     # era 0.20 (resume guardando mais, refaz menos) — aplicado
+  protect_last_n: 24     # era 20 — aplicado
   protect_first_n: 3
   in_place: false
 ```
 
+Verificado por `hermes config get` (`0.7`, `0.25`, `24`). Reverter é a mesma porta:
+`hermes config set compression.threshold 0.75` (idem para as outras duas).
+
 Com `context_length: 65500` no auxiliar, isso põe o gatilho em ~46k — ainda cedo.
 Para chegar aos ~90k, o teto usado pelo compressor precisa subir para ~131.000.
-**Pendência de aprovação:** é configuração do app dele, não deste repo (`Q-029`).
+**Essa parte não foi aplicada**: não há como testar localmente se o modelo auxiliar
+aceita 131k, e uma falha de resumo no meio da tarefa é pior que compactar cedo.
+Fica em `Q-029`, com o resto.
 
 **3.4 Parâmetros — executor (OpenCode).** `~/.config/opencode/opencode.json`:
 
