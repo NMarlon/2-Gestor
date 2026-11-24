@@ -411,3 +411,27 @@ linha de JS e nenhuma captura de tela entrega.
 - Escolha a amostra certa: página gerada por plugin (Complianz, WooCommerce, formulário)
   carrega o CSS do plugin e não representa o tema. Use uma página comum.
 - Relatório de subagente é hipótese, igual ao do executor. Números de navegador são fato.
+
+## E-023 — Chutei o corpo do texto e o CSS não pegava; os dois viraram número
+
+**Data:** 23/11/2026 · **Projeto:** P-03 · **Gravidade:** média (brief quase saiu com dois erros)
+
+O brief T-022 mandava "confira a medida de leitura: 20 px numa coluna larga passa de
+90 caracteres por linha". Eu não tinha medido. Medi depois: **66 caracteres por linha**
+— confortável, nada a corrigir. Se tivesse saído assim, o OpenCode mexeria na coluna de
+texto para resolver um problema que não existe.
+
+Na mesma linha de trabalho, escrevi o CSS de correção do `h1` sem `!important` e medi:
+o `font-size` **não mudava**, só o `line-height`. A causa: o título vem do template com
+a classe `has-large-font-size`, e o core emite
+`.has-large-font-size{font-size:var(--wp--preset--font-size--large)!important}`.
+Regra sem `!important` perde, por mais específica que seja.
+
+**Regras.**
+- Número que entra em brief sai de medição, não de estimativa. Se não medi, escrevo
+  "não medido" — o executor merece saber a diferença.
+- Antes de briefar CSS contra tema WordPress, liste as regras que casam o elemento com
+  `document.styleSheets` e confira `!important` em cada uma. Achar a regra que vence é
+  metade do trabalho; a outra metade é medir o resultado com o CSS injetado.
+- CSS candidato se valida no navegador **antes** de virar tarefa: injetar por CDP, medir
+  `getComputedStyle`, e só então escrever o brief com os valores medidos.

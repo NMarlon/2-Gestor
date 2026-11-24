@@ -34,16 +34,24 @@ dar a elas o **estilo editorial** do site. Nada mais.
   |---|---|
   | `h1` ("Obrigado") | **31,67 px** |
   | `h2` | **40,44 px** |
-  | parágrafo | 20 px / entrelinha 32 px |
+  | parágrafo | 20 px / entrelinha 32 px — **66 caracteres por linha** |
 
   O `h1` é **menor que o `h2`**: a hierarquia está invertida em toda página interna.
   Na home o título display fica na faixa de 52–56 px. É esse o buraco a fechar.
+  A medida de leitura do parágrafo está **boa** (66 caracteres): não mexa no corpo.
+
+- **A causa do `h1` pequeno, já isolada (não gaste tempo nela):** o título vem do
+  template `page-with-title` com a classe `has-large-font-size`, e o WordPress emite
+  `.has-large-font-size{font-size:var(--wp--preset--font-size--large)!important}`.
+  Um seletor sem `!important` **perde** — testei: só o `line-height` mudava.
+  O override precisa de `!important` e de escopo apertado.
 
 - `:root` já expõe os tokens globais de cor: `--jhw-ink`, `--jhw-ink-forte`,
   `--jhw-oliva`, `--jhw-oliva-escuro`, `--jhw-ocre`, `--jhw-base`, `--jhw-bege`,
   `--jhw-raio-card`, `--jhw-sombra-card`, `--jhw-transicao`.
-- Página interna de referência hoje: `https://jessicahaguiwara.arq.br/politica-de-cookies/`
-  — 140.474 bytes, Astra puro, sem o desenho do site. **É o "antes".**
+- **Não use `/politica-de-cookies/` como amostra de página interna.** Ela é gerada pelo
+  Complianz e estilizada pelo CSS do plugin (corpo a 14 px, sem `page-with-title`).
+  A amostra correta é `/obrigado/` — página comum, mesmo template das quatro.
 - Home hoje: **178.621 bytes**, md5 `f5439f0a2a1d`, `<footer>` md5 `d0a615c449b2`,
   `style.css?ver=1.3.8`, 7 fotos `.webp`, gzip 46.246 bytes.
 - Rodapé é `wp_template_part` **salvo no banco (ID 185)** — ele vence `parts/footer.html`.
@@ -63,15 +71,26 @@ dar a elas o **estilo editorial** do site. Nada mais.
    de revisão — é o rollback.
 2. **CSS: consertar a escala do título nas páginas internas**, em
    `jessica-haguiwara-child/style.css`.
-   Hoje: `h1` 31,67 px e `h2` 40,44 px. Alvo: `h1` na faixa display (52–56 px em
-   desktop, decrescendo no celular) e `h2` **abaixo** dele, mantendo a proporção que a
-   home usa. O `h1` precisa ganhar peso visual de título de página, não de legenda.
-   Escopo: páginas internas — `body.page .wp-block-post-title` (ou equivalente do
-   template). **Não** alcance a home: `.jhw-home-v2` fica intocado.
-   Ajuste fino: confira a medida de leitura do parágrafo (20 px numa coluna larga passa
-   de 90 caracteres por linha; o confortável é 60–75). Se passar, limite a coluna —
-   **não** aumente a fonte do corpo sem olhar.
-   **Não** reescreva os 148 blocos globais, **não** mexa em `.jhw-home-v2`.
+   Hoje: `h1` 31,67 px e `h2` 40,44 px. Alvo: `h1` na faixa display, acima do `h2`.
+   **Este bloco foi testado por mim em navegador real** (HTML servido + CSS injetado +
+   medição por CDP), não é chute:
+
+   ```css
+   body.page .wp-block-post-title.has-large-font-size {
+     font-family: Marcellus, "Times New Roman", Times, serif !important;
+     font-weight: 400 !important;
+     font-size: clamp(2.25rem, 1.4rem + 2.4vw, 3.5rem) !important;
+     line-height: 1.06 !important;
+     letter-spacing: -0.015em !important;
+   }
+   ```
+
+   Medido com esse bloco: `h1` **56 px / 59,36 px** em 1440, **36 px** em 390;
+   `h2` segue **40,8 px**; corpo intacto (20 px / 32 px); `scrollWidth == innerWidth`;
+   **zero** elemento passando da borda, nos dois tamanhos. Use estes valores; se mudar,
+   meça e relate o número.
+   **Não** toque em `.jhw-home-v2` nem no corpo do texto. **Não** reescreva os 148 blocos
+   globais.
 
 3. **Subir a versão**: `style.css` 1.3.8 → **1.3.9** (cabeçalho do arquivo e
    `functions.php`, os dois lugares). `node scripts/validate-theme.mjs` verde.
@@ -110,6 +129,11 @@ dar a elas o **estilo editorial** do site. Nada mais.
   esperado (só os 4 `href` mudam).
 - `/politica-de-cookies/` **byte-idêntica** a 140.474.
 - `style.css?ver=1.3.9` presente no HTML servido.
+- Título de página interna **medido no HTML servido**, a 1440 px: `font-size` do `h1`
+  entre **52 e 56 px**, e **maior** que o `h2`. No celular (390 px): entre **32 e 40 px**
+  e ainda maior que o `h2`. `scrollWidth == innerWidth` nos dois.
+- Home: o título do hero **não** mudou de tamanho (o override não pode vazar para
+  `.jhw-home-v2`).
 - Submenu SOLUÇÕES presente no HTML da home, com os 4 links.
 - HTML de uma página interna comprimido (gzip) abaixo de **60 KB**.
 
