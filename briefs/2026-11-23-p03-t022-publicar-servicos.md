@@ -37,6 +37,14 @@ dar a elas o **estilo editorial** do site. Nada mais.
   `style.css?ver=1.3.8`, 7 fotos `.webp`, gzip 46.246 bytes.
 - Rodapé é `wp_template_part` **salvo no banco (ID 185)** — ele vence `parts/footer.html`.
   Não mexa nele (ver E-020, corolário 3).
+- **O menu não é menu clássico.** Ele vive no post `wp_navigation/6`. Mexer em
+  `nav_menu` clássico não muda nada na tela — é a armadilha já registrada em
+  `DOCS/IA/aprendizados-paginas-jessica.md`. Edite a navegação `6`.
+- **Existem três rascunhos legados e vazios**: IDs **164** (`CONSULTORIA`),
+  **165** (`GESTÃO DE OBRA`), **166** (`PROJETOS`), anteriores a este trabalho.
+  Não são as páginas boas — as boas são 226–229. Deixá-los publicados ou visíveis
+  faz a cliente editar a página errada.
+
 
 ## O QUE FAZER
 
@@ -62,6 +70,10 @@ dar a elas o **estilo editorial** do site. Nada mais.
    Consultoria, Projetos, Gestão de Obra, Chave na Mão.
 8. **Yoast**: título e meta description por página. **Não invente** dado de cliente —
    nada de CAU, área, prazo, preço, número de obras. Só o que está no texto aprovado.
+9. **Mover os três rascunhos legados vazios para a lixeira** — IDs 164, 165, 166.
+   Antes, confirme que estão vazios (sem conteúdo, sem revisão publicada). É lixeira,
+   não exclusão: reversível. Se algum tiver conteúdo, **não apague** e me avise.
+
 
 ## PROIBIDO TOCAR
 
@@ -76,6 +88,8 @@ dar a elas o **estilo editorial** do site. Nada mais.
 
 - As quatro URLs respondem **200**: `/consultoria/`, `/projetos/`, `/gestao-de-obra/`,
   `/chave-na-mao/`.
+- Cada URL resolve para o **ID certo** (226, 227, 228, 229), não para um legado.
+- IDs 164, 165, 166 na lixeira (ou intactos, com aviso, se tinham conteúdo).
 - Home: **4 hrefs** corretos nos cartões; **nenhum** cartão apontando para `#contato`.
 - Home: rodapé com md5 `d0a615c449b2` **inalterado**; tamanho dentro de ±400 bytes do
   esperado (só os 4 `href` mudam).
