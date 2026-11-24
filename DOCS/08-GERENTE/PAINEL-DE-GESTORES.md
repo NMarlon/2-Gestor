@@ -109,11 +109,28 @@ Nenhum deles sobrevive à pergunta "o que foi publicado".
 
 ## Registro do próprio Gerente — onde parei
 
-- 24/11: política de compactação medida e aplicada em parte (`Q-029`); `consumo.py`
-  entregue; E-024 (pendência fantasma do `release.json` corrigida); este painel.
-- Aberto comigo: `Q-029` (teto do compressor), `Q-030` (relatório semanal),
-  `Q-031` (publicação das páginas — resposta do Marlon libera o gestor do P-03).
-- Regra nova em vigor: **Gerente não escreve código de projeto de próprio punho**
+**Atualizado: 2026-11-24, 21:10.**
+
+- **P-03 entregue e medido no ar** — 1.3.9, 4 páginas de serviço `200`, submenu
+  SOLUÇÕES com 4 filhos, 4 cartões da home ligados. `T-P03-024` fechada pelo
+  `p03-gestor`, com bloco de verificação em `04-TAREFAS.md`.
+- **Fechado hoje:** `Q-031` (publicação das páginas), `Q-030` (relatório vira
+  script, sem cron), `T-P03-022` (marcada como feita na prática), `backups/` no
+  `.gitignore`. Item 17 da lista do Marlon respondido: era minha proposta de
+  enxugar o `AGENTS.md`; hoje se contradiz — recomendo riscar.
+- **Aberto comigo:** `Q-032` (cor do botão do banner — espera "pode"), `Q-034`
+  (credencial do GitHub: commits locais sem push), `Q-035` (rótulo
+  "Projeto"/"Projetos" — default: não mexer), e a prova de onde vivem os 4 itens
+  do submenu (tema × `wp_navigation`), que decide se o rollback de tema basta.
+- **Não começou:** **P-05 Painel Hermes** — pasta `C:\MarlonScripts\5-Painel-Hermes`
+  inexistente, sem repo, sem doc pelo padrão de projeto novo, sem coletor de cota,
+  sem UI. O papel do `p05-gestor` está escrito (81 linhas) e aguarda aprovação.
+- **Também pendente:** revisão editorial das 4 páginas com antes/depois (`Q-033`).
+- Regra em vigor: **Gerente não escreve código de projeto de próprio punho**
   (item 3 do `Dos GERENTES.md`). Script que precisar existir vira brief para o
-  OpenCode; o que já existe (`consumo.py`, `commit-agent.sh`, `oc-brief.ps1`) fica
-  como está e é mantido por brief.
+  OpenCode; `consumo.py`, `commit-agent.sh` e `oc-brief.ps1` ficam como estão e
+  são mantidos por brief.
+- Regras novas do Marlon (itens 17-22 do `Dos GERENTES.md`, 24/11): entregar
+  resumo do que foi feito, manter a doc própria atualizada, registrar todo erro,
+  **plano antes de executar**, e **delegar a execução ao gestor** em vez de
+  executar com as próprias mãos.

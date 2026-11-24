@@ -129,6 +129,44 @@ Automação: o coletor em background (item 21) precisa gravar **as três janelas
 e projeção de esgotamento. **Não escrevo isso de próprio punho** (item 3 do
 `Dos GERENTES.md`, e ele reforçou em 24/11): vira brief para o OpenCode.
 
+## Auditoria item a item — a lista que o Marlon colou (24/11, 23:53)
+
+Contagem: **12 feitos · 3 parciais · 3 não começaram · 4 respeitados (congelados) ·
+3 esperando decisão dele.** Conferida contra o disco e o site em 24/11, 21h.
+
+| # | Pedido | Estado | Prova / onde |
+|---|---|---|---|
+| 1 | Regra "se você é GERENTE, leia tais arquivos" | ✅ | `AGENTS.md` §Mapa por papel (`e168b31`) |
+| 2 | `agentes.md` como mapa por papel e especialidade | ✅ | mesma seção, listas nominais GERENTE/GESTOR/EXECUTOR |
+| 3 | Sem ultrafocus em tokens | ✅ em vigor | decidido por prioridade, não por economia |
+| 4 | Ordem: Jéssica urgente → Marcelo depois → Erdős só com sobra | ✅ em vigor | P-03 entregue; P-02/P-04 congelados; Erdős não tocado |
+| 5 | Help selector: Git Credential Manager | ✅ | resolvido; janela fechou |
+| 6 | Publicar as 4 páginas + dizer o que mudou | 🟡 parcial | números medidos e entregues; **revisão editorial não** (`Q-033`) |
+| 7 | Cor do botão a meu critério (azul serve) | ⏸ espera "pode" | `Q-032`: override escuro fora do CSS servido |
+| 8 | Prós e contras do push | ✅ | entregue na sessão; política no `AGENTS.md` |
+| 9 | `Q-030`: sem cron, mas script mostrando a cota | 🟡 parcial | `consumo.py` lê tokens locais; **nada mede quota** |
+| 10 | `Q-033`: revisar e apresentar antes/depois | ❌ | não começou |
+| 11 | P-04 não mexer (não será WordPress) | ✅ respeitado | nada tocado |
+| 12 | P-02 / `Q-024` não mexer | ✅ respeitado | nada tocado |
+| 13 | Explicar o item 17 (enxugar `AGENTS.md`) | ✅ | respondido; recomendo riscar o item |
+| 14 | Dropdown com 4 itens | ✅ | no ar: submenu SOLUÇÕES, 4 filhos |
+| 15 | Push feito por ele | ✅ registrado | hoje 6 commits locais à frente (`Q-034`) |
+| 16 | Explicar o backup `.bundle` | ✅ | `backups/`, 8,1 MB, `git bundle verify` completo |
+| 17 | Consertar o bloco "estado atual / onde parei" no P-03 | ✅ nesta rodada | `02-PROJETOS.md` P-03 + bloco do painel reescritos |
+| 18 | Máximo para o OpenCode; script em vez de IA | ✅ em vigor | deploys e medições pelo OpenCode/gestor |
+| 19 | Script de fundo medindo cota + pesquisar histórico | 🟡 parcial | pesquisa feita (sem API de série); **script não existe** |
+| 20 | Dados da cliente Jéssica | ⏸ espera cliente | nada a fazer do nosso lado |
+| 21 | `Dos GERENTES.md` atualizado por ele | ✅ lido | regras 17-22 em vigor; arquivo **não commitado** (edição dele) |
+
+**Projeto novo (P-05 Painel Hermes)**
+
+| # | Pedido | Estado | Prova / onde |
+|---|---|---|---|
+| 1 | App + gestor + GitHub + pasta + scripts + UI local | 🟡 parcial | perfil `p05-gestor` criado; papel **aguarda aprovação**. Pasta, GitHub, doc, coletor e UI **não existem** |
+| 2 | Entrar em projetos aprovados | ✅ | `PROJETOS_APROVADOS.md`, item 5 |
+| 3 | Doc conforme "Instruções Básicas de Novo Projeto" | ❌ | não escrita |
+| 4 | Dúvidas → perguntar | ✅ | `06-PERGUNTAS.md` |
+
 ## Ordem de leitura para quem chegar depois
 
 1. Este arquivo.

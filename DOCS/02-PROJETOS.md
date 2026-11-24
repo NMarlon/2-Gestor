@@ -87,26 +87,28 @@ Commit `79013d5`. Verificação independente depois do commit:
 
 ## P-03 · Site Jessica Haguiwara Arquitetura
 
-> **Medição do GERENTE · 2026-11-23:** publicação **1.3.8** no ar. Home
-> `https://jessicahaguiwara.arq.br/` → `200`, **178.614 bytes** de HTML (UA Chrome,
-> sem query string, duas leituras), `style.css?ver=1.3.8`, link de cookies no
-> rodapé. Repo em `cbdf3d0` (`T-P03-018`), árvore limpa; tarefas `T-P03-016`…`020`
-> executadas mas **fora** da fila `04` (corrigido em `T-020`). Aberto: `T-011` (dados
-> da cliente). Depoimentos fictícios: mantidos como `EXEMPLO` por decisão do Marlon
-> (`Q-025`). `release.json` em 1.3.7 é baseline normal — o validador passa
-> (`PASS` nos três testes de release, 24/11). Detalhe:
-> `08-GERENTE/AUDITORIA-2026-11-23.md`.
+> **Medição do GERENTE · 2026-11-24, 20:51:** publicação **1.3.9** no ar. Home
+> `https://jessicahaguiwara.arq.br/` → `200`, **181.138 bytes** de HTML (UA Chrome,
+> URL limpa, sem query string), `style.css?ver=1.3.9` no child. As **4 páginas de
+> serviço estão publicadas e medidas**: `/consultoria/` 149.338 B, `/projetos/`
+> 149.167 B, `/gestao-de-obra/` 149.132 B, `/chave-na-mao/` 149.054 B — todas `200`,
+> com submenu SOLUÇÕES de **4 filhos** e os **4 cartões da home** ligados. Repo do
+> projeto em `a2394e0` (`T-P03-024`). Aberto: `T-P03-023` (cor do botão do banner de
+> cookies, travada em `Q-032`) e `T-011` (dados da cliente). Detalhe:
+> `08-GERENTE/AUDITORIA-2026-11-23.md` e o bloco de verificação da `T-P03-024` em
+> `04-TAREFAS.md`. Depoimentos fictícios: mantidos como `EXEMPLO` por decisão do
+> Marlon (`Q-025`).
 
 
 | Campo | Valor |
 |---|---|
 | Caminho | `C:\MarlonScripts\Jessica Haguiwara` |
-| Repo | Próprio (git), último commit `f7ffce7` — árvore limpa em 2026-11-20 |
+| Repo | Próprio (git), último commit `a2394e0` — 2026-11-24 (só `planejamento/` modificado, fora do tema) |
 | Objetivo do Marlon | Site institucional no ar, editorial, sem dado inventado; base técnica que aguente cliente real |
 | Estado | 🟢 **No ar e aprovado pela cliente**; faltam dados que dependem dela |
 | Site | `https://jessicahaguiwara.arq.br` |
 | Peso servido (2026-11-20, 22h) | HTML 178.559 B · CSS 5 folhas 420.591 B · JS 21 scripts 1.275.704 B → **481 KB gzip/visita** em 27 requisições (HTML + CSS + JS) |
-| Stack | WordPress + tema pai `extendable` + child `jessica-haguiwara-child` (1.3.7), Spectra, Forminator, Complianz, WP Fastest Cache |
+| Stack | WordPress + tema pai `extendable` + child `jessica-haguiwara-child` (**1.3.9 no ar**), Spectra, Forminator, Complianz, WP Fastest Cache |
 | Papel do gestor | Decide prioridade, aprova publicação, verifica no ar. **Não escreve no repo** — o OpenCode escreve |
 | Doc do projeto | `DOCS/00-INDICE.md` → `AGENTS.md` é o contrato; `DOCS/12-PLANO-EXECUCAO.md` é o plano vigente |
 
