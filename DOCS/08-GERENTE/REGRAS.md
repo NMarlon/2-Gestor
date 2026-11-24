@@ -25,6 +25,25 @@ O GERENTE herda `AGENTS.md` e as `Definições Oficiais Manuais/` inteiras. Este
 documento não substitui nem interpreta esses dois; ele organiza a camada que
 responde pelo conjunto. Em conflito, vence `AGENTS.md`.
 
+### 0.1 O que o Marlon escreveu sobre o GERENTE (23/11, 22:34)
+
+Arquivo: `Definições Oficiais Manuais/Dos GERENTES.md`. Vale como regra; está aqui
+resumido para não depender de abrir a pasta a cada sessão.
+
+1. **O GERENTE cuida dos gestores.** Não é um gestor de projeto a mais.
+2. **Análise estatística de progresso** — individual e geral — é dever do GERENTE,
+   não iniciativa. Onde: `08-GERENTE/MEDICOES-AAAA-MM-DD.md`, semanal.
+3. **O GERENTE também não escreve código de próprio punho.** Tem autonomia e o dever
+   de mandar o OpenCode executar. Documentação de gestão é a exceção, e é só isso
+   que ele assina.
+4. **GERENTE ↔ gestor: comunicação direta permitida.**
+5. **Gestor → GERENTE: comunicação permitida** quando necessário.
+
+Canal, para não virar conversa de corredor: `08-GERENTE/PARA-GESTORES.md`, um bloco
+por mensagem, com data, projeto, o que se pede e o prazo. Resposta do gestor vai no
+caderno do projeto dele e o GERENTE recolhe na auditoria. Nada de mensagem fora de
+arquivo — o que não está escrito não aconteceu.
+
 ---
 
 ## 1. O que o GERENTE faz — e o que não faz
@@ -126,6 +145,21 @@ Regras de convivência entre esses arquivos:
   `t016`…`t018` do P-03 foram executados sem entrar na fila — o resultado existe e
   a fila não sabe. Isso quebra a visão do conjunto.
 
+### 4.1 Commit — a parte que ninguém lê até precisar
+
+Medido em 23/11, dentro desta auditoria: o commit `6676141` levou, junto do trabalho
+do P-03, dois arquivos meus em andamento — `REGRAS.md` e `AUDITORIA`, 469 linhas com
+outra finalidade. Nada se perdeu; o rastro ficou errado.
+
+- `git add <caminhos>` explícitos. **Nunca** `git add -A`, `git add .` nem `git add DOCS`.
+- Antes de commitar, `git status`. Arquivo que você não escreveu fica fora do commit
+  — mesmo que pareça pronto.
+- Um commit, uma intenção. A mensagem descreve o que o commit faz, e nada além.
+- **Assinatura:** cada agente commita com a própria identidade,
+  `git -c user.name="gestor P-0X" -c user.email="gestor@p0x.local" commit ...`.
+  Hoje tudo sai como `Marlon Rebello Viana`, e o `git log` não diz quem fez o quê —
+  o que anula a auditoria por autoria.
+
 ---
 
 ## 5. Como se prova cada tipo de afirmação
@@ -212,6 +246,10 @@ só pegou o bloco vazio do case na segunda passada, com revisão visual.
 
 Medir na segunda, registrar no caderno do projeto afetado, uma página por semana.
 Métrica que ninguém mede não existe.
+
+Números por projeto e por gestor: `08-GERENTE/MEDICOES-AAAA-MM-DD.md`. Lá o método
+está declarado e o que não foi possível medir também — inclusive o fato de que
+**custo em R$ não existe** enquanto não houver preço configurado no perfil.
 
 ---
 

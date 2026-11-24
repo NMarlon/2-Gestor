@@ -546,5 +546,24 @@ Entram na fila pelo que foi medido, não pelo que foi narrado:
 | T-P03-017 | `p03-t017-rodape-origem-e-cache` | 🟢 feita | commit `e59874a`; purge do WPFC via PHP medido |
 | T-P03-018 | `p03-t018-resolver-override-rodape` | 🟢 feita e publicada | commit `cbdf3d0`; HTML servido 1.3.8 com o link |
 | T-P03-019 | `p03-t019-limpar-php-diagnostico` | 🟢 feita | `GET /jhw-purge.php` e `/jhw-check.php` → **404** |
-| T-P03-020 | `p03-t020-paginas-servico-rascunho` | 🟡 rascunho, não verificável por URL | `/consultoria/` etc. → 404 (esperado em rascunho); conferir no WP |
+| T-P03-020 | `p03-t020-paginas-servico-rascunho` | 🟢 feita e verificada pelo gestor | 4 páginas `draft` no WP (IDs 226–229, slugs exatos); as 4 URLs → **404**; home intacta (178.614 B, rodapé `d0a615c449b2`, 1.3.8) |
+| T-P03-021 | `p03-t021-webp-home` | 🟡 disparada em 23/11 | 7 fotos da home, 1.312 KB → 662 KB (−50%) medido localmente em WebP q80 |
+
+**Verificação do T-P03-020 (feita por mim, via MCP e HTTP, não pelo relatório):**
+`wp_get_page` 226–229 → `status: draft`, slugs `consultoria`, `projetos`,
+`gestao-de-obra`, `chave-na-mao`, títulos corretos. `GET` das quatro URLs públicas →
+404. Home → 200, 178.614 bytes, duas leituras idênticas, rodapé 3.478 caracteres com
+`d0a615c449b2`, `style.css?ver=1.3.8`. Nada ligado ao menu.
+
+**Achados que condicionam a publicação (não são do escopo do 020):**
+1. O CSS `.jhw-*` é escopado em `.jhw-home-v2`. As páginas internas **não herdam**
+   o desenho da home — publicar antes de uma passada de estilo entrega página
+   genérica. Tarefa de estilo é pré-requisito da publicação.
+2. O submenu SOLUÇÕES é o `wp_navigation` **6**; ligar os 4 itens é passo de
+   publicação, não de criação.
+3. Rascunhos legados com slug vazio: 164 `CONSULTORIA`, 165 `GESTÃO DE OBRA`,
+   166 `PROJETOS` (0 byte) e 96 `Quem Somos`. Invisíveis, não colidem. O "154" que o
+   executor descreveu como página inteira **não** é página: `wp_get_page(154)` → null
+   e `wp_get_post(154)` → ID inválido. Tratar como não confirmado.
+
 

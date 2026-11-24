@@ -149,8 +149,8 @@ Commit `79013d5`. Verificação independente depois do commit:
 > **Medição do GERENTE · 2026-11-23:** o site **existe e está construído**, ao
 > contrário do que diz a linha "executor ainda não acionado" abaixo. Repo
 > `C:\MarlonScripts\4-Portfolio`, árvore limpa em `047be25`; home + 6 cases; quatro
-> briefs (`v1`…`v4`); `grep PENDENTE` = **0**. **Não publicado:** o repositório não
-> tem `git remote` — o "GitHub Pages" do brief v1 não tem destino. Pendências:
+> briefs (`v1`…`v4`); 4 commits no repo; `grep PENDENTE` = **0**. **Não publicado:**
+> o repositório não tem `git remote` — o "GitHub Pages" do brief v1 não tem destino. Pendências:
 > `Q-016` (decidir publicação), `Q-018` (foto), `Q-020` (autorização dos clientes),
 > `Q-021` (GitHub privado).
 

@@ -20,9 +20,11 @@
 Cadernos por projeto ficam em `DOCS/P-<numero>-<nome>/GESTOR.md` e contêm apenas o
 que é exclusivo do gestor. O que é do projeto mora no repo do projeto.
 
-`08-GERENTE/` responde pelo **conjunto**: `REGRAS.md` (como o GERENTE trabalha) e
-`AUDITORIA-AAAA-MM-DD.md` (o que foi medido, com evidência). Gestor de projeto lê;
-não escreve ali.
+`08-GERENTE/` responde pelo **conjunto**: `REGRAS.md` (como o GERENTE trabalha),
+`AUDITORIA-AAAA-MM-DD.md` (o que foi medido, com evidência),
+`MEDICOES-AAAA-MM-DD.md` (números de progresso por projeto e por gestor) e
+`PARA-GESTORES.md` (canal direto GERENTE ↔ gestor, ver `Dos GERENTES.md` itens 4–5).
+Gestor de projeto lê; não escreve ali.
 
 ## Documentos externos ao workspace (referência)
 

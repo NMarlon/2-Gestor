@@ -139,7 +139,7 @@ Isso quebra exatamente a visão que permite vários gestores no mesmo workspace.
 
 ### P-04 · Portfólio — a designar
 
-- **Entrega:** home + 6 cases, 4 briefs (v1…v4), 5 commits (`dd561fb`…`047be25`),
+- **Entrega:** home + 6 cases, 4 briefs (v1…v4), 4 commits (`dd561fb`…`047be25`),
   retrato e idiomas do autor, árvore limpa, **0 `PENDENTE`**, **sem remote** —
   respeitou "não publicar".
 - **Hoje:** o painel ainda diz "(a criar)" e "executor ainda não acionado". É a
@@ -161,7 +161,7 @@ continuar contando história.
 
 | Onde | O que está escrito | O que é verdade em 23/11 |
 |---|---|---|
-| `02-PROJETOS.md` P-04 | "(a criar)", "executor ainda não acionado", brief v1 | repo com 7 páginas, 4 briefs, 5 commits |
+| `02-PROJETOS.md` P-04 | "(a criar)", "executor ainda não acionado", brief v1 | repo com 7 páginas, 4 briefs, 4 commits |
 | `02-PROJETOS.md` P-03 | 1.3.7, árvore limpa em 20/11, commit `f7ffce7` | 1.3.8 no ar, commits `3a4cbad`…`cbdf3d0` |
 | `02-PROJETOS.md` P-01 | API `200`, `version: 0.23.2` | API não responde |
 | `02-PROJETOS.md` P-02 | varredura completa em andamento | doc 07 diz pausado; serviço de pé |
@@ -197,3 +197,41 @@ Nada aqui exige mexer em código de projeto. Tudo é registro, gate ou dono.
 - Serviço, banco e desempenho do P-02 em execução.
 - Qualidade visual do P-04 e do P-03: sem visão nesta sessão.
 - Conteúdo dos repositórios privados do GitHub.
+
+---
+
+## 9. Incidente medido **durante** esta auditoria — a colisão não é hipótese
+
+Enquanto eu escrevia este documento, às **22:24:41 de 23/11**, um commit varreu os
+meus arquivos em andamento:
+
+```
+6676141 Marlon Rebello Viana  11-23 22:24
+P-03: conteudo final das 4 paginas + brief T-P03-020 (rascunho) + perguntas 10.1-10.3
+ DOCS/00-INDICE.md                       |  10 +-
+ DOCS/08-GERENTE/AUDITORIA-2026-11-23.md | 199 +++
+ DOCS/08-GERENTE/REGRAS.md               | 270 +++
+ DOCS/P-03-Jessica-Haguiwara/...         | 159 +++
+ ...QUESTIONARIO-CLIENTE.md              |  11 +-
+ briefs/...p03-t020...md                |  71 +++
+```
+
+Três fatos, todos verificáveis:
+
+1. **A mensagem não descreve metade do commit.** `REGRAS.md` e `AUDITORIA` são meus,
+   escritos para outra finalidade, e entraram junto do trabalho do P-03.
+2. **O autor é `Marlon Rebello Viana`** — a mesma identidade de todos os agentes. O
+   `git log` deste workspace **não distingue quem fez o quê**. Nenhuma auditoria
+   futura consegue atribuir trabalho por autoria sem outro sinal.
+3. **Nada se perdeu** — os arquivos estão íntegros no `HEAD`. O dano é de rastro,
+   não de conteúdo.
+
+Regras que isso cria (já em `REGRAS.md` §4):
+
+- Commit é por arquivo tocado: `git add <caminho>`, nunca `git add -A` nem `git add DOCS`.
+- Antes de commitar: `git status`. Arquivo que você não escreveu **fica fora**.
+- Cada gestor assina com `--author="gestor P-0X <gestor@p0x.local>"`. Custa um
+  parâmetro e devolve a única coisa que o `git log` não dá hoje: autoria.
+
+Este é o tipo de erro que não aparece em relatório de executor. Apareceu porque eu
+estava medindo enquanto acontecia.
