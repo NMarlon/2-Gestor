@@ -21,13 +21,24 @@ dar a elas o **estilo editorial** do site. Nada mais.
 - **O buraco que isto resolve:** na home, os quatro cartões da seção Serviços apontam
   **todos** para `#contato`. Medi: a seção inteira tem 3 links e os 3 são `#contato`.
   O visitante não tem como ler o que é "Gestão de Obra".
-- **Por que as páginas internas não herdam o desenho:** `style.css` tem 284 blocos.
-  **136 estão escopados em `.jhw-home-v2`**, classe que só existe na home. Os outros
-  **148 são globais** (link, botão, card) e já valem nas páginas internas.
-  O que falta é só o topo da cadeia tipográfica, hoje escopado:
-  `.jhw-home-v2 h1, .jhw-home-v2 h2, .jhw-home-v2 h3 { font-family: var(--jhw-v2-serif);
-  font-weight: 400; line-height: 1.05; letter-spacing: -0.02em }`, mais o
-  `color: var(--jhw-v2-ink)` e `font-family: var(--jhw-v2-sans)` do wrapper.
+- **As páginas internas JÁ herdam o desenho do site** — isto foi medido em navegador
+  real, não deduzido: `h1` em **Marcellus** (a serifada do site), corpo em **Inter**,
+  fundo `#EDE3D6` (`--jhw-base`), cabeçalho, rodapé e menu presentes.
+  **Não** existe CSS preso que precise ser "desescopado". A hipótese anterior de que as
+  páginas internas eram "Astra puro" está **errada** — ela veio de olhar
+  `/politica-de-cookies/`, que é uma página gerada pelo Complianz e estilizada pelo CSS
+  do plugin (corpo a 14px), não uma página comum do site.
+- **O defeito real, medido em `/obrigado/` (página comum, mesma família das quatro):**
+
+  | elemento | tamanho |
+  |---|---|
+  | `h1` ("Obrigado") | **31,67 px** |
+  | `h2` | **40,44 px** |
+  | parágrafo | 20 px / entrelinha 32 px |
+
+  O `h1` é **menor que o `h2`**: a hierarquia está invertida em toda página interna.
+  Na home o título display fica na faixa de 52–56 px. É esse o buraco a fechar.
+
 - `:root` já expõe os tokens globais de cor: `--jhw-ink`, `--jhw-ink-forte`,
   `--jhw-oliva`, `--jhw-oliva-escuro`, `--jhw-ocre`, `--jhw-base`, `--jhw-bege`,
   `--jhw-raio-card`, `--jhw-sombra-card`, `--jhw-transicao`.
@@ -50,14 +61,18 @@ dar a elas o **estilo editorial** do site. Nada mais.
 
 1. **Backup primeiro.** `wp_history_list` nas quatro páginas e na home. Anotar os IDs
    de revisão — é o rollback.
-2. **CSS do estilo interno**, em `jessica-haguiwara-child/style.css`:
-   criar um escopo próprio para página interna — classe no wrapper do conteúdo ou
-   `body.page` — aplicando os primitivos que faltam: fonte serifada nos h1–h3 com
-   peso 400 e `line-height` ~1.05, cor `--jhw-ink`, base sans, largura de leitura
-   confortável para parágrafo (~62–68ch), ritmo vertical entre seções e respiro no
-   topo (o título não pode colar no cabeçalho).
-   **Não** altere nada dentro de `.jhw-home-v2`. **Não** use `:has()` novo se der para
-   resolver com classe. **Não** reescreva os 148 blocos globais.
+2. **CSS: consertar a escala do título nas páginas internas**, em
+   `jessica-haguiwara-child/style.css`.
+   Hoje: `h1` 31,67 px e `h2` 40,44 px. Alvo: `h1` na faixa display (52–56 px em
+   desktop, decrescendo no celular) e `h2` **abaixo** dele, mantendo a proporção que a
+   home usa. O `h1` precisa ganhar peso visual de título de página, não de legenda.
+   Escopo: páginas internas — `body.page .wp-block-post-title` (ou equivalente do
+   template). **Não** alcance a home: `.jhw-home-v2` fica intocado.
+   Ajuste fino: confira a medida de leitura do parágrafo (20 px numa coluna larga passa
+   de 90 caracteres por linha; o confortável é 60–75). Se passar, limite a coluna —
+   **não** aumente a fonte do corpo sem olhar.
+   **Não** reescreva os 148 blocos globais, **não** mexa em `.jhw-home-v2`.
+
 3. **Subir a versão**: `style.css` 1.3.8 → **1.3.9** (cabeçalho do arquivo e
    `functions.php`, os dois lugares). `node scripts/validate-theme.mjs` verde.
 4. **Deploy**: `node scripts/deploy-theme.mjs --dry-run` e **pare**. Devolva o output.

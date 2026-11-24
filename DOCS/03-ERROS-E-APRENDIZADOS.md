@@ -370,3 +370,44 @@ bytes de rede depois de mandar `Accept-Encoding: gzip`.
 - Pilha do Forminator + jQuery + Select2 + AOS ≈ 200 KB de JS na home, onde só o
   formulário do fim da página usa.
 - Assets respondem `Cache-Control: private` sem `ETag` → sem 304, rebaixa tudo a cada visita.
+
+## E-022 · O print mentiu sobre o layout, e eu quase briefei a correção errada (2026-11-23)
+
+**O que aconteceu.** Precisava saber se as páginas internas do site da Jéssica herdavam o
+desenho da home. Deleguei a avaliação visual de três capturas. O veredito voltou grave:
+"texto cortado na borda direita no celular, container de 668 px numa tela de 390", "H1
+ausente", "sem cabeçalho, sem rodapé", "parece tema WordPress genérico". Parecia que a
+página precisava de uma passada de estilo inteira, e eu já tinha escrito o brief mandando
+o executor extrair 136 blocos de CSS.
+
+Antes de disparar, medi no navegador. **Tudo errado, exceto uma coisa:**
+
+| afirmação do print | medido no CDP |
+|---|---|
+| overflow horizontal no celular | `innerWidth` 390, `scrollWidth` 390, **0 elementos** passando da borda |
+| H1 ausente | `h1` = "Política de Cookies", Marcellus, 31,67 px |
+| sem cabeçalho / rodapé / menu | os três existem no DOM |
+| tipografia diferente da home | Marcellus e Inter, iguais; fundo `#EDE3D6` igual |
+| botão do banner azul `#3B29FF` | **confirmado**, `rgb(59,41,255)`, texto "Aceito" |
+
+**Por que mentiu.** Duas causas somadas:
+
+1. `--window-size=390,844` no Edge headless **não** dá viewport de 390. O layout saiu em
+   ~495 px e o print foi recortado para 390 — daí o "texto cortado na direita" e os
+   "511 px de vazio no topo". Um recorte sempre fabrica um defeito.
+2. A página escolhida como amostra, `/politica-de-cookies/`, é **gerada pelo Complianz** e
+   estilizada pelo CSS do plugin (corpo a 14 px). Não é uma página comum do site. Medi
+   `/obrigado/` depois: corpo 20 px/32 px. Julguei o site por uma página de plugin.
+
+**O defeito que existia de verdade, e que o print não viu:** em página interna o `h1` é
+**31,67 px** e o `h2` é **40,44 px** — a hierarquia está invertida. Isso é medível em uma
+linha de JS e nenhuma captura de tela entrega.
+
+**Regras.**
+- Antes de aceitar "overflow horizontal", leia `documentElement.scrollWidth` contra
+  `innerWidth`. Iguais = não há overflow, o print é que está errado.
+- Antes de acusar "H1 ausente" ou "sem cabeçalho", conte os elementos no DOM. Um print de
+  viewport não prova ausência — só prova ausência *no enquadramento*.
+- Escolha a amostra certa: página gerada por plugin (Complianz, WooCommerce, formulário)
+  carrega o CSS do plugin e não representa o tema. Use uma página comum.
+- Relatório de subagente é hipótese, igual ao do executor. Números de navegador são fato.
