@@ -17,12 +17,14 @@
 | "Somos vários gestores: quem é de quê e como não colidir?" | [`07-GESTORES.md`](07-GESTORES.md) |
 | "Quem responde pelo conjunto dos gestores e como audita?" | [`08-GERENTE/REGRAS.md`](08-GERENTE/REGRAS.md) |
 | "Quando compactar a sessão e com que parâmetro?" | [`08-GERENTE/COMPACTACAO.md`](08-GERENTE/COMPACTACAO.md) |
+| "Como estão os gestores? O que cobrar de cada um?" | [`08-GERENTE/PAINEL-DE-GESTORES.md`](08-GERENTE/PAINEL-DE-GESTORES.md) |
 | "Quanto cada agente e cada projeto consumiu?" | `python scripts/consumo.py --dias 7` |
 
 Cadernos por projeto ficam em `DOCS/P-<numero>-<nome>/GESTOR.md` e contêm apenas o
 que é exclusivo do gestor. O que é do projeto mora no repo do projeto.
 
 `08-GERENTE/` responde pelo **conjunto**: `REGRAS.md` (como o GERENTE trabalha),
+`PAINEL-DE-GESTORES.md` (registro e progresso medido dos gestores),
 `AUDITORIA-AAAA-MM-DD.md` (o que foi medido, com evidência),
 `MEDICOES-AAAA-MM-DD.md` (números de progresso por projeto e por gestor) e
 `PARA-GESTORES.md` (canal direto GERENTE ↔ gestor, ver `Dos GERENTES.md` itens 4–5).

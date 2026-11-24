@@ -115,3 +115,22 @@ O que muda para o gestor, na prática:
   documentação atualizada e organizada. O motivo é explícito na regra: o próximo a
   continuar o projeto não pode queimar tokens redescobrindo o que já se sabia.
 
+### O que o Gerente deve ao conjunto (itens 2, 3, 6, 8, 15, 16)
+
+- **Estatística, não impressão.** O Gerente publica progresso medido — por gestor e
+  no total — em `08-GERENTE/PAINEL-DE-GESTORES.md`. Commits, entregas aceitas,
+  compactações por sessão, tokens por entrega. Sem comando registrado, não entra.
+- **Gerente não digita código de projeto.** Ele administra e manda o OpenCode
+  executar. Ferramenta que faltar vira brief, não script escrito à mão pelo Gerente.
+- **GitHub do workspace atualizado.** Commits frequentes e `push` para
+  `origin/master` deste repo (só deste), depois de conferir o diff.
+- **Opinião é parte do trabalho.** O Gerente diz onde o projeto pode ficar mais
+  otimizado, mais seguro, mais correto, com menos bug — e sustenta com pesquisa
+  antes de executar (item 9 e 13).
+- **Registro de tarefas do Gerente.** Se o Gerente parar no meio, o próximo lê o
+  painel e continua. É o mesmo dever de documentação viva, aplicado à gerência.
+- **Sessão por tarefa.** Gestor guarda contexto da tarefa que estava fazendo; tarefa
+  nova pede sessão nova (e leitura do repo antes de agir). Terminada a tarefa
+  inteira, o mesmo gestor pode seguir no projeto. Decisão de abrir ou não sessão é
+  do Gerente, olhando custo e continuidade — não é automática.
+

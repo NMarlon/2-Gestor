@@ -3,14 +3,25 @@
 Canal criado com base em `Definições Oficiais Manuais/Dos GERENTES.md`, itens 4 e 5
 (GERENTE ↔ gestor: comunicação direta permitida, nos dois sentidos).
 
-**Como funciona**
+**Como funciona** (revisado em 24/11, depois de medir que o canal tinha 3 mensagens
+e **zero** acks — protocolo que ninguém executa é enfeite)
 
 - O GERENTE **acrescenta** um bloco no fim. Nunca edita bloco antigo, nunca apaga.
-- O gestor responde no caderno do próprio projeto (`DOCS/P-XX-*/GESTOR.md`), com a
-  linha `ACK M-NNN` e o que fez. O GERENTE recolhe na auditoria seguinte.
-- Mensagem sem `ACK` e sem prazo vencido aparece na auditoria. É o único controle.
+- O gestor **não responde "recebi"**. O ack é o efeito: o próximo commit dele no
+  caderno (`DOCS/P-XX-*/GESTOR.md`) com a linha `Estado:` atualizada. Ack explícito
+  custa token e não informa nada — regra adotada de protocolos de coordenação entre
+  agentes ("silence = success"; a ausência de escalonamento é o ack).
+- **Escalonamento é a única mensagem que o gestor manda de volta**: o que travou,
+  por quê, e qual decisão destrava. Vai no caderno, seção `Escalonamento`, e aparece
+  na auditoria. Discussão entre gestor e Gerente não passa de **3 turnos**; do
+  contrário vira documento, não conversa.
+- Resposta de entrega, quando o Gerente pedir, segue contrato fixo:
+  `RESULTADO / evidencia / nao_testado / riscos / pedido`.
 - Nada de instrução aqui que contrarie `AGENTS.md` ou o brief em vigor: em conflito,
   vale o brief, e o gestor abre pergunta.
+- **Dúvida que só o Marlon resolve** não para no gestor nem no Gerente: vira uma
+  linha em `DOCS/06-PERGUNTAS.md` com default declarado, e o trabalho segue pelo
+  default até ele responder (item 14 do `Dos GERENTES.md`).
 
 ---
 

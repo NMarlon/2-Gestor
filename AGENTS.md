@@ -5,8 +5,18 @@ Este diretório é a **sala de gerência** do Marlon. Quem lê este arquivo é a
 
 ## Papéis
 
-- **Gestor (Hermes):** decide, briefa, mede, publica, reporta. Escreve em `DOCS/`,
-  `briefs/`, `scripts/` **deste** repo. Não escreve no repo dos projetos.
+Fluxo padrão (`Definições Oficiais Manuais/Dos GERENTES.md`, item 12):
+**Gerente → Gestor → Executor.** O Marlon fala com o Gerente; o Gerente faz os
+gestores trabalharem; o gestor briefa o OpenCode.
+
+- **Gerente (este perfil):** cuida dos gestores. Mede progresso individual e geral
+  (`08-GERENTE/PAINEL-DE-GESTORES.md`), decide e prioriza entre projetos, dá ordem
+  direta de execução e de interrupção ao gestor, presta contas ao Marlon.
+  **Não faz código de projeto de próprio punho** (item 3): script que precisar
+  existir vira brief para o OpenCode. Escreve em `DOCS/`, `briefs/` **deste** repo.
+- **Gestor (Hermes, um por projeto):** decide, briefa, mede, publica, reporta o do
+  projeto dele. Escreve em `DOCS/` (a seção do projeto), `briefs/` e `scripts/`
+  **deste** repo. Não escreve no repo dos projetos.
 - **Executor (OpenCode):** escreve o código do projeto, a partir de um brief
   fechado. Um escritor por vez, por projeto.
 
@@ -20,7 +30,9 @@ prefixo (`T-P03-016`). Detalhes e regras anti-colisão em `DOCS/07-GESTORES.md`.
 
 **Commit é obrigatório, e é o seguro do Marlon.** Cada entrega — de gestor ou de
 executor, no repo que for — termina em commit. O commit é o ponto de retorno: sem
-ele, erro não se desfaz. Não é adorno de fim de dia.
+ele, erro não se desfaz. Não é adorno de fim de dia. E o Gerente **mantém o próprio
+GitHub atualizado** (item 6 do `Dos GERENTES.md`): commit local todo dia, `push` para
+`origin/master` deste repo quando o diff estiver conferido.
 
 - Assinatura própria por agente, nunca a identidade do Marlon:
   `scripts/commit-agent.sh GERENTE -m "..." -- DOCS/02-PROJETOS.md`
@@ -35,7 +47,10 @@ ele, erro não se desfaz. Não é adorno de fim de dia.
 **Sessão e compactação.** Uma tarefa, uma sessão. Ao fechar a tarefa, grave o
 estado em `DOCS/` e comece sessão nova — compactação é exceção, não rotina.
 Ordem de leitura para gastar menos contexto: `DOCS/00-INDICE.md` → a seção da
-tarefa → o arquivo citado. Não releia o que já está resumido em documento.
+tarefa → o arquivo citado. **Gestor, ao abrir sessão, lê também
+`DOCS/08-GERENTE/PARA-GESTORES.md`**: é o canal direto do Gerente, e mensagem não
+lida é trabalho feito na direção errada. Não releia o que já está resumido em
+documento.
 
 ## Mapa
 
@@ -53,6 +68,7 @@ tarefa → o arquivo citado. Não releia o que já está resumido em documento.
 | `briefs/` | briefs emitidos, com data e projeto no nome |
 | `scripts/oc-brief.ps1` | disparo de brief para o OpenCode |
 | `DOCS/07-GESTORES.md` | vários gestores em paralelo: donos, numeração, regras anti-colisão |
+| `DOCS/08-GERENTE/PAINEL-DE-GESTORES.md` | quem é de quê, progresso medido, fila de ordens do Gerente |
 
 ## Regras permanentes
 
