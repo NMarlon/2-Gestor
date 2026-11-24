@@ -131,9 +131,10 @@ Isso quebra exatamente a visão que permite vários gestores no mesmo workspace.
   HTML, `style.css?ver=1.3.8`, link de cookies no rodapé, purge do cache comprovado
   no HTML público. Antes: 1.3.7 com 394 KB de CSS morto removido (T-009), deploy
   saindo 0 (T-010), editor rich-text fora do formulário (T-015).
-- **Falha:** fila contornada (§3); depoimentos fictícios no ar (§7 das REGRAS);
-  `release.json` continua em 1.3.7 — a baseline do release não foi gravada depois
-  de publicar, então a próxima validação vai exigir outro bump por qualquer ajuste.
+- **Falha:** fila contornada (§3); depoimentos fictícios no ar (§7 das REGRAS) —
+  autorizados como exemplo em `Q-025`. *Correção de 24/11:* o `release.json` **não**
+  está com falha; o validador passa (`PASS baseline 1.3.7 / versão subiu / 1.3.8 apos
+  1.3.7`). Baseline desatualizada entre releases é o comportamento previsto.
 - **Veredito:** o gestor que mais entregou e o que melhor documenta o próprio
   trabalho. Precisa de gate de publicação explícito e de disciplina de fila.
 

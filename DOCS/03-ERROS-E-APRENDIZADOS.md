@@ -443,3 +443,25 @@ hero da home, ele tem **74,88 px**. O alvo estava 20 px abaixo do certo, e o CSS
 "validado" (56 px) ficava ainda mais longe. Medido de novo com `clamp(2.5rem,…,4rem)`:
 **64 px**. Lição: número de terceiro entra no brief como "estimativa do relatório", nunca
 como régua; a régua é o `getComputedStyle`.
+
+---
+
+## E-024 · Reportei defeito sem rodar o verificador do próprio repo
+
+**O que fiz.** Vi `scripts/release.json` em 1.3.7 e `style.css` em 1.3.8, concluí
+"gate de versão quebrado" e escrevi isso na `AUDITORIA`, no `M-001` e no `M-003` ao
+gestor do P-03. Em 24/11 o Marlon pediu explicação, fui rodar o validador — e ele
+**passa**: `PASS baseline 1.3.7 / versão subiu / 1.3.8 apos 1.3.7`. Baseline atrás da
+versão corrente é o estado previsto entre releases; ela só é regravada com `--record`
+depois do ZIP. O defeito não existia.
+
+**Por que aconteceu.** Comparei dois arquivos e tratei a diferença como erro, sem ler
+a regra que liga os dois — a regra estava no `validate-theme.mjs`, que eu não rodei.
+
+**Lição.** Se o repositório tem um verificador para a afirmação, o verificador decide,
+não o meu olho. Divergência entre dois artefatos só é defeito depois que a regra diz
+que é. Ordem certa: rodar o check → colar a saída → se falhar, aí sim reportar.
+
+**Custo.** Três documentos com pendência fantasma, um brief pedindo trabalho
+desnecessário ao gestor do P-03 e uma correção pública. Barato desta vez; caro se
+tivesse virado tarefa.

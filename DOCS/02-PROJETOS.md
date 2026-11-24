@@ -91,9 +91,11 @@ Commit `79013d5`. Verificação independente depois do commit:
 > `https://jessicahaguiwara.arq.br/` → `200`, **178.614 bytes** de HTML (UA Chrome,
 > sem query string, duas leituras), `style.css?ver=1.3.8`, link de cookies no
 > rodapé. Repo em `cbdf3d0` (`T-P03-018`), árvore limpa; tarefas `T-P03-016`…`020`
-> executadas mas **fora** da fila `04` (corrigido em `T-020`). Aberto: `release.json`
-> em 1.3.7, 3 depoimentos fictícios etiquetados (`Q-025`), `T-011` (dados da
-> cliente). Detalhe: `08-GERENTE/AUDITORIA-2026-11-23.md`.
+> executadas mas **fora** da fila `04` (corrigido em `T-020`). Aberto: `T-011` (dados
+> da cliente). Depoimentos fictícios: mantidos como `EXEMPLO` por decisão do Marlon
+> (`Q-025`). `release.json` em 1.3.7 é baseline normal — o validador passa
+> (`PASS` nos três testes de release, 24/11). Detalhe:
+> `08-GERENTE/AUDITORIA-2026-11-23.md`.
 
 
 | Campo | Valor |

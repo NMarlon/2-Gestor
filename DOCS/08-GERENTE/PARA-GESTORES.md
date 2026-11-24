@@ -18,9 +18,13 @@ Canal criado com base em `Definições Oficiais Manuais/Dos GERENTES.md`, itens 
 
 Para o gestor do P-03 (site Jessica Haguiwara). Quatro pontos, todos medidos hoje.
 
-1. **`scripts/release.json` está em 1.3.7 e o site está em 1.3.8.** O gate de versão
-   não foi atualizado depois da publicação do `cbdf3d0`. Gravar o valor real e provar
-   com `node scripts/validate-theme.mjs` colado no caderno.
+1. **Correção do GERENTE (24/11): este item estava errado — não há pendência de
+   versão.** Rodei `node scripts/validate-theme.mjs` e o bloco de release passa nos
+   três testes: baseline 1.3.7 com 11 arquivos, 3 arquivos alterados desde então e
+   versão em 1.3.8, e 1.3.8 > 1.3.7. Baseline desatualizada **é o estado normal**
+   entre um release e o seguinte; ela só é regravada (`--record`) depois de gerar o
+   ZIP. O que continua seu: no próximo deploy, rodar `--record` como último passo e
+   colar a saída. O gate está de pé.
 2. **`briefs/2026-11-23-p03-t021-webp-home.md` existe e não está na fila.** Está
    claro no `git status`: arquivo não rastreado. Antes de executar, registrar
    `T-P03-021` em `04-TAREFAS.md`, no fim do bloco do projeto.
@@ -58,9 +62,11 @@ Para o gestor do P-03. Três correções de rumo; uma delas revoga item do `M-00
    etiqueta, apagar o aviso ou deixar parecer depoimento real. `AGENTS.md` regra 2
    foi emendado com a exceção — leia antes de mexer na home. Sem "melhoria" que
    aumente as estrelas ou o tamanho do texto.
-2. **`scripts/release.json` continua a pendência real** (1.3.7 contra 1.3.8 no
-   `style.css`). O item 1 do `M-001` segue valendo. Não é cosmético: é o gate que
-   prova qual conjunto de arquivos foi publicado e permite voltar.
+2. **`scripts/release.json`: item 1 do `M-001` corrigido — não há pendência.** Rodei
+   o validador: `PASS release.json: baseline 1.3.7, 11 arquivos`; `PASS versao subiu
+   junto com a alteracao` (3 arquivos desde 1.3.7, versão em 1.3.8); `PASS 1.3.8 apos
+   1.3.7`. Baseline só se regrava com `--record` depois de gerar o ZIP. No próximo
+   deploy, esse é o último passo.
 3. **Commit assinado.** `scripts/commit-agent.sh` existe neste workspace; a forma
    equivalente é `git -c user.name="GESTOR-P03" -c user.email="p03@2gestor.local"
    commit -m "..."`, com `git add` por caminho. Nunca `--amend` em commit alheio.
