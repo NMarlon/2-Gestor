@@ -548,7 +548,8 @@ Entram na fila pelo que foi medido, não pelo que foi narrado:
 | T-P03-019 | `p03-t019-limpar-php-diagnostico` | 🟢 feita | `GET /jhw-purge.php` e `/jhw-check.php` → **404** |
 | T-P03-020 | `p03-t020-paginas-servico-rascunho` | 🟢 feita e verificada pelo gestor | 4 páginas `draft` no WP (IDs 226–229, slugs exatos); as 4 URLs → **404**; home intacta (178.614 B, rodapé `d0a615c449b2`, 1.3.8) |
 | T-P03-021 | `p03-t021-webp-home` | 🟢 feita e verificada | 7 fotos trocadas por WebP dedicado; home serve **7/7 `.webp`**, 0 referências a `.jpg`; peso real baixado **864,4 KB → 661,7 KB (−23,5%)**; home 178.621 B, 3 leituras idênticas (md5 `f5439f0a2a1d`) |
-| T-P03-022 | `p03-t022-publicar-servicos` | 🔴 aguarda "pode" do Marlon | publicar as 4 páginas, ligar os 4 cartões da home, submenu, Yoast, estilo interno |
+| T-P03-022 | `p03-t022-publicar-servicos` | 🔴 aguarda "pode" do Marlon · brief pronto (`briefs/2026-11-23-p03-t022-publicar-servicos.md`, marca `BLOQUEADO POR APROVAÇÃO`) | publicar as 4 páginas, ligar os 4 cartões da home, submenu, Yoast, escala do H1. **Medido:** páginas internas já herdam Marcellus/Inter/`#EDE3D6`; o defeito real é `h1` 31,67 px **menor que** `h2` 40,44 px (hierarquia invertida). Premissa anterior de "CSS preso em `.jhw-home-v2` a desescopar" era **errada** — ver E-022 |
+| T-P03-023 | `p03-t023-banner-cookies-paleta` | 🟡 a emitir | botão "Aceito" do Complianz em `#3B29FF` (azul elétrico, medido `rgb(59,41,255)`), fora da paleta bege/preto; mudança visível em todo o site → exige "pode" do Marlon |
 
 **Verificação do T-P03-020 (feita por mim, via MCP e HTTP, não pelo relatório):**
 `wp_get_page` 226–229 → `status: draft`, slugs `consultoria`, `projetos`,
