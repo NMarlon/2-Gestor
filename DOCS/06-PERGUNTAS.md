@@ -609,3 +609,21 @@ estão íntegros; falta só a porta de saída.
 
 **Default:** (c) até você decidir. Commit local continua obrigatório; o risco é
 perder o repo se o disco morrer, não perder o histórico do dia.
+
+---
+
+## Q-035 · P-03 · O menu diz "Projeto" e o cartão diz "Projetos" — padronizo?
+
+Medido na URL pública em 24/11, pelo gestor do P-03: o submenu SOLUÇÕES traz o item
+**"Projeto"** (singular), o cartão da home diz **"Projetos"** e o `h1` da página é
+**"Projeto de arquitetura e interiores"**. Os três links estão certos; é só o rótulo
+que não fecha. Inconsistência visível ao visitante, não falha técnica.
+
+(a) Padronizo para **"Projetos"** no submenu (o rótulo curto do menu fica no plural,
+    igual ao cartão) — muda uma string no menu de navegação. (recomendado)
+(b) Padronizo para **"Projeto"** também no cartão da home.
+(c) Deixa como está: menu curto no singular é escolha editorial, e eu registro a
+    decisão para não voltar em toda revisão.
+
+**Default:** (c) — não mexo em rótulo visível sem sua palavra. A página está no ar e
+funcional; isso é acabamento.

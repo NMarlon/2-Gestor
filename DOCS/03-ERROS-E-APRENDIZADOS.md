@@ -465,3 +465,23 @@ que é. Ordem certa: rodar o check → colar a saída → se falhar, aí sim rep
 **Custo.** Três documentos com pendência fantasma, um brief pedindo trabalho
 desnecessário ao gestor do P-03 e uma correção pública. Barato desta vez; caro se
 tivesse virado tarefa.
+
+---
+
+## E-025 · `curl.exe -o /dev/null` no Windows mente o tamanho
+
+**O que aconteceu.** Medição de página no Windows com `curl.exe ... -o /dev/null`:
+o comando saiu **23** (erro de escrita) e reportou `size_download 0`, enquanto o
+código HTTP veio correto e a página existia. Quem lesse a saída concluiria "página
+vazia". Encontrado pelo gestor do P-03 durante a verificação da T-P03-024, antes de
+virar número no relatório.
+
+**Por que aconteceu.** `/dev/null` é caminho POSIX; o `curl.exe` nativo não resolve.
+Ele abre, falha a escrita e conta zero bytes baixados.
+
+**Lição.** No Windows, com `curl.exe` nativo, o descarte é `-o nul`, não `/dev/null`.
+E código HTTP correto não valida tamanho: se o número importa, ele precisa de um
+segundo caminho de medida (aqui: `-o arquivo` + `wc -c`, ou `curl -s | wc -c`).
+
+**Custo.** Nenhum — foi pego na hora. Virado regra para não virar 149 kB de página
+"0 bytes".

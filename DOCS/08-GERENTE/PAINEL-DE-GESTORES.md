@@ -11,14 +11,32 @@
 
 | Projeto | Gestor (quem decide) | Escritor (quem digita) | Estado medido |
 |---|---|---|---|
-| P-03 Jessica Haguiwara | este perfil (`manager-developer-hermes`) | OpenCode, sessão do P-03 | 🟢 ativo — 1.3.8 no ar, 4 páginas em rascunho |
+| P-03 Jessica Haguiwara | **perfil `p03-gestor`** | OpenCode, sessão do P-03 | 🟢 ativo — 1.3.9 no ar, 4 páginas publicadas e verificadas |
+| P-05 Painel Hermes | **perfil `p05-gestor`** (criado 24/11; papel aguardando aprovação do Marlon) | — (nada iniciado) | ⚪ aprovado, pasta `5-Painel-Hermes` ainda não existe |
 | P-04 Portfólio | **sem dono** (`Q-024`) | — | 🟡 construído em 20/11, não publicado |
 | P-02 Reconhecedor | **sem dono** (`Q-024`) | — | 🟡 serviço de pé, sem repo em `MarlonScripts/` |
 | P-01 Hermes-Mobile | — | — | 🔵 arquivado (API parada em 23/11) |
 
-Consequência prática: **o conjunto tem um gestor ativo e dois projetos órfãos.**
-Abrir gestor novo é decisão do Marlon; o Gerente lembra, não abre por conta própria
-(`07-GESTORES.md`, "Fim de projeto").
+Consequência prática: **dois projetos com gestor próprio (P-03 ativo, P-05 parado),
+dois órfãos (P-02, P-04).** Abrir gestor novo é decisão do Marlon; o Gerente lembra,
+não abre por conta própria (`07-GESTORES.md`, "Fim de projeto").
+
+## Primeira tarefa do gestor de P-03 — o que ele entregou
+
+Comando de leitura: `git log --oneline -3` no 2-Gestor; commits `ef2e0b6` e
+`73a2b29`, ambos de `GESTOR-P03`, 24/11.
+
+| O que medi no gestor | Resultado |
+|---|---|
+| Mediu na fonte pública ou repetiu o relatório do executor? | Na fonte: UA Chrome/131, URL sem query, **duas leituras por URL**, md5 por página |
+| Números com rastro | `/` 181.139 B md5 `8f73a2c0…`; 4 páginas 149.338 / 149.167 / 149.132 / 149.054 B; `page-id` 226–229; 157–177 palavras no `<main>` |
+| Distinguiu falha de ressalva | Sim — separou "023 não entrou" (falha) de "rótulo no singular" (copy) |
+| Achou o que não sabia e disse | Sim — um **commit de correção próprio** (`73a2b29`) ao perceber que não provou onde o submenu vive; rollback do tema pode **não** desfazer o menu |
+| Escreveu fora do escopo? | Não — `AGENTS.md` intocado, nenhum caderno de P-02/P-04, nada no repo do projeto, nenhum deploy |
+| Respeitou o gate de aprovação? | Sim — parou a 023 (botão do banner de cookies) esperando `Q-032` |
+
+Nota de leitura: o valor desse gestor não foi achar que estava tudo bem, foi
+**entregar o próprio erro no segundo commit**. É o comportamento que o painel mede.
 
 ## Progresso por projeto
 

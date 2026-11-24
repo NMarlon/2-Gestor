@@ -22,6 +22,7 @@ Nunca dois gestores no mesmo projeto; nunca dois OpenCode no mesmo repositório.
 | P-02 Reconhecedor | a designar | 🟡 serviço de pé, sem dono definido (Q-024) |
 | P-03 Jessica Haguiwara | **perfil `p03-gestor`** (criado 24/11) | 🟢 ativo, prioridade — 1.3.9 no ar, 4 páginas publicadas |
 | P-04 Portfólio | a designar | 🟡 construído, não publicado, sem dono (Q-024) |
+| P-05 Painel Hermes | **perfil `p05-gestor`** (criado 24/11, papel no `SOUL.md` **pendente de aprovação**) | ⚪ aprovado, não iniciado — pasta `5-Painel-Hermes` ainda não existe |
 
 *Estados medidos em **2026-11-24**. Detalhe em `02-PROJETOS.md`; medição em
 `08-GERENTE/AUDITORIA-2026-11-23.md`.*
