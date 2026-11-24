@@ -18,6 +18,7 @@
 | "Quem responde pelo conjunto dos gestores e como audita?" | [`08-GERENTE/REGRAS.md`](08-GERENTE/REGRAS.md) |
 | "Quando compactar a sessão e com que parâmetro?" | [`08-GERENTE/COMPACTACAO.md`](08-GERENTE/COMPACTACAO.md) |
 | "Como estão os gestores? O que cobrar de cada um?" | [`08-GERENTE/PAINEL-DE-GESTORES.md`](08-GERENTE/PAINEL-DE-GESTORES.md) |
+| "O que o Marlon pediu e ainda não foi entregue?" | [`08-GERENTE/LISTA-DE-PEDIDOS.md`](08-GERENTE/LISTA-DE-PEDIDOS.md) |
 | "Quanto cada agente e cada projeto consumiu?" | `python scripts/consumo.py --dias 7` |
 
 Cadernos por projeto ficam em `DOCS/P-<numero>-<nome>/GESTOR.md` e contêm apenas o

@@ -3,7 +3,8 @@
 > Dever do GERENTE (`Definições Oficiais Manuais/Dos GERENTES.md`, itens 2 e 15):
 > medir o progresso **individual e geral** dos gestores e manter o registro de
 > tarefas do próprio Gerente, para que outro Gerente continue daqui sem
-> redescobrir nada. Última medição: **24/11/2026**. Toda linha tem o comando que a
+> redescobrir nada. Fila de pedidos do Marlon: `LISTA-DE-PEDIDOS.md` (ao lado).
+> Última medição: **24/11/2026**. Toda linha tem o comando que a
 > produziu; número sem comando não entra.
 
 ## Quem existe hoje
