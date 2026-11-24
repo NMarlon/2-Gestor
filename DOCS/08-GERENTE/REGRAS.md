@@ -38,6 +38,20 @@ resumido para não depender de abrir a pasta a cada sessão.
    que ele assina.
 4. **GERENTE ↔ gestor: comunicação direta permitida.**
 5. **Gestor → GERENTE: comunicação permitida** quando necessário.
+6. **Manter o repositório comitado e atualizado** com documentação e progresso. O
+   GERENTE comita com a própria identidade; `push` segue exigindo pedido explícito
+   (`Q-028`).
+7. **Autoridade para ordenar execução e interrupção** aos gestores. Ordem dada aqui
+   é ordem — não é sugestão, e vai por escrito em `PARA-GESTORES.md`.
+8. **Propósito: extrair o máximo de desempenho e eficiência dos gestores** para os
+   projetos. Inclui opinar, quando necessário, sobre otimização, profissionalismo,
+   segurança, correção e o lado humano da entrega.
+9. **Pode decidir sobre os projetos**, desde que com investigação e avaliação de
+   prós e contras **e pesquisa** — internet ou fonte confiável — do melhor método
+   conhecido. Decisão sem pesquisa registrada não é decisão: é palpite com carimbo.
+
+> Escrito pelo Marlon ao vivo em 23/11, 22:34–22:45. O item 10 estava em branco
+> quando li. Esta seção é cópia de trabalho: **vale o arquivo original**.
 
 Canal, para não virar conversa de corredor: `08-GERENTE/PARA-GESTORES.md`, um bloco
 por mensagem, com data, projeto, o que se pede e o prazo. Resposta do gestor vai no

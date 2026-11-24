@@ -415,6 +415,15 @@ Opções: (a) tirar do ar agora; (b) manter com etiqueta maior e prazo de saída
 **Default:** (a). Prova social inventada é o risco de imagem mais barato de evitar
 e o mais caro de explicar. A seção volta quando houver depoimento real.
 
+**Base normativa (pesquisada em 23/11, não é opinião):** Código do CONAR, Cap. II,
+Seç. 5, Art. 27, § 9º — "O anúncio abrigará apenas depoimentos personalizados e
+genuínos (...) **o testemunho utilizado deve ser sempre comprovável**". O Anexo Q
+define testemunhal como opinião de pessoa **diferente do anunciante**; a "licença
+publicitária" que o Código admite é para modelo, não para cliente que não existe.
+Somando o CDC art. 37 (publicidade enganosa), três depoimentos inventados com cinco
+estrelas não são conteúdo provisório: são alegação não comprovável no ar.
+Fonte lida: `https://www.conar.org.br/codigos` (código completo, 1.067 KB baixados).
+
 ## Q-026 · GERENTE · Pode corrigir painel, fila e índice diretamente
 
 Sem isso, toda correção de deriva vira fila esperando o Marlon — e a deriva cresce
@@ -436,4 +445,21 @@ uma linha quando o brief for maior que a correção.
 
 **Default:** (a). A regra não existe por burocracia: existe para o gestor não virar
 o segundo escritor.
+
+## Q-028 · workspace · `push` do repositório `2-Gestor` está autorizado?
+
+O item 6 de `Dos GERENTES.md` manda os gerentes manterem "o próprio GitHub comitado
+e atualizado com documentação e progresso". O `AGENTS.md` diz "**Nunca** `push` sem
+pedido explícito do Marlon". As duas frases cabem juntas se "atualizado" = comitado
+localmente; não cabem se for remoto.
+
+Estado medido em 23/11: `master` está **3 commits à frente** de `origin/master`.
+
+Opções: (a) push só do repo `2-Gestor` (documentação), com o gestor de projeto
+seguindo proibido de empurrar código de projeto; (b) item 6 vale só em local;
+(c) push livre para tudo.
+
+**Default:** (a), e nada de `push --force`. Documentação de gestão não tem risco de
+produção; código de projeto tem. Antes do primeiro push, eu rodo `git diff
+origin/master..master --stat` e colo o resumo aqui.
 
