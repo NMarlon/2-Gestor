@@ -79,3 +79,39 @@ projeto de outro.
 Quando o gestor esgota o que o projeto permite, ele registra o estado em
 `02-PROJETOS.md`, fecha as tarefas abertas e avisa o Marlon. Quem abre o próximo
 projeto é o Marlon — não o gestor anterior, e não por conta própria.
+
+## Git num workspace compartilhado
+
+**Nunca `git add -A` neste repo.** Outro gestor pode estar com edição em voo no mesmo
+diretório, e o `-A` leva o trabalho dele para dentro do seu commit — foi o que
+aconteceu no commit `d363607` (varreu `Definições Oficiais Manuais/Dos GERENTES.md`,
+que não era meu). Adicione só os caminhos que você escreveu:
+
+```sh
+git add DOCS/04-TAREFAS.md DOCS/03-ERROS-E-APRENDIZADOS.md briefs/2026-11-23-p03-*.md
+```
+
+Antes de commitar, `git status --short` e conferir se algum arquivo listado não é seu.
+Se for de outro gestor, deixe como está: ele commita.
+
+## A camada acima: Gerente
+
+O Marlon definiu em `Definições Oficiais Manuais/Dos GERENTES.md` uma camada **acima**
+do gestor. A hierarquia é:
+
+**Gerente** → **Gestor** (Hermes, um por projeto) → **Executor** (OpenCode).
+
+O que muda para o gestor, na prática:
+
+- O Gerente pode **dar ordem direta de execução e de interrupção** ao gestor. Ordem de
+  Gerente não se discute com o Marlon; executa-se, e se houver risco, o gestor diz o
+  risco ao Gerente antes.
+- O Gerente pode pedir ao gestor que um projeto fique mais otimizado, mais seguro, mais
+  correto. Isso é prioridade de trabalho, não sugestão.
+- Decisão de projeto continua com o gestor — mas **sempre** com prós e contras
+  investigados, e pesquisando o método conhecido antes de inventar. "Achei melhor
+  assim" não é justificativa.
+- Todo mundo — Gerente, Gestor, Executor — é responsável por manter a própria
+  documentação atualizada e organizada. O motivo é explícito na regra: o próximo a
+  continuar o projeto não pode queimar tokens redescobrindo o que já se sabia.
+
