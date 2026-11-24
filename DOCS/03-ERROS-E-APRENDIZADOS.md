@@ -306,3 +306,35 @@ começar o teste quando `/api/stats` devolver 200.
 **Por que ninguém vê:** o relatório diz "banco real inalterado" — verdade — mas não
 diz que o processo do usuário foi derrubado e substituído. O sintoma que o usuário vê
 é "o app abriu, mas não carrega nada".
+
+---
+
+## E-020 · A mesma armadilha do cache, três dias depois (2026-11-23)
+
+**O que aconteceu:** afirmei ao Marlon, sobre o site da Jéssica, que o menu **não tinha
+"Soluções"**, e propus criar o item. Ele respondeu que existia. Medi de novo, agora
+furando o cache: **existe**, com submenu, apontando para `#solucoes`. Eu havia lido a
+página em cache — exatamente o erro que o E-015 descreve, cometido por quem o escreveu.
+
+No mesmo dia, errei duas vezes mais pelo mesmo motivo: contei CSS na página em cache e
+chamei de "não minificado" (já estava minificado pelo WPFC); e comparei o rodapé servido
+(3426 B, minificado pelo cache) com o dinâmico (3701 B) como se fossem o mesmo objeto,
+concluindo "o arquivo não chegou no ar" — quando o que faltava era outra coisa.
+
+**Regra nova, e ela é mecânica:** antes de afirmar que um recurso **não existe**, medir
+as duas leituras — a servida (limpa) e a dinâmica (`?cb=1`) — e comparar. Se divergirem,
+o que vale é a servida, mas a comparação é obrigatória. "Não achei no HTML" só vira
+conclusão depois das duas leituras.
+
+**Corolário 1 — 404 não é disco limpo:** 30 arquivos `jhw-*.php` de diagnóstico antigo
+devolvem 404 para GET anônimo, mas continuam no docroot. Um deles (`jhw-purge.php`)
+**executa** com chave estática na URL. Ausência de resposta não prova ausência de arquivo.
+
+**Corolário 2 — travessão não é assinatura:** vi `–` onde o arquivo tinha `-` e chamei
+de prova de edição no editor. É `wptexturize` do WordPress agindo na saída. A conclusão
+estava certa por outro caminho (bytes do banco); a evidência que usei era inválida.
+
+**Corolário 3 — arquivo de tema não é fonte de verdade por si:** `wp_template_part`
+salvo no banco (ID 185) vence `parts/footer.html`. Deploy verde, verificação 11/11,
+e o visitante continua vendo o rodapé antigo. Antes de editar tema, perguntar: **este
+template part está salvo no banco?**

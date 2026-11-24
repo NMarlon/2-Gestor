@@ -40,6 +40,7 @@ Eu estou contente com o resultado, vou continuar usando o Hermes Agent como send
 7. SE é um sistema sem GitHub (como sites em wordpress), tem que ter uma forma de fazer backup do projeto, se não houver nada na documentação falando sobre isso, pergunte ao DEV onde deve estar os backups daquele projeto. 
 	1. Porém, ainda assim, a documentação do projeto e outros arquivos base desse tipo, scripts que a IA usa etc, DEVE estar num repositório do GitHub, deve ser criado um se não houver.
 8. SEMPRE tenha certeza que tem um último backup/commit feito antes de começar à modificar, para não perder nada do que já foi feito, antes do próximo trabalho. O executor (OpenCode), deve manter atualizado um arquivo com os backups, para que assim também, não precise reabrir no navegador e gastar tokens e tempo verificando algo que já foi registrado e é só ler.
+9. Ao iniciar um novo projeto, OBRIGATORIAMENTE deve seguir o protocolo de: "./Instrução Básicas de Novo Projeto para os Agentes Executores.md" para os agentes executores do novo projeto. 
 
 
 #### Para Sites Wordpress

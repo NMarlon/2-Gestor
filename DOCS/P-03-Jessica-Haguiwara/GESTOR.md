@@ -55,9 +55,21 @@ custaram caro:
 | MCP WordPress | Não é fonte de verdade sobre o que está no ar. Sempre abrir a URL pública. |
 | `custom_css` | Gravação pela REST responde vazio; o CSS foi movido para o `style.css` do child. Não voltar a usar o Customizer. |
 | Spectra | O plugin injeta **394 KB** de CSS utilitário inline em toda página e **nenhuma** página usa essas classes. Ver T-009. |
+| Template part no banco | `wp_template_part` **ID 185** (`post_name=footer`) vence `parts/footer.html`. Deploy verde, verificação 11/11, e o visitante vê o rodapé velho. Resolvido em 2026-11-23 apagando o override — o arquivo voltou a mandar. **Antes de editar tema, checar se a parte está salva no banco.** |
+| Menu | Não está em `parts/header.html`: é `wp_navigation` no banco. O item SOLUÇÕES existe e aponta para `#solucoes`; o submenu (`open-on-hover-click`) existe **vazio**. |
+| Medição | Medir sempre as duas leituras: a servida (limpa) e a dinâmica (`?cb=1`). O cache já me fez afirmar três coisas falsas (E-020). |
+| PHP de diagnóstico | 30 `jhw-*.php` no docroot, inertes (`http_response_code(404)`), exceto `jhw-purge.php`, que **executa** com chave estática na URL. 404 anônimo não prova arquivo apagado. |
+| Slug em inglês | Política de Privacidade vive em `/privacy-policy/`; `/politica-de-privacidade/` dá 404. O rodapé tem os dois links, um em cada idioma. Não mexer sem checar referências do Complianz. |
 
 ## Decisões tomadas
 
+- **2026-11-23 (executada)** — Publicado o link da Política de Cookies no rodapé
+  (versão **1.3.8**). Mudou mais que o link: havia um `wp_template_part` no banco
+  (ID 185) vencendo o arquivo do tema, então o deploy saía verde e o ar não mudava.
+  O override foi removido, o arquivo voltou a mandar, o cache foi purgado, e a URL
+  limpa agora mostra `<footer>` de **3478 B** (era 3426 B) com os dois links, em duas
+  leituras idênticas. `/politica-de-cookies/` responde 200. Rollback = recriar o
+  template part a partir de `backups/template-part-185-footer-2026-11-23.json`.
 - **2026-11-20 (executada)** — 1.3.5 no ar: removidos 394 KB de CSS utilitário
   morto do Spectra em cada página. Home 577.433 → **183.203 B**. Medido na URL
   pública depois de limpar WPFC + proxy. Rollback = commit `723548c`.
