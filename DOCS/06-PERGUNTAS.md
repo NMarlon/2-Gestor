@@ -589,3 +589,23 @@ se a frase vende bem — isso é teu, ou da Jéssica.
 (c) Peço à Jéssica para ler.
 
 **Default:** (a), mas só depois de Q-031.
+
+---
+
+## Q-034 · workspace · Como o Gerente publica no GitHub (credencial que falta)?
+
+O item 6 do `Dos GERENTES.md` pede GitHub do workspace atualizado. Tentei o `push`
+hoje, 24/11, e ele **não passa**: `https://github.com/NMarlon/2-Gestor.git` sem
+credencial salva (`fatal: could not read Username`), nenhuma chave SSH em `~/.ssh`
+(`Permission denied (publickey)`) e nenhum token no `.env`. Os 22 commits locais
+estão íntegros; falta só a porta de saída.
+
+(a) Você cria um **fine-grained PAT** (só este repo, permissão `Contents: read and
+    write`), põe em `.env` como `GITHUB_TOKEN=...` e eu configuro o helper. Nenhum
+    agente lê nem imprime o valor. (recomendado)
+(b) Você gera uma chave SSH e adiciona em GitHub → Settings → SSH keys; eu troco o
+    remote para `git@github.com:NMarlon/2-Gestor.git`.
+(c) Deixa sem `push` por enquanto: commit local todo dia e backup pelo `.bundle`.
+
+**Default:** (c) até você decidir. Commit local continua obrigatório; o risco é
+perder o repo se o disco morrer, não perder o histórico do dia.
