@@ -15,9 +15,14 @@
 | "O que está esperando o Marlon?" | [`06-PERGUNTAS.md`](06-PERGUNTAS.md) |
 | "Peguei o projeto X: o que é só meu e o que está no repo dele?" | [`P-03-Jessica-Haguiwara/GESTOR.md`](P-03-Jessica-Haguiwara/GESTOR.md) |
 | "Somos vários gestores: quem é de quê e como não colidir?" | [`07-GESTORES.md`](07-GESTORES.md) |
+| "Quem responde pelo conjunto dos gestores e como audita?" | [`08-GERENTE/REGRAS.md`](08-GERENTE/REGRAS.md) |
 
 Cadernos por projeto ficam em `DOCS/P-<numero>-<nome>/GESTOR.md` e contêm apenas o
 que é exclusivo do gestor. O que é do projeto mora no repo do projeto.
+
+`08-GERENTE/` responde pelo **conjunto**: `REGRAS.md` (como o GERENTE trabalha) e
+`AUDITORIA-AAAA-MM-DD.md` (o que foi medido, com evidência). Gestor de projeto lê;
+não escreve ali.
 
 ## Documentos externos ao workspace (referência)
 
@@ -31,8 +36,9 @@ que é exclusivo do gestor. O que é do projeto mora no repo do projeto.
 
 ## Convenções
 
-- Nomes de arquivo em `DOCS/` são numerados: `00` a `06`. Documento novo entra
-  com o próximo número livre.
+- Nomes de arquivo em `DOCS/` são numerados: `00` a `07`; a pasta `08-GERENTE/`
+  guarda as regras e auditorias do GERENTE. Documento novo entra com o próximo
+  número livre.
 - Status: 🟢 feito e verificado · 🟡 em andamento · 🔴 bloqueado · ⚪ não iniciado.
 - Toda afirmação de estado carrega **data** e **evidência** (comando + saída,
   caminho de log, URL, hash de commit).

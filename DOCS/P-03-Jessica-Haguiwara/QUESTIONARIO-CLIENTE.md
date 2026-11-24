@@ -42,7 +42,16 @@ Onde não souber, escrever "não sei" — nada será inventado no lugar.
 ## 4. Como você trabalha e cobra
 
 **10.** Quais serviços você oferece hoje? (projeto arquitetônico completo, projeto de interiores, consultoria, acompanhamento de obra, outros)
-*Hoje o site não tem página de serviços.*
+*Hoje o site não tem página de serviços. Escrevi quatro páginas a partir do que já está publicado na home: Consultoria, Projetos, Gestão de Obra e Chave na Mão. As três perguntas abaixo são para eu não afirmar nada errado nelas.*
+
+**10.1.** A consultoria pode ser contratada sozinha, avulsa, ou ela só existe dentro de um projeto maior?
+*Está escrito de um jeito que serve para os dois casos. Se só existir dentro de projeto, eu mudo a frase.*
+
+**10.2.** Na gestão de obra, você vai à obra? Com que frequência costuma ser — semanal, quinzenal, por etapa?
+*O texto hoje diz "acompanha a execução" sem prometer frequência. Se você vai toda semana, isso vira argumento de venda.*
+
+**10.3.** No chave na mão, quem executa a obra: você com equipe própria, ou você coordena empreiteiros e fornecedores do cliente?
+*Muda a frase e muda a expectativa de quem contrata. Não quero que o site prometa o que você não faz.*
 
 **11.** Como funciona o seu processo, do primeiro contato à entrega? Quantas etapas, e quanto tempo costuma levar?
 *É a seção "Como trabalhamos" — hoje ela descreve um processo genérico, não o seu.*
