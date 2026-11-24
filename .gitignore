@@ -6,3 +6,6 @@ node_modules/
 
 # perfil de navegador do executor (cookies de sessao, nunca versionar)
 .browser/
+
+# backups locais do repo (.bundle de 8 MB, nao e fonte)
+backups/
