@@ -526,3 +526,66 @@ login no navegador; robô logado em painel de faturamento é risco que eu não a
 
 **Default:** (a).
 
+
+---
+
+## Q-031 · P-03 · Liberar a publicação das 4 páginas (T-P03-022)?
+
+O brief está pronto e medido: 4 páginas em `draft` (226 consultoria, 227 projetos,
+228 gestão de obra, 229 chave na mão), 4 cartões da home hoje apontando para `#contato`,
+submenu SOLUÇÕES inexistente, e o CSS que corrige o título de página (31,67 px → 64 px).
+Publicar é mudança visível ao cliente, então não ando sem tua palavra.
+
+Reversível: revisão do WordPress em cada página + `git revert` do tema. Nada é
+destrutivo; os legados 164–166 vão para a lixeira, não para o lixo.
+
+(a) Pode — publica as 4, liga os cartões, cria o submenu, sobe o CSS (recomendado).
+(b) Só o CSS do título; as páginas ficam em rascunho.
+(c) Espera; quero ver o CSS antes.
+
+**Default:** (c) — não publico nada. Se você não responder, o site fica como está:
+funcionando, com as 4 páginas ainda invisíveis.
+
+---
+
+## Q-032 · P-03 · Trocar a cor do botão "Aceito" do banner de cookies?
+
+Medido na home: o banner é 500×313, fixo no canto inferior esquerdo, fundo
+`rgb(220,216,200)` — combina com o site. O botão "Aceito" é `rgb(59,41,255)`, azul
+elétrico, fora da paleta bege/preto. É a única coisa fora de lugar no banner.
+
+**Escopo real (medido no `banner-1-optin.css`):** 3 variáveis com `#3B29FF` —
+`--cmplz_button_accept_background_color`, `--cmplz_hyperlink_color`,
+`--cmplz_slider_active_color`. O link do banner já sai oliva `rgb(79,91,67)` por regra
+mais específica, então na prática o azul aparece **só no botão "Aceito"** (e no slider
+ativo, quando o visitante abre "Escolher preferências").
+
+**Proposta, já validada em navegador** (`probe11` na home @1440):
+`--cmplz_button_accept_background_color: #1A1A1A` com
+`--cmplz_button_accept_text_color: #EDE3D6` (mais borda `#1A1A1A` e slider `#1A1A1A`).
+Resultado medido: botão `rgb(26,26,26)` / `rgb(237,227,214)`, continua `149×45`; banner
+segue `500×313`, `fixed`, mesmo canto, fundo `rgb(220,216,200)`; `scrollWidth 1440 =
+innerWidth 1440`. **Contraste 13,72:1** — contra 7,13:1 do branco sobre o azul atual.
+
+(a) Trocar para preto/bege da paleta (recomendado; CSS e brief prontos).
+(b) Deixa como está.
+(c) Mostrar a cor proposta antes.
+(d) Só o botão; deixar o slider azul.
+
+**Default:** (b) — não mexo. É cosmético e afeta todo o site.
+**Brief:** `briefs/2026-11-23-p03-t023-paleta-banner-cookies.md` (marca `BLOQUEADO POR APROVAÇÃO`).
+
+---
+
+## Q-033 · P-03 · As 4 páginas de serviço: revisão editorial é tua ou minha?
+
+As páginas 226–229 foram escritas pelo OpenCode com o texto que você aprovou. Eu
+verifiquei estrutura: 2 H2 cada, CTA de WhatsApp correto (`5511983236422`), nada
+inventado (sem CAU, sem preço, sem prazo, sem obra). O que eu **não** faço é julgar
+se a frase vende bem — isso é teu, ou da Jéssica.
+
+(a) Publico e você revisa depois, no ar (recomendado, se o texto já foi aprovado).
+(b) Você lê os rascunhos antes de qualquer publicação.
+(c) Peço à Jéssica para ler.
+
+**Default:** (a), mas só depois de Q-031.
