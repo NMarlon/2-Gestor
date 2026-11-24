@@ -435,3 +435,11 @@ Regra sem `!important` perde, por mais específica que seja.
   metade do trabalho; a outra metade é medir o resultado com o CSS injetado.
 - CSS candidato se valida no navegador **antes** de virar tarefa: injetar por CDP, medir
   `getComputedStyle`, e só então escrever o brief com os valores medidos.
+
+**Adendo (mesmo dia, segunda ocorrência).** O "52–56 px" que usei como alvo do título de
+página não era medição minha: era estimativa do relatório do analista, e eu a repeti como
+se fosse número medido — inclusive dentro de um critério de aceite. Quando fui medir o
+hero da home, ele tem **74,88 px**. O alvo estava 20 px abaixo do certo, e o CSS já
+"validado" (56 px) ficava ainda mais longe. Medido de novo com `clamp(2.5rem,…,4rem)`:
+**64 px**. Lição: número de terceiro entra no brief como "estimativa do relatório", nunca
+como régua; a régua é o `getComputedStyle`.
