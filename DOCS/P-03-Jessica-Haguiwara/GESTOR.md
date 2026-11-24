@@ -56,13 +56,46 @@ custaram caro:
 | `custom_css` | Gravação pela REST responde vazio; o CSS foi movido para o `style.css` do child. Não voltar a usar o Customizer. |
 | Spectra | O plugin injeta **394 KB** de CSS utilitário inline em toda página e **nenhuma** página usa essas classes. Ver T-009. |
 | Template part no banco | `wp_template_part` **ID 185** (`post_name=footer`) vence `parts/footer.html`. Deploy verde, verificação 11/11, e o visitante vê o rodapé velho. Resolvido em 2026-11-23 apagando o override — o arquivo voltou a mandar. **Antes de editar tema, checar se a parte está salva no banco.** |
-| Menu | Não está em `parts/header.html`: é `wp_navigation` no banco. O item SOLUÇÕES existe e aponta para `#solucoes`; o submenu (`open-on-hover-click`) existe **vazio**. |
+| Menu | Não está em `parts/header.html`: é `wp_navigation` no banco. Desde a **1.3.9** (24/11) o item SOLUÇÕES aponta para `#solucoes` (âncora existe) e o submenu (`open-on-hover-click`) tem **4 filhos**: consultoria, projetos, gestao-de-obra, chave-na-mao. Antes disso estava vazio — reverter o tema devolve o submenu vazio. |
 | Medição | Medir sempre as duas leituras: a servida (limpa) e a dinâmica (`?cb=1`). O cache já me fez afirmar três coisas falsas (E-020). |
+| `curl` no Windows | `curl.exe -o /dev/null` sai **23** (erro de write) e reporta `size_download 0`: o código HTTP continua válido e o **tamanho mente**. Use `-o nul`. Aconteceu em 24/11 — por um instante a home "tinha" 0 B. |
 | PHP de diagnóstico | 30 `jhw-*.php` no docroot, inertes (`http_response_code(404)`), exceto `jhw-purge.php`, que **executa** com chave estática na URL. 404 anônimo não prova arquivo apagado. |
 | Slug em inglês | Política de Privacidade vive em `/privacy-policy/`; `/politica-de-privacidade/` dá 404. O rodapé tem os dois links, um em cada idioma. Não mexer sem checar referências do Complianz. |
 
 ## Decisões tomadas
 
+- **2026-11-24 (verificada na fonte pública)** — **T-P03-024**: tema **1.3.9**,
+  4 páginas de serviço, submenu SOLUÇÕES com filhos e link nos cartões. Medido por
+  mim, não pelo relatório do executor. UA Chrome/131, sem query string, duas
+  leituras por URL:
+  - `/` **200**, 181.139 B, md5 `8f73a2c0da296d23f9d7cee9eb34a416` nas duas.
+    HTML sai com `Cache-Control: no-store` e `X-Proxy-Cache: MISS` — cada leitura
+    bateu na origem, não em cache de borda.
+  - CSS: `themes/jessica-haguiwara-child/style.css?ver=1.3.9` — arquivo servido com
+    52.632 B, cabeçalho `Version: 1.3.9`, `Template: extendable`, e a seção
+    `PAGINAS INTERNAS` (14 regras `.jhw-service`). O `themes/extendable/style.css?ver=1.3.9`
+    é o **tema pai** enfileirado com a versão do filho; o cabeçalho dele diz 2.2.2 —
+    isso é normal, não é release errado.
+  - `/consultoria/` **200** 149.338 B · `/projetos/` **200** 149.167 B ·
+    `/gestao-de-obra/` **200** 149.132 B · `/chave-na-mao/` **200** 149.054 B.
+    md5 idêntico em duas leituras por página; `page-id` 226…229 (os mesmos rascunhos
+    de 23/11); h1 presente com `has-large-font-size` (alvo do CSS do T-P03-022) e
+    157–177 palavras dentro do `<main>`.
+  - Submenu: **1** bloco `wp-block-navigation-submenu` dentro do `<nav>`, 2.448 B
+    de markup, com **4 links de página**. O 5º `<a>` do bloco é o próprio SOLUÇÕES
+    em `#solucoes`, e a âncora existe no HTML.
+  - Cartões: **4** `<article class="jhw-service">`, cada um com **1** `<a>` no
+    título para a página correspondente. Nenhum cartão sem link.
+  - Rodapé segue em **3.478 caracteres**, com `/privacy-policy/` e
+    `/politica-de-cookies/` em caminho relativo: igual à referência de 23/11.
+  - Delta: home **178.621 → 181.139 B** (+2.518), coerente com 2.448 B de submenu
+    novo mais os `<a>` dos títulos.
+  - Comando: `curl -sS -A "$UA" -o nul -w "%{http_code} %{size_download}" <url>`
+    e `python parse-menu.py home-r1.html` (parser `HTMLParser`, conta `<a>` dentro
+    do bloco do submenu).
+  - **Ressalva de copy:** o rótulo do submenu é "Projeto" (singular), o cartão diz
+    "Projetos" e o h1 da página é "Projeto de arquitetura e interiores". Link
+    correto nos três; só o rótulo não bate com o cartão. Não é falha técnica.
 - **2026-11-23 (executada)** — Publicado o link da Política de Cookies no rodapé
   (versão **1.3.8**). Mudou mais que o link: havia um `wp_template_part` no banco
   (ID 185) vencendo o arquivo do tema, então o deploy saía verde e o ar não mudava.

@@ -536,7 +536,7 @@ tarefa do P-03 termina sem compactação intermediária.
 três documentos com estados incompatíveis, API do P-01 parada com o painel dizendo
 `200`. Nada disso é código; tudo isso é registro.
 
-### Registro retroativo · T-P03-016 … T-P03-020 (executadas em 23/11)
+### Registro retroativo · T-P03-016 … T-P03-024
 
 Entram na fila pelo que foi medido, não pelo que foi narrado:
 
@@ -550,6 +550,7 @@ Entram na fila pelo que foi medido, não pelo que foi narrado:
 | T-P03-021 | `p03-t021-webp-home` | 🟢 feita e verificada | 7 fotos trocadas por WebP dedicado; home serve **7/7 `.webp`**, 0 referências a `.jpg`; peso real baixado **864,4 KB → 661,7 KB (−23,5%)**; home 178.621 B, 3 leituras idênticas (md5 `f5439f0a2a1d`) |
 | T-P03-022 | `p03-t022-publicar-servicos` | 🔴 aguarda "pode" do Marlon · brief pronto (`briefs/2026-11-23-p03-t022-publicar-servicos.md`, marca `BLOQUEADO POR APROVAÇÃO`) · **CSS candidato já validado em navegador** | publicar as 4 páginas, ligar os 4 cartões da home, submenu, Yoast, escala do H1. **Medido:** páginas internas já herdam Marcellus/Inter/`#EDE3D6`; o defeito real é `h1` 31,67 px **menor que** `h2` 40,44 px. **Causa:** `.has-large-font-size{font-size:…!important}` do core vence regra sem `!important`. **Escala da home medida:** display do hero **74,88 px** @1440. **Candidato validado** (`body.page .wp-block-post-title.has-large-font-size`, 6 propriedades com `!important`, `clamp(2.5rem,1.6rem+2.8vw,4rem)`, injetado por CDP em `/obrigado/`): `h1` **64 px/67,84** @1440 e **40 px** @390; `h2` segue 40,8/25,05; corpo intacto 20/32 e **66 chars/linha** (leitura boa — não mexer); `scrollWidth == innerWidth`, **overflow 0** nos dois. Escala resultante 74,88 → 64 → 40,8 → 20. Ver E-022 e E-023 |
 | T-P03-023 | `p03-t023-banner-cookies-paleta` | 🟡 brief emitido, bloqueado por aprovação | botão "Aceito" do Complianz em `#3B29FF` (azul elétrico, medido `rgb(59,41,255)`), fora da paleta bege/preto. **Banner medido na home** (@1440): `500×313`, `position:fixed`, canto inferior esquerdo, fundo `rgb(220,216,200)`, `z-index 99999` — **não** cobre o conteúdo (o `h1` do hero fica em `top 316`, livre). O defeito é só a cor. Cor proposta **validada em navegador** (`probe11`, @1440): override de 4 vars em `:root` → botão `rgb(26,26,26)` com texto `rgb(237,227,214)`, geometria intacta `149×45` / banner `500×313` / `fixed` / `scrollWidth 1440 = innerWidth 1440`. Contraste **13,72:1** (era 7,13:1). `--cmplz_hyperlink_color` fica fora: o link do banner já é oliva `rgb(79,91,67)` por regra mais específica. Brief: `briefs/2026-11-23-p03-t023-paleta-banner-cookies.md`. Mudança visível em todo o site → exige "pode" do Marlon (Q-032) |
+| T-P03-024 | `p03-t024-publicar-deploy-real` | 🟢 **concluída e verificada pelo gestor** (24/11) | tema **1.3.9** no ar; 5 URLs **200**; 4 páginas com conteúdo real; submenu SOLUÇÕES com **4 filhos**; 4 cartões ligados. Medição no fim desta seção. A 023 **não** entrou neste deploy |
 
 **Verificação do T-P03-020 (feita por mim, via MCP e HTTP, não pelo relatório):**
 `wp_get_page` 226–229 → `status: draft`, slugs `consultoria`, `projetos`,
@@ -567,5 +568,31 @@ Entram na fila pelo que foi medido, não pelo que foi narrado:
    166 `PROJETOS` (0 byte) e 96 `Quem Somos`. Invisíveis, não colidem. O "154" que o
    executor descreveu como página inteira **não** é página: `wp_get_page(154)` → null
    e `wp_get_post(154)` → ID inválido. Tratar como não confirmado.
+
+**Verificação do T-P03-024 (feita por mim na URL pública em 24/11, UA Chrome/131,
+sem query string, duas leituras por URL — não pelo relatório do executor):**
+
+`/` **200**, **181.139 B**, md5 `8f73a2c0da296d23f9d7cee9eb34a416` nas duas leituras;
+`style.css?ver=1.3.9` = `themes/jessica-haguiwara-child/style.css`, arquivo de
+**52.632 B** com `Version: 1.3.9`, `Template: extendable` e a seção `PAGINAS INTERNAS`
+(14 regras `.jhw-service`). O `themes/extendable/style.css?ver=1.3.9` é o tema **pai**
+enfileirado com a versão do filho — não é release errado.
+`/consultoria/` **200** 149.338 B · `/projetos/` **200** 149.167 B ·
+`/gestao-de-obra/` **200** 149.132 B · `/chave-na-mao/` **200** 149.054 B —
+md5 idêntico em duas leituras **por página**, `page-id` 226–229 (os mesmos rascunhos
+de 23/11), `h1` com `has-large-font-size` (alvo do CSS do 022) e **157–177 palavras**
+dentro do `<main>`.
+Submenu SOLUÇÕES: **1** bloco `wp-block-navigation-submenu` dentro do `<nav>`,
+**2.448 B** de markup, com **4 links de página** — o 5º `<a>` do bloco é o próprio
+SOLUÇÕES em `#solucoes`, e a âncora existe no HTML.
+Cartões: **4** `<article class="jhw-service">`, **4** links de título apontando para
+as páginas certas, nenhum cartão órfão. Rodapé segue **3.478 caracteres**, com
+`/privacy-policy/` e `/politica-de-cookies/` em caminho relativo.
+Home **178.621 → 181.139 B** (+2.518), coerente com os 2.448 B de submenu novo.
+**A 023 não entrou:** o override `rgb(26,26,26)` do botão do banner não está no CSS
+servido — o botão segue azul, como estava.
+
+Ressalva de copy (não é falha técnica): o rótulo do submenu é "Projeto" (singular),
+o cartão diz "Projetos" e o `h1` é "Projeto de arquitetura e interiores".
 
 
