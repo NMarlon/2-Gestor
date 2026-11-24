@@ -11,12 +11,12 @@ A lista original não foi alterada — as caixas continuam como estavam.
 |---|---|---|---|
 | A1 | **Menu Superior › Soluções (hover) com 3 subitens**: Consultoria, Projeto, Gestão de Obra | Menu usa `wp:navigation ref:6`. No site não existe a palavra "Soluções". O WordPress tem **4 páginas** (home, privacidade, cookies, obrigado) — **as três páginas não existem** | Criar 3 páginas + montar o submenu. É obra de tema, não ajuste de menu |
 | A2 | **Imagens em WebP/AVIF** (Converter for Media) | **0 de 9 imagens** em WebP na home | Converter; ganho estimado relevante no peso |
-| A3 | **Minificar CSS e JS** | 5 arquivos CSS; 4 **não minificados** (218 KB, 103 KB, 72 KB, 3,7 KB) | Minificar os 4; medir antes/depois |
-| A4 | **Lazy loading** (testar) | 7 de 9 imagens com `loading="lazy"` | Corrigir as 2 restantes |
+| A3 | ~~Minificar CSS e JS~~ | **Já está minificado.** Os 5 CSS são servidos por `cache/wpfc-minified/` (WP Fastest Cache), uma regra por linha. O problema é **volume**, não minificação: 218 KB (Spectra + Forminator), 103 KB (tema + fontes), 72 KB (Complianz), 22 KB (AOS) | Rebaixado. A alavanca é enxugar Spectra, não minificar |
+| A4 | ~~Lazy loading~~ | 7 de 9 imagens com `loading="lazy"`. As 2 sem lazy são **o logo do header** | Nada a fazer: logo acima da dobra carrega imediato, de propósito |
 | A5 | **CAU no rodapé** | Ausente | Depende da cliente (número + UF) |
 | A6 | **Instagram no rodapé** | Publicado como "Instagram · em breve" | Depende da cliente (perfil) |
-| A7 | **Política de Cookies linkada** | A página existe e **não é linkada em lugar nenhum** do site | Adicionar ao rodapé, ao lado da privacidade |
-| A8 | **Botão flutuante de WhatsApp** (plugin wp-whatsapp) | Só há links de WhatsApp no rodapé e no CTA; **não há botão flutuante** | Instalar/configurar, se quiser o botão |
+| A7 | **Política de Cookies linkada** | A página existe (`/politica-de-cookies/`, 200) e **não é linkada em lugar nenhum** do site | T-P03-016, em execução |
+| A8 | ~~Botão flutuante de WhatsApp~~ | Plugin **`wp-whatsapp-chat` instalado** e ativo. Ele injeta o botão por JavaScript, por isso não aparece no HTML cru | Feito |
 
 ## B. Feito na prática, caixa ainda vazia — pode marcar
 
@@ -59,8 +59,10 @@ A lista original não foi alterada — as caixas continuam como estavam.
 
 ## Prioridade sugerida
 
-1. **A7** (link de cookies) — 5 minutos, e é falha legal visível.
-2. **A1** (Soluções + 3 páginas) — a maior, e a que você lembrou.
-3. **A3 + A2 + A4** (peso) — mede-se antes e depois; efeito direto em celular.
-4. **A8** (botão flutuante) — decide-se rápido.
-5. **A5 + A6** — quando a cliente responder o questionário.
+1. **A7** (link de cookies) — em execução, brief T-P03-016.
+2. **A1** (Soluções + 3 páginas) — a maior, e a que você lembrou. A home já tem os quatro
+   serviços escritos (Consultoria, Projetos, Gestão de Obra, Chave na Mão); as páginas
+   podem nascer desse texto, sem inventar nada.
+3. **A2** (WebP) — única alavanca real de peso que sobrou, depois que a minificação se
+   mostrou já feita.
+4. **A5 + A6** — quando a cliente responder o questionário.
