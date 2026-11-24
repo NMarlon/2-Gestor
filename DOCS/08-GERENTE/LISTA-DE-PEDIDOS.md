@@ -3,7 +3,7 @@
 > Arquivo de continuidade do GERENTE. Se eu sumir, quem chegar lê **este** arquivo,
 > depois `PAINEL-DE-GESTORES.md`, depois `DOCS/04-TAREFAS.md`. Cada linha tem estado,
 > evidência e próximo passo — não é ata de conversa, é fila de trabalho.
-> Atualizado: **24/11/2026, 09:05** (America/Sao_Paulo).
+> Atualizado: **24/11/2026, 09:55** (America/Sao_Paulo).
 
 ## Pendências vivas
 
@@ -25,6 +25,8 @@
 | 14 | **Mensagem cortada: "E o próximo I…"** | ⚪ sem continuação | veio truncada em 24/11 | perguntar quando ele voltar; não adivinhar |
 | 15 | **Projeto P-04 (Portfólio) sem dono** | 🟡 parado | `Q-024` | abrir gestor só com "sim" dele |
 | 16 | **Projeto P-02 (Reconhecedor) sem dono** | 🟡 parado | `Q-024` | idem |
+| 17 | **AGENTS.md: 107 linhas / ~1.550 tokens — deve virar só ponteiro para o arquivo dos gestores?** | 🟡 decisão dele; **pediu opinião, proibiu executar** | Medido: 107 linhas, 6.063 bytes; "Papéis" = 50 % do arquivo; **não há nenhum nome/estado de gestor lá** (isso está no `PAINEL`); só 2 regras duplicadas com `07-GESTORES.md` | minha recomendação: **não** ponteiro puro (ponteiro não se verifica — foi assim que o `d363607` varreu arquivo alheio). Corte realista: ~20 linhas de procedimento + dedupe. **Default: não mexer** até ele decidir |
+| 18 | **"Apareceu uma janela: Credential Help Selector"** | ✅ respondido 24/11 | Git Credential Manager 2.9.1; `credential.helper` = `helper-selector` no nível **system** (padrão do Git for Windows); `.gitconfig` dele sem helper — nada foi gravado; a janela foi aberta pelo meu `git push` | ele escolhe o store (recomendado: GCM ou `wincred`, nunca `store`); depois PAT do `Q-034` |
 
 ## Regras que ele deu e valem sempre
 
@@ -37,6 +39,8 @@
 - **`AGENTS.md` é editável** — ele liberou explicitamente.
 - **Gerente não escreve código de projeto de próprio punho**; briefa o OpenCode.
 - **Nunca inventar dado de cliente**: CAU, área, prazo, preço, obra, depoimento.
+- **Quando ele pede opinião, é opinião**: "não execute nada ainda sobre isso" é ordem.
+  Reflexão primeiro, execução só com "pode".
 
 ## Quota do OpenCode Go — como se mede (24/11)
 
