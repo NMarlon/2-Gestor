@@ -364,3 +364,76 @@ problema **provável** (0,17% de duplicata exata) não justifica um projeto inte
 agora. O caminho barato, quando voltarmos ao P-02: marcar, esconder nas listagens e
 manter o arquivo — nada é apagado.
 
+---
+
+## Q-022 · workspace · Qual documento manda quando o painel e o caderno divergem
+
+Hoje `02-PROJETOS.md`, `DOCS/P-XX/GESTOR.md` e `07-GESTORES.md` contam estados
+diferentes do mesmo projeto (P-01, P-02 e P-04 têm contradição medida em 23/11).
+Sem uma precedência escrita, cada gestor reconcilia à sua maneira.
+
+Opções: (a) painel manda, caderno é diário, divergência corrige em 24 h; (b) caderno
+manda, painel é resumo; (c) nenhum manda — toda divergência vira pergunta.
+
+**Default:** (a). O painel é o que o Marlon lê primeiro; o caderno guarda o porquê.
+Divergência com mais de 24 h vira falha de registro, não discussão.
+
+## Q-023 · P-03 · Ok de publicação: por deploy ou autorização genérica
+
+A 1.3.8 foi publicada sob "faça o que puder" e deu certo — mas o gate virou opinião.
+Não há deploy pendente agora; a resposta vale para o próximo.
+
+Opções: (a) cada publicação pede um "ok" de uma linha; (b) autorização genérica
+cobre tudo dentro do escopo já aprovado; (c) ok só quando muda texto visível ao
+cliente, não quando muda infraestrutura.
+
+**Default:** (a) + (c): toda mudança visível pede ok; correção de infraestrutura
+(documentada, reversível, sem mudar o que o cliente lê) segue sem interromper.
+
+## Q-024 · P-02 e P-04 · Dono e estado
+
+Os dois projetos estão sem gestor nomeado. No P-02, `07` diz "pausado" e `02` diz
+"varredura em andamento", com serviço de pé. No P-04, o site está construído e não
+publicado, e o painel ainda diz "a criar".
+
+Opções: (a) P-02 fica em manutenção (nada novo) e P-04 fica congelado até o P-03
+fechar; (b) o mesmo gestor do P-03 assume P-04 em paralelo; (c) abrir um gestor
+novo agora para P-02 ou P-04.
+
+**Default:** (a). O P-03 é prioridade declarada; P-04 não publica sem `Q-016`.
+
+## Q-025 · P-03 · Três depoimentos fictícios no ar
+
+A home publica três depoimentos inventados (Amanda & Ricardo, Lucas Mendes, Camila
+Torres), com 5 estrelas, marcados apenas por uma etiqueta `EXEMPLO` de 8 px gerada
+em CSS (`data-pendente="exemplo"`). O `DADOS-DO-CLIENTE.md` declara que são
+fictícios. O `AGENTS.md` diz que, sem o dado real, a seção não existe.
+
+Opções: (a) tirar do ar agora; (b) manter com etiqueta maior e prazo de saída;
+(c) manter como está até a cliente mandar os reais.
+
+**Default:** (a). Prova social inventada é o risco de imagem mais barato de evitar
+e o mais caro de explicar. A seção volta quando houver depoimento real.
+
+## Q-026 · GERENTE · Pode corrigir painel, fila e índice diretamente
+
+Sem isso, toda correção de deriva vira fila esperando o Marlon — e a deriva cresce
+mais rápido que a fila.
+
+Opções: (a) sim, com commit `docs:` isolado e registro na auditoria; (b) só propor,
+o dono do projeto aplica; (c) só o Marlon mexe nesses arquivos.
+
+**Default:** (a). É documentação de gestão, reversível, sem efeito no cliente.
+
+## Q-027 · workspace · Gestor que edita código de projeto
+
+Aconteceu no P-02: dois patches do gestor em `app/face_engine.py`. Não houve dano,
+mas quebrou a regra que impede dois escritores no mesmo repositório.
+
+Opções: (a) registrar em `03-ERROS`, devolver a tarefa ao executor e não repetir;
+(b) tratar como falha grave e suspender o gestor do projeto; (c) permitir edição de
+uma linha quando o brief for maior que a correção.
+
+**Default:** (a). A regra não existe por burocracia: existe para o gestor não virar
+o segundo escritor.
+

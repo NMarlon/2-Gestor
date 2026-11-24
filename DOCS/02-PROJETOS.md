@@ -7,6 +7,11 @@
 
 ## P-01 · Hermes-Mobile
 
+> **Medição do GERENTE · 2026-11-23:** `curl http://127.0.0.1/api/status` **não
+> respondeu**. O bloco abaixo é o registro de 2026-11-20, quando a API respondia
+> `200`. Estado real: arquivado, API parada. Reabrir só a pedido do Marlon.
+
+
 | Campo | Valor |
 |---|---|
 | Caminho | `C:\MarlonScripts\1-Mini-Projetos\Hermes-Mobile` |
@@ -35,6 +40,14 @@ Commit `79013d5`. Verificação independente depois do commit:
 ---
 
 ## P-02 · Reconhecedor de Rostos de Imagens
+
+> **Medição do GERENTE · 2026-11-23:** o serviço está **de pé** em `:8011`
+> (`openapi.json` responde, título "Reconhecedor de Rostos", versão 0.1.0); commits
+> novos até `1681d3b` (22/11); `.scan_pass2_done` não rastreado na árvore. **Não
+> medido:** jobs em execução e fila. O `07-GESTORES.md` dizia "pausado"; este bloco
+> diz "varredura em andamento". Sem dono definido (`Q-024`), vale o mais
+> conservador: **nenhuma tarefa nova** aqui.
+
 
 | Campo | Valor |
 |---|---|
@@ -73,6 +86,15 @@ Commit `79013d5`. Verificação independente depois do commit:
 ---
 
 ## P-03 · Site Jessica Haguiwara Arquitetura
+
+> **Medição do GERENTE · 2026-11-23:** publicação **1.3.8** no ar. Home
+> `https://jessicahaguiwara.arq.br/` → `200`, **178.614 bytes** de HTML (UA Chrome,
+> sem query string, duas leituras), `style.css?ver=1.3.8`, link de cookies no
+> rodapé. Repo em `cbdf3d0` (`T-P03-018`), árvore limpa; tarefas `T-P03-016`…`020`
+> executadas mas **fora** da fila `04` (corrigido em `T-020`). Aberto: `release.json`
+> em 1.3.7, 3 depoimentos fictícios etiquetados (`Q-025`), `T-011` (dados da
+> cliente). Detalhe: `08-GERENTE/AUDITORIA-2026-11-23.md`.
+
 
 | Campo | Valor |
 |---|---|
@@ -123,6 +145,15 @@ Commit `79013d5`. Verificação independente depois do commit:
 ---
 
 ## P-04 · Portfólio Profissional Marlon Viana
+
+> **Medição do GERENTE · 2026-11-23:** o site **existe e está construído**, ao
+> contrário do que diz a linha "executor ainda não acionado" abaixo. Repo
+> `C:\MarlonScripts\4-Portfolio`, árvore limpa em `047be25`; home + 6 cases; quatro
+> briefs (`v1`…`v4`); `grep PENDENTE` = **0**. **Não publicado:** o repositório não
+> tem `git remote` — o "GitHub Pages" do brief v1 não tem destino. Pendências:
+> `Q-016` (decidir publicação), `Q-018` (foto), `Q-020` (autorização dos clientes),
+> `Q-021` (GitHub privado).
+
 
 | Campo | Valor |
 |---|---|

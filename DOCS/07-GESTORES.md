@@ -4,6 +4,10 @@
 > Hermes ao mesmo tempo** — um por projeto, todos dentro do `2-Gestor`, todos
 > seguindo estas DOCS, cada um briefando o OpenCode para programar.
 > Gestores têm a mesma autoridade. O que os separa é o projeto.
+>
+> **Quem responde pelo conjunto é o GERENTE** — `08-GERENTE/REGRAS.md`. Ele audita,
+> prioriza entre projetos, presta contas ao Marlon; não escreve em projeto nem
+> publica. Autoridade igual entre gestores; dono do conjunto é um só.
 
 ## O modelo em uma frase
 
@@ -14,10 +18,13 @@ Nunca dois gestores no mesmo projeto; nunca dois OpenCode no mesmo repositório.
 
 | Projeto | Gestor | Estado |
 |---|---|---|
-| P-01 Hermes-Mobile | — (arquivado) | 🔵 em manutenção, sem gestor ativo |
-| P-02 Reconhecedor | a designar | 🔴 pausado a pedido do Marlon |
-| P-03 Jessica Haguiwara | este gestor | 🟢 ativo, prioridade |
-| P-04 Portfólio | a designar | ⚪ na fila |
+| P-01 Hermes-Mobile | — (arquivado) | 🔵 em manutenção — API parada em 23/11 |
+| P-02 Reconhecedor | a designar | 🟡 serviço de pé, sem dono definido (Q-024) |
+| P-03 Jessica Haguiwara | este gestor | 🟢 ativo, prioridade — 1.3.8 no ar |
+| P-04 Portfólio | a designar | 🟡 construído, não publicado, sem dono (Q-024) |
+
+*Estados medidos em **2026-11-23**. Detalhe em `02-PROJETOS.md`; medição em
+`08-GERENTE/AUDITORIA-2026-11-23.md`.*
 
 Um gestor novo começa lendo, nesta ordem: `../AGENTS.md`, `00-INDICE.md`,
 `01-PROTOCOLO.md`, a seção do **seu** projeto em `02-PROJETOS.md`,

@@ -515,3 +515,36 @@ Forminator **não testada** pelo executor (admitido no relatório) nem por mim.
 **Commits no repo do site:** `3a4cbad` (form + `.gitignore`), `30e6efd` (§26),
 `f7ffce7` (§32). Árvore limpa.
 
+---
+
+## T-020 · Governança do conjunto — fechar a deriva de estado
+
+| Campo | Valor |
+|---|---|
+| Status | 🟡 em andamento — aberta pelo GERENTE em 2026-11-23 |
+| Dono | GERENTE (`DOCS/08-GERENTE/`) |
+| Origem | `08-GERENTE/AUDITORIA-2026-11-23.md` §7 |
+| Escopo | registro, gate e dono. **Nenhuma linha de código de projeto.** |
+| Pendente de | `Q-023` (gate), `Q-024` (donos), `Q-025` (depoimentos) |
+
+**Critério de aceite:** (1) os quatro blocos de `02-PROJETOS.md` com data de 23/11 e
+sem "a criar"; (2) `T-P03-016`…`T-P03-020` registradas na fila, ordem por projeto;
+(3) `scripts/release.json` do P-03 gravado depois da publicação 1.3.8; (4) a próxima
+tarefa do P-03 termina sem compactação intermediária.
+
+**Por que existe:** medido em 23/11 — cinco briefs do P-03 executados fora da fila,
+três documentos com estados incompatíveis, API do P-01 parada com o painel dizendo
+`200`. Nada disso é código; tudo isso é registro.
+
+### Registro retroativo · T-P03-016 … T-P03-020 (executadas em 23/11)
+
+Entram na fila pelo que foi medido, não pelo que foi narrado:
+
+| Tarefa | Brief | Estado em 23/11 | Prova |
+|---|---|---|---|
+| T-P03-016 | `p03-t016-footer-cookies` | 🔵 absorvida pela 018 | link de cookies só apareceu com `cbdf3d0` |
+| T-P03-017 | `p03-t017-rodape-origem-e-cache` | 🟢 feita | commit `e59874a`; purge do WPFC via PHP medido |
+| T-P03-018 | `p03-t018-resolver-override-rodape` | 🟢 feita e publicada | commit `cbdf3d0`; HTML servido 1.3.8 com o link |
+| T-P03-019 | `p03-t019-limpar-php-diagnostico` | 🟢 feita | `GET /jhw-purge.php` e `/jhw-check.php` → **404** |
+| T-P03-020 | `p03-t020-paginas-servico-rascunho` | 🟡 rascunho, não verificável por URL | `/consultoria/` etc. → 404 (esperado em rascunho); conferir no WP |
+
