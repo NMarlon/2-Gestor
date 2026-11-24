@@ -49,9 +49,17 @@ resumido para não depender de abrir a pasta a cada sessão.
 9. **Pode decidir sobre os projetos**, desde que com investigação e avaliação de
    prós e contras **e pesquisa** — internet ou fonte confiável — do melhor método
    conhecido. Decisão sem pesquisa registrada não é decisão: é palpite com carimbo.
+10. **Commit sempre.** Cada commit é um ponto de retorno: sem ele não há como
+    desfazer o que deu errado. Proibido editar commit antigo (perder histórico).
+    "Então o commit é bom sempre." — autorizou mudar o `AGENTS.md`; a regra que
+    restringia commit não tinha origem conhecida.
+11. **O GERENTE responde por documentação viva.** Manter docs atualizadas e
+    organizadas para que o próximo agente — ou o Marlon — **não gaste tokens**
+    redescobrindo o que já foi feito. Documento parado é custo recorrente.
+12. (em branco no original)
 
-> Escrito pelo Marlon ao vivo em 23/11, 22:34–22:45. O item 10 estava em branco
-> quando li. Esta seção é cópia de trabalho: **vale o arquivo original**.
+> Escrito pelo Marlon ao vivo em 23/11, 22:34–23:0x. Itens 10 e 11 acrescentados
+> na segunda leitura (24/11). Esta seção é cópia de trabalho: **vale o arquivo original**.
 
 Canal, para não virar conversa de corredor: `08-GERENTE/PARA-GESTORES.md`, um bloco
 por mensagem, com data, projeto, o que se pede e o prazo. Resposta do gestor vai no
@@ -103,6 +111,30 @@ Número sem método é opinião.
 
 ---
 
+## 2.1 Tarefa fantasma — a regra que eu revisei
+
+Pergunta do Marlon (23/11): "por que uma limitação para tarefa fantasma que não
+existe? Qual a vantagem de ter e de não ter?"
+
+Regra antiga: nada começa sem `T-XXX` aberta. Vantagem real: rastreabilidade — todo
+trabalho tem dono, motivo e data; nada aparece no repositório sem ninguém saber
+quem pediu. Desvantagem real: atrito e burocracia — um ajuste de uma linha vira
+cerimônia, e o agente é levado a abrir tarefa fictícia só para cumprir a forma.
+Regra que premia ficção produz ficção.
+
+Regra revisada, e é a que vale:
+
+- Trabalho com escopo e entrega → tarefa aberta **antes**.
+- Correção pequena, no calor de uma tarefa já aberta → **não** abre tarefa nova:
+  entra na tarefa corrente e é citada no fechamento.
+- Trabalho que começou sem registro → **registro retroativo em uma linha**, no mesmo
+  dia, com o que foi feito e por quê. Nunca em silêncio.
+
+O que não se admite é o oposto: tarefa aberta que nunca fecha, ou tarefa que existe
+no papel e não no repositório. Fila única em `04-TAREFAS.md`.
+
+---
+
 ## 3. A forma da sessão do gestor (orçamento de contexto)
 
 O que foi medido nesta auditoria, no perfil do `2-Gestor`:
@@ -113,6 +145,13 @@ O que foi medido nesta auditoria, no perfil do `2-Gestor`:
 - Mediana do sumário **26.439** caracteres; maior **56.702**.
 - **12 compactações entre 21:57 e 22:12** de 23/11 — uma a cada ~75 segundos.
 - Soma de saída de ferramenta (com repetição entre gerações): 5.275.558 caracteres.
+
+Medição de 24/11, refeita pelo `scripts/consumo.py` em 30 dias: 277 sessões Hermes,
+14,00 M de entrada, 85 compactações (33% das sessões, 1 evento cada); e o gatilho
+não é a janela de 1 M do modelo — dispara entre **27k e 38k tokens** (mediana 32,7k),
+porque `threshold: 0.75` incide sobre um teto artificial de 65.500. Parâmetro
+corrigido, com pesquisa: **`08-GERENTE/COMPACTACAO.md`**. Regra de bolso: teto de
+~90k tokens por sessão, resumo guardando 25%, e compactação como exceção.
 
 Conclusão operacional: **o gestor gasta mais contexto se explicando do que
 trabalhando.** Regras:
@@ -251,7 +290,10 @@ só pegou o bloco vazio do case na segunda passada, com revisão visual.
 
 ## 9. Métricas do GERENTE (semanais, cinco)
 
-1. **Compactações por tarefa** — hoje ~5. Alvo: ≤ 1.
+1. **Compactações por tarefa** — alvo: ≤ 1. Medido em 24/11: 85 compactações em
+   260 sessões de 30 dias (33% das sessões, 1 evento cada); gatilho dispara entre
+   27k e 38k tokens. Parâmetro e correção em `08-GERENTE/COMPACTACAO.md`;
+   medição por `python scripts/consumo.py --dias 7`.
 2. **Tarefas concluídas × abertas** na fila única.
 3. **Publicações sem ok por escrito** — alvo: 0.
 4. **Documentos com estado > 24 h** durante trabalho ativo — alvo: 0.

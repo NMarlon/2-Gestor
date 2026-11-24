@@ -45,3 +45,24 @@ houver: o P-02 tem serviço de pé e acervo real com `T-005`…`T-007` abertas; 
 está construído, com 0 `PENDENTE`, e **não publica** — o repo não tem `remote` e
 `Q-016` não foi respondida. Quem assumir começa lendo
 `08-GERENTE/AUDITORIA-2026-11-23.md` §6 e `MEDICOES-2026-11-23.md` §3.
+
+---
+
+## M-003 · P-03 · 2026-11-24 · prazo 25/11
+
+Para o gestor do P-03. Três correções de rumo; uma delas revoga item do `M-001`.
+
+1. **Depoimentos: NÃO congelar, e não remover.** O item 4 do `M-001` está revogado.
+   O Marlon respondeu `Q-025`: os três fictícios ficam, porque são **exemplo de
+   layout** para o cliente, marcados como `EXEMPLO`. O que não pode é tirar a
+   etiqueta, apagar o aviso ou deixar parecer depoimento real. `AGENTS.md` regra 2
+   foi emendado com a exceção — leia antes de mexer na home. Sem "melhoria" que
+   aumente as estrelas ou o tamanho do texto.
+2. **`scripts/release.json` continua a pendência real** (1.3.7 contra 1.3.8 no
+   `style.css`). O item 1 do `M-001` segue valendo. Não é cosmético: é o gate que
+   prova qual conjunto de arquivos foi publicado e permite voltar.
+3. **Commit assinado.** `scripts/commit-agent.sh` existe neste workspace; a forma
+   equivalente é `git -c user.name="GESTOR-P03" -c user.email="p03@2gestor.local"
+   commit -m "..."`, com `git add` por caminho. Nunca `--amend` em commit alheio.
+
+**O que não estou pedindo:** deploy. Nada visível ao cliente sem ok por escrito.

@@ -18,6 +18,25 @@ Meça na fonte pública (URL, banco, arquivo), com o comando registrado.
 projeto. Regra: **um projeto, um gestor, um escritor.** Numeração de tarefa com
 prefixo (`T-P03-016`). Detalhes e regras anti-colisão em `DOCS/07-GESTORES.md`.
 
+**Commit é obrigatório, e é o seguro do Marlon.** Cada entrega — de gestor ou de
+executor, no repo que for — termina em commit. O commit é o ponto de retorno: sem
+ele, erro não se desfaz. Não é adorno de fim de dia.
+
+- Assinatura própria por agente, nunca a identidade do Marlon:
+  `scripts/commit-agent.sh GERENTE -m "..." -- DOCS/02-PROJETOS.md`
+  (ou `git -c user.name="GERENTE-P03" -c user.email="p03@2gestor.local" commit`).
+- `git add` por caminho explícito. `git add -A`, `git add .` e `commit -a` são
+  proibidos: varrem arquivo de outro agente e de outro projeto.
+- Proibido: `--amend` em commit alheio, `rebase` de histórico já comitado,
+  `push --force`. Commit feito é história; não se reescreve.
+- `push`: só deste repo, e só depois de colar `git diff origin/master..master --stat`
+  no relatório. Repo de projeto não recebe push sem pedido explícito do Marlon.
+
+**Sessão e compactação.** Uma tarefa, uma sessão. Ao fechar a tarefa, grave o
+estado em `DOCS/` e comece sessão nova — compactação é exceção, não rotina.
+Ordem de leitura para gastar menos contexto: `DOCS/00-INDICE.md` → a seção da
+tarefa → o arquivo citado. Não releia o que já está resumido em documento.
+
 ## Mapa
 
 | Onde | O que é |
@@ -40,6 +59,9 @@ prefixo (`T-P03-016`). Detalhes e regras anti-colisão em `DOCS/07-GESTORES.md`.
 1. **Português (Brasil), direto, sem hype.** Números medidos, não adjetivos.
 2. **Nunca inventar** dado de cliente: CAU, área, prazo, preço, obra, depoimento.
    Sem o dado, a seção não existe — nada de placeholder.
+   **Exceção autorizada (Marlon, 23/11):** bloco marcado na tela como `EXEMPLO`,
+   a pedido do cliente, para demonstração de layout. Nunca sem a marca, nunca
+   passando por prova real, e a resposta ao cliente diz que é exemplo.
 3. **Segredos só em `.env`.** Nunca no chat, no commit ou em print.
    Ao ler arquivo com chave, mascare antes de imprimir.
 4. **Deploy é decisão do gestor.** Brief para o executor sempre diz

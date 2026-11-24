@@ -402,7 +402,18 @@ novo agora para P-02 ou P-04.
 
 **Default:** (a). O P-03 é prioridade declarada; P-04 não publica sem `Q-016`.
 
-## Q-025 · P-03 · Três depoimentos fictícios no ar
+## Q-025 · P-03 · Três depoimentos fictícios no ar — **RESOLVIDO 23/11**
+
+**Resposta do Marlon:** manter. "Eu sei sobre essa parte das testemunhas. Só dei de
+exemplo para mostrar para o cliente. Está escrito EXEMPLO em cima das declarações.
+Não tire os depoimentos fictícios, tá? Está para exemplo do cliente que pediu o site."
+
+Decisão: os três continuam no ar com a etiqueta `EXEMPLO` visível; não são prova real
+e não podem virar depoimento sem dado do cliente. `AGENTS.md` regra 2 foi emendado
+com a exceção autorizada (bloco marcado `EXEMPLO`, a pedido do cliente, e a resposta
+ao cliente diz que é exemplo). O gestor do P-03 foi avisado em `M-003`.
+
+Texto original da pergunta, para o histórico:
 
 A home publica três depoimentos inventados (Amanda & Ricardo, Lucas Mendes, Camila
 Torres), com 5 estrelas, marcados apenas por uma etiqueta `EXEMPLO` de 8 px gerada
@@ -446,7 +457,24 @@ uma linha quando o brief for maior que a correção.
 **Default:** (a). A regra não existe por burocracia: existe para o gestor não virar
 o segundo escritor.
 
-## Q-028 · workspace · `push` do repositório `2-Gestor` está autorizado?
+## Q-028 · workspace · `push` do repositório `2-Gestor` — **RESOLVIDO 23/11**
+
+**Resposta do Marlon:** "Pode mudar o `agentes.md`; não sei de onde veio essa regra.
+É para vocês estarem todos comitando constantemente. Vocês não podem mexer e editar
+os commits antigos. Cada commit que vocês fazem eu tenho como voltar atrás. Sem o
+commit, não temos como voltar se acontecer algo errado. Então o commit é bom sempre."
+
+Decisão registrada: **commit é obrigatório em toda entrega** (assinatura própria,
+`scripts/commit-agent.sh`), `--amend` em commit alheio, `rebase` de histórico e
+`push --force` são proibidos. `push` deste repo: permitido depois de colar
+`git diff origin/master..master --stat` no relatório. Repo de projeto continua sem
+push sem pedido explícito.
+
+Correção de registro: o `AGENTS.md` **não** continha regra restringindo commit — a
+restrição vinha de documento de gestão, e foi revista. A pergunta abaixo fica como
+histórico.
+
+Original:
 
 O item 6 de `Dos GERENTES.md` manda os gerentes manterem "o próprio GitHub comitado
 e atualizado com documentação e progresso". O `AGENTS.md` diz "**Nunca** `push` sem
@@ -462,4 +490,39 @@ seguindo proibido de empurrar código de projeto; (b) item 6 vale só em local;
 **Default:** (a), e nada de `push --force`. Documentação de gestão não tem risco de
 produção; código de projeto tem. Antes do primeiro push, eu rodo `git diff
 origin/master..master --stat` e colo o resumo aqui.
+
+---
+
+## Q-029 · workspace · Aplicar os parâmetros de compactação no app?
+
+`08-GERENTE/COMPACTACAO.md` fixa a regra: uma tarefa por sessão, teto de ~90k
+tokens, resumo guardando 25%, últimas 24 mensagens intactas. Para isso valer no
+Hermes, é preciso mudar `config.yaml` do perfil (`threshold` 0.75 → 0.70,
+`target_ratio` 0.20 → 0.25, `protect_last_n` 20 → 24) e o teto usado pelo
+compressor (65.500 → ~131.000). A segunda parte é a que muda de verdade: sem ela, o
+gatilho sai de 49k para 46k e nada melhora.
+
+(a) Aplico as três chaves seguras agora e deixo o teto para quando houver teste
+    (recomendado).
+(b) Aplico tudo de uma vez, incluindo o teto de 131.000.
+(c) Não mexe na configuração; só documenta a regra.
+
+**Default:** (a). O teto do compressor não tem teste local: se o modelo auxiliar não
+aceitar 131k, o resumo falha em silêncio no meio de uma tarefa.
+
+---
+
+## Q-030 · workspace · Relatório de consumo automático toda semana?
+
+`scripts/consumo.py` já lê os bancos locais em modo somente-leitura e imprime
+entrada, saída, cache, compactações e custo por projeto, dia e modelo. Nenhuma
+credencial, nenhum token gasto. O console do provedor continua fora de alcance (exige
+login no navegador; robô logado em painel de faturamento é risco que eu não assumo).
+
+(a) Cron semanal, segunda de manhã, resumo no `DOCS/08-GERENTE/MEDICOES.md`
+    (recomendado).
+(b) Só sob demanda, quando eu perguntar.
+(c) Diário.
+
+**Default:** (a).
 

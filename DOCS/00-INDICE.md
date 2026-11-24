@@ -16,6 +16,8 @@
 | "Peguei o projeto X: o que é só meu e o que está no repo dele?" | [`P-03-Jessica-Haguiwara/GESTOR.md`](P-03-Jessica-Haguiwara/GESTOR.md) |
 | "Somos vários gestores: quem é de quê e como não colidir?" | [`07-GESTORES.md`](07-GESTORES.md) |
 | "Quem responde pelo conjunto dos gestores e como audita?" | [`08-GERENTE/REGRAS.md`](08-GERENTE/REGRAS.md) |
+| "Quando compactar a sessão e com que parâmetro?" | [`08-GERENTE/COMPACTACAO.md`](08-GERENTE/COMPACTACAO.md) |
+| "Quanto cada agente e cada projeto consumiu?" | `python scripts/consumo.py --dias 7` |
 
 Cadernos por projeto ficam em `DOCS/P-<numero>-<nome>/GESTOR.md` e contêm apenas o
 que é exclusivo do gestor. O que é do projeto mora no repo do projeto.
