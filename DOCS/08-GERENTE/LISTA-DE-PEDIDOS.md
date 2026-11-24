@@ -3,30 +3,64 @@
 > Arquivo de continuidade do GERENTE. Se eu sumir, quem chegar lê **este** arquivo,
 > depois `PAINEL-DE-GESTORES.md`, depois `DOCS/04-TAREFAS.md`. Cada linha tem estado,
 > evidência e próximo passo — não é ata de conversa, é fila de trabalho.
-> Atualizado: **24/11/2026, 09:55** (America/Sao_Paulo).
+> Atualizado: **24/11/2026, 10:20** (America/Sao_Paulo).
+
+## Decisões dele em 24/11 (turno das 21 respostas)
+
+1. **Publicar as 4 páginas de serviço: APROVADO.** "Pode publicar… quero ver como
+   ficaram. E me diga exatamente o que mudou."
+2. **Dropdown: 4 itens.** "Qualquer coisa eu mudo depois."
+3. **Cor do botão "Aceito": decisão minha.** "Pode deixar o que achar melhor."
+4. **Revisão editorial (`Q-033`): eu reviso** e apresento **antes/depois**.
+5. **`Q-030`: sem cron job.** Ele não quer consumo de IA nisso — quer um **script
+   read-only** e análise **esporádica** (não diária), quando ele perguntar.
+6. **P-04 (Portfólio): não mexer.** Ele decidiu ontem; **não será WordPress**; stack
+   ainda indefinida. Congelado até ele dar os detalhes.
+7. **P-02 (Reconhecedor): não mexer.** Ele está fazendo o destrinchamento manual das
+   imagens e chama quando precisar.
+8. **Prioridade de tokens, dita por ele:** Jéssica Haguiwara é urgente **porque já
+   está paga**. Erdos 711 só consome o que sobrar do mês, antes da renovação.
+   "Não quero ultrafocus em tokens" — qualidade e segurança primeiro.
+9. **Máximo para o OpenCode.** "Quero que você passe o máximo possível para o OpenCode
+   executar. Não você." — inclusive scripts.
+10. **`AGENTS.md` é mapa para todo tipo de IA** — gestor, gerente e executor, cada um
+    com sua especialidade. Regra pedida: "se você for GERENTE, leia tais arquivos".
+    **Autorizada.**
+11. **Janela do Credential Helper: pode ser GCM.** Ele autorizou abrir quando eu
+    precisar e ele clica.
+12. **Backup `.bundle`: quer, mas quis entender.** Explicado; feito.
+13. **Novo projeto (painel/monitor): aprovado** — pasta em `C:\MarlonScripts`, GitHub
+    próprio, gestor novo, docs pelo padrão de "Novo Projeto".
+14. **Cliente Jéssica:** ele já cobrou; aguardando o cliente mandar os dados. Esperar.
 
 ## Pendências vivas
 
 | # | O que o Marlon pediu/perguntou | Estado | Evidência / onde está | Próximo passo |
 |---|---|---|---|---|
-| 1 | **"O menu vai ter um drop com 3–4 opções"** — o dropdown não aparece no site | 🔴 **não está no ar**: menu plano de 3 links, 0 submenu, 4 páginas em 404 | Medido no HTML servido da home: `<nav>` com um `<ul>` plano e 3 links — QUEM SOMOS `#quem-somos`, SOLUÇÕES `#solucoes`, CONTATO `#contato`; `has-child` = 0; `submenu-toggle` = 0; a única menção a `wp-block-navigation-submenu` está no **CSS inline** do WP, não no markup. As 4 URLs de serviço respondem **404** | `Q-031`: liberar publicação → brief `T-P03-022` |
-| 2 | **3 ou 4 itens no dropdown?** | 🟡 decisão aberta | home tem 4 serviços; spec `planejamento/Obsidian Pages/Menu Superior.md` lista 3 | default **4**; pode mudar até o deploy |
-| 3 | **Revisão editorial das 4 páginas** (texto vende?) | 🟡 aberta | `Q-033` | publicar e revisar no ar, ou ler rascunhos antes |
-| 4 | **Publicar as 4 páginas de serviço** | 🔴 bloqueado | `Q-031`, brief `2026-11-23-p03-t022-publicar-servicos.md` | um "pode" do Marlon |
-| 5 | **Cor do botão "Aceito" do banner de cookies** | 🟡 aberta | `Q-032`, brief `T-P03-023` | default: não mexer |
-| 6 | **Como está a comunicação com os gestores** | ✅ respondido 24/11 | `PARA-GESTORES.md` revisado; `PAINEL-DE-GESTORES.md` seção "Canal" | teste real quando P-04 tiver dono |
-| 7 | **Quantos gestores existem / um por projeto** | ✅ respondido 24/11 | regra veio do Marlon em 20/11 (commit `155552d`); confirmada por ele | nada a fazer |
-| 8 | **Gasto e orçamento do OpenCode Go** | ✅ **resolvido** 24/11 | `GET https://opencode.ai/zen/go/v1/usage` com `OPENCODE_GO_API_KEY`: rolling 1%, semanal 11%, mensal 32% | ver seção "Quota" abaixo |
+| 1 | **"O menu vai ter um drop com 3–4 opções"** | 🟢 **4 itens, aprovado 24/11**; ainda não está no ar | menu plano de 3 links, 0 submenu, 4 páginas em 404 (medido no HTML servido) | entra no 2º run do `T-P03-022` |
+| 2 | **3 ou 4 itens no dropdown?** | ✅ **4** | decisão dele, 24/11 | — |
+| 3 | **Revisão editorial das 4 páginas** | 🟢 minha, decidido | `Q-033`; ele quer **antes e depois** do que eu mudar | revisar depois de publicar |
+| 4 | **Publicar as 4 páginas de serviço** | 🟢 **aprovado 24/11 10:10**, run 1 em andamento | `T-P03-022`; run 1 para no `--dry-run` | conferir dry-run → liberar run 2 |
+| 5 | **Cor do botão "Aceito" dos cookies** | 🟢 decisão minha | `Q-032`, brief `T-P03-023`; azul `rgb(59,41,255)` fora da paleta | vou de tinta escura: 13,72:1 (vs 7,13:1 do azul) |
+| 6 | **Como está a comunicação com os gestores** | ✅ respondido | `PARA-GESTORES.md`, `PAINEL-DE-GESTORES.md` | — |
+| 7 | **Quantos gestores existem / um por projeto** | ✅ confirmado | regra dele em 20/11 (`155552d`) | — |
+| 8 | **Gasto e orçamento do OpenCode Go** | ✅ resolvido; **histórico pesquisado** | ver seção "Quota" | — |
 | 9 | **Lista de pedidos para não esquecer** | ✅ este arquivo | — | atualizar a cada sessão |
-| 10 | **Compactação: parâmetro melhor para o fluxo** | 🟡 parcial | `Q-029`, `08-GERENTE/COMPACTACAO.md` | falta decidir o teto do compressor |
-| 11 | **Relatório de consumo automático semanal** | 🟡 aberto | `Q-030` | default: não criar cron ainda |
-| 12 | **Push do workspace para o GitHub** | 🔴 bloqueado por credencial | `Q-034`: sem PAT, sem chave SSH, sem token | PAT fine-grained no `.env` |
-| 13 | **Atualizar os docs com a nova hierarquia** (`Dos GERENTES.md`) | ✅ feito 24/11 | `AGENTS.md` (Papéis), `07-GESTORES.md` (itens 2/3/6/8/15/16), `08-GERENTE/PAINEL-DE-GESTORES.md` | — |
-| 14 | **Mensagem cortada: "E o próximo I…"** | ⚪ sem continuação | veio truncada em 24/11 | perguntar quando ele voltar; não adivinhar |
-| 15 | **Projeto P-04 (Portfólio) sem dono** | 🟡 parado | `Q-024` | abrir gestor só com "sim" dele |
-| 16 | **Projeto P-02 (Reconhecedor) sem dono** | 🟡 parado | `Q-024` | idem |
-| 17 | **AGENTS.md: 107 linhas / ~1.550 tokens — deve virar só ponteiro para o arquivo dos gestores?** | 🟡 decisão dele; **pediu opinião, proibiu executar** | Medido: 107 linhas, 6.063 bytes; "Papéis" = 50 % do arquivo; **não há nenhum nome/estado de gestor lá** (isso está no `PAINEL`); só 2 regras duplicadas com `07-GESTORES.md` | minha recomendação: **não** ponteiro puro (ponteiro não se verifica — foi assim que o `d363607` varreu arquivo alheio). Corte realista: ~20 linhas de procedimento + dedupe. **Default: não mexer** até ele decidir |
-| 18 | **"Apareceu uma janela: Credential Help Selector"** | ✅ respondido 24/11 | Git Credential Manager 2.9.1; `credential.helper` = `helper-selector` no nível **system** (padrão do Git for Windows); `.gitconfig` dele sem helper — nada foi gravado; a janela foi aberta pelo meu `git push` | ele escolhe o store (recomendado: GCM ou `wincred`, nunca `store`); depois PAT do `Q-034` |
+| 10 | **Compactação: parâmetro melhor** | 🟡 parcial | `Q-029`, `COMPACTACAO.md` | falta decidir o teto |
+| 11 | **Relatório de consumo** | ✅ **sem cron**; script sob demanda | `Q-030`; análise esporádica, não diária | brief do script |
+| 12 | **Push do workspace para o GitHub** | ✅ **ele fez o push em 24/11** (`origin/master` = `c4b3950`, ahead 0) | `Q-034`; eu continuo sem credencial própria | discutir política (prós/contras entregues) |
+| 13 | **Docs com a nova hierarquia** | ✅ feito 24/11 | `AGENTS.md`, `07-GESTORES.md`, `PAINEL` | — |
+| 14 | **Mensagem cortada: "E o próximo I…"** | ⚪ sem continuação | veio truncada | perguntar; não adivinhar |
+| 15 | **P-04 (Portfólio)** | ⛔ **congelado por ele** 24/11 | não será WordPress; stack indefinida | esperar os detalhes |
+| 16 | **P-02 (Reconhecedor)** | ⛔ **congelado por ele** 24/11 | ele faz o destrinchamento manual | ele chama |
+| 17 | **`AGENTS.md`: 107 linhas — vira ponteiro?** | 🟡 ele pediu o conteúdo do item; não decidiu enxugar | 107 linhas / 6.063 bytes / ~1.550 tokens; "Papéis" = 50 %; **não há nome de gestor lá** | levar como pergunta na próxima, com o texto na mão |
+| 18 | **Janela "Credential Help Selector"** | ✅ resolvido: é o GCM, ele autorizou | `credential.helper=helper-selector` no system; nada gravado | abrir quando eu precisar de push |
+| 19 | **Novo projeto: painel de estatísticas ao vivo** | 🟢 **aprovado 24/11** | pasta em `C:\MarlonScripts`, GitHub próprio, gestor novo, scripts de fundo + navegador local | docs pelo padrão + brief do app |
+| 20 | **Backup `.bundle` do workspace** | ✅ feito 24/11 | `backups/2-Gestor-20261124.bundle`, 8,1 MB, `git bundle verify` = "complete history", HEAD `c4b3950` | repetir a cada entrega grande |
+| 21 | **Coleta de cota em background, com histórico** | 🟢 aprovado | ele quer série para média, não retrato | brief do coletor |
+| 22 | **"Histórico no site" do consumo** | ✅ pesquisado 24/11 | **não existe API de série temporal** (feature request aberto no repo do OpenCode) | série só sai de coleta própria |
+| 23 | **Dados da cliente Jéssica** | ⏳ ele já cobrou o cliente | "só estou aguardando o retorno" | esperar; não inventar |
+| 24 | **Ele atualizou `Dos GERENTES.md`** | ✅ lido 24/11 | novo item: pedir aprovação antes de editar `AGENTS.md`, e deixar para o fim | respeitar: edição de `AGENTS.md` só com o "pode" |
 
 ## Regras que ele deu e valem sempre
 
@@ -36,11 +70,15 @@
   marcados como `EXEMPLO`. Nunca apresentar como prova real.
 - **Tokens**: agentes podem **ver** o consumo, nunca ganhar acesso a mais token nem
   criar credencial. Tudo read-only.
-- **`AGENTS.md` é editável** — ele liberou explicitamente.
+- **`AGENTS.md` é editável** — ele liberou; mas pediu **aprovação antes** de editar e
+  deixar para o fim da fila.
 - **Gerente não escreve código de projeto de próprio punho**; briefa o OpenCode.
+  Vale para script também: script vira brief.
 - **Nunca inventar dado de cliente**: CAU, área, prazo, preço, obra, depoimento.
 - **Quando ele pede opinião, é opinião**: "não execute nada ainda sobre isso" é ordem.
   Reflexão primeiro, execução só com "pode".
+- **Não é ultrafocus em tokens.** Economizar é meio, não fim: qualidade e segurança
+  vêm antes. Prioridade dele: Jéssica (paga) → demais → Erdos 711 só com a sobra.
 
 ## Quota do OpenCode Go — como se mede (24/11)
 
@@ -62,19 +100,34 @@ Resposta medida hoje, 24/11, 09:00 local:
 | Semanal | **11 %** | 29/11 21:00 (local) |
 | Mensal | **32 %** | 12/12 21:45 (local) |
 
-Leitura: o Go é **assinatura com teto ponderado**, não cobrança por dólar. O teto de
-referência é US$ 60/mês, e cada modelo consome em ritmo próprio (DeepSeek V4.1 Flash
-tem limite mensal alto, então gasta devagar). 32 % em 24/11 deixa ~3,5 %/dia até
-12/12 — folga confortável.
+**O que a pesquisa de 24/11 acrescentou (item 19 do pedido dele):**
 
-Ressalvas: o endpoint **não é documentado** e pode sumir sem aviso (é o mesmo que o
+- **Não existe API de histórico.** "Expose OpenCode Go usage history through the API
+  key" é *feature request* ainda aberto no repo do OpenCode. O endpoint devolve **o
+  percentual de agora** (arredondado para baixo), não série temporal. O "histórico no
+  site" que ele lembra é a página Console → Go, com os mesmos três números.
+- **A única série temporal real está na máquina**: o `opencode.db` guarda custo e
+  requisições **por dia**, por dispositivo. É dele que saem histórico e média.
+- **Rota mais rica, não testada:** a Console API tem permissão `Usage: Read` e
+  medidores em **micro-centavos** (`usedMicroCents`/`limitMicroCents`) — **dólar**,
+  não porcentagem. Exigiria criar chave de API, e ele disse que agentes **não** criam
+  credencial. Fica como pergunta, não como ação.
+- Existe também `GET /api/experimental/usage/limits` no servidor local do OpenCode
+  (experimental, mesmas três janelas).
+- **Plano:** a doc lista Go (US$ 10/mês) e Go Plus (US$ 40/mês); cada modelo tem teto
+  mensal próprio em dólares (DeepSeek V4.1 Flash: US$ 100 no Go). **Não sei qual é o
+  plano dele** — o endpoint não diz. A cota é um balde único ponderado, por isso o
+  percentual sobe devagar num modelo barato.
+
+Ressalvas do endpoint: **não é documentado** e pode sumir sem aviso (é o mesmo que o
 console usa); `User-Agent` de `curl`/`urllib` padrão leva 403; o campo `cost` das
 respostas do Go é sempre `"0"`, então não serve para contabilidade. A visão por
 projeto continua sendo `python scripts/consumo.py --dias 30`, que lê os bancos locais.
 
-Automação pendente: um `scripts/quota.py` read-only, que imprime as três janelas e o
-tempo até resetar. **Não escrevo isso de próprio punho** (item 3 do `Dos GERENTES.md`)
-— vira brief para o OpenCode.
+Automação: o coletor em background (item 21) precisa gravar **as três janelas + o
+`resetsAt`** de tempos em tempos — é o único jeito de ter série. Daí saem média por dia
+e projeção de esgotamento. **Não escrevo isso de próprio punho** (item 3 do
+`Dos GERENTES.md`, e ele reforçou em 24/11): vira brief para o OpenCode.
 
 ## Ordem de leitura para quem chegar depois
 

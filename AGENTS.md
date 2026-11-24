@@ -28,6 +28,38 @@ Meça na fonte pública (URL, banco, arquivo), com o comando registrado.
 projeto. Regra: **um projeto, um gestor, um escritor.** Numeração de tarefa com
 prefixo (`T-P03-016`). Detalhes e regras anti-colisão em `DOCS/07-GESTORES.md`.
 
+## Mapa por papel — o que cada IA lê ao entrar
+
+Todo agente que abre sessão neste workspace **se identifica primeiro** e lê a lista do
+seu papel, nesta ordem. Não é sugestão: é o que evita trabalho na direção errada por
+arquivo de regra não lido.
+
+**Se você é GERENTE**
+1. `Definições Oficiais Manuais/Dos GERENTES.md` — regras fundamentais.
+2. `DOCS/08-GERENTE/LISTA-DE-PEDIDOS.md` — fila do Marlon, com estado de cada item.
+3. `DOCS/08-GERENTE/PAINEL-DE-GESTORES.md` — quem é de quê e o que foi medido.
+4. `DOCS/08-GERENTE/PARA-GESTORES.md` — o canal que ele usa para falar com os gestores.
+5. `DOCS/04-TAREFAS.md` e `DOCS/06-PERGUNTAS.md` — o que está aberto.
+
+**Se você é GESTOR de projeto**
+1. `Definições Oficiais Manuais/Dos GERENTES.md` — **o pulo deste arquivo é o erro
+   clássico do gestor.**
+2. `DOCS/08-GERENTE/PARA-GESTORES.md` — mensagem não lida é trabalho errado.
+3. `DOCS/07-GESTORES.md` — seu dono, numeração `T-PXX-NNN`, regras anti-colisão.
+4. `DOCS/P-XX-<projeto>/GESTOR.md` — **só o do seu projeto.** Caderno alheio não se abre.
+5. `DOCS/04-TAREFAS.md` — filtrando o seu prefixo.
+6. Por especialidade: projeto de **dev** soma `DOCS/02-PROJETOS.md`; projeto de
+   **análise/dados** soma o último relatório medido do próprio projeto.
+
+**Se você é EXECUTOR (OpenCode)**
+1. O **brief** recebido — é o contrato; nada fora dele.
+2. O `AGENTS.md` do repo do projeto, se existir — convenções daquele código.
+3. `Definições Oficiais Manuais/` só quando o brief mandar.
+
+**Honestidade de leitura:** se um arquivo da sua lista não existir, **diga** — não
+improvise o papel. Se o que você leu contradiz o brief, vale a regra permanente: pare
+e reporte.
+
 **Commit é obrigatório, e é o seguro do Marlon.** Cada entrega — de gestor ou de
 executor, no repo que for — termina em commit. O commit é o ponto de retorno: sem
 ele, erro não se desfaz. Não é adorno de fim de dia. E o Gerente **mantém o próprio

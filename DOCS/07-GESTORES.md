@@ -20,16 +20,26 @@ Nunca dois gestores no mesmo projeto; nunca dois OpenCode no mesmo repositório.
 |---|---|---|
 | P-01 Hermes-Mobile | — (arquivado) | 🔵 em manutenção — API parada em 23/11 |
 | P-02 Reconhecedor | a designar | 🟡 serviço de pé, sem dono definido (Q-024) |
-| P-03 Jessica Haguiwara | este gestor | 🟢 ativo, prioridade — 1.3.8 no ar |
+| P-03 Jessica Haguiwara | **perfil `p03-gestor`** (criado 24/11) | 🟢 ativo, prioridade — 1.3.9 no ar, 4 páginas publicadas |
 | P-04 Portfólio | a designar | 🟡 construído, não publicado, sem dono (Q-024) |
 
-*Estados medidos em **2026-11-23**. Detalhe em `02-PROJETOS.md`; medição em
+*Estados medidos em **2026-11-24**. Detalhe em `02-PROJETOS.md`; medição em
 `08-GERENTE/AUDITORIA-2026-11-23.md`.*
 
-Um gestor novo começa lendo, nesta ordem: `../AGENTS.md`, `00-INDICE.md`,
-`01-PROTOCOLO.md`, a seção do **seu** projeto em `02-PROJETOS.md`,
-`03-ERROS-E-APRENDIZADOS.md`, `04-TAREFAS.md` e `06-PERGUNTAS.md`. Depois cria o
-caderno `DOCS/P-<n>-<nome>/GESTOR.md` do projeto dele.
+## Gestor é perfil Hermes, não subagente
+
+Cada gestor é um **perfil isolado** (`hermes profile create <nome> --clone`), com
+`SOUL.md` próprio definindo o papel, `.env` e `config.yaml` herdados. Roda headless
+com `hermes -p <perfil> -z "<ordem>"` a partir do diretório do workspace. Vantagem
+sobre subagente: tem sessão, memória e caderno próprios, e continua existindo entre
+tarefas. Perfis em uso: `manager-developer-hermes` (Gerente), `p03-gestor` (P-03).
+
+Um gestor novo começa lendo a lista do **seu papel** em `../AGENTS.md`, seção
+"Mapa por papel". Depois cria o caderno `DOCS/P-<n>-<nome>/GESTOR.md` do projeto dele.
+
+Índice detalhado da documentação, quando precisar: `00-INDICE.md`,
+`01-PROTOCOLO.md`, a seção do **seu** projeto em `02-PROJETOS.md`, e
+`03-ERROS-E-APRENDIZADOS.md`.
 
 ## Regra de ouro contra colisão
 

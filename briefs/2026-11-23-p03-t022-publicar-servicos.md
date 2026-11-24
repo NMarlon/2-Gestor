@@ -2,6 +2,13 @@
 
 Projeto: P-03 (site Jéssica Haguiwara) · Emitido: 2026-11-23 · Gestor: Hermes
 
+**APROVADO — 2026-11-24, 10:10.** O Marlon liberou a publicação das quatro páginas
+("Pode publicar as quatro páginas de serviço, quero ver como ficaram").
+
+**Este run PARA no passo 4** (`--dry-run`). Não faça o deploy real, não publique as
+páginas, não mexa no menu ainda: entregue o dry-run e o rollback anotado. O deploy
+real e a publicação saem em um segundo brief, depois que o Gerente conferir os números.
+
 **BLOQUEADO POR APROVAÇÃO.** Este brief só é disparado com o "pode" do Marlon.
 Não publique nada antes disso. Se receber este arquivo sem a marca `APROVADO` no
 topo, pare e devolva "aguardando aprovação".
