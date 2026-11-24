@@ -338,3 +338,35 @@ estava certa por outro caminho (bytes do banco); a evidência que usei era invá
 salvo no banco (ID 185) vence `parts/footer.html`. Deploy verde, verificação 11/11,
 e o visitante continua vendo o rodapé antigo. Antes de editar tema, perguntar: **este
 template part está salvo no banco?**
+
+## E-021 · Medi o arquivo no disco, não o byte que o navegador baixa (2026-11-23)
+
+Reportei ao Marlon que as sete fotos da home pesavam 1.312 KB e que o WebP daria
+**−50%**. O número estava errado: o site tem o plugin **Converter for Media**, que
+serve WebP em *passthru* — a URL `.jpg` responde `Content-Type: image/webp` quando o
+navegador manda `Accept: image/webp`. O navegador já baixava **864 KB**, não 1.312.
+
+Medido agora, com o cabeçalho real:
+
+| | antes (URL .jpg, Accept webp) | depois (URL .webp) |
+|---|---|---|
+| 7 fotos | 864,4 KB | 661,7 KB |
+| ganho | — | **−23,5%** |
+
+O ganho é real e a troca valeu (as fotos dedicadas são menores que as do passthru),
+mas o número que eu dei ao Marlon era do disco, não da rede.
+
+**Regra:** medir peso de imagem **com o `Accept` do navegador** (`image/avif,image/webp,
+image/*,*/*;q=0.8`) e ler `Content-Type` + `Content-Length` da resposta. Arquivo no
+disco é inventário, não é o que o visitante paga. O mesmo vale para HTML: só contar
+bytes de rede depois de mandar `Accept-Encoding: gzip`.
+
+**Achados colaterais da mesma medição (home, 1ª visita, medido por asset):**
+- `gtag/js?id=GT-TBVGGKRR` (GTM) = **178,8 KB** gzip — o maior asset isolado.
+- Logo do banner de cookies (Complianz) baixa `logo-scaled.png` **2560×786 = 133,4 KB**
+  com `fetchpriority="high"`, para exibir ~40px. O logo do cabeçalho, esse, usa
+  `sizes="128px"` e pega a variante de 300w — está correto.
+- Hero é `background-image` inline (`.jpg`, 206,7 KB no disco / 134,1 KB servido em webp).
+- Pilha do Forminator + jQuery + Select2 + AOS ≈ 200 KB de JS na home, onde só o
+  formulário do fim da página usa.
+- Assets respondem `Cache-Control: private` sem `ETag` → sem 304, rebaixa tudo a cada visita.

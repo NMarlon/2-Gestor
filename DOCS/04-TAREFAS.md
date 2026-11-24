@@ -547,7 +547,8 @@ Entram na fila pelo que foi medido, não pelo que foi narrado:
 | T-P03-018 | `p03-t018-resolver-override-rodape` | 🟢 feita e publicada | commit `cbdf3d0`; HTML servido 1.3.8 com o link |
 | T-P03-019 | `p03-t019-limpar-php-diagnostico` | 🟢 feita | `GET /jhw-purge.php` e `/jhw-check.php` → **404** |
 | T-P03-020 | `p03-t020-paginas-servico-rascunho` | 🟢 feita e verificada pelo gestor | 4 páginas `draft` no WP (IDs 226–229, slugs exatos); as 4 URLs → **404**; home intacta (178.614 B, rodapé `d0a615c449b2`, 1.3.8) |
-| T-P03-021 | `p03-t021-webp-home` | 🟡 disparada em 23/11 | 7 fotos da home, 1.312 KB → 662 KB (−50%) medido localmente em WebP q80 |
+| T-P03-021 | `p03-t021-webp-home` | 🟢 feita e verificada | 7 fotos trocadas por WebP dedicado; home serve **7/7 `.webp`**, 0 referências a `.jpg`; peso real baixado **864,4 KB → 661,7 KB (−23,5%)**; home 178.621 B, 3 leituras idênticas (md5 `f5439f0a2a1d`) |
+| T-P03-022 | `p03-t022-publicar-servicos` | 🔴 aguarda "pode" do Marlon | publicar as 4 páginas, ligar os 4 cartões da home, submenu, Yoast, estilo interno |
 
 **Verificação do T-P03-020 (feita por mim, via MCP e HTTP, não pelo relatório):**
 `wp_get_page` 226–229 → `status: draft`, slugs `consultoria`, `projetos`,
