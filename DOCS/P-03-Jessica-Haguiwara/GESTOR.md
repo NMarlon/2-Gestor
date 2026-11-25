@@ -78,9 +78,12 @@ custaram caro:
 
 - **2026-11-25 (M-020 executada e medida por mim)** — **T-P03-033**: 1.3.12 no ar (executor
   `578b4b9`, 4 arquivos, +5/−5). O `text=` dos 2 links do rodapé e do botão da 404 passou a
-  `Olá! Quero conversar sobre o meu projeto.` — **0** ocorrências do texto antigo no HTML
-  servido das 4 páginas **e** da 404; cada página agora tem **1 texto próprio no corpo + 2
-  universais no rodapé** (3 links de WhatsApp, como antes). Antes: 2 antigos por página
+  `Olá! Quero conversar sobre o meu projeto.` — **0** ocorrências do texto antigo nos
+  **links** (`href`/`text=`) das 4 páginas **e** da 404; cada página agora tem **1 texto
+  próprio no corpo + 2 universais no rodapé** (3 links de WhatsApp, como antes). **Fora dos
+  links**, o literal antigo persiste **2× por página** no JSON inline do plugin **qlwapp**
+  (botão flutuante; campo `message`, não `text=`) — fora do escopo do brief e não tocado;
+  decisão pendente do Gerente. Antes: 2 antigos por página
   (3 na 404). **Re-medido às 15:07** (cache do WPFC regravado, 2 leituras idênticas por URL):
   149.683 / 149.605 / 149.528 / 149.494 B, mesmos **0 antigo / 2 universal / 1 próprio /
   3 links**. O `−58 B` por página é o rodapé **−104 B** (2 links de 165 → 113 B) **+46 B**
