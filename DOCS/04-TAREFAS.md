@@ -854,3 +854,65 @@ sobre o seu caso"; 227/228/229 seguem "Fale sobre o seu projeto". `style.css` = 
 **Não testado:** renderização visual/mobile (mesma classe da lista que já existia) e
 validade do bloco no editor Gutenberg. **Risco aberto:** `og:description` da
 `/chave-na-mao/` ainda com a frase antiga do M1 (Yoast não grava por MCP).
+
+---
+
+## T-P03-027 · o CTA final das 4 páginas vira botão, com ≥32px de ar embaixo 🟢
+
+**Origem:** M-008 do Gerente (`DOCS/08-GERENTE/PARA-GESTORES.md`) — pedido do Marlon: o link de
+WhatsApp no fim das 4 páginas de serviço "não tem margem nenhuma embaixo, está colado com a caixa
+de baixo". **Brief:** `briefs/2026-11-25-p03-t027-cta-final-botao.md`, despachado em 25/11.
+
+**O que é:** troca de markup no `post_content` das 4 páginas (226, 227, 228, 229): o `wp:paragraph`
+final com o link do WhatsApp sai e entram `wp:buttons` > `wp:button` (botão nativo do tema, oliva,
+raio pill — o `theme.json` já estiliza) + `wp:spacer` de 32px. Texto e `href` byte a byte. **Sem
+tema, sem CSS, sem deploy** — a copy e a estrutura vivem no banco.
+
+**Medição de abertura (gestor, 25/11 08:10–08:13, Edge headless/CDP, dpr 1, 1440×900 e 390×844,
+8 combinações):** o último filho do `.entry-content` é `<p class="wp-block-paragraph">` com
+`margin-bottom: 0px`; o topo do `<footer class="jhw-footer--v2">` coincide com a base do parágrafo —
+**vão = 0 px nas 8 combinações**. Nenhuma das 4 tem `.wp-block-button__link` no `entry-content`.
+Baseline HTML (Chrome/131, sem query string, 2 leituras): `/consultoria/` 149.392 B
+(`6bbd90dfd1c266e32bc1aa94c8ba1ffc`), `/projetos/` 149.300 (`e8532940679e0cfcd2a0d54a383aba0e`),
+`/gestao-de-obra/` 149.244 (`6dfc674cce34d1218b06f88c97462eae`), `/chave-na-mao/` 149.178
+(`e7a75bf37c1a54d715973f93b9b9a6dc`). Prints ANTES: `cache/scratch/t027/antes-*-{1440,390}.png`.
+
+**CA:** 4 releituras cruas com `status=publish`; 1 `.wp-block-button__link` no `entry-content` de
+cada URL pública, texto e href idênticos (o `<a>` só muda pela classe); vão base-do-botão → topo do
+footer **≥32 px** em 1440 e 390; `scrollWidth == 390`; 4 URLs 200; purge WPFC com
+`cache_all_html_restantes: 0`. Item Q-037: **uma** tentativa de `wp_update_post_meta`
+(`_yoast_wpseo_metadesc` na 229) — se voltar `ignored_keys`, registrar e parar.
+
+**Estado:** 🟢 **entregue e medido pelo gestor em 25/11** — feito pelo OpenCode por MCP
+(`wp_get_cpt_item` → `wp_update_cpt_item`, 4 páginas), purge WPFC com
+`cache_all_html_restantes: 0`.
+
+**Medição (gestor, 25/11 08:26–08:36).** HTML: UA Chrome/131, sem query string, **duas
+leituras idênticas** por URL; layout: Edge headless/CDP, dpr 1, 1440×900 e 390×844,
+8 combinações.
+
+| Página | HTTP | Bytes (antes → depois) | botão/spacer no `entry-content` | vão botão → rodapé |
+|---|---|---|---|---|
+| `/consultoria/` | 200 | 149.392 → **149.768** (+376) | 1 / 1 · 0 parágrafo antigo | **96 px** @1440 · **72 px** @390 |
+| `/projetos/` | 200 | 149.300 → **149.676** (+376) | 1 / 1 · 0 | **96** · **72** |
+| `/gestao-de-obra/` | 200 | 149.244 → **149.620** (+376) | 1 / 1 · 0 | **96** · **72** |
+| `/chave-na-mao/` | 200 | 149.178 → **149.554** (+376) | 1 / 1 · 0 | **96** · **72** |
+
+Antes o vão era **0 px** nas 8 combinações. Os +376 B são os mesmos nas 4 páginas: é a
+mesma troca de bloco. Texto e `href` **byte a byte** iguais (o `<a>` só ganhou
+`class="wp-block-button__link wp-element-button"`). Botão: oliva `#4F5B43`, texto branco,
+pill, padding 12/28, **58 px** de altura @1440 e **49,09 px** @390; largura 272,17 / 297,88
+@1440 e 212,52 / 231,08 @390 — **não** fica pesado no mobile. Sem overflow horizontal
+(`scrollWidth` 1440 / 390).
+
+**Print:** `DOCS/P-03-Jessica-Haguiwara/evidencias/t027/print-<slug>-{1440,390}.png`
+(8 PNGs recortados), conferidos **pixel a pixel** — a faixa oliva do botão termina
+exatamente 96/72 px acima da faixa marrom do rodapé nos 8. JSON da medição:
+`evidencias/t027/verify-cta.json` e `print-shots.json`.
+
+**Q-037:** `wp_update_post_meta` (`_yoast_wpseo_metadesc`, 229) → `ignored_keys`, uma
+tentativa, parei. No ar, `og:description` da /chave-na-mao/ segue com a frase antiga
+(limite da ferramenta, não regressão).
+
+**Não testado:** validade do bloco no editor Gutenberg (não abri o wp-admin) e leitor de
+tela; a classe do botão é a nativa do tema, já usada em outras páginas.

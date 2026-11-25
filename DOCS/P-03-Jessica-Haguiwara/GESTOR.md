@@ -3,6 +3,10 @@
 > Só o que é **exclusivo do gestor** neste projeto. O que é do projeto mora no
 > repo dele e é a fonte de verdade.
 
+> **Perfil Hermes deste gestor:** `jessica-p03` (M-010, 25/11 — nasceu `p03-gestor`,
+> passou por `p03-jessica`; apelido de linha de comando: `jessica`). Perfil ativo
+> confirmado no runtime desta sessão.
+
 ## Onde ler (nesta ordem)
 
 1. `C:\MarlonScripts\Jessica Haguiwara\AGENTS.md` — **contrato**. Precede tudo.
@@ -60,12 +64,38 @@ custaram caro:
 | Medição | Medir sempre as duas leituras: a servida (limpa) e a dinâmica (`?cb=1`). O cache já me fez afirmar três coisas falsas (E-020). |
 | Marcador do WPFC | O HTML servido às vezes termina com `<!-- need to refresh to see cached version -->` (**46 chars**). Isso muda bytes e md5 da **página inteira** sem mudar conteúdo. Comparação confiável neste site é o bloco `entry-content`, não a página. Medido em 25/11 (149.290 vs 149.244 B só por causa do marcador). |
 | Copy no banco | A copy das páginas vive em `post_content` (não no tema). Editar texto = MCP `wp_replace_in_post`, nunca deploy. `search` é **literal**, `regex:false`, `max_replacements:1`, `search` ≤ **500 chars**; molde real da lista é `<ul class="wp-block-list">` com aspas + `<!-- wp:list-item -->`. |
+| Print headless | `Page.captureScreenshot` **sem `clip`** devolve o **topo** da página, não a posição do scroll: em 25/11 (T-P03-027) os PNGs "antes" e "depois" saíram **byte-idênticos** e pareciam prova de que nada mudou. Use `clip` em coordenada absoluta (`rect.top + scrollY`) com `captureBeyondViewport: true`, e confira o PNG por pixel (cor do botão + cor da faixa abaixo). |
+| `wp_update_post_meta` | Nesta instância o Easy MCP AI pede `post_id` + `meta` (dict) + `post_type`. Mesmo com a forma certa, meta do Yoast (`_yoast_wpseo_metadesc`) volta **`ignored_keys`** — é allowlist da ferramenta, não sintaxe. Tentativa única autorizada (Q-037), 25/11. Não insistir. |
+| Botão no conteúdo | `core/button` **não** precisa de CSS neste site: herda `styles.elements.button` do `theme.json` (fundo `#4F5B43`, texto branco, pill, padding 12/28, Inter 500). O ar embaixo vem do `wp:spacer` **somado** ao `blockGap` do layout: 32+64 = **96 px @1440** e 32+40 = **72 px @390**. |
 | `curl` no Windows | `curl.exe -o /dev/null` sai **23** (erro de write) e reporta `size_download 0`: o código HTTP continua válido e o **tamanho mente**. Use `-o nul`. Aconteceu em 24/11 — por um instante a home "tinha" 0 B. |
 | PHP de diagnóstico | 30 `jhw-*.php` no docroot, inertes (`http_response_code(404)`), exceto `jhw-purge.php`, que **executa** com chave estática na URL. 404 anônimo não prova arquivo apagado. |
 | Slug em inglês | Política de Privacidade vive em `/privacy-policy/`; `/politica-de-privacidade/` dá 404. O rodapé tem os dois links, um em cada idioma. Não mexer sem checar referências do Complianz. |
 
 ## Decisões tomadas
 
+- **2026-11-25 (executada e medida por mim)** — **T-P03-027** (M-008): o link do WhatsApp
+  no fim das **4 páginas de serviço** virou **botão** e ganhou ar embaixo. Caminho escolhido:
+  **conteúdo, não tema** — `wp:paragraph` final → `wp:buttons` > `wp:button` (`core/button`,
+  herda o `styles.elements.button` do `theme.json`: oliva `#4F5B43`, texto branco, pill,
+  padding 12/28) **+** `wp:spacer` de **32 px**. Zero CSS novo, zero deploy, `style.css`
+  segue **1.3.10**. Feito pelo OpenCode por MCP (`wp_get_cpt_item` → `wp_update_cpt_item`,
+  4 páginas), purge WPFC com `cache_all_html_restantes: 0`. **Medição minha** (Edge
+  headless/CDP, 8 combinações, dpr 1; HTML com UA Chrome/131, sem query string, **duas
+  leituras idênticas** por página): 4× **200**; bytes **+376** em cada (`/consultoria/`
+  149.768 · `/projetos/` 149.676 · `/gestao-de-obra/` 149.620 · `/chave-na-mao/` 149.554);
+  **1** `.wp-block-button__link` e **1** `.wp-block-spacer` no `entry-content`, **0**
+  parágrafo antigo; texto e `href` **byte a byte** iguais aos de antes (o `<a>` só ganhou
+  a classe). Botão: **58 px** de altura @1440 e **49,09 px** @390, largura 272,17 / 297,88
+  @1440 e 212,52 / 231,08 @390 — **não** fica pesado no mobile (M-008, item 3).
+  **Ar embaixo: 96 px @1440 e 72 px @390** (32 do espaçador + 64/40 do `blockGap` do
+  `theme.json`), contra **0 px** antes — medido em todas as 8 combinações. Sem overflow
+  horizontal (`scrollWidth` = 1440 / 390). Prints recortados em
+  `DOCS/P-03-Jessica-Haguiwara/evidencias/t027/print-<slug>-{1440,390}.png`, conferidos
+  **pixel a pixel**: a faixa oliva do botão termina exatamente 96/72 px acima da faixa
+  marrom do rodapé nos 8 arquivos. **Q-037:** uma tentativa de `wp_update_post_meta`
+  (`_yoast_wpseo_metadesc`, 229) → `ignored_keys`, como previsto; **parei**. No ar, o
+  `og:description` da /chave-na-mao/ segue com a frase antiga do M1 (não é regressão:
+  é o mesmo limite de ferramenta).
 - **2026-11-25 (executada e medida por mim)** — **T-P03-026**: as **10** trocas
   editoriais de Q-033 estão no ar (P2 vetada, intocada). Feito por MCP
   (`wp_replace_in_post`, 10 chamadas, todas `replacements_count: 1`), sem arquivo de

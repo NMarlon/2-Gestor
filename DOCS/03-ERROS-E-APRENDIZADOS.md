@@ -585,3 +585,24 @@ documentação lista todos os diretórios e marca a ausência de dado como “se
 
 **Custo.** Uma frase errada em `04-TAREFAS.md`, corrigida às 02:04, e uma linha a mais
 no doc de arquitetura do projeto — que o executor já tinha feito certo.
+
+## E-030 · O print "antes/depois" era o topo da página nas duas vezes (2026-11-25)
+
+**O que aconteceu.** Na T-P03-027, gerei 16 PNGs (8 combinações × antes/depois) com
+`Page.captureScreenshot` sem `clip`, achando que o scroll feito por `scrollIntoView`
+apareceria na imagem. Os PNGs de "antes" e "depois" saíram **byte-idênticos** — e eu os
+tinha como prova visual da mudança. Só descobri ao conferir os pixels: os dois mostravam
+o **topo** da página, 100% acima do CTA.
+
+**Por que aconteceu.** `Page.captureScreenshot` captura a partir da origem do documento
+quando não recebe `clip`, independente do scroll. E eu tinha "olhado" o arquivo pelo
+tamanho (>18 KB) em vez de olhar o conteúdo — tamanho não diz o que a imagem mostra.
+
+**Lição.** Print de região específica é **recorte calculado**: `clip` com coordenada
+absoluta (`rect.top + window.scrollY`) e `captureBeyondViewport: true`. E print só é
+prova depois de **lido por pixel**: em 25/11 conferi a faixa oliva do botão e a faixa
+marrom do rodapé e a distância entre elas em cada PNG (96 px @1440, 72 px @390), batendo
+com a medição do DOM. Print não conferido é arquivo, não evidência.
+
+**Custo.** Uma rodada de 16 PNGs descartada e o script de captura reescrito. Nada falso
+foi publicado: o defeito foi pego antes do relatório.

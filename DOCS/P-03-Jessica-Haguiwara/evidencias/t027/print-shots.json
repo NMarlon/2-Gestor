@@ -1,0 +1,170 @@
+[
+  {
+    "slug": "consultoria",
+    "view": "1440x900@1",
+    "png": "print-consultoria-1440.png",
+    "clip": {
+      "x": 0,
+      "y": 1071,
+      "width": 1440,
+      "height": 535,
+      "scale": 1
+    },
+    "btnTop": 1281.64,
+    "btnBottom": 1339.64,
+    "btnLeft": 384,
+    "btnWidth": 272.17,
+    "btnHeight": 58,
+    "footTop": 1435.64,
+    "gap": 96,
+    "docH": 2123,
+    "texto": "Fale sobre o seu caso →"
+  },
+  {
+    "slug": "consultoria",
+    "view": "390x844@1",
+    "png": "print-consultoria-390.png",
+    "clip": {
+      "x": 0,
+      "y": 882,
+      "width": 390,
+      "height": 502,
+      "scale": 1
+    },
+    "btnTop": 1092.83,
+    "btnBottom": 1141.92,
+    "btnLeft": 20,
+    "btnWidth": 212.52,
+    "btnHeight": 49.09,
+    "footTop": 1213.92,
+    "gap": 72,
+    "docH": 2006,
+    "texto": "Fale sobre o seu caso →"
+  },
+  {
+    "slug": "projetos",
+    "view": "1440x900@1",
+    "png": "print-projetos-1440.png",
+    "clip": {
+      "x": 0,
+      "y": 1007,
+      "width": 1440,
+      "height": 535,
+      "scale": 1
+    },
+    "btnTop": 1217.64,
+    "btnBottom": 1275.64,
+    "btnLeft": 384,
+    "btnWidth": 297.88,
+    "btnHeight": 58,
+    "footTop": 1371.64,
+    "gap": 96,
+    "docH": 2059,
+    "texto": "Fale sobre o seu projeto →"
+  },
+  {
+    "slug": "projetos",
+    "view": "390x844@1",
+    "png": "print-projetos-390.png",
+    "clip": {
+      "x": 0,
+      "y": 859,
+      "width": 390,
+      "height": 502,
+      "scale": 1
+    },
+    "btnTop": 1069.73,
+    "btnBottom": 1118.83,
+    "btnLeft": 20,
+    "btnWidth": 231.08,
+    "btnHeight": 49.09,
+    "footTop": 1190.83,
+    "gap": 72,
+    "docH": 1983,
+    "texto": "Fale sobre o seu projeto →"
+  },
+  {
+    "slug": "gestao-de-obra",
+    "view": "1440x900@1",
+    "png": "print-gestao-de-obra-1440.png",
+    "clip": {
+      "x": 0,
+      "y": 1071,
+      "width": 1440,
+      "height": 535,
+      "scale": 1
+    },
+    "btnTop": 1281.64,
+    "btnBottom": 1339.64,
+    "btnLeft": 384,
+    "btnWidth": 297.88,
+    "btnHeight": 58,
+    "footTop": 1435.64,
+    "gap": 96,
+    "docH": 2123,
+    "texto": "Fale sobre o seu projeto →"
+  },
+  {
+    "slug": "gestao-de-obra",
+    "view": "390x844@1",
+    "png": "print-gestao-de-obra-390.png",
+    "clip": {
+      "x": 0,
+      "y": 798,
+      "width": 390,
+      "height": 502,
+      "scale": 1
+    },
+    "btnTop": 1008.05,
+    "btnBottom": 1057.14,
+    "btnLeft": 20,
+    "btnWidth": 231.08,
+    "btnHeight": 49.09,
+    "footTop": 1129.14,
+    "gap": 72,
+    "docH": 1921,
+    "texto": "Fale sobre o seu projeto →"
+  },
+  {
+    "slug": "chave-na-mao",
+    "view": "1440x900@1",
+    "png": "print-chave-na-mao-1440.png",
+    "clip": {
+      "x": 0,
+      "y": 1007,
+      "width": 1440,
+      "height": 535,
+      "scale": 1
+    },
+    "btnTop": 1217.64,
+    "btnBottom": 1275.64,
+    "btnLeft": 384,
+    "btnWidth": 297.88,
+    "btnHeight": 58,
+    "footTop": 1371.64,
+    "gap": 96,
+    "docH": 2059,
+    "texto": "Fale sobre o seu projeto →"
+  },
+  {
+    "slug": "chave-na-mao",
+    "view": "390x844@1",
+    "png": "print-chave-na-mao-390.png",
+    "clip": {
+      "x": 0,
+      "y": 840,
+      "width": 390,
+      "height": 502,
+      "scale": 1
+    },
+    "btnTop": 1050.44,
+    "btnBottom": 1099.53,
+    "btnLeft": 20,
+    "btnWidth": 231.08,
+    "btnHeight": 49.09,
+    "footTop": 1171.53,
+    "gap": 72,
+    "docH": 1964,
+    "texto": "Fale sobre o seu projeto →"
+  }
+]

@@ -1,0 +1,101 @@
+{
+  "problemas": [],
+  "paginas": [
+    {
+      "slug": "consultoria",
+      "url": "https://jessicahaguiwara.arq.br/consultoria/",
+      "status": 200,
+      "bytes": 149768,
+      "duas_leituras_iguais": true,
+      "botoes_no_entry_content": 1,
+      "botoes": [
+        {
+          "texto": "Fale sobre o seu caso →",
+          "href": "https://api.whatsapp.com/send?phone=5511983236422&amp;text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20de%20Arquitetura%20de%20Jessica%20Haguiwara",
+          "tem_target": false,
+          "classes": "wp-block-button__link wp-element-button"
+        }
+      ],
+      "spacer": [
+        "<div style=\"height:32px\" aria-hidden=\"true\" class=\"wp-block-spacer\">"
+      ],
+      "paragrafos_antigos_restantes": 0,
+      "overflow_marker": null,
+      "checa_texto": true,
+      "checa_href": true,
+      "og_description": "Orientação para decidir com segurança antes de comprar, mover ou construir."
+    },
+    {
+      "slug": "projetos",
+      "url": "https://jessicahaguiwara.arq.br/projetos/",
+      "status": 200,
+      "bytes": 149676,
+      "duas_leituras_iguais": true,
+      "botoes_no_entry_content": 1,
+      "botoes": [
+        {
+          "texto": "Fale sobre o seu projeto →",
+          "href": "https://api.whatsapp.com/send?phone=5511983236422&amp;text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20de%20Arquitetura%20de%20Jessica%20Haguiwara",
+          "tem_target": false,
+          "classes": "wp-block-button__link wp-element-button"
+        }
+      ],
+      "spacer": [
+        "<div style=\"height:32px\" aria-hidden=\"true\" class=\"wp-block-spacer\">"
+      ],
+      "paragrafos_antigos_restantes": 0,
+      "overflow_marker": null,
+      "checa_texto": true,
+      "checa_href": true,
+      "og_description": "Arquitetura e interiores desenvolvidos sob medida para o seu jeito de viver."
+    },
+    {
+      "slug": "gestao-de-obra",
+      "url": "https://jessicahaguiwara.arq.br/gestao-de-obra/",
+      "status": 200,
+      "bytes": 149620,
+      "duas_leituras_iguais": true,
+      "botoes_no_entry_content": 1,
+      "botoes": [
+        {
+          "texto": "Fale sobre o seu projeto →",
+          "href": "https://api.whatsapp.com/send?phone=5511983236422&amp;text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20de%20Arquitetura%20de%20Jessica%20Haguiwara",
+          "tem_target": false,
+          "classes": "wp-block-button__link wp-element-button"
+        }
+      ],
+      "spacer": [
+        "<div style=\"height:32px\" aria-hidden=\"true\" class=\"wp-block-spacer\">"
+      ],
+      "paragrafos_antigos_restantes": 0,
+      "overflow_marker": null,
+      "checa_texto": true,
+      "checa_href": true,
+      "og_description": "Acompanhamento técnico para o projeto sair do papel como foi desenhado."
+    },
+    {
+      "slug": "chave-na-mao",
+      "url": "https://jessicahaguiwara.arq.br/chave-na-mao/",
+      "status": 200,
+      "bytes": 149554,
+      "duas_leituras_iguais": true,
+      "botoes_no_entry_content": 1,
+      "botoes": [
+        {
+          "texto": "Fale sobre o seu projeto →",
+          "href": "https://api.whatsapp.com/send?phone=5511983236422&amp;text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20de%20Arquitetura%20de%20Jessica%20Haguiwara",
+          "tem_target": false,
+          "classes": "wp-block-button__link wp-element-button"
+        }
+      ],
+      "spacer": [
+        "<div style=\"height:32px\" aria-hidden=\"true\" class=\"wp-block-spacer\">"
+      ],
+      "paragrafos_antigos_restantes": 0,
+      "overflow_marker": null,
+      "checa_texto": true,
+      "checa_href": true,
+      "og_description": "Do projeto à entrega, com a tranquilidade de cuidar de cada etapa."
+    }
+  ]
+}
