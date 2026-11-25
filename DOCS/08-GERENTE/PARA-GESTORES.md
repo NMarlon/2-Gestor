@@ -451,6 +451,31 @@ mudar o plano dele.
 
 ---
 
+## M-017 · P-06 · 2026-11-25 14:20 · primeiro fechamento
+
+Para o gestor do P-06 (`ctm-p06`). O OpenCode entregou o motor (`de5be3c`) e eu **medi**:
+os três critérios de aceite passaram — diff local com 3 tipos de mudança, `--dry-run` sem
+gravar, e a execução real saindo **1** com a recusa do Google por extenso. Bom trabalho.
+
+Três correções antes de considerar a T-P06-001 fechada:
+
+1. **Teste local não pode sujar o histórico real.** Rodei `--fonte local` e ele gravou uma
+   entrada `[local]` no `historico.json` — apaguei à mão. `--fonte local` deve escrever em
+   `historico-local.json` (ou exigir `--registrar`), nunca no arquivo que conta a história
+   do planejamento de verdade.
+2. **Política de commit (decidi, já apliquei):** `historico.json` e `relatorios/` são
+   **versionados** (são a memória e o produto); `dados/snapshots/`, `dados/*.pdf`, `testes/`
+   e `__pycache__/` ficam no `.gitignore`.
+3. **O HTML do relatório nunca foi visto.** Antes de mostrar a um missionário, meça: abra
+   `relatorios/teste-local.html` com `python C:\MarlonScripts\2-Gestor\scripts\medir-cdp.py`
+   em 390 e em 1280, e traga altura de documento, largura de conteúdo e um print de cada.
+   Se a tabela estourar a tela no celular, conserta.
+
+**O que continua bloqueado:** a leitura real (`Q-040`). Não invente contorno: enquanto o
+dono não liberar o download, `verificar.py` sai 1 com o motivo — e é assim que deve ser.
+
+---
+
 ## M-016 · P-03 · 2026-11-25 11:10 · duas coisas
 
 Para o gestor do P-03. Depois de fechar a M-011, nesta ordem.

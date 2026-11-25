@@ -23,6 +23,7 @@ Nunca dois gestores no mesmo projeto; nunca dois OpenCode no mesmo repositório.
 | P-03 Jessica Haguiwara | **perfil `jessica-p03`** (nasceu `p03-gestor`, virou `p03-jessica`, hoje `jessica-p03`) | 🟢 ativo, prioridade — 1.3.10 no ar, 4 páginas publicadas |
 | P-04 Portfólio | a designar | 🟡 construído, não publicado, sem dono (Q-024) |
 | P-05 Painel Hermes | **perfil `painel-p05`** (nasceu `p05-gestor`, virou `p05-painel`, hoje `painel-p05`) | 🟢 ativo — T-P05-001 a T-P05-003 entregues; UI local no ar |
+| P-06 Alerta Planejamento Missionário | **perfil `ctm-p06`** (criado 25/11, clonado de `painel-p05`) | 🟡 criado — motor em construção pelo OpenCode; bloqueio externo `Q-040` |
 
 *Estados medidos em **2026-11-24**. Detalhe em `02-PROJETOS.md`; medição em
 `08-GERENTE/AUDITORIA-2026-11-23.md`.*
