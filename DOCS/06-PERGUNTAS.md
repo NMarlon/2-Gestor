@@ -743,7 +743,7 @@ documento em dois pedaços que qualquer visitante com o link recebe:
 
 ```
 /viewer/meta      → {"pages":7,"maxPageWidth":3200}
-/viewer/presspage → camada de TEXT0 por página, com coordenadas de cada palavra
+/viewer/presspage → camada de TEXTO por página, com coordenadas de cada palavra
 /viewer/img       → imagem da página em até 3200 px (não usada: texto é melhor)
 ```
 
