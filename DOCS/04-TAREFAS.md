@@ -1296,10 +1296,16 @@ release.json **1.3.12**; dry-run final **12 iguais, 0 divergentes, 0 novos, 0 ó
 | sonda de 404 | 404 | 145.830 | **0** | **3** | — | 3 |
 
 Zero ocorrências do texto antigo no HTML de qualquer uma das 5 URLs, inclusive rodapé.
-Os **−58 B** por página são exatamente os 2 links × 29 B mais curtos (`/chave-na-mao/`
-também: 149.417 → 149.359). O `%0A` que os dois links do rodapé traziam no fim saiu junto
-com o texto antigo (o brief especificava o link sem ele); efeito visível: nenhum.
+O `%0A` que os dois links do rodapé traziam no fim saiu junto com o texto antigo (o brief
+especificava o link sem ele); efeito visível: nenhum. O **−58 B** por página é o rodapé
+**−104 B** (2 links de 165 → 113 B) **+46 B** do marcador do WPFC (`need to refresh…`).
 `release.json` no repo do site: commit `19c84d3`, assinatura `GESTOR-P03`.
+
+**Re-medido por mim às 15:07** (cache do WPFC regravado, 2 leituras idênticas por URL,
+md5 igual par a par): **0 antigo / 2 universal / 1 próprio / 3 links** nas 4 páginas;
+bytes 149.683 / 149.605 / 149.528 / 149.494. Fora do rodapé, o diff antigo→novo do HTML
+é só `?ver=1.3.11 → 1.3.12`. A home, fora do escopo, mantém **1 texto antigo no CTA do
+corpo** (`post_content`, intocado).
 
 **Não testado:** a mensagem pré-preenchida aberta no app do WhatsApp (só o `href`
 codificado); rodapé nas 14 páginas do site (medi as 5 do escopo + a 404).

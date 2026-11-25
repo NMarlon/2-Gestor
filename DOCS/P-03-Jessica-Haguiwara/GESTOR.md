@@ -81,9 +81,17 @@ custaram caro:
   `Olá! Quero conversar sobre o meu projeto.` — **0** ocorrências do texto antigo no HTML
   servido das 4 páginas **e** da 404; cada página agora tem **1 texto próprio no corpo + 2
   universais no rodapé** (3 links de WhatsApp, como antes). Antes: 2 antigos por página
-  (3 na 404). −58 B por página = 2 × 29 B mais curtos. Backup em
-  `backups/theme-1.3.11-antes-1.3.12/`; deploy 4 arquivos `todos conferem`; `--record` →
-  1.3.12; dry-run final **12 iguais, 0 divergentes**. `release.json` commit `19c84d3`.
+  (3 na 404). **Re-medido às 15:07** (cache do WPFC regravado, 2 leituras idênticas por URL):
+  149.683 / 149.605 / 149.528 / 149.494 B, mesmos **0 antigo / 2 universal / 1 próprio /
+  3 links**. O `−58 B` por página é o rodapé **−104 B** (2 links de 165 → 113 B) **+46 B**
+  do marcador do WPFC (`need to refresh…`), não 2 × 29 B. Fora do rodapé, o diff
+  antigo→novo do HTML é só `?ver=1.3.11 → 1.3.12`. A home (fora do escopo) mantém **1
+  texto antigo no CTA do corpo** (`post_content`, intocado — CTA é proibido); o rodapé dela
+  já é o universal. Backup em `backups/theme-1.3.11-antes-1.3.12/`; deploy 4 arquivos
+  `todos conferem`; `--record` → 1.3.12; dry-run final **12 iguais, 0 divergentes**.
+  `release.json` commit `19c84d3`, assinado `GESTOR-P03`. **Risco de processo:** o commit
+  do executor `578b4b9` saiu com autor `Marlon Rebello Viana`, não `EXECUTOR-P03` — o brief
+  não fixou a assinatura; não se reescreve commit, o próximo brief repete a regra.
 
 - **2026-11-25 (M-020 aberta pelo Gerente)** — a T-P03-031 foi **aceita** por medição dele
   (1 link com o texto próprio por página, 0 de outra, rótulo e número intactos), com uma
