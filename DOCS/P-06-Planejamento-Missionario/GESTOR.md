@@ -216,3 +216,23 @@ artefato `4 | 4 | 4 …` nas páginas 4–6.
 linha solta, e o HTML embute a imagem da página que mudou (o `viewer/img` já entrega 3200 px).
 Brief **T-P06-011** despachado com o print dele como gabarito: se a grade da página 1 não
 reproduzir as caixas da imagem, não passa.
+
+## 25/11/2026, 22:40 — T-016: o Vigia no ar, medido por mim
+
+**http://127.0.0.1:8788/** — painel local, servidor de stdlib, sem dependência.
+
+| Critério | Medido |
+|---|---|
+| `GET /` | **200**, 11.066 B, título "Vigia P-06", cartão do POR6 com frequência 24 h e próxima verificação calculada |
+| `GET /link/por6` | **200**, 13.329 B, com "Observações", "Mudanças" e "Mudanças de célula entre leituras" |
+| `POST /verificar/por6` | **303**; nova linha no `logs/vigia.jsonl` em <25 s: `exit 0, 0,8 s, sem mudanças` |
+| Frequência | 35 s depois, **nenhuma linha nova** — não roda antes da hora |
+| Traversal | `../../config.json` → **404**; `..%2f..%2f` → **403**; `%2e%2e%2f` → **403** |
+| Navegador | `msedge` **0** depois do ciclo — o painel não abre navegador |
+| 390 px | `innerWidth 390`, `scrollDoc 390`, **overflow 0** |
+| Migração | `dados/links/por6/historico.json` com **5 leituras** (as 4 da raiz + a nova), todas com sha `14dfb168` |
+| Agendador | tarefa **VigiaP06** instalada, status *Pronto*; remover com `agendar-vigia.ps1 -Remover` |
+
+**Correção de registro:** o OpenCode relatou que `relatorios/pagina-1.png` "sumiu do disco sem
+comando de exclusão dele". Fui eu — `rm -f` na limpeza do teste simulado. Não foi mistério nem
+perda de dado; o arquivo era artefato do meu teste, e ele restaurou uma cópia de `testes/`.
