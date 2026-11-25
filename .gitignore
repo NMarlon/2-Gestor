@@ -9,3 +9,6 @@ node_modules/
 
 # backups locais do repo (.bundle de 8 MB, nao e fonte)
 backups/
+
+# rascunho e sonda do Gerente (HTML salvo, texto de ordem) — nao e fonte
+.scratch/
