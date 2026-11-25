@@ -58,12 +58,27 @@ custaram caro:
 | Template part no banco | `wp_template_part` **ID 185** (`post_name=footer`) vence `parts/footer.html`. Deploy verde, verificação 11/11, e o visitante vê o rodapé velho. Resolvido em 2026-11-23 apagando o override — o arquivo voltou a mandar. **Antes de editar tema, checar se a parte está salva no banco.** |
 | Menu | Não está em `parts/header.html`: é `wp_navigation` no banco. Desde a **1.3.9** (24/11) o item SOLUÇÕES aponta para `#solucoes` (âncora existe) e o submenu (`open-on-hover-click`) tem **4 filhos**: consultoria, projetos, gestao-de-obra, chave-na-mao. Antes disso estava vazio. **Não verifiquei nesta medição onde os itens vivem** (bloco no tema ou `wp_navigation` no banco); se for no banco, rollback do tema **não** desfaz o submenu — desfazer é pelo editor de navegação. |
 | Medição | Medir sempre as duas leituras: a servida (limpa) e a dinâmica (`?cb=1`). O cache já me fez afirmar três coisas falsas (E-020). |
+| Marcador do WPFC | O HTML servido às vezes termina com `<!-- need to refresh to see cached version -->` (**46 chars**). Isso muda bytes e md5 da **página inteira** sem mudar conteúdo. Comparação confiável neste site é o bloco `entry-content`, não a página. Medido em 25/11 (149.290 vs 149.244 B só por causa do marcador). |
+| Copy no banco | A copy das páginas vive em `post_content` (não no tema). Editar texto = MCP `wp_replace_in_post`, nunca deploy. `search` é **literal**, `regex:false`, `max_replacements:1`, `search` ≤ **500 chars**; molde real da lista é `<ul class="wp-block-list">` com aspas + `<!-- wp:list-item -->`. |
 | `curl` no Windows | `curl.exe -o /dev/null` sai **23** (erro de write) e reporta `size_download 0`: o código HTTP continua válido e o **tamanho mente**. Use `-o nul`. Aconteceu em 24/11 — por um instante a home "tinha" 0 B. |
 | PHP de diagnóstico | 30 `jhw-*.php` no docroot, inertes (`http_response_code(404)`), exceto `jhw-purge.php`, que **executa** com chave estática na URL. 404 anônimo não prova arquivo apagado. |
 | Slug em inglês | Política de Privacidade vive em `/privacy-policy/`; `/politica-de-privacidade/` dá 404. O rodapé tem os dois links, um em cada idioma. Não mexer sem checar referências do Complianz. |
 
 ## Decisões tomadas
 
+- **2026-11-25 (executada e medida por mim)** — **T-P03-026**: as **10** trocas
+  editoriais de Q-033 estão no ar (P2 vetada, intocada). Feito por MCP
+  (`wp_replace_in_post`, 10 chamadas, todas `replacements_count: 1`), sem arquivo de
+  tema e sem deploy — copy vive no banco. Medição minha na URL pública, UA Chrome/131,
+  sem query string, duas leituras idênticas por URL: `/consultoria/` **200 149.392 B**
+  `6bbd90df…` · `/projetos/` **149.300** `e8532940…` · `/gestao-de-obra/` **149.244**
+  `6dfc674c…` · `/chave-na-mao/` **149.178** `e7a75bf3…`. Dentro do `entry-content`: os 10
+  trechos novos aparecem 1×, os 10 velhos 0×; P2 continua 1×; `<title>`, canonical e
+  `og:*` idênticos aos de antes. C3 virou `<ul>` de **3 `<li>`** irmão do H2. CTA: só
+  a 226 mudou para "Fale sobre o seu caso"; as outras três seguem "Fale sobre o seu
+  projeto". `style.css` continua **1.3.10**; `git status` do repo do projeto igual
+  antes/depois. **Ressalva:** o `og:description` da /chave-na-mao/ ainda tem a frase
+  antiga do M1 (Yoast não grava por MCP) — divergência conhecida, fora de escopo.
 - **2026-11-24 (verificada na fonte pública)** — **T-P03-024**: tema **1.3.9**,
   4 páginas de serviço, submenu SOLUÇÕES com filhos e link nos cartões. Medido por
   mim, não pelo relatório do executor. UA Chrome/131, sem query string, duas
@@ -119,4 +134,5 @@ custaram caro:
 ## Pendências que dependem do Marlon
 
 - Levar à cliente a lista de dados reais (T-011).
-- Decidir se o `logs/` do projeto entra no `.gitignore` — hoje aparece como `??`.
+- ~~Decidir se o `logs/` do projeto entra no `.gitignore`~~ — **resolvido**: conferido em
+  25/11, `logs/` e `backups/` já estão no `.gitignore` do projeto. Nada de `??` por isso.

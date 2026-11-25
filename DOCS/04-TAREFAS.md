@@ -685,7 +685,7 @@ está no relatório da tarefa.
 
 ---
 
-## T-P03-026 · revisão editorial das 4 páginas de serviço (Q-033) 🟡
+## T-P03-026 · revisão editorial das 4 páginas de serviço (Q-033) ✅
 
 **Origem:** M-004 do Gerente (`DOCS/08-GERENTE/PARA-GESTORES.md`) — aplicar **10 das 11** propostas
 da revisão de Q-033 (`DOCS/P-03-Jessica-Haguiwara/REVISAO-EDITORIAL-2026-11-24.md`). P2 vetada pelo
@@ -712,3 +712,25 @@ no corpo — contar ocorrência no HTML inteiro daria falso negativo.
 1× e 10 ANTES 0×; P2 intacta; C3 como `<ul class="wp-block-list">` de 3 `<li>` irmã do H2 (não dentro
 de `<p>`); purge do WPFC; 4 URLs 200 com contagem certa no HTML público; `git status` do repo do
 projeto igual antes/depois.
+
+**Execução (25/11, OpenCode):** 10 chamadas `wp_replace_in_post`, todas com
+`replacements_count: 1`; deltas medidos batem com os previstos (C1 +26, C2 −3, C3 +176
+— molde real com aspas, C4 −3, P1 +4, G1 −48, G2 +31, M1 −2, M2 −4, M3 +1, em bytes).
+Purge do WPFC: `cache_all_html_restantes: 0`. Nenhum arquivo do repo do projeto alterado.
+
+**Medição do gestor (25/11, Chrome/131, sem query string, 2 leituras idênticas/URL):**
+
+| página | status | bytes | md5 | entry-content |
+|---|---|---|---|---|
+| `/consultoria/` | 200 | 149.392 | `6bbd90dfd1c266e32bc1aa94c8ba1ffc` | C1/C2/C4 novos 1×, velhos 0×; C3 `<ul>` 3 `<li>` |
+| `/projetos/` | 200 | 149.300 | `e8532940679e0cfcd2a0d54a383aba0e` | P1 novo 1×; **P2 intacta 1×** |
+| `/gestao-de-obra/` | 200 | 149.244 | `6dfc674cce34d1218b06f88c97462eae` | G1/G2 novos 1×, velhos 0× |
+| `/chave-na-mao/` | 200 | 149.178 | `e7a75bf37c1a54d715973f93b9b9a6dc` | M1/M2/M3 novos 1×; M1 velho **0× no corpo, 1× na meta** |
+
+Diff do texto do `<body>` inteiro antes × depois: exatamente as 10 linhas trocadas, nada
+mais (`<title>`, canonical, `og:title`, `og:description` idênticos). CTA: 226 = "Fale
+sobre o seu caso"; 227/228/229 seguem "Fale sobre o seu projeto". `style.css` = 1.3.10.
+
+**Não testado:** renderização visual/mobile (mesma classe da lista que já existia) e
+validade do bloco no editor Gutenberg. **Risco aberto:** `og:description` da
+`/chave-na-mao/` ainda com a frase antiga do M1 (Yoast não grava por MCP).
