@@ -302,7 +302,7 @@ def main():
                                                        "buttons": botoes})
                 time.sleep(2.0)
         if js:
-            extra = c.cmd("Runtime.evaluate", {"expression": js, "returnByValue": True})
+            extra = c.cmd("Runtime.evaluate", {"expression": js, "returnByValue": True, "awaitPromise": True})
             dados["js"] = extra.get("result", {}).get("value")
         if flags.get("perf"):
             perf = c.cmd("Runtime.evaluate", {"expression": _PERF_LEITURA, "returnByValue": True})

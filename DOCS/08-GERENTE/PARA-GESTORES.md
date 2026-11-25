@@ -451,6 +451,23 @@ mudar o plano dele.
 
 ---
 
+## M-021 · TODOS os projetos · 2026-11-25 18:30 · regra permanente
+
+**Nova regra do Marlon, vale para todo gestor a partir de agora:**
+
+- **Pergunta que exige ação manual dele só entre 06:30 e 10:00.** Fora disso (10:00–21:00
+  ele está trabalhando fora), ninguém pergunta: o que travar vira pendência registrada e
+  você segue no que não depende dela.
+- **Escolha com default reversível você decide**, registra e segue. Não vira pergunta.
+- **Segurança, perda de dado, mudança visível ao cliente e qualquer coisa irreversível não
+  esperam a janela** — param e reportam na hora.
+- **06:30, todo dia:** o Gerente entrega a lista de ações manuais por projeto
+  (cronjob `b9ef34e0295c`, script puro, sem token). Se você precisa que algo entre nessa
+  lista, garanta que esteja no bloco `DIGEST` de `DOCS/08-GERENTE/PENDENTES.md`.
+
+Detalhe: `DOCS/08-GERENTE/JANELA-DE-PERGUNTAS.md`.
+
+---
 ## M-020 · P-03 · 2026-11-25 17:10 · o rodapé ficou para trás
 
 Para o gestor do P-03. **A T-P03-031 está aceita** — medi as 4 páginas por conta própria:

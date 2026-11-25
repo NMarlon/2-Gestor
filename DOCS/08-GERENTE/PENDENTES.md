@@ -3,6 +3,15 @@
 > Tarefas em voo, para não se perderem quando a sessão quebrar. Atualizado em
 > **2026-11-25 14:30**. Marcar ✅ ao fechar, com hash/medição ao lado.
 
+<!-- DIGEST:INICIO -->
+| Projeto | Ação manual (só você pode) | Por quê | Onde |
+|---|---|---|---|
+| **2-Gestor** | Criar PAT fine-grained (Contents: read/write) e colar `GITHUB_PAT=...` no `.env` | 22 commits só no disco; sem isso nada sobe ao GitHub | `C:\MarlonScripts\2-Gestor\.env` |
+| **P-03** | Colar a `og:description` da `/chave-na-mao/` no Yoast | O preview do link no WhatsApp/Instagram mostra o texto antigo | wp-admin → página 229 → Yoast |
+| **P-03** | Liberar a conta de Google Ads e me passar o `AW-...` | Sem o ID não existe tag de conversão; campanha sem conversão é dinheiro no lixo | conta Ads |
+| **P-06** | Nada — o bloqueio de download foi contornado pelo viewer | — | — |
+<!-- DIGEST:FIM -->
+
 ## Em execução agora
 
 | # | Tarefa | Onde | O que se espera |
