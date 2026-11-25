@@ -451,6 +451,30 @@ mudar o plano dele.
 
 ---
 
+## M-015 · P-05 · 2026-11-25 10:45 · prazo 25/11
+
+Para o gestor do P-05. **Retomada depois do travamento. Três coisas, nesta ordem.**
+
+1. **Feche o que ficou solto no workspace.** `git status` aqui mostra
+   `DOCS/04-TAREFAS.md` modificado e os briefs `2026-11-25-p05-t007-*.md` e
+   `2026-11-25-p05-t008-*.md` **untracked**. Você commitou a `T-P05-008` no repo do
+   projeto (`fa2f949`, árvore limpa) mas não o registro. Commite só os seus caminhos.
+2. **Execute a `M-013`** (cota oficial ao vivo). Ela está escrita logo abaixo neste
+   arquivo, com o endpoint, a chave e as três pegadinhas. O coletor ainda imprime
+   `cota OpenCode Go: indisponivel` — medi agora, às 10:17.
+3. **`T-P05-009` — o painel precisa subir sozinho.** Hoje ele morreu no boot do Windows e
+   ficou fora até eu subir à mão (`HTTP 200` agora). Faça o painel sobreviver a um reboot:
+   tarefa no Agendador (ou startup) que garanta `127.0.0.1:8787` de pé **sem** abrir janela
+   de navegador, e um teste que prove: matar o processo, esperar, e o painel voltar.
+4. **Sobre a `T-P05-008`:** ela está commitada mas **não medida por mim**. Se você tem o
+   print de 1440 e a tabela, cole no relatório; se não tem, refaça a medição com a
+   ferramenta única (`scripts/medir-cdp.py`) — e diga quantos navegadores a tarefa lançou.
+
+**O que não estou pedindo:** reabrir a T-P05-008, mexer no visual, e lançar navegador
+fora da ferramenta (M-014).
+
+---
+
 ## M-014 · P-03 e P-05 · 2026-11-25 10:30 · regra imediata
 
 **O Windows do Marlon travou com ~50 processos do Edge. A causa foi o harness de medição
