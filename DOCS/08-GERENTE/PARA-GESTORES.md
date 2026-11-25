@@ -244,6 +244,86 @@ Para o gestor do P-05. **T-P05-002 conferida na fonte — fecha. Autorizo a T-P0
 
 ---
 
+## M-008 · P-03 · 2026-11-25 02:35 · prazo 25/11
+
+Para o gestor do P-03. **T-P03-027 — o CTA do fim das páginas vira botão, e ganha ar
+embaixo.** Pedido do Marlon, com print: *"gostaria que isso fosse um botão mesmo, acho
+que ainda é mais elegante. E também não tem margem nenhuma embaixo dele, está colado com
+a caixa de baixo."*
+
+1. **Escopo:** o parágrafo final com o link do WhatsApp, nas **4 páginas**
+   (226/227/228/229). Hoje é `<p class="wp-block-paragraph"><a href="api.whatsapp…">…</a></p>`.
+   Vira **botão** (`core/button`, com `core/buttons` se o alinhamento pedir), mantendo
+   **texto e `href` exatamente como estão** — inclusive o `Fale sobre o seu caso` da 226.
+   Nada de texto novo.
+2. **Ar embaixo:** mínimo de **32 px** entre o botão e o bloco seguinte, para não encostar.
+   Se o caminho for espaçador no conteúdo, use; se for CSS, entra no tema com bump — e aí
+   **versão nova** (1.3.11) pelas regras do `release.json`.
+3. **Estilo:** o botão herda a identidade do site (não invente cor nova; se a paleta já tem
+   token de CTA, use-o). Se ficar visualmente pesado na largura de 390 px, reporte com print
+   em vez de decidir sozinho.
+4. **Nada além disso:** não toque em título, header, rodapé, formulário, cookies, preço,
+   depoimento.
+5. **Prova:** antes/depois com print em **1440×900 e 390×844** das 4 páginas (ou de duas,
+   se as quatro forem idênticas — diga qual), `curl` 200 nas 4, e a distância medida entre
+   a base do botão e o topo do bloco seguinte (≥32).
+6. **Q-037 — tentativa única:** antes de fechar, tente gravar a meta
+   `_yoast_wpseo_metadesc` da página 229 via `wp_update_post_meta` com o texto
+   *"Do projeto à entrega, com cada etapa conduzida pelo escritório: projeto, fornecedores,
+   obra e acabamento sob um responsável só, do começo ao fim."* Se voltar `ignored_keys`,
+   **não insista**: reporte e o Marlon faz no wp-admin. Decidi pela versão do corpo; a meta
+   segue o corpo, não o contrário.
+7. Commit no repo do projeto (se houver mudança de tema) e no caderno.
+
+**O que não estou pedindo:** deploy sem versão nova, texto novo de WhatsApp (`Q-038`), e
+mexer no resto das páginas.
+
+---
+
+## M-009 · P-05 · 2026-11-25 02:35 · prazo 25/11
+
+Para o gestor do P-05. **T-P05-004 — o gráfico que o Marlon pediu.** Ele quer olhar o
+painel e ver *"como está indo o desenvolvimento e o gasto de tokens"*.
+
+1. **A referência dele são três janelas:** a tabela do provedor com **5 horas, semanal e
+   mensal**. É isso que o painel tem que mostrar — e é isso que hoje não existe, porque a
+   API devolve `data=null`/401 (tabela `account` do `opencode.db` local está **vazia**, 0
+   linhas: não há workspace conectado nesta máquina).
+2. **Duas séries, uma tela.** (a) **Medido localmente** — tokens de entrada, saída, cache
+   lido e nº de chamadas/sessões, agregados em **5 h, 7 d e 30 d**, por perfil e por dia.
+   Fonte: `state.db` do Hermes + `opencode.db`. (b) **Oficial do provedor** — só quando
+   existir; até lá, cartão `INDISPONIVEL` com o motivo e **o que o Marlon precisa fazer**
+   (entrar no Console e conectar o workspace).
+3. **Nunca misture as duas.** Rótulo diferente, cara diferente. A série local é medida; a
+   oficial é contador do plano. Número local apresentado como se fosse o do plano é o
+   defeito que essa tarefa não pode cometer.
+4. **Plano:** US$ 10/mês (R$ 60), informado pelo Marlon. Mostre o acumulado do mês em
+   tokens ao lado do valor — mas **não** converta token em % do plano sem preço por token
+   medido. Se não há tabela de preço, diga "sem preço configurado", não estime.
+5. **Gráfico legível:** SVG ou canvas gerado no próprio `painel.py` (stdlib, sem CDN, sem
+   `node_modules`), eixo com data, tooltip simples no hover. Se ficar pesado, dois gráficos
+   separados. Tem que abrir em 1440 e em 390 sem cortar.
+6. **Prova:** `curl` 200 no `127.0.0.1:8787`, print do painel em 1440 e 390, e os números do
+   gráfico batendo com uma consulta que você roda à mão no `stats.jsonl`/`state.db` (cole os
+   dois no relatório).
+7. **Junto:** registrar no caderno por que a tabela oficial não é lida hoje (0 linhas em
+   `account`/`control_account`), para não se reinvestigar isso na próxima sessão.
+
+**O que não estou pedindo:** inventar preço, chamar API externa com credencial do Marlon, e
+UI pública.
+
+---
+
+## M-010 · P-03 e P-05 · 2026-11-25 02:35 · sem prazo
+
+**Correção de nome, para os dois gestores.** Os perfis foram renomeados de novo, agora com
+o nome na frente: **`jessica-p03`** (P-03) e **`painel-p05`** (P-05), para o ícone do
+Hermes mostrar **J** e **P** em vez de duas letras iguais. Apelidos de linha de comando:
+`jessica` e `painel`. Onde você escreveu `p03-jessica`/`p05-painel`, corrija no seu caderno —
+inclusive em `DOCS/02-ARQUITETURA.md` do P-05.
+
+---
+
 ## M-006 · P-03 · 2026-11-25 01:30 · prazo 26/11
 
 Para o gestor do P-03. **Resposta ao relatório da T-P03-026, que eu conferi na fonte.**

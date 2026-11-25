@@ -88,6 +88,16 @@ Onde não souber, escrever "não sei" — nada será inventado no lugar.
 
 ---
 
+## 7. Sobre a consultoria
+
+**21.** Quando alguém contrata uma consultoria com você, o que a pessoa recebe no fim? Por exemplo: um relatório por escrito, a planta marcada com as alterações, uma ata do que foi combinado, ou é um encontro único de orientação?
+*Pergunto porque a página da consultoria explica o método, mas não diz o que fica na mão de quem contrata. É a dúvida de quem está decidindo.*
+
+**22.** A consultoria é presencial, online, ou as duas? Se é online, você faz por vídeo chamada?
+*Quem mora longe desiste antes de perguntar. Se as duas existem, eu digo isso na página.*
+
+---
+
 ## Notas internas (não enviar)
 
 - Item 4 da lista antiga (foto profissional) está resolvido: os arquivos existem em `img/img of own Jéssica Haguiwara/`; a escolhida é a (2). Só falta a confirmação de uso.

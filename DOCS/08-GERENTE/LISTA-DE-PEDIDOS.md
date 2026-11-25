@@ -162,7 +162,7 @@ Contagem: **12 feitos · 3 parciais · 3 não começaram · 4 respeitados (conge
 
 | # | Pedido | Estado | Prova / onde |
 |---|---|---|---|
-| 1 | App + gestor + GitHub + pasta + scripts + UI local | 🟡 parcial | perfil `p05-painel` (ex-`p05-gestor`); pasta, doc e coletor **existem** (T-P05-001); agendador e UI pendentes |
+| 1 | App + gestor + GitHub + pasta + scripts + UI local | 🟡 parcial | perfil `painel-p05` (ex-`painel-p05`); pasta, doc e coletor **existem** (T-P05-001); agendador e UI pendentes |
 | 2 | Entrar em projetos aprovados | ✅ | `PROJETOS_APROVADOS.md`, item 5 |
 | 3 | Doc conforme "Instruções Básicas de Novo Projeto" | ✅ | repo `5-Painel-Hermes`: `AGENTS.md` (62 linhas, cita commit autônomo, sigilo de chave e "PARE e pergunte") + `DOCS/00-INDICE`, `01-ESCOPO`, `02-ARQUITETURA`, `03-ERROS-E-APRENDIZADOS`, `04-TAREFAS`, `05-BACKLOG` |
 | 4 | Dúvidas → perguntar | ✅ | `06-PERGUNTAS.md` |

@@ -654,6 +654,10 @@ perguntar — e então as 4 páginas continuam sem falar de entrega nem de forma
 **Default:** (c). Não pergunto nada à cliente por conta própria — nem para ela, nem
 sobre ela.
 
+**RESOLVIDA em 2026-11-25 — Marlon autorizou (opção a).** As duas entraram no
+`QUESTIONARIO-CLIENTE.md` como **perguntas 21 e 22**, na seção nova "7. Sobre a
+consultoria", com a nota de por que pergunto. Texto pronto para ele mandar à cliente.
+
 ## Q-037 · P-03 · O preview do link da /chave-na-mao/ ficou com o texto antigo
 
 **Medido hoje no HTML servido** (25/11, URL limpa): a `/chave-na-mao/` tem

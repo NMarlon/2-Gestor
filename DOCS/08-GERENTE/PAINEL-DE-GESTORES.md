@@ -11,8 +11,8 @@
 
 | Projeto | Gestor (quem decide) | Escritor (quem digita) | Estado medido |
 |---|---|---|---|
-| P-03 Jessica Haguiwara | **perfil `p03-jessica`** | OpenCode, sessão do P-03 | 🟢 ativo — 1.3.10 no ar, 4 páginas publicadas e verificadas |
-| P-05 Painel Hermes | **perfil `p05-painel`** | OpenCode, sessão do P-05 | 🟢 ativo — T-P05-001 entregue (coletor rodando); agendador pendente |
+| P-03 Jessica Haguiwara | **perfil `jessica-p03`** | OpenCode, sessão do P-03 | 🟢 ativo — 1.3.10 no ar, 4 páginas publicadas e verificadas |
+| P-05 Painel Hermes | **perfil `painel-p05`** | OpenCode, sessão do P-05 | 🟢 ativo — T-P05-001 entregue (coletor rodando); agendador pendente |
 | P-04 Portfólio | **sem dono** (`Q-024`) | — | 🟡 construído em 20/11, não publicado |
 | P-02 Reconhecedor | **sem dono** (`Q-024`) | — | 🟡 serviço de pé, sem repo em `MarlonScripts/` |
 | P-01 Hermes-Mobile | — | — | 🔵 arquivado (API parada em 23/11) |
@@ -113,7 +113,7 @@ Nenhum deles sobrevive à pergunta "o que foi publicado".
 
 - **P-03 entregue e medido no ar** — 1.3.9, 4 páginas de serviço `200`, submenu
   SOLUÇÕES com 4 filhos, 4 cartões da home ligados. `T-P03-024` fechada pelo
-  `p03-gestor`, com bloco de verificação em `04-TAREFAS.md`.
+  `jessica-p03`, com bloco de verificação em `04-TAREFAS.md`.
 - **Fechado hoje:** `Q-031` (publicação das páginas), `Q-030` (relatório vira
   script, sem cron), `T-P03-022` (marcada como feita na prática), `backups/` no
   `.gitignore`. Item 17 da lista do Marlon respondido: era minha proposta de
@@ -124,7 +124,7 @@ Nenhum deles sobrevive à pergunta "o que foi publicado".
   do submenu (tema × `wp_navigation`), que decide se o rollback de tema basta.
 - **Não começou:** **P-05 Painel Hermes** — pasta `C:\MarlonScripts\5-Painel-Hermes`
   inexistente, sem repo, sem doc pelo padrão de projeto novo, sem coletor de cota,
-  sem UI. O papel do `p05-gestor` está escrito (81 linhas) e aguarda aprovação.
+  sem UI. O papel do `painel-p05` está escrito (81 linhas) e aguarda aprovação.
 - **Também pendente:** revisão editorial das 4 páginas com antes/depois (`Q-033`).
 - Regra em vigor: **Gerente não escreve código de projeto de próprio punho**
   (item 3 do `Dos GERENTES.md`). Script que precisar existir vira brief para o
