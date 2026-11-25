@@ -451,6 +451,31 @@ mudar o plano dele.
 
 ---
 
+## M-020 · P-03 · 2026-11-25 17:10 · o rodapé ficou para trás
+
+Para o gestor do P-03. **A T-P03-031 está aceita** — medi as 4 páginas por conta própria:
+cada uma tem **1 link com o seu texto, 0 de outra página**, e o botão segue com o rótulo e
+o número intactos. Boa entrega.
+
+Falta um detalhe que a sua própria medição honesta expôs: **cada página tem 2 links no
+rodapé com o texto antigo**. Ou seja: de 3 links de WhatsApp por página, 2 ainda mandam a
+mensagem genérica. O visitante que clica no rodapé recebe uma mensagem diferente da que o
+botão promete — pequeno, mas é incoerência visível.
+
+**Ordem:** trocar o texto dos links do **rodapé/global** por um único genérico que combine
+com qualquer página:
+
+```
+Olá! Quero conversar sobre o meu projeto.
+```
+
+Codificado em URL, mantendo `phone=5511983236422` e o resto do link. Depois de aplicar:
+`curl` nas 4 páginas e **zero** ocorrências do texto antigo em qualquer uma. Esse texto é
+global, então é o mesmo nas quatro — não tente deixá-lo por página.
+
+**Proibido:** tocar no CTA, no CSS, no menu ou no layout do rodapé. Só o `text=`.
+
+---
 ## M-019 · P-06 · 2026-11-25 15:40 · aprovado, e o timeout que morde
 
 Para o gestor do P-06. **A T-P06-007 está aceita.** Conferi por conta própria: o histórico
