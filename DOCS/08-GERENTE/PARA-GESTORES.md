@@ -92,6 +92,14 @@ Para o gestor do P-03. **Ordem de execução: T-P03-026.** O Marlon aprovou a re
 editorial (Q-033) com uma exceção. **Fila:** só depois de T-P03-025 fechar — um
 escritor por vez no repo do projeto.
 
+**Antes de tudo: commite o que você deixou solto.** O `git status` deste workspace
+mostra `briefs/2026-11-24-p03-t025-titulo-atras-do-header.md` modificado e as linhas
+novas de `T-P03-024/025` em `DOCS/04-TAREFAS.md` **sem commit**. Entrega sem commit não
+tem ponto de retorno. `scripts/commit-agent.sh GESTOR-P03 -m "..." -- <caminhos>`, com
+caminho explícito; o wrapper agora **recusa** se o stage tiver arquivo que você não
+nomeou (E-027). Não toque em `Definições Oficiais Manuais/Dos GERENTES.md` — é edição
+do Marlon, não sua.
+
 1. **Aplicar 10 das 11 mudanças** de `DOCS/P-03-Jessica-Haguiwara/REVISAO-EDITORIAL-2026-11-24.md`,
    nas 4 páginas de serviço: C1, C2, C3, C4 (consultoria), P1 (projetos), G1, G2
    (gestão de obra), M1, M2, M3 (chave na mão).
@@ -102,30 +110,55 @@ escritor por vez no repo do projeto.
    invente terceira versão. O documento tem o "depois" literal para cada item — o
    OpenCode aplica aquela string. Se uma string não casar com o que está no banco,
    **pare e reporte**, não adapte.
-4. **Proibido nesta tarefa:** mexer em CSS, JS, `functions.php`, menu, header, rodapé,
-   banner de cookies, título/SEO, depoimentos, formulário. É troca de copy dentro de
-   `post_content` das 4 páginas. Se o texto estiver em bloco, altere o bloco; se
-   estiver em template do tema, **pare e reporte** — isso muda o escopo.
-5. **C4 tem risco próprio:** o texto pré-preenchido do WhatsApp ("Olá! Quero saber
+
+**Mecânica — correção minha (24/11 22:20).** A ordem anterior dizia "`--dry-run` e
+para; deploy não autorizado". Isso estava errado para este tipo de mudança: a copy
+**não mora no repo do tema**, mora no `post_content` do WordPress. Não existe dry-run
+de MCP — a escrita é o que o cliente vê. O que autoriza é a aprovação do Marlon aos 10
+itens, e ela existe. Portanto:
+
+4. **O caminho é o MCP, não o repo.** Páginas: `226 /consultoria/`, `227 /projetos/`,
+   `228 /gestao-de-obra/`, `229 /chave-na-mao/`. Ferramenta `wp_replace_in_post`,
+   `field: post_content`, `max_replacements: 1`. **Ler antes**
+   `DOCS/IA/aprendizados-mcp-wordpress.md` do repo do projeto (§2 encoding, §4
+   `wp_replace_in_post`, §5 aninhamento de blocos, §8 validar no HTML publicado).
+5. **Ancore o `search` no conteúdo cru, não no HTML.** O `search` roda contra o
+   `post_content` do banco. O HTML servido passa por `wptexturize()` — `" - "` sai
+   como `&#8211;` (§30.9) —, então a string que eu conferi no HTML **pode não casar**
+   no banco. O executor lê `wp_get_cpt_item {rest_base:'pages', item_id:N}`, tira o
+   trecho do `content` bruto e usa esse. `replacements_count` **tem de ser 1**; 0 ou
+   >1 = parar e reportar, sem "ajustar" o texto.
+6. **Backup e rollback antes da primeira escrita.** `wp_list_revisions` por página,
+   anotando o ID da revisão imediatamente anterior. Rollback é
+   `wp_update_cpt_item` com aquele conteúdo (ou `wp_get_revision`) — **não** é
+   reverter commit de git, porque git não guarda o banco. Registrar os 4 IDs de
+   revisão no relatório.
+7. **C4 tem risco próprio:** o texto pré-preenchido do WhatsApp ("Olá! Quero saber
    mais sobre os serviços de Arquitetura de Jessica Haguiwara") aparece 5× por página
-   no HTML servido. Confirme onde ele nasce antes de tocar: se não for no mesmo
-   bloco do botão, **deixe C4 de fora** e reporte — os outros 9 seguem.
-6. **Medição obrigatória, antes e depois**, com o protocolo do `AGENTS.md`: URL sem
-   query string, duas leituras iguais, registrar UA e comando. Baseline medido por
+   no HTML servido. Se ele não estiver no `post_content` da 226, **deixe C4 de fora**
+   e reporte — os outros 9 seguem. Não caçar o texto em template do tema nesta tarefa.
+8. **Proibido nesta tarefa:** CSS, JS, `functions.php`, menu, header, rodapé, banner
+   de cookies, título/SEO, depoimentos, formulário, criar/duplicar página. Se um dos
+   10 trechos estiver em template do tema em vez de `post_content`, **pare e reporte**
+   — isso muda o escopo.
+9. **Medição obrigatória, antes e depois**, no protocolo do `AGENTS.md`: URL limpa, sem
+   query string, duas leituras iguais, UA e comando registrados. Baseline medido por
    mim em 24/11: `/consultoria/` 149.338 B · `/projetos/` 149.167 B · `/gestao-de-obra/`
-   149.132 B · `/chave-na-mao/` 149.054 B. **Esses bytes vão mudar** (o texto muda);
-   o que não pode mudar é o HTTP 200 nas 4 e o resto da página.
-7. **Critério de aceite:** as 10 strings novas presentes no HTML servido, as 10
-   antigas ausentes, 4× HTTP 200, e o "antes" de C1/C2/P1/G1/M2 verificável contra a
-   medição de hoje. Rollback = reverter o commit no repo do projeto.
-8. **`--dry-run` e para.** Deploy não está autorizado por esta ordem.
+   149.132 B · `/chave-na-mao/` 149.054 B. **Os bytes vão mudar** (o texto muda); o que
+   não pode mudar é HTTP 200 nas 4 e o resto da página.
+10. **Depois de escrever: purge do WP Fastest Cache** (receita em §30.8 do arquivo do
+    projeto), senão o HTML servido continua o antigo e a verificação mente.
+11. **Critério de aceite:** as 10 strings novas presentes no HTML servido, as 10
+    antigas ausentes (0 ocorrência), 4× HTTP 200, 4 IDs de revisão de rollback
+    anotados, e o antes/depois colado no relatório com o comando usado.
 
 **Contexto já verificado (não re-investigue):** 11 de 11 citações "antes" conferidas
-por mim no HTML servido hoje. Não existe `<article class="jhw-service">` nas páginas
-no ar — a copy está em `main` → `h1` → `div.entry-content`. O documento está commitado
-(`51ade5d`, GESTOR-P03).
+por mim no HTML servido em 24/11. Não existe `<article class="jhw-service">` nas
+páginas no ar — a copy está em `main` → `h1` → `div.entry-content`. O documento está
+commitado (`51ade5d`, GESTOR-P03). **T-P03-025 já fechou** (1.3.10 no ar, commit
+`df38099` no repo do projeto), então a fila está livre: esta ordem pode rodar agora.
 
-**O que não estou pedindo:** deploy, mudança de layout, e a P2.
+**O que não estou pedindo:** deploy de tema, mudança de layout, e a P2.
 
 ---
 
@@ -133,7 +166,14 @@ no ar — a copy está em `main` → `h1` → `div.entry-content`. O documento e
 
 Para o gestor do P-05. **Ordem de execução: T-P05-002.**
 
-1. **O coletor está medido e correto — mas não grava sozinho.** Conferi
+1. **Antes de qualquer coisa: commite o que você deixou solto.** O `git status` deste
+   workspace mostra `DOCS/P-05-Painel-Hermes/GESTOR.md`, os dois briefs
+   `2026-11-24-p05-t001-*` e linhas em `DOCS/02-PROJETOS.md` / `DOCS/04-TAREFAS.md`
+   **sem commit**. Entrega sem commit não tem ponto de retorno. Use
+   `scripts/commit-agent.sh GESTOR-P05 -m "..." -- <caminhos>`, com caminho explícito.
+   O wrapper agora **recusa** commitar se o stage tiver arquivo que você não nomeou
+   (lição E-027) — se recusar, `git restore --staged` no arquivo alheio e avise.
+2. **O coletor está medido e correto — mas não grava sozinho.** Conferi
    `dados/stats.jsonl`: 8 amostras, 45.044 B, a última às `21:29:13`, duração 3,6 s,
    Python 3.11.9. Hermes detectado (8 processos, heartbeat), 55 sessões de hoje no
    Hermes, `opencode.db` com 193 sessões, cota `indisponivel` com motivo
@@ -141,25 +181,25 @@ Para o gestor do P-05. **Ordem de execução: T-P05-002.**
    **O que falta:** `schtasks /query /tn "PainelHermes-Coletor"` → *"O sistema não
    pode encontrar o arquivo especificado"*. A tarefa não existe. A série só existe
    quando alguém roda o coletor à mão — e o Marlon quer série histórica, não amostra.
-2. **Instalar o agendador**, com o `-IUnderstand` que você mesmo exigiu. Requisitos:
+3. **Instalar o agendador**, com o `-IUnderstand` que você mesmo exigiu. Requisitos:
    `-WorkingDirectory` explícito, ciclo entre 5 e 15 min, e rodar **mesmo com o
    usuário fora** (a série perder buraco quando ele fecha o notebook é o defeito que
    essa tarefa existe para evitar).
-3. **Provar, não relatar.** Aceite = `schtasks /query /tn "PainelHermes-Coletor" /v /fo LIST`
+4. **Provar, não relatar.** Aceite = `schtasks /query /tn "PainelHermes-Coletor" /v /fo LIST`
    mostrando a tarefa e a próxima execução, **e** uma amostra nova em
    `dados/stats.jsonl` com `coletado_em` posterior à instalação, gerada pela tarefa e
    não por execução manual. Cole os dois no relatório.
-4. **Registrar o desfazer** em `DOCS/` do repo: `Unregister-ScheduledTask -TaskName
+5. **Registrar o desfazer** em `DOCS/` do repo: `Unregister-ScheduledTask -TaskName
    "PainelHermes-Coletor" -Confirm:$false`. Tarefa agendada é mudança de máquina; se
    não tem desfazer escrito, não está pronto.
-5. **Cota continua `indisponivel`** enquanto o OpenCode Console não tiver workspace
+6. **Cota continua `indisponivel`** enquanto o OpenCode Console não tiver workspace
    conectado. Não invente número, não troque por estimativa, não faça média com o que
    não existe. O que eu preciso no relatório: **o que exatamente o Marlon teria de
    fazer** para a cota virar dado (login no Console? token no `.env`? qual arquivo?).
    Isso vira pergunta objetiva para ele, não tentativa e erro.
-6. **Nada de UI nesta tarefa** — a T-P05-002 é só a série funcionando sozinha. Depois
+7. **Nada de UI nesta tarefa** — a T-P05-002 é só a série funcionando sozinha. Depois
    dela eu abro a UI com brief próprio.
-7. Proibido: imprimir ou versionar `.env`, `auth.json`, `opencode.db`; cron de IA;
+8. Proibido: imprimir ou versionar `.env`, `auth.json`, `opencode.db`; cron de IA;
    publicar em GitHub (`Q-034`).
 
 **Contexto já verificado (não re-investigue):** o coletor roda e produz JSON válido;

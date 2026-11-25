@@ -11,8 +11,8 @@
 
 | Projeto | Gestor (quem decide) | Escritor (quem digita) | Estado medido |
 |---|---|---|---|
-| P-03 Jessica Haguiwara | **perfil `p03-gestor`** | OpenCode, sessão do P-03 | 🟢 ativo — 1.3.9 no ar, 4 páginas publicadas e verificadas |
-| P-05 Painel Hermes | **perfil `p05-gestor`** (criado 24/11; papel aguardando aprovação do Marlon) | — (nada iniciado) | ⚪ aprovado, pasta `5-Painel-Hermes` ainda não existe |
+| P-03 Jessica Haguiwara | **perfil `p03-jessica`** | OpenCode, sessão do P-03 | 🟢 ativo — 1.3.10 no ar, 4 páginas publicadas e verificadas |
+| P-05 Painel Hermes | **perfil `p05-painel`** | OpenCode, sessão do P-05 | 🟢 ativo — T-P05-001 entregue (coletor rodando); agendador pendente |
 | P-04 Portfólio | **sem dono** (`Q-024`) | — | 🟡 construído em 20/11, não publicado |
 | P-02 Reconhecedor | **sem dono** (`Q-024`) | — | 🟡 serviço de pé, sem repo em `MarlonScripts/` |
 | P-01 Hermes-Mobile | — | — | 🔵 arquivado (API parada em 23/11) |

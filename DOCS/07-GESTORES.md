@@ -20,9 +20,9 @@ Nunca dois gestores no mesmo projeto; nunca dois OpenCode no mesmo repositório.
 |---|---|---|
 | P-01 Hermes-Mobile | — (arquivado) | 🔵 em manutenção — API parada em 23/11 |
 | P-02 Reconhecedor | a designar | 🟡 serviço de pé, sem dono definido (Q-024) |
-| P-03 Jessica Haguiwara | **perfil `p03-gestor`** (criado 24/11) | 🟢 ativo, prioridade — 1.3.9 no ar, 4 páginas publicadas |
+| P-03 Jessica Haguiwara | **perfil `p03-jessica`** (criado 24/11 como `p03-gestor`, renomeado 25/11) | 🟢 ativo, prioridade — 1.3.10 no ar, 4 páginas publicadas |
 | P-04 Portfólio | a designar | 🟡 construído, não publicado, sem dono (Q-024) |
-| P-05 Painel Hermes | **perfil `p05-gestor`** (criado 24/11, papel no `SOUL.md` **pendente de aprovação**) | ⚪ aprovado, não iniciado — pasta `5-Painel-Hermes` ainda não existe |
+| P-05 Painel Hermes | **perfil `p05-painel`** (criado 24/11 como `p05-gestor`, renomeado 25/11) | 🟢 ativo — T-P05-001 entregue (coletor), repo `5-Painel-Hermes` existe |
 
 *Estados medidos em **2026-11-24**. Detalhe em `02-PROJETOS.md`; medição em
 `08-GERENTE/AUDITORIA-2026-11-23.md`.*
@@ -33,7 +33,15 @@ Cada gestor é um **perfil isolado** (`hermes profile create <nome> --clone`), c
 `SOUL.md` próprio definindo o papel, `.env` e `config.yaml` herdados. Roda headless
 com `hermes -p <perfil> -z "<ordem>"` a partir do diretório do workspace. Vantagem
 sobre subagente: tem sessão, memória e caderno próprios, e continua existindo entre
-tarefas. Perfis em uso: `manager-developer-hermes` (Gerente), `p03-gestor` (P-03).
+tarefas. Perfis em uso: `manager-developer-hermes` (Gerente), `p03-jessica` (P-03),
+`p05-painel` (P-05).
+
+**Renomeação de 25/11.** `p03-gestor` → `p03-jessica` e `p05-gestor` → `p05-painel`,
+feita com `hermes profile rename` (preserva histórico de sessão) e apelidos de linha de
+comando criados com `hermes profile alias --name jessica|painel`
+(`C:\Users\Marlon\.local\bin\jessica.bat` e `painel.bat`). Briefs e erros anteriores a
+essa data citam o nome antigo **de propósito**: são registro do que foi enviado, não se
+reescrevem.
 
 Um gestor novo começa lendo a lista do **seu papel** em `../AGENTS.md`, seção
 "Mapa por papel". Depois cria o caderno `DOCS/P-<n>-<nome>/GESTOR.md` do projeto dele.
