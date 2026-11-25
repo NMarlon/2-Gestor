@@ -185,3 +185,26 @@ o device flow do `gh` expirou sem autorização do Marlon. O case do FileFuse es
 descrito por evidência indireta (`filefuse-estado.json`); o de Bot-Creator não
 existe ainda e **não deve ser escrito** até o repo ser lido.
 
+---
+
+## P-05 · Painel Hermes
+
+| Campo | Valor |
+|---|---|
+| Caminho | `C:\MarlonScripts\5-Painel-Hermes` |
+| Repo | próprio, git local — **sem remote** (`Q-034` bloqueia credencial) |
+| Objetivo do Marlon | Painel local, ao vivo, do ambiente de trabalho: Hermes vivo, uso do OpenCode Go, desempenho dos gestores |
+| Estado | 🟢 T-P05-001 (coletor) **entregue e medida** em 2026-11-24 21:27; UI é a T-P05-002 |
+| Stack | Python stdlib (ou Node sem `node_modules`); série em arquivo append-only |
+| Papel do gestor | Decide, briefa, mede. **Não escreve** — o OpenCode escreve |
+| Caderno do gestor | `DOCS/P-05-Painel-Hermes/GESTOR.md` |
+| Brief | `briefs/2026-11-24-p05-t001-kickoff-coletor.md` |
+
+**Aprovação:** Marlon, 2026-11-24 21:15 — *"Então pode fazer P05 Painel Hermes."*
+
+**Regra de cadência:** sem cron de IA. Agendador do Windows roda o script (não gasta
+token de LLM) e só se instala quando o Marlon pedir. Não instalado até aqui.
+
+**Próxima tarefa:** `T-P05-002` — UI local em `http://127.0.0.1:8787` lendo a série.
+Brief próprio, só depois de o coletor estar provado na fonte.
+
