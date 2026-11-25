@@ -675,3 +675,45 @@ sem reuso e sem limite, cada verificação vira um processo — e a conta chega 
 **Regra que fica.** Medição com navegador: um por sessão, reutilizado, com limite de
 lançamentos e teardown por perfil. Proibido `Start-Process <url>` / `start <url>` para
 "abrir e conferir".
+
+## E-033 · "Banner de consentimento no HTML" não é consentimento: 6 cookies antes do clique (2026-11-25)
+
+**O que aconteceu.** Na auditoria do P-03 (M-011) eu ia fechar o eixo "consentimento"
+como **aprovado**, porque o HTML servido trazia o Complianz completo:
+`body data-cmplz=1`, `cmplz-cookiebanner-1-optin`, as 4 categorias
+(`cmplz-desc-{functional,marketing,preferences,statistics}-1-optin`), `cmplz-js`. Um
+banner configurado, no ar, com categorias de marketing — dá para assinar em cima disso.
+
+**A medição que desmentiu.** Abri o site em perfil de navegador **limpo**, **sem clicar
+em nada**, e li `document.cookie` + `Network.getAllCookies`: `_ga`,
+`_ga_NGGYW0ZYHP`, `__hstc`, `hubspotutk`, `__hssc`, `__hssrc` — GA4 e HubSpot gravando
+**antes** de qualquer aceite. E `gtag('consent','default',…)`: **0** ocorrências.
+Banner presente, bloqueio inexistente.
+
+**Por que quase passou.** O que se vê é o banner; o que se mede é o cookie. Eu estava
+lendo a intenção do cliente (proteger o visitante) em vez do efeito no navegador.
+
+**Regra que fica.** Consentimento só se mede em perfil limpo, **sem clique**: liste os
+cookies e procure `gtag('consent'`. Banner configurado com categoria "marketing" não
+prova bloqueio — e para Google Ads tráfego com falta de Consent Mode v2 é risco de
+conta, não detalhe de LGPD.
+
+## E-034 · Duas medições de INP inválidas antes de uma certa: o clique precisa ser de confiança (2026-11-25)
+
+**O que aconteceu.** Medindo INP da home do P-03 pelo `medir-cdp.py`: a primeira rodada
+clicou em `y=5376` com `scrollY=9367` (coordenada lida **antes** do `scrollIntoView`
+assentar — o site tem *smooth scroll*) e saiu `INP 24 ms / 3 eventos`; a segunda, com o
+alvo já centrado (`y=422`), deu **`INP None / 0 eventos`** porque
+`Input.dispatchMouseEvent` mandava só *pressed/released*, sem `mouseMoved` e sem
+`buttons`. As duas parecem resultado; nenhuma era.
+
+**O que consertou.** (1) `scrollIntoView({block:'center', behavior:'instant'})` numa
+chamada, `sleep 0.4`, e só então ler `getBoundingClientRect` — devolvendo também o `tag`
+do alvo para provar **o que** foi clicado; (2) sequência
+`mouseMoved(buttons:0) → mousePressed(buttons:1) → mouseReleased(buttons:0)` com
+`clickCount` coerente. Resultado: `clique tag=BUTTON.forminator-button-next`, **INP 16 ms
+com 5 eventos**, CLS 0,244 estável em 5 leituras.
+
+**Regra que fica.** Medição de interação prova três coisas ou não vale: **qual elemento**
+foi atingido (o `tag` no retorno), **que houve evento** (contagem > 0) e **que o número
+repetiu**. `INP: None` com 0 eventos é falha do harness, nunca "não se aplica".

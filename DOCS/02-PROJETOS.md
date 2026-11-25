@@ -87,6 +87,18 @@ Commit `79013d5`. Verificação independente depois do commit:
 
 ## P-03 · Site Jessica Haguiwara Arquitetura
 
+> **Medição do GESTOR-P03 · 2026-11-25 (2ª rodada):** **M-011 fechada.** Parte A:
+> submenu `Projeto` → **`Projetos`** (`wp_navigation` 6, +1 byte), `h1` intacto; duas
+> leituras, md5 `105a167c…` dos 7 rótulos; purge 204. Parte B: auditoria de prontidão
+> em `P-03-Jessica-Haguiwara/AUDITORIA-PRONTIDAO-2026-11-25.md` — **deploy oficial
+> liberado**; **Google Ads bloqueado** por 4 itens medidos: (1) 0 tag `AW-` e 0 evento
+> de conversão, `/obrigado/` sem link; (2) `_ga`/`__hstc`/`hubspotutk` gravados **sem
+> consentimento** e 0 `gtag('consent')`; (3) `[INSERIR REGISTRO]` na `/privacy-policy/`;
+> (4) LCP mobile home **7,5–8,2 s** (`DIV.jhw-hero__bg`, JPEG 131,3 KB de background).
+> Também medido: `/contato/` **404**; meta description em **1 de 8** páginas;
+> `/obrigado/` indexável; `/privacy-policy/` sem `h1`; CLS home **0,244**; INP **16 ms**.
+> `T-P03-029` (§37/§38 no `DOCS/IA` do projeto) commitado em **`b8cc298`**.
+
 > **Medição do GERENTE · 2026-11-25, 01:25:** publicação **1.3.10** no ar. As 4 páginas
 > de serviço respondem `200` com duas leituras iguais cada (UA Chrome, URL limpa):
 > `/consultoria/` **149.392 B** (md5 `6bbd90df`), `/projetos/` **149.300 B** (`e8532940`),
@@ -99,7 +111,8 @@ Commit `79013d5`. Verificação independente depois do commit:
 > intacta; C3 virou `<ul class="wp-block-list">` com 3 `<li>` (markup conferido).
 > **Aberto:** `Q-037` (a `og:description` da `/chave-na-mao/` ficou presa no Yoast com o
 > texto antigo do M1), `Q-038` (texto pré-preenchido do WhatsApp desalinhado do CTA novo),
-> `Q-035` (rótulo Projeto/Projetos), `Q-036` (duas lacunas do questionário da cliente),
+> ~~`Q-035`~~ (fechada em 25/11: o rótulo do submenu virou **"Projetos"**, T-P03-028),
+> `Q-036` (duas lacunas do questionário da cliente),
 > `T-P03-023` (cor do botão do banner de cookies, em `Q-032`) e `T-011` (dados da
 > cliente). Detalhe: `08-GERENTE/AUDITORIA-2026-11-23.md`,
 > `P-03-Jessica-Haguiwara/REVISAO-EDITORIAL-2026-11-24.md` e `08-GERENTE/PARA-GESTORES.md`

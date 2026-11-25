@@ -1005,3 +1005,72 @@ tentativa, parei. No ar, `og:description` da /chave-na-mao/ segue com a frase an
 
 **Não testado:** validade do bloco no editor Gutenberg (não abri o wp-admin) e leitor de
 tela; a classe do botão é a nativa do tema, já usada em outras páginas.
+
+## T-P03-028 · M-011 A: rótulo do submenu `Projeto` → `Projetos`, sem tocar no `h1` ✅
+
+**Origem:** M-011 parte A (`DOCS/08-GERENTE/PARA-GESTORES.md`), que fecha a **Q-035**
+com a alternativa **(a)**. **Brief:** `briefs/2026-11-25-p03-t028-submenu-projetos.md`,
+despachado em 25/11 via `scripts/oc-brief.ps1`.
+
+**O que é:** o menu não vive no tema: é `wp_navigation` **ID 6** no banco. Troca de
+**1 byte** no rótulo do item; `href` e `h1` da página não mudam. Sem deploy, sem CSS.
+
+**CA:** pré-contagem `1 /projetos/`, `1 "label":"Projeto"`, `0 "Projetos"`; depois da
+edição, `relido_igual_ao_enviado: true` e delta **+1 byte**; purge WPFC; 2 leituras
+públicas iguais.
+
+**Estado:** 🟢 **entregue e medido pelo gestor em 25/11.** Executor: `wp_navigation` 6,
+`Projeto` → `Projetos`, +1 byte, `cache_all_html_restantes: 0`, purge **204**. Repo do
+projeto **sem commit novo** por esta tarefa (o menu é banco; `git status` igual).
+
+**Medição (gestor, `curl` UA Chrome/131, URL limpa, 2 leituras):** md5 dos 7 rótulos
+**`105a167c248f7ffc1782000bf261e848`** nas duas; submenu com `Consultoria`, **`Projetos`**,
+`Gestão de Obra`, `Chave na Mão`; `h1` de `/projetos/` = `Projeto de arquitetura e
+interiores` (**intocado**, como a M-011 exigia).
+
+## T-P03-030 · M-011 B: auditoria de prontidão para deploy oficial + Google Ads ✅
+
+**Origem:** M-011 parte B. **Entrega:** `DOCS/P-03-Jessica-Haguiwara/AUDITORIA-PRONTIDAO-2026-11-25.md`.
+
+**Como foi medido:** HTML servido (UA Chrome/131, sem query string, sem `no-cache`) e
+navegador **só** por `scripts/medir-cdp.py` (M-014), uma página por vez (E-032),
+`--throttle 4g --wait 15`. Home medida **5×** no dia: CLS 0,244 em todas.
+
+**Veredito:** **deploy oficial liberado**; **Google Ads BLOQUEIA** por 4 itens:
+1. **conversão inexistente** — 0 tag `AW-`, 0 `gtag("event")`, `/obrigado/` 200 mas
+   **0 link** na home;
+2. **consentimento não bloqueia** — `_ga`, `_ga_NGGYW0ZYHP`, `__hstc`, `hubspotutk`,
+   `__hssc`, `__hssrc` gravados em navegador limpo **sem clique**; 0 `gtag('consent'`;
+3. **placeholder legal no ar** — `/privacy-policy/`: `Registro profissional: CAU/A nº
+   [INSERIR REGISTRO]`;
+4. **LCP mobile** — home @390/4G **7.496–8.172 ms** (`DIV.jhw-hero__bg`, JPEG 131,3 KB
+   como `background-image`), limite bom ≤2.500.
+
+**Outros números medidos:** `/contato/` **404** (corpo 148.270 B, noindex); meta
+description em **1 de 8** páginas; `/obrigado/` `index, follow`; `/privacy-policy/`
+**0 `h1`**; CLS home **0,244** (0,099 hero + 0,145 QLWAP); TBT 112–396 ms; INP **16 ms**;
+home **846,5–850,0 KB**; `/consultoria/` 298,1 KB, LCP 2.316 ms; `/projetos/` LCP
+7.672 ms (`DIV.cmplz-message`).
+
+**nao_testado:** envio real do formulário (não criei lead na base da cliente); resposta
+humana no WhatsApp; conversão em campo (só laboratório).
+
+**Estado:** 🟢 entregue. Próximas tarefas propostas: T-031 consentimento, T-032
+conversão, T-033 hero, T-034 lote de SEO, T-035 CAU.
+
+## T-P03-029 · M-006 item 2: dois aprendizados de MCP no `DOCS/IA` do projeto ✅
+
+**Origem:** M-006 item 2 (`08-GERENTE/PARA-GESTORES.md`) — autoriza o OpenCode a
+registrar 2 aprendizados no `DOCS/IA` do **projeto**. **Brief:**
+`briefs/2026-11-25-p03-t029-docs-ia-aprendizados.md`.
+
+**O que é:** duas seções de documentação, sem código: **§37** `wp_replace_in_post` exige
+o molde HTML **cru com aspas duplas** (`<ul class="wp-block-list">`; variante com aspas
+simples devolve `replacements_count: 0` sem erro) e **§38** o marcador de **46 bytes**
+do WP Fastest Cache faz byte/md5 da **página inteira** oscilar (comparar bloco
+`entry-content` ou normalizar).
+
+**Estado:** 🟢 **entregue e verificado pelo gestor em 25/11.** Commit do executor
+**`b8cc298`**, `DOCS/IA/aprendizados-mcp-wordpress.md` **+50 linhas**, nenhum outro
+arquivo (`git show --stat`). Cabeçalhos no arquivo: `## 37.` e `## 38.`, arquivo com
+1.858 linhas. Sem MCP, sem deploy, sem purge.

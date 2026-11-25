@@ -73,6 +73,21 @@ custaram caro:
 
 ## Decisões tomadas
 
+- **2026-11-25 (M-011: parte A e parte B)** — **T-P03-028**: o rótulo do submenu
+  `Projeto` virou **`Projetos`** em `wp_navigation` **ID 6** (o menu vive no banco, não
+  no tema). Executor devolveu delta **+1 byte** e `relido_igual_ao_enviado: true`; repo
+  do projeto **sem commit novo** (`HEAD b8cc298` é do T-P03-029; o T-028 não tocou
+  arquivo). **Medição minha**, `curl` UA Chrome/131 sem query string, 2 leituras:
+  md5 dos 7 rótulos **idêntico** (`105a167c248f7ffc1782000bf261e848`); submenu
+  `Consultoria · Projetos · Gestão de Obra · Chave na Mão`; `h1` de `/projetos/`
+  **intocado** (`Projeto de arquitetura e interiores`); purge **204**.
+  **T-P03-030 (parte B)** — auditoria de prontidão em
+  `DOCS/P-03-Jessica-Haguiwara/AUDITORIA-PRONTIDAO-2026-11-25.md`: **deploy oficial
+  liberado**, **Google Ads BLOQUEIA** por 4 motivos medidos (conversão inexistente,
+  consentimento que não bloqueia `_ga`/HubSpot, placeholder `[INSERIR REGISTRO]` na
+  política, LCP mobile 7,5–8,2 s com hero de 131,3 KB em `background-image`).
+  **T-P03-029**: §37 e §38 no `DOCS/IA/aprendizados-mcp-wordpress.md` do projeto
+  (commit `b8cc298`, +50 linhas, só doc).
 - **2026-11-25 (executada e medida por mim)** — **T-P03-027** (M-008): o link do WhatsApp
   no fim das **4 páginas de serviço** virou **botão** e ganhou ar embaixo. Caminho escolhido:
   **conteúdo, não tema** — `wp:paragraph` final → `wp:buttons` > `wp:button` (`core/button`,

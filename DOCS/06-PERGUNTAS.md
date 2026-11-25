@@ -628,6 +628,13 @@ que não fecha. Inconsistência visível ao visitante, não falha técnica.
 **Default:** (c) — não mexo em rótulo visível sem sua palavra. A página está no ar e
 funcional; isso é acabamento.
 
+**Decidido: (a)** — o Gerente decidiu em **25/11** e mandou executar na **M-011 parte A**
+(`08-GERENTE/PARA-GESTORES.md`), com a condição explícita de **não tocar no `h1`**.
+Executado em 25/11 (**T-P03-028**): `wp_navigation` ID 6, `Projeto` → `Projetos`,
+delta **+1 byte**; medido por mim na URL pública, duas leituras, md5
+`105a167c248f7ffc1782000bf261e848` dos 7 rótulos, e o `h1` de `/projetos/` segue
+`Projeto de arquitetura e interiores`. Fechada.
+
 ---
 
 ## Q-036 · P-03 · Duas lacunas de conteúdo que o questionário não cobre

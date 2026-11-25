@@ -14,6 +14,7 @@ a maquina de processos do Edge (25/11/2026). Regras embutidas:
 
 Uso:
     python scripts/medir-cdp.py <url> <largura> <altura> [saida.png] [--js "expr"]
+        [--wait segundos] [--throttle 4g|3g] [--perf]
 Exemplo:
     python scripts/medir-cdp.py http://127.0.0.1:8787/ 1440 900 print-1440.png
 """
@@ -37,6 +38,47 @@ PERFIL = os.path.join(tempfile.gettempdir(), "jhw-cdp-perfil")
 CONTADOR = os.path.join(tempfile.gettempdir(), "jhw-cdp-contador.json")
 LIMITE_HORA = 30
 TIMEOUT_S = 40
+
+# Perfis de rede do CDP (bytes/s e ms). "4g" = Slow 4G do Lighthouse mobile:
+# 1,6 Mbps de descida, 750 kbps de subida, 150 ms de RTT.
+REDES = {
+    "4g": {"latency": 150, "downloadThroughput": 200 * 1024, "uploadThroughput": 94 * 1024},
+    "3g": {"latency": 400, "downloadThroughput": 50 * 1024, "uploadThroughput": 25 * 1024},
+}
+
+# Instrumentacao instalada ANTES da navegacao (Page.addScriptToEvaluateOnNewDocument):
+# sem isso, LCP/CLS ja passaram quando o Runtime.evaluate roda.
+_PERF_JS = """
+(()=>{const P=window.__jhwPerf={lcp:[],cls:[],long:[],evt:[],fcp:null,first:[]};
+const ob=(t,f)=>{try{new PerformanceObserver(l=>{for(const e of l.getEntries())f(e)}).observe({type:t,buffered:true})}catch(e){}};
+ob("largest-contentful-paint",e=>P.lcp.push({t:Math.round(e.startTime),s:e.size||0,el:e.element?(e.element.tagName+"."+String(e.element.className||"").slice(0,60)):null}));
+ob("layout-shift",e=>{if(!e.hadRecentInput)P.cls.push({v:e.value,src:(e.sources||[]).map(s=>s.node?(s.node.nodeName+"."+String(s.node.className||"").slice(0,40)):"?")})});
+ob("longtask",e=>P.long.push([Math.round(e.startTime),Math.round(e.duration)]));
+ob("paint",e=>{if(e.name==="first-contentful-paint")P.fcp=Math.round(e.startTime)});
+ob("first-input",e=>P.first.push({t:Math.round(e.startTime),d:Math.round(e.duration),n:e.name}));
+try{new PerformanceObserver(l=>{for(const e of l.getEntries())P.evt.push({n:e.name,t:Math.round(e.startTime),d:Math.round(e.duration),i:e.interactionId||0})}).observe({type:"event",buffered:true,durationThreshold:16})}catch(e){}
+})();
+"""
+
+_PERF_LEITURA = """
+JSON.stringify((()=>{const P=window.__jhwPerf||{};const lcp=(P.lcp||[]).slice(-1)[0]||null;
+const cls=(P.cls||[]).reduce((a,e)=>a+(e.v||0),0);const long=P.long||[];const rs=performance.getEntriesByType("resource");
+const nav=performance.getEntriesByType("navigation")[0]||{};
+const dom={};for(const r of rs){const u=new URL(r.name);const k=u.hostname;dom[k]=(dom[k]||0)+(r.transferSize||0)}
+const total=Object.values(dom).reduce((a,b)=>a+b,0);
+const imgs=rs.filter(r=>r.initiatorType==="img"||/\\.(webp|jpe?g|png|avif|gif)(\\?|$)/i.test(r.name)).map(r=>({arq:r.name.split("/").pop().slice(0,60),kb:Math.round((r.transferSize||0)/102.4)/10,decodificado_kb:Math.round((r.decodedBodySize||0)/102.4)/10}));
+return {fcp_ms:P.fcp||null,lcp_ms:lcp?lcp.t:null,lcp_px:lcp?lcp.s:null,lcp_el:lcp?lcp.el:null,
+cls:Math.round(cls*1000)/1000,cls_shifts:(P.cls||[]).map(x=>({v:Math.round(x.v*1000)/1000,src:x.src})),
+tbt_ms:Math.round(long.reduce((a,x)=>a+Math.max(0,x[1]-50),0)),
+longtasks:long.length,longtask_max_ms:long.length?Math.max(...long.map(x=>x[1])):0,
+first_input:(P.first||[])[0]||null,
+inp_ms:(()=>{const ev=(P.evt||[]).filter(x=>x.i);return ev.length?Math.max(...ev.map(x=>x.d)):null})(),
+eventos:(P.evt||[]).length,
+load_ms:Math.round(nav.loadEventEnd||0),dcl_ms:Math.round(nav.domContentLoadedEventEnd||0),
+recursos:rs.length,transfer_kb:Math.round(total/102.4)/10,
+por_dominio_kb:Object.fromEntries(Object.entries(dom).sort((a,b)=>b[1]-a[1]).map(([k,v])=>[k,Math.round(v/102.4)/10])),
+imgs:imgs,cookie:document.cookie.slice(0,300)}})())
+"""
 
 
 def _contar_lancamento():
@@ -167,13 +209,28 @@ class Cdp:
                 return d.get("result", {})
 
 
+def _ler_args():
+    """Posicionais e flags separados: o valor de --js nao pode virar caminho de PNG."""
+    pos, fl, i = [], {}, 1
+    while i < len(sys.argv):
+        a = sys.argv[i]
+        if a in ("--js", "--wait", "--throttle", "--clique") and i + 1 < len(sys.argv):
+            fl[a[2:]] = sys.argv[i + 1]
+            i += 2
+        elif a == "--perf":
+            fl["perf"] = True
+            i += 1
+        else:
+            pos.append(a)
+            i += 1
+    return pos, fl
+
+
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    js = ""
-    if "--js" in sys.argv:
-        i = sys.argv.index("--js")
-        if i + 1 < len(sys.argv):
-            js = sys.argv[i + 1]
+    args, flags = _ler_args()
+    js = flags.get("js", "")
+    espera = float(flags.get("wait", 1.5))
+    rede = REDES.get(flags.get("throttle", ""), None)
     if len(args) < 3:
         print(__doc__)
         return 2
@@ -207,10 +264,16 @@ def main():
 
         c = Cdp(_ws_pagina())
         c.cmd("Page.enable")
+        if rede:
+            c.cmd("Network.enable")
+            c.cmd("Network.setCacheDisabled", {"cacheDisabled": True})
+            c.cmd("Network.emulateNetworkConditions", {"offline": False, **rede})
         c.cmd("Emulation.setDeviceMetricsOverride",
               {"width": largura, "height": altura, "deviceScaleFactor": 1, "mobile": largura < 600})
+        if flags.get("perf"):
+            c.cmd("Page.addScriptToEvaluateOnNewDocument", {"source": _PERF_JS})
         c.cmd("Page.navigate", {"url": url})
-        time.sleep(1.5)
+        time.sleep(espera)
         info = c.cmd("Runtime.evaluate", {
             "expression": "JSON.stringify({titulo:document.title, w:innerWidth, h:innerHeight,"
                           "altura_doc:document.documentElement.scrollHeight,"
@@ -218,9 +281,33 @@ def main():
             "returnByValue": True,
         })
         dados = json.loads(info["result"]["value"])
+        if flags.get("clique"):
+            sel = json.dumps(flags["clique"])
+            c.cmd("Runtime.evaluate", {"expression":
+                   "(()=>{const e=document.querySelector(%s);if(e)e.scrollIntoView({block:'center',behavior:'instant'});})()" % sel})
+            time.sleep(0.4)
+            res = c.cmd("Runtime.evaluate", {
+                "expression": ("(()=>{const e=document.querySelector(%s);if(!e)return null;"
+                               "const r=e.getBoundingClientRect();"
+                               "return JSON.stringify({x:Math.round(r.x+r.width/2),y:Math.round(r.y+r.height/2),"
+                               "tag:e.tagName+'.'+String(e.className).slice(0,40)})})()" % sel),
+                "returnByValue": True})
+            alvo = res.get("result", {}).get("value")
+            dados["clique"] = alvo
+            if alvo:
+                pt = json.loads(alvo)
+                for tipo, botoes in (("mouseMoved", 0), ("mousePressed", 1), ("mouseReleased", 0)):
+                    c.cmd("Input.dispatchMouseEvent", {"type": tipo, "x": pt["x"], "y": pt["y"],
+                                                       "button": "left", "clickCount": 1 if botoes else 0,
+                                                       "buttons": botoes})
+                time.sleep(2.0)
         if js:
             extra = c.cmd("Runtime.evaluate", {"expression": js, "returnByValue": True})
             dados["js"] = extra.get("result", {}).get("value")
+        if flags.get("perf"):
+            perf = c.cmd("Runtime.evaluate", {"expression": _PERF_LEITURA, "returnByValue": True})
+            valor = perf.get("result", {}).get("value")
+            dados["perf"] = json.loads(valor) if valor else None
         if saida:
             shot = c.cmd("Page.captureScreenshot", {"captureBeyondViewport": True})
             with open(saida, "wb") as f:
