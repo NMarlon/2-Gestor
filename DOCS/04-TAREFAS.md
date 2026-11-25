@@ -730,7 +730,7 @@ refletiu a 17ª amostra sem reiniciar. Detalhe e limites no caderno do gestor.
 
 ---
 
-## T-P05-004 · P-05: gráficos das três janelas + cota oficial `INDISPONIVEL` 🟡
+## T-P05-004 · P-05: gráficos das três janelas + cota oficial `INDISPONIVEL` ✅
 
 **Brief:** `briefs/2026-11-25-p05-t004-graficos-tres-janelas.md`
 **Dir:** `C:\MarlonScripts\5-Painel-Hermes`
@@ -757,8 +757,32 @@ percentual de cota estimado, dependência nova, CDN, porta/serviço/agendador no
 consulta independente nos bancos; print headless em **1440×900** e **390×844** sem
 corte; commit `P05-EXECUTOR` por caminho explícito.
 
-**Estado:** 🟡 brief escrito e despachado em 2026-11-25 (tarde). Aguardando entrega do
-executor para medição.
+**Estado:** ✅ medida em 2026-11-25. Entrega `94b87f7` (`P05-EXECUTOR`, 08:47:47),
+árvore limpa. Medição: `curl /` **200** (27.940 B) com 1× cada `grafico-5h`/`grafico-7d`/
+`grafico-30d`, 1× `INDISPONIVEL`, 1× `US$ 10/mês`; `POST` **405**; `/scripts/painel.py`
+**404**; `/api/stats` 200 (46 amostras); 0 recurso externo, 0 `fetch(`. CDP Edge:
+1440×900 → 3 SVGs 1318×458, 31 textos de 27 px, overflow 0; 390×844 → 3 SVGs 340×118,
+textos de 13 px, overflow 0. Números de 5 h batem com o delta das amostras (tolerância 0);
+7 d/30 d diferem −0,87 % por duas sessões abertas no instante da amostra (fato medido,
+mecanismo não confirmado). Sobraram **3 defeitos de rótulo em 390** → `T-P05-006`.
+
+---
+
+## T-P05-006 · P-05: rótulos de eixo sem colisão e sem corte em 390 px 🟡
+
+**Origem:** medição do gestor em 2026-11-25 sobre `94b87f7` (T-P05-004).
+**Brief:** `briefs/2026-11-25-p05-t006-rotulos-eixo-390.md`, despachado 08:58.
+**Escopo único:** (1) `grafico-5h` — "0" do eixo Y cruza "04:55" em 390 (5×6 px);
+(2) `grafico-30d` — "25/11" 2 px além da borda direita do SVG em 390; (3)
+`janelas.5h.inicio` deve ser o instante da amostra base (`03:55:49`, não `03:49:17`).
+Nada mais muda; 1440 fica idêntico.
+
+**Critério de aceite (medido pelo gestor):** em 390, CDP com **0** sobreposições de texto
+e **0** textos fora do SVG; em 1440 os três SVGs continuam 1318×458 com 0 overflow;
+`janelas.5h.inicio` = `coletado_em` da amostra base e soma dos buckets = totais da janela;
+`py_compile` exit 0; `curl /` 200; commit `P05-EXECUTOR` por caminho explícito.
+
+**Estado:** 🟡 despachado em 2026-11-25 08:58. Aguardando commit para medir.
 
 ---
 

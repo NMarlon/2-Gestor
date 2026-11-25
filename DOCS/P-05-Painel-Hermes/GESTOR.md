@@ -263,3 +263,65 @@ existe mais". Errado: o diretório existe (`…\hermes\profiles\conversa`), não
 
 **Próximo:** backlog do projeto (`DOCS/05-BACKLOG.md`) já recebeu rotação/compactação da
 série; autostart e `Q-034` (push) só com ordem escrita do Marlon.
+
+---
+
+## 2026-11-25 · T-P05-004 medida — três janelas, cota oficial `INDISPONIVEL`
+
+**Brief:** `briefs/2026-11-25-p05-t004-graficos-tres-janelas.md`, despacho por
+`scripts/oc-brief.ps1` (log `logs/oc-20261125-082203-t004.log`).
+**Entrega:** commit `94b87f7` "T-P05-004: graficos 5h/7d/30d, plano informado e cota
+oficial indisponivel" (`P05-EXECUTOR`, 08:47:47), árvore limpa. O executor **não
+devolveu o contrato** no log; avaliei pelo commit e pela minha medição. Antes dele houve
+`947db95` (08:41) e um `git reset --hard HEAD~1` da mesma sessão para refazer os rótulos:
+`94b87f7` = `947db95` + 15/−3 linhas em `painel.py` (registro em `E-031`).
+
+**Medição (meus comandos, 25/11 08:49–08:58):**
+
+| O que | Comando | Resultado |
+|---|---|---|
+| UI | `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8787/` | **200**, HTML **27.940 B** |
+| Gráficos no HTML | `grep -c` no HTML servido | 1× `grafico-5h`, 1× `grafico-7d`, 1× `grafico-30d` |
+| Cota e plano | idem | 1× `INDISPONIVEL`, 1× `US$ 10/mês (R$ 60)` |
+| Escrita | `POST /` | **405** |
+| Arquivo do repo | `GET /scripts/painel.py` | **404** |
+| Dependência externa | `grep` por `https?://` em `src`/`href` e `fetch(` | **0** e **0** |
+| API | `/api/stats` | 200, 33.110 B, **46 amostras**, `status_coleta=ao_vivo` |
+| Layout 1440×900 | CDP Edge, `getBoundingClientRect` | 3 SVGs **1318×458**, 31 textos, altura 27 px, overflow **0**, texto fora do SVG **0** |
+| Layout 390×844 | idem | 3 SVGs **340×118**, 31 textos, altura 13 px, overflow **0**; defeitos 1–2 abaixo |
+| Bind | `netstat -ano` | só `127.0.0.1:8787 LISTENING` |
+
+**Números conferidos na fonte (`mode=ro`, no instante `amostra_em=2026-11-25T08:49:17`):**
+
+- **5 h** — Hermes `input 1.554.346`, `output 156.073`, `cache_read 17.854.848`; OpenCode
+  `459.912 / 68.057 / 20.422.144`. Igual ao delta das amostras 03:55:49→08:49:17 e à soma
+  dos 20 buckets, **tolerância 0**.
+- **7 d** — JSON 22.641.331 in / 1.695.172 out / 132.700.544 cache; banco 22.840.675 /
+  1.702.502 / 133.597.824 → **−199.344 in (−0,87 %)**. **Fato medido:** duas sessões com
+  `started_at` 08:46:58 e 08:47:11 existem no `state.db` e não entraram na amostra das
+  08:49:17 (outras duas, 08:54, são posteriores à amostra — ausência correta). **Hipótese
+  não confirmada** para o mecanismo: linha de sessão em curso só fica visível ao fechar.
+- **30 d** — JSON 22.804.105 / 1.713.462 / 133.761.792 (Hermes) e 47.511.646 / 3.855.685 /
+  2.088.818.240 (OpenCode); mesmo delta de −199.344 in pelas mesmas duas sessões.
+
+**Defeitos residuais em 390 (medidos; repo é do executor, não corrigi à mão):**
+
+1. `grafico-5h`: o "0" do eixo Y cruza o primeiro rótulo do X ("04:55") — 5×6 px.
+2. `grafico-30d`: "25/11" termina **2 px além** da borda direita do SVG.
+3. `janelas.5h.inicio` diz `03:49:17`, mas a amostra base é `03:55:49` (janela real 4,89 h).
+
+→ brief `briefs/2026-11-25-p05-t006-rotulos-eixo-390.md` (**T-P05-006**) despachado
+08:58. Numeração pulou a 005 porque o backlog do projeto já reservou `T-P05-005` para
+`relatorio-semanal.py`.
+
+**Cota oficial — por que não leio (M-009, item 7):** `account` e `control_account` em
+`~/.local/share/opencode/opencode.db` têm **0 linhas** (consulta `mode=ro`, 25/11 08:58);
+o CLI devolve `data=null`; HTTP 401 e 404. O cartão mostra `INDISPONIVEL` com motivo e
+ação. O plano (`US$ 10/mês`, `R$ 60`) é informação do Marlon, e a UI escreve "sem preço
+configurado — não convertemos token em % do plano". **Nenhum percentual inventado.**
+
+**Decisão:** T-P05-004 aceita como entregue (os três gráficos existem, mostram números
+conferidos e não há overflow). Os três defeitos de rótulo vão para T-P05-006; se o
+executor não entregar, o aceite de T-P05-004 continua valendo — o defeito é cosmético e
+está documentado.
+

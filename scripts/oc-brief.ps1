@@ -49,7 +49,10 @@ if ($Agent) { $args += @('--agent', $Agent) }
 $args += '--archived'
 if ($Standalone) { $args += '--standalone' }
 if ($PrintLogs) { $args += '--print-logs' }
-$args += $prompt
+# O brief NAO vai como argumento: o PowerShell 5.1 nao escapa aspas ao montar a
+# linha de comando de um .exe nativo e um brief de 16 KB com aspas chegou ao CLI
+# como mensagem vazia (ele imprimiu o help e saiu 1). Vai por stdin, que o
+# `opencode run` le quando nao recebe mensagem — testado em 25/11 com 2.3.2.
 
 Push-Location -LiteralPath $Dir
 # O opencode-cli resolve o cwd por $env:PWD. Vindo do bash/MSYS ele chega como
@@ -85,7 +88,9 @@ try {
   $sw = New-Object System.IO.StreamWriter($LogPath, $true, (New-Object System.Text.UTF8Encoding($false)))
   $sw.AutoFlush = $true
   try {
-    & $exe @args 2> $errFile | ForEach-Object { $sw.WriteLine($_); Write-Output $_ }
+    # stdin em UTF-8 (sem BOM): acentos do brief chegam intactos ao CLI.
+    $OutputEncoding = New-Object System.Text.UTF8Encoding($false)
+    $prompt | & $exe @args 2> $errFile | ForEach-Object { $sw.WriteLine($_); Write-Output $_ }
     $code = $LASTEXITCODE
     $errText = Get-Content -LiteralPath $errFile -Raw -ErrorAction SilentlyContinue
     if ($errText) {

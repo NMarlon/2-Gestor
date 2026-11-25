@@ -606,3 +606,27 @@ com a medição do DOM. Print não conferido é arquivo, não evidência.
 
 **Custo.** Uma rodada de 16 PNGs descartada e o script de captura reescrito. Nada falso
 foi publicado: o defeito foi pego antes do relatório.
+
+## E-031 · Dois escritores no mesmo repo: o órfão fez `reset --hard` e reescreveu o commit (2026-11-25)
+
+**O que aconteceu.** Na T-P05-004 o `dispatch` do OpenCode gerou **duas** sessões escritoras
+no mesmo repo: a principal e uma “peer”. Enquanto eu media, uma delas escreveu no log que
+ia “deixar a outra terminar” e, às 08:47, o `git reflog` mostra `94b87f7 HEAD@{0} commit` /
+`3ce9186 HEAD@{1} reset: moving to HEAD~1` / `947db95 HEAD@{2} commit`: o commit `947db95`
+(08:41) foi **desfeito por reset** e refeito como `94b87f7`. Árvore final limpa e diff entre
+os dois de só 15/−3 linhas em `painel.py`, mas o reset podia ter levado junto o que já
+estava commitado.
+
+**Por que aconteceu.** O despacho anterior deixou uma sessão `opencode-cli` viva; ela não
+morre quando o `dispatch.py` termina. Eu não conferi “quantos escritores existem” antes de
+medir, e `taskkill //PID` falhou no Git Bash (`Argumento/opção inválido - '//PID'`), o que
+atrasou o encerramento.
+
+**Lição.** Um repo, **um** escritor: antes de medir, contar processos do executor
+(`Get-CimInstance Win32_Process` filtrando `opencode-cli ... run`) e encerrar a árvore;
+matar com `powershell Stop-Process -Id <pid,familia> -Force`, não com `taskkill //PID`.
+Depois do commit, **ler o `git reflog`** — reset/amend aparecem lá e invalidam medição
+feita antes. Se o commit foi reescrito, medir de novo no HEAD final.
+
+**Custo.** Uma rodada de medição descartada (as medições de layout eram do `947db95`),
+duas sessões encerradas à força e o commit final registrado como `94b87f7`.
