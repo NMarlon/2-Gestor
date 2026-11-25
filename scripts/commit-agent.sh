@@ -46,6 +46,23 @@ if [ ${#PATHS[@]} -eq 0 ]; then
   echo "erro: informe os caminhos depois de -- (nada de git add -A)"
   exit 2
 fi
+# guarda: um commit leva o que estiver no stage, nao so o que foi nomeado.
+# Se outro agente deixou arquivo staged, ele entraria com a assinatura errada.
+# Roda ANTES do git add para nao deixar residuo no stage quando recusa.
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  bateu=0
+  for p in "${PATHS[@]}"; do
+    case "$f" in "$p"|"$p"/*) bateu=1 ;; esac
+  done
+  if [ "$bateu" -eq 0 ]; then
+    echo "erro: '$f' ja estava no stage e nao foi nomeado depois de --."
+    echo "      commit cancelado para nao assinar trabalho de outro agente."
+    echo "      resolve: git restore --staged -- '$f'  (e avise o dono do arquivo)"
+    exit 3
+  fi
+done < <(git diff --cached --name-only)
+
 git add -- "${PATHS[@]}"
 
 git -c user.name="$NOME" -c user.email="$EMAIL" commit -m "${MSG[@]}"
