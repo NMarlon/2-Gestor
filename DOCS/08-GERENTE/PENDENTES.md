@@ -3,15 +3,21 @@
 > Tarefas em voo, para não se perderem quando a sessão quebrar. Atualizado em
 > **2026-11-25 10:35**. Marcar ✅ ao fechar, com hash/medição ao lado.
 
-## Em execução / retomar
+## Em execução agora (duas sessões despachadas)
 
-| # | Tarefa | Estado | Próximo passo |
+| # | Tarefa | Onde | O que se espera |
 |---|---|---|---|
-| 1 | **P-05 · T-P05-008** (equilíbrio da grade em 1440) | interrompida pelo travamento; `scripts/painel.py` **modificado e não commitado** | decidir: terminar ou `git checkout -- scripts/painel.py`; depois commitar |
-| 2 | **P-05 · M-013** (cota oficial ao vivo no coletor) | ordem escrita, **não despachada** | despachar junto com a T-008 |
-| 3 | **P-03 · M-011-B** (auditoria de prontidão para deploy + Ads) | ordem escrita, não despachada | despachar; é a pergunta do Marlon sobre o que falta para anunciar |
-| 4 | **P-03 · M-006 item 2** (registrar 2 aprendizados no repo do projeto) | autorizado, sem sessão | entra na próxima sessão do P-03 |
-| 5 | **Painel sem autostart** | morre a cada reboot (aconteceu hoje: caiu às 10:01) | criar T-P05-009: autostart + verificação de que a série não perde ponto |
+| 1 | **M-015** — P-05: fechar soltos + **M-013** (cota oficial ao vivo) + **T-P05-009** (autostart) | `painel-p05` | coletor gravando `cota_oficial` (2/18/35%) e painel voltando sozinho após reboot |
+| 2 | **M-011** — P-03: rótulo "Projetos" + **auditoria de prontidão para deploy/Ads**; e M-006 item 2 | `jessica-p03` | tabela bloqueia × antes-da-campanha × depois, com dono por item |
+
+## Fechado hoje
+
+- ✅ **T-P05-008** (grade 1440) — commit `fa2f949`, árvore limpa. **Não medida por mim** —
+  pedi print/tabela no relatório do gestor.
+- ✅ **E-032** — vazamento de Edge: `scripts/medir-cdp.py` (reuso + teto 30/h + teardown por
+  perfil), 6 scripts em quarentena, skill corrigida.
+- ✅ Painel de pé (`127.0.0.1:8787`, HTTP 200) — caiu no boot das 10:01 e subi à mão;
+  autostart é a T-P05-009.
 
 ## Esperando o Marlon
 
