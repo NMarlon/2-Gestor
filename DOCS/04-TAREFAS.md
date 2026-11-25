@@ -1213,7 +1213,98 @@ a pasta `templates/` do child **não existia** em produção e foi criada pelo g
 25/11 pela API 2 (`Fileman::mkdir`) — UAPI não tem mkdir/rmdir/unlink. Pasta já no ar,
 vazia. `parts/header.html` e `parts/footer.html` presentes no child.
 
-**Estado:** 🟢 despachada.
+**Executor:** OpenCode, commit `1713758` (3 arquivos, +57/−2: `templates/404.html` novo,
+`style.css` e `functions.php` com a versão).
+
+**Medido antes (por mim, antes do deploy):** sonda
+`/uma-url-que-nao-existe-p03-m016/` → HTTP **404** real, **148.270 B**, md5
+`6f9a53726b8c7bad799d59a325379e87`, h1 **`Page Not Found`** (inglês, tema pai), parágrafo
+em inglês + **formulário de busca**, **0 links** dentro do `main`, 2 links de WhatsApp na
+página (rodapé), `noindex` presente, `lang="pt-BR"`.
+
+**Backup antes do deploy (obrigatório):** `backups/theme-1.3.10-before-1.3.11/` com os 11
+arquivos do commit `1713758^` (`git archive`), `BACKUP.md` com sha256 de cada um e o passo a
+passo do rollback. Conferência contra o servidor por UAPI `Fileman/get_file_content`:
+`style.css` e `functions.php` line-a-line **0 linhas diferentes** do backup — o backup é
+fiel ao que estava no ar.
+
+**Deploy (25/11):** `node scripts/deploy-theme.mjs` → 3 arquivos enviados
+(`functions.php`, `style.css`, `templates/404.html`), verificação SHA256 pela URL pública
+**12/12 PASS**; purge por `scripts/diagnostics/purge-wpfc-once.mjs` (arquivo de uso único
+apagado, 404 confirmado); `validate-theme.mjs --record` → release.json **1.3.11**, 12
+arquivos, `templates/404.html` incluído; dry-run final **12 iguais, 0 divergentes,
+0 novos, 0 órfãos**.
+
+**Medido depois (por mim, HTML servido, UA Chrome/131, sem query string, 2 leituras
+idênticas):** sonda → HTTP **404** real, **146.096 B**, md5 `0d8e5df7c2f4707fe9d2581eeaad9f12`,
+`text/html; charset=UTF-8`; h1 **`Página não encontrada`**; **4** links de serviço no `main`
+(`/consultoria/`, `/projetos/`, `/gestao-de-obra/`, `/chave-na-mao/`); **1** CTA de WhatsApp no
+`main` (texto genérico, `phone=5511983236422`); **0** `<form>` e **0** `type="search"`;
+`noindex`; header de bloco e `<footer>` presentes; **3** links de WhatsApp na página inteira
+(CTA + rodapé ×2); `lang="pt-BR"`. Segunda URL de sonda `/?p=999999` → **404** também.
+Geometria por CDP (`medir-cdp.py`, 2 lançamentos): **1440×900** h1 em 104–141 px, faixa
+tertiary `rgb(237,227,214)` até 173 px, `scrollW` = `innerW` = 1425, botão "Fale sobre o seu
+projeto →"; **390×844** h1 em 104–130 px, barra do header 64 px, `scrollW` = `innerW` = 390,
+botão 231 px, altura do documento 1372 px. Prints em
+`AppData/Local/hermes/profiles/jessica-p03/cache/scratch/p03-m016/cdp/404-1440.png` e
+`404-390.png`.
+
+**Não testado:** 404 em navegador com JS desligado; leitor de tela.
+
+**Estado:** ✅ feita, publicada e medida (25/11).
+
+---
+
+## T-P03-033 · M-020: texto único do WhatsApp no rodapé e na 404 ✅
+
+**Origem:** M-020 do Gerente (25/11 17:10, depois de aceitar a T-P03-031). **Brief:**
+`briefs/2026-11-25-p03-t033-whatsapp-rodape-global.md`. **Executor:** OpenCode, commit
+`578b4b9` (4 arquivos, +5/−5).
+
+**Escopo:** só o `text=` de 3 links — `parts/footer.html` **linha 16** (botão
+`jhw-footer-button`) e **linha 57** (link do título da coluna de contato), mais
+`templates/404.html` linha 46 (botão da 404, incluído por mim para o site não se
+contradizer na página de erro). Texto: `Olá! Quero conversar sobre o meu projeto.`
+(`Ol%C3%A1!%20Quero%20conversar%20sobre%20o%20meu%20projeto`), `phone=5511983236422`
+intacto. Bump 1.3.11 → **1.3.12**.
+
+**Medido antes (por mim, 2 leituras idênticas por URL, HTML inteiro):**
+
+| URL | status | bytes | antigo | universal | próprio |
+|---|---|---|---|---|---|
+| `/consultoria/` | 200 | 149.602 | **2** | 0 | 1 |
+| `/projetos/` | 200 | 149.526 | **2** | 0 | 1 |
+| `/gestao-de-obra/` | 200 | 149.444 | **2** | 0 | 1 |
+| `/chave-na-mao/` | 200 | 149.417 | **2** | 0 | 1 |
+| sonda de 404 | 404 | 145.983 | **3** | 0 | — |
+
+**Backup antes do deploy:** `backups/theme-1.3.11-antes-1.3.12/` (12 arquivos de
+`578b4b9^` + `BACKUP.md` com sha256 e rollback).
+
+**Deploy (25/11):** `deploy-theme.mjs` → 4 arquivos, `todos os arquivos conferem`;
+purge de uso único (arquivo apagado, 404 confirmado); `validate-theme.mjs --record` →
+release.json **1.3.12**; dry-run final **12 iguais, 0 divergentes, 0 novos, 0 órfãos**.
+
+**Medido depois (por mim, mesmas 5 URLs, 2 leituras idênticas):**
+
+| URL | status | bytes | antigo | universal | próprio | links wa |
+|---|---|---|---|---|---|---|
+| `/consultoria/` | 200 | 149.544 | **0** | **2** | 1 | 3 |
+| `/projetos/` | 200 | 149.468 | **0** | **2** | 1 | 3 |
+| `/gestao-de-obra/` | 200 | 149.386 | **0** | **2** | 1 | 3 |
+| `/chave-na-mao/` | 200 | 149.359 | **0** | **2** | 1 | 3 |
+| sonda de 404 | 404 | 145.830 | **0** | **3** | — | 3 |
+
+Zero ocorrências do texto antigo no HTML de qualquer uma das 5 URLs, inclusive rodapé.
+Os **−58 B** por página são exatamente os 2 links × 29 B mais curtos (`/chave-na-mao/`
+também: 149.417 → 149.359). O `%0A` que os dois links do rodapé traziam no fim saiu junto
+com o texto antigo (o brief especificava o link sem ele); efeito visível: nenhum.
+`release.json` no repo do site: commit `19c84d3`, assinatura `GESTOR-P03`.
+
+**Não testado:** a mensagem pré-preenchida aberta no app do WhatsApp (só o `href`
+codificado); rodapé nas 14 páginas do site (medi as 5 do escopo + a 404).
+
+**Estado:** ✅ feita, publicada e medida (25/11).
 
 ---
 

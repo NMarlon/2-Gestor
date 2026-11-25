@@ -53,7 +53,7 @@ custaram caro:
 | Armadilha | Fato |
 |---|---|
 | Cache | WP Fastest Cache serve HTML velho e faz a medição mentir. Limpar antes de medir. |
-| Purge | Na prática: `https://jessicahaguiwara.arq.br/jhw-purge.php?k=<chave>` (chave em `backups/`, nunca no chat) e depois `curl -X PURGE` em cada URL → 204. Sem isso a medição mostra o HTML antigo. |
+| Purge | **A receita antiga morreu:** o `jhw-purge.php` não existe mais no docroot (saiu no expurgo de 23/11) — `?k=<chave>` dá 404 e não limpa nada. O caminho que funciona em 25/11 é `node scripts/diagnostics/purge-wpfc-once.mjs`, que grava um PHP de uso único, chama, apaga e confere o 404 do arquivo. Depois medir. |
 | Deploy | **Sai 0** desde 2026-11-20 (órfão foi para `~/.trash/`). Prova boa: `N igual(is), 0 divergente(s), 0 novo(s), 0 orfao(s)` e nenhum envio. Se voltar a sair 1, é divergência real ou órfão novo — não ignorar. |
 | Gate de versão | Bump em `style.css` + `functions.php` + `scripts/release.json`, senão o deploy recusa. |
 | MCP WordPress | Não é fonte de verdade sobre o que está no ar. Sempre abrir a URL pública. |
@@ -68,10 +68,47 @@ custaram caro:
 | `wp_update_post_meta` | Nesta instância o Easy MCP AI pede `post_id` + `meta` (dict) + `post_type`. Mesmo com a forma certa, meta do Yoast (`_yoast_wpseo_metadesc`) volta **`ignored_keys`** — é allowlist da ferramenta, não sintaxe. Tentativa única autorizada (Q-037), 25/11. Não insistir. |
 | Botão no conteúdo | `core/button` **não** precisa de CSS neste site: herda `styles.elements.button` do `theme.json` (fundo `#4F5B43`, texto branco, pill, padding 12/28, Inter 500). O ar embaixo vem do `wp:spacer` **somado** ao `blockGap` do layout: 32+64 = **96 px @1440** e 32+40 = **72 px @390**. |
 | `curl` no Windows | `curl.exe -o /dev/null` sai **23** (erro de write) e reporta `size_download 0`: o código HTTP continua válido e o **tamanho mente**. Use `-o nul`. Aconteceu em 24/11 — por um instante a home "tinha" 0 B. |
-| PHP de diagnóstico | 30 `jhw-*.php` no docroot, inertes (`http_response_code(404)`), exceto `jhw-purge.php`, que **executa** com chave estática na URL. 404 anônimo não prova arquivo apagado. |
+| PHP de diagnóstico | Os 30 `jhw-*.php` do docroot foram **apagados em 23/11**; o único PHP de diagnóstico que ainda pisa no ar é o de uso único criado (e apagado) por `purge-wpfc-once.mjs`. Docroot hoje: nenhum `jhw-*.php`, só `.jhw-test` (resíduo). |
+| Pasta nova no tema | A UAPI do cPanel **não tem** `mkdir`/`rmdir`/`unlink` (dá `not implemented`). Criar pasta remota é **API 2**: `/json-api/cpanel` com `cpanel_jsonapi_apiversion=2`, `module=Fileman`, `func=mkdir`, params `path` (pai) + `name` (nova). Remover arquivo/pasta: `func=fileop`, `op=trash`, `sourcefiles=<caminho>` — vai para a lixeira do cPanel (recuperável). `save_file_content` (UAPI) **cria** arquivo novo, mas só em pasta que já existe. |
+| `templates/` do child | Em 25/11 a pasta `templates/` **não existia** no child em produção (o child só tinha `parts/`, `assets/`, `style.css`, `functions.php`, `theme.json`, `README.md`). Foi criada vazia pela API 2. Consequência: até 25/11 o 404 era o do tema pai — **h1 em inglês "Page Not Found"**, parágrafo em inglês e formulário de busca. E `404.php` na raiz **não** resolve neste tema: quem manda é `templates/404.html` (block template). |
 | Slug em inglês | Política de Privacidade vive em `/privacy-policy/`; `/politica-de-privacidade/` dá 404. O rodapé tem os dois links, um em cada idioma. Não mexer sem checar referências do Complianz. |
 
 ## Decisões tomadas
+
+- **2026-11-25 (M-020 executada e medida por mim)** — **T-P03-033**: 1.3.12 no ar (executor
+  `578b4b9`, 4 arquivos, +5/−5). O `text=` dos 2 links do rodapé e do botão da 404 passou a
+  `Olá! Quero conversar sobre o meu projeto.` — **0** ocorrências do texto antigo no HTML
+  servido das 4 páginas **e** da 404; cada página agora tem **1 texto próprio no corpo + 2
+  universais no rodapé** (3 links de WhatsApp, como antes). Antes: 2 antigos por página
+  (3 na 404). −58 B por página = 2 × 29 B mais curtos. Backup em
+  `backups/theme-1.3.11-antes-1.3.12/`; deploy 4 arquivos `todos conferem`; `--record` →
+  1.3.12; dry-run final **12 iguais, 0 divergentes**. `release.json` commit `19c84d3`.
+
+- **2026-11-25 (M-020 aberta pelo Gerente)** — a T-P03-031 foi **aceita** por medição dele
+  (1 link com o texto próprio por página, 0 de outra, rótulo e número intactos), com uma
+  sobra que eu já tinha reportado: **2 links do rodapé** por página ainda mandavam o texto
+  antigo. A ordem M-020 troca o `text=` desses dois por **um único genérico**
+  (`Olá! Quero conversar sobre o meu projeto.`) — global, igual nas quatro, só o `text=`,
+  proibido tocar CTA/CSS/menu/layout. Em `parts/footer.html` linhas **16** (botão
+  `jhw-footer-button`) e **57** (link do título da coluna de contato). Virou **T-P03-033**;
+  incluí o botão da 404 (`templates/404.html` linha 46), que nasceu hoje com o texto antigo,
+  para o site não se contradizer na página de erro.
+
+- **2026-11-25 (M-016 A publicada e medida por mim)** — **T-P03-032**: a 404 personalizada
+  subiu em **1.3.11** (commit do executor `1713758`, 3 arquivos, +57/−2). Antes: fonte do
+  tema pai, **404** real, 148.270 B, md5 `6f9a5372…`, h1 **`Page Not Found`** em inglês,
+  parágrafo em inglês e **formulário de busca**, 0 links no `main`. Depois: **404** real,
+  146.096 B, md5 `0d8e5df7…`, h1 `Página não encontrada`, **4** links de serviço, **1** CTA
+  de WhatsApp (texto genérico), **0** form/search, `noindex`, header+footer, 3 links de
+  WhatsApp na página, `lang="pt-BR"`; 2 leituras idênticas; `/?p=999999` também **404**.
+  Geometria CDP: 1440×900 sem rolagem horizontal (1425 = 1425), h1 em 104–141 px abaixo da
+  barra; 390×844 header 64 px, h1 em 104–130 px, documento 1372 px, sem estouro.
+  **Backup antes:** `backups/theme-1.3.10-before-1.3.11/` (11 arquivos de `1713758^` +
+  `BACKUP.md` com sha256 e rollback), conferido linha a linha contra o servidor pela UAPI
+  (`style.css` e `functions.php`, 0 linhas diferentes). Deploy: 3 arquivos, **12/12 PASS** no
+  SHA256 público; `--record` → release.json 1.3.11 (12 arquivos); dry-run final **12 iguais,
+  0 divergentes**. Commit do `release.json` no repo do site: `2ffb716`, assinatura
+  `GESTOR-P03`.
 
 - **2026-11-25 (executada e medida por mim)** — **T-P03-031** (M-016 B): o `text=` do
   link de WhatsApp dentro do `post_content` das 4 páginas de serviço passou a ser o

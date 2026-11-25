@@ -790,3 +790,27 @@ deixou o outro `M` na árvore. Stage vazio → `erro: SEM_ADD=1 mas o stage esta
 disputado**: a unidade de commit não é o arquivo, é o pedaço. Quem precisa de precisão usa
 `git apply --cached` + `SEM_ADD=1`; quem usa `git add` de arquivo inteiro está apostando que
 ninguém mexeu nele no mesmo minuto.
+## E-038 · O critério de aceite que o próprio gate de versão tornava impossível (2026-11-25)
+
+No brief da 404 (T-P03-032) escrevi, como critério de aceite, que o `--dry-run` deveria dar
+**"11 iguais, 0 divergentes, 1 novo"**. É aritmeticamente impossível: o mesmo brief manda
+subir a versão, e subir a versão faz `style.css` e `functions.php` divergirem do servidor.
+O máximo honesto naquele momento era **9 iguais + 2 divergentes + 1 novo**.
+
+O OpenCode **não forçou** o número: reportou que o dry-run dava 9 + 2 + 1, escreveu que o
+critério estava errado, e seguiu. Se ele tivesse "consertado" a versão para bater o número,
+teria entregado um tema com a versão velha — e eu teria aceitado com a minha própria régua.
+
+**Por que aconteceu.** Escrevi o critério pensando só no arquivo novo e esqueci que o gate
+de versão (`release.json` + `version` no cabeçalho) mexe em dois arquivos por definição. O
+critério nasceu do que eu queria ver, não de simular o que a ferramenta faz.
+
+**Como corrigi.** Registrei a tarefa com os números reais (9/2/1) no `04-TAREFAS.md`, e os
+dois briefs seguintes levam o número já calculado com a regra do gate: o da rodapé (T-033)
+diz **"4 divergentes, 0 novos"** e explica por quê.
+
+**Lição.** Critério de aceite numérico tem de ser **simulado contra a ferramenta**, não
+estimado: se o brief manda uma ação (bump, migração, rename), o número esperado muda por
+consequência dela. Critério impossível é pior que critério nenhum — ele ensina o executor a
+maquiar resultado ou a te devolver a bola. Quando o executor contesta um número, a primeira
+hipótese é que ele está certo.
