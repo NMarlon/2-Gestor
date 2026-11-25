@@ -13,9 +13,10 @@ Aprovação do Marlon em 2026-11-24 21:15: *"Então pode fazer P05 Painel Hermes
 | Repo | git local, **sem remote** — GitHub bloqueado por `Q-034` (credencial) |
 | Gestor | perfil `p05-painel` (era `p05-gestor`; renomeado em 24/11, commit `587f8f8`) |
 | Escritor | OpenCode, um por vez, via `scripts/oc-brief.ps1` |
-| Brief vigente | `briefs/2026-11-24-p05-t001-kickoff-coletor.md` |
-| Estado | 🟢 T-P05-001 **entregue e medida** em 2026-11-24 21:27 — coletor no ar local |
-| UI | **não iniciada** — é a T-P05-002, brief próprio depois do coletor provado |
+| Brief vigente | `briefs/2026-11-25-p05-t002-agendador-serie.md` |
+| Estado | 🟢 T-P05-001 (coletor) medida em 24/11 21:27 · 🟢 T-P05-002 (agendador) medida em 25/11 01:26 |
+| Coleta | **automática**, tarefa `\PainelHermes-Coletor` a cada 15 min, modo **interativo** (não roda deslogado) |
+| UI | **não iniciada** — é a T-P05-003, brief próprio |
 
 ## Objetivo do Marlon
 
@@ -80,8 +81,10 @@ versão de Python disponível.
 
 ## Próximo passo
 
-T-P05-002 (UI em `127.0.0.1:8787`), brief próprio. Antes disso, nada pendente do
-coletor.
+T-P05-003 (UI em `127.0.0.1:8787` lendo `dados/stats.jsonl`), brief próprio. No mesmo
+brief, corrigir a lista de perfis do item 1 de `DOCS/02-ARQUITETURA.md` do projeto
+(ainda diz `p03-gestor`, `p05-gestor`, `conversa`; hoje são `p03-jessica`, `p05-painel`,
+e `conversa` não existe). Nada mais pendente do coletor nem do agendador.
 
 ### 2026-11-24 21:16–21:27 · T-P05-001 medida na fonte (executor OpenCode, 3 commits)
 
@@ -119,7 +122,67 @@ workspace, não raspar o banco.
 Enquanto o repo é local, não há perda; quando o GitHub destravar (`Q-034`), decidir
 se a série entra versionada ou só o código. Anotado no backlog do projeto.
 
+### 2026-11-25 01:14–01:26 · T-P05-002 medida na fonte (executor OpenCode, commit `e5046f4`)
+
+**Ordem:** M-005 do Gerente (`PARA-GESTORES.md`), em nome do Marlon — é o pedido
+escrito que faltava para instalar o agendador. Escopo re-mapeado na hora: T-P05-002 =
+**agendador**; a UI virou **T-P05-003**.
+
+**Brief:** `briefs/2026-11-25-p05-t002-agendador-serie.md` (6.184 B). Despacho por
+`oc-brief.ps1` em background; primeira tentativa morreu no help do CLI — ver E-028.
+
+**Entrega:** commit `e5046f4` `T-P05-002: agendador do Windows (PainelHermes-Coletor,
+15 min, modo interativo)`, autor `P05-EXECUTOR <p05@2gestor.local>`, 8 arquivos,
++397/−73 (`scripts/instalar-agendador.ps1` +258/−27 e seis docs). Árvore limpa, 0
+remotes. `scripts/coletor.py` **não** foi tocado (0 linhas de diff contra `e88420d`).
+
+**Medido pelo gestor (não é relatório do executor):**
+
+| Prova | Comando | Resultado |
+|---|---|---|
+| Guarda | `instalar-agendador.ps1` sem `-IUnderstand` | `exit 1`, imprime a ação, nada registra |
+| Faixa | `-IUnderstand -IntervaloMinutos 3` | `exit 2` |
+| Instalar | `-IUnderstand` | `exit 0`, `MODO=INTERATIVO` |
+| Desfazer | `-IUnderstand -Remover -NomeTarefa PainelHermes-SONDA-GESTOR` | `exit 0`; `schtasks` passa a responder que não acha — testado em sonda, tarefa real intacta |
+| Tarefa | `schtasks /query /tn PainelHermes-Coletor /v /fo LIST` | ver bloco abaixo |
+| Série | `wc -l dados/stats.jsonl` antes/depois | **11 → 12** sem execução manual |
+
+Bloco do `schtasks` (25/11 01:26):
+
+```
+Nome da tarefa:            \PainelHermes-Coletor
+Status:                    Pronto
+Modo de Logon:             Interativo apenas
+Tarefa a ser executada:    C:\Users\Marlon\AppData\Local\Programs\Python\Python311\python.exe "C:\MarlonScripts\5-Painel-Hermes\scripts\coletor.py"
+Iniciar em:                C:\MarlonScripts\5-Painel-Hermes
+Executar como Usuário:     Marlon
+Repetir: a cada:           0 hora(s), 15 minuto(s)
+Horário da última execução: 25/11/2026 01:25:46
+Último resultado:          0
+Hora da próxima execução:  25/11/2026 01:40:46
+```
+
+Amostra 12 da série: `2026-11-25T01:25:49-03:00`, `duracao_ms=1562`,
+`coletor=1.0.0 (python 3.11.9)`, `host=DESKTOP-P05PR2E`. Gravada **3 s depois** do
+horário agendado (01:25:46) e sem o gestor rodar o coletor — é a tarefa que escreve.
+
+**Limitação que fica registrada:** S4U recusado com `Acesso negado` (sessão não
+elevada); a tarefa é **Interativo apenas**, então **não coleta com o usuário
+deslogado**. Para isso: registrar elevado com `-LogonType S4U`. Consequência para a
+UI: última coleta com mais de ~20 min = tarefa parada ou máquina deslogada, não
+"sem uso".
+
+**Pendência menor para o próximo brief:** `DOCS/02-ARQUITETURA.md` do projeto ainda
+lista os perfis velhos no item 1 (`p03-gestor`, `p05-gestor`, `conversa`).
+
 ## Escalonamento
 
-Nada travado nesta sessão. `Q-034` (credencial GitHub) é do Gerente/Marlon, não
-bloqueia o coletor.
+Duas decisões sobem para o Gerente/Marlon; nenhuma bloqueia a T-P05-003.
+
+1. `Q-034` (credencial GitHub) — é do Gerente/Marlon; sem ela o repo do P-05 fica local
+   e a série `dados/stats.jsonl` continua fora do git.
+2. **Cobertura com o usuário deslogado:** o agendador ficou em modo interativo porque
+   S4U exige elevação. Se o Marlon quiser coleta com a sessão fechada, alguém roda uma
+   vez, **elevado**: `.\scripts\instalar-agendador.ps1 -IUnderstand -LogonType S4U`
+   (hoje o script tenta S4U, cai para interativo e avisa). Sem isso, a série tem buraco
+   sempre que a máquina fica deslogada.

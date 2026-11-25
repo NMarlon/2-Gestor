@@ -602,7 +602,7 @@ o cartão diz "Projetos" e o `h1` é "Projeto de arquitetura e interiores".
 **Brief:** `briefs/2026-11-24-p05-t001-kickoff-coletor.md`
 **Dir:** `C:\MarlonScripts\5-Painel-Hermes` (criado 2026-11-24, vazio, antes do despacho)
 **Executor:** OpenCode via `scripts/oc-brief.ps1`
-**Gestor:** perfil `p05-gestor` — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
+**Gestor:** perfil `p05-painel` (era `p05-gestor`; renomeado em 24/11, commit `587f8f8`) — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
 
 **Escopo:** repo do zero (`git init`, `AGENTS.md` + `DOCS/00`…`05`, `README.md`) e
 **só o coletor**. Sem UI, sem agendador instalado, sem remote (GitHub bloqueado por
@@ -638,7 +638,58 @@ cota; a cota vem de `opencode api GET /api/experimental/usage/limits`, hoje com
 `data:null` porque nenhum workspace do OpenCode Console está conectado. A chave
 `oc_…` do banco dá 401 — `indisponivel` é o dado correto, não falha do coletor.
 
-**Próxima:** `T-P05-002` (UI `127.0.0.1:8787`) — brief próprio.
+**Próxima:** `T-P05-002` (agendador do Windows) — a UI virou `T-P05-003`.
+
+---
+
+## T-P05-002 · P-05: agendador do Windows — a série se preenche sozinha 🟢
+
+**Brief:** `briefs/2026-11-25-p05-t002-agendador-serie.md`
+**Dir:** `C:\MarlonScripts\5-Painel-Hermes`
+**Executor:** OpenCode via `scripts/oc-brief.ps1`
+**Gestor:** perfil `p05-painel` — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
+**Ordem:** M-005 do Gerente (`DOCS/08-GERENTE/PARA-GESTORES.md`), em nome do Marlon —
+é o pedido escrito que o `AGENTS.md` do projeto exigia para instalar o agendador.
+
+**Escopo:** só o agendador. `scripts/instalar-agendador.ps1` registra de verdade a
+coleta: python **absoluto** + `-WorkingDirectory` na raiz do repo, intervalo validado
+em **5 a 15 min**, guarda `-IUnderstand`, `-Remover` e o desfazer escrito nos docs do
+projeto. A UI saiu deste escopo e virou `T-P05-003`.
+
+**Não autorizado:** serviço do Windows, cron do Hermes, porta pública, `git push`,
+tocar em `scripts/coletor.py` ou em `dados/`, inventar cota, segredo em log ou commit.
+
+**Critério de aceite (medido pelo gestor):** sem `-IUnderstand` sai 1 e não registra;
+`-IntervaloMinutos 3` sai 2; `-IUnderstand` sai 0 e a tarefa aparece no `schtasks`;
+`-Remover` desregistra; e **uma amostra nova** entra em `dados/stats.jsonl` sem o
+gestor rodar o coletor à mão.
+
+**Estado:** 🟢 **concluída em 2026-11-25 01:26**, medida na fonte.
+Commit `e5046f4` (`P05-EXECUTOR <p05@2gestor.local>`, 8 arquivos, +397/−73), árvore
+limpa, 0 remotes; `scripts/coletor.py` não foi tocado.
+Tarefa **`\PainelHermes-Coletor`**: `Status: Pronto`, `Modo de Logon: Interativo
+apenas`, `Executar como Usuário: Marlon`, ação
+`…\Python311\python.exe "…\scripts\coletor.py"`, `Iniciar em:
+C:\MarlonScripts\5-Painel-Hermes`, repetição **15 min**, `Último resultado: 0`,
+última execução `01:25:46`, próxima `01:40:46`.
+**Prova da série:** 11 → **12 linhas**; a 12ª (`2026-11-25T01:25:49-03:00`,
+`dur_ms=1562`, `coletor 1.0.0 (python 3.11.9)`) foi gravada **3 s** depois do disparo
+da tarefa, sem execução manual.
+Sequência medida pelo gestor: exit 1 (sem `-IUnderstand`), exit 2 (intervalo 3),
+exit 0 (instalar, `MODO=INTERATIVO`), exit 0 (remover a sonda
+`PainelHermes-SONDA-GESTOR` → `schtasks` passa a não achar); tarefa real intacta
+depois do teste de remoção.
+
+**Limitação registrada (não é falha):** S4U foi recusado com “Acesso negado” — a sessão
+não é elevada. Em modo interativo a coleta **não roda com o usuário deslogado**; para
+isso é preciso registrar elevado com `-LogonType S4U`. Efeito na UI: última coleta com
+mais de ~20 min significa tarefa parada ou máquina deslogada, não ausência de uso.
+
+**Pendência menor (vai no próximo brief):** `DOCS/02-ARQUITETURA.md` do projeto ainda
+lista os perfis com os nomes velhos (`p03-gestor`, `p05-gestor`, `conversa`) — hoje são
+`p03-jessica` e `p05-painel`, e `conversa` não existe mais.
+
+**Próxima:** `T-P05-003` (UI local `http://127.0.0.1:8787`, só lê a série) — brief próprio.
 
 ---
 

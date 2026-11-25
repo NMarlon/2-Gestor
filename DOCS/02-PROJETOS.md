@@ -194,17 +194,22 @@ existe ainda e **não deve ser escrito** até o repo ser lido.
 | Caminho | `C:\MarlonScripts\5-Painel-Hermes` |
 | Repo | próprio, git local — **sem remote** (`Q-034` bloqueia credencial) |
 | Objetivo do Marlon | Painel local, ao vivo, do ambiente de trabalho: Hermes vivo, uso do OpenCode Go, desempenho dos gestores |
-| Estado | 🟢 T-P05-001 (coletor) **entregue e medida** em 2026-11-24 21:27; UI é a T-P05-002 |
+| Estado | 🟢 T-P05-001 (coletor) medida em 24/11 21:27 · 🟢 T-P05-002 (agendador) medida em 25/11 01:26, coleta a cada 15 min; UI é a T-P05-003 |
 | Stack | Python stdlib (ou Node sem `node_modules`); série em arquivo append-only |
 | Papel do gestor | Decide, briefa, mede. **Não escreve** — o OpenCode escreve |
 | Caderno do gestor | `DOCS/P-05-Painel-Hermes/GESTOR.md` |
-| Brief | `briefs/2026-11-24-p05-t001-kickoff-coletor.md` |
+| Brief | `briefs/2026-11-25-p05-t002-agendador-serie.md` |
 
 **Aprovação:** Marlon, 2026-11-24 21:15 — *"Então pode fazer P05 Painel Hermes."*
 
 **Regra de cadência:** sem cron de IA. Agendador do Windows roda o script (não gasta
-token de LLM) e só se instala quando o Marlon pedir. Não instalado até aqui.
+token de LLM) e só se instala quando o Marlon pedir — pedido feito na M-005 do Gerente.
 
-**Próxima tarefa:** `T-P05-002` — UI local em `http://127.0.0.1:8787` lendo a série.
-Brief próprio, só depois de o coletor estar provado na fonte.
+**Agendador instalado em 2026-11-25 01:26:** tarefa `\PainelHermes-Coletor`, a cada
+15 min, modo **interativo** (S4U exige elevação; não coleta com o usuário deslogado).
+Prova: `schtasks` com `Último resultado: 0` e 11 → 12 linhas em `dados/stats.jsonl`,
+a 12ª gravada 3 s depois do disparo, sem execução manual.
+
+**Próxima tarefa:** `T-P05-003` — UI local em `http://127.0.0.1:8787` lendo a série.
+Brief próprio.
 

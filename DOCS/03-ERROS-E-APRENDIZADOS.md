@@ -541,3 +541,28 @@ comando que você digita não define o que o commit leva — o índice define. A
 commitar, o único número que importa é `git diff --cached --name-only`. E a verificação
 que salvou o caso foi `--stat` depois do commit, não a mensagem de sucesso.
 
+
+## E-028 · O brief virou seis argumentos e o CLI do OpenCode imprimiu o help (2026-11-25)
+
+**O que aconteceu.** Despachei a T-P05-002 pelo `scripts/oc-brief.ps1`. O writer
+"terminou" com exit 0 e deixou um log de 2.031 B. Abri o log: era o **help do
+`opencode run`**, não a execução. O repositório do projeto continuou limpo — o brief
+nunca foi lido. O brief tinha 16 aspas retas (`"`), do tipo *"Acesso negado"*.
+
+**Por que aconteceu.** O `oc-brief.ps1` monta `@args` e chama o `.exe` nativo com o
+prompt inteiro como **um** argumento. O PowerShell 5.1 **não escapa** aspas retas
+embutidas ao passar string para executável nativo: o parser do processo corta ali.
+Medido com uma sonda (`Get-Content -Raw` do brief → `python argv.py $p`): o arquivo
+virou **6 argumentos** (`'linha1\n- item com Acesso'`, `'negado e Modo'`, …) em vez
+de 1. Com argv quebrado, o CLI não achou mensagem válida e cuspiu a ajuda.
+
+**Lição.** Antes de acusar o executor, medir o que ele **recebeu**. Sonda barata:
+passar o mesmo texto por um programa que imprime `sys.argv`. E, ao escrever brief para
+esse dispatcher, **não usar aspas retas** — usar “aspas tipográficas” ou `'simples'`.
+Depois da troca, a mesma sonda mostrou `argv_count=1 / chars=6184` e o writer rodou.
+
+**Custo.** Um dispatch perdido (~40 s), um brief de 6 kB reescrito e a dúvida de "o
+writer não funciona" — quando o defeito era meu, no texto do brief.
+
+**Efeito colateral bom:** exit 0 do dispatcher **não** é prova de execução. Vale a
+regra de sempre — conferir `git status` do repo e o `tail` do log antes de reportar.
