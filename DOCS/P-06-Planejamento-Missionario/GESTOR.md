@@ -155,3 +155,32 @@ versionado).
 - Risco vivo: `modifiedTime` público é só rótulo ("19 de nov.", sem hora). Edição no mesmo
   dia pode escapar do atalho; existe `--forcar` para isso.
 - Dependência: `C:\MarlonScripts\2-Gestor\scripts\medir-cdp.py` (pode virar `P06_MEDIR_CDP`).
+
+## 25/11/2026, 19:40 — T-P06-010 medido: agora a linha se lê
+
+**Antes:** `6:30 and Cafeteria 9:30 Study 13:30 15:00 19:00 Activity Go your off`
+**Agora:** `Getting Up, Praying and Preparing for the Day | ... | Getting Up, Praying, Preparing for the Day - 6:30 am - 7:00 am`
+
+O que medi, com as saídas reais:
+
+| Critério | Resultado |
+|---|---|
+| Leitura nova (formato v2) | 7 páginas · 495 linhas · **5.796 palavras** (mesmas de antes) · sha `14dfb168…` |
+| Cabeçalho da grade | `PLAN POR6 - WEEK 1` / `Wednesday - Day 1 \| Thursday - Day 2 \| …` — legível |
+| Diff com uma linha removida do snapshot | **exit 10**, página 4, `1 linha adicionada`, **frase inteira**, com `\|` escapado para não quebrar a tabela |
+| Determinismo | dois `--forcar` seguidos → **mesmo sha** `14dfb1685394` |
+| Atalho preservado | execução normal depois → **exit 0, 0 navegadores** |
+| Estado do repo depois dos testes | `git status` **limpo**, `historico.json` = `[]` |
+
+**Critério que não fechei:** o caso "snapshot em formato antigo". Induzi um registro de
+histórico sem o campo do snapshot e o script **recusou comparar** —
+`ERRO: não consigo comparar sem inventar: registro ... não informa o snapshot` (exit 1). É o
+comportamento certo (recusar em vez de inventar), mas o caso específico de snapshot v1
+presente e legível **não foi exercitado**. Digo isso em vez de marcar como testado.
+
+**Ruído menor, estável:** as páginas 4, 5 e 6 trazem uma linha `4 | 4 | 4 | 4 | 4 | 4 | 4 | 4`
+vinda da camada de texto. Não gera falso positivo (é sempre igual), mas polui o relatório.
+Fica para um T-011 se o Marlon quiser o relatório impecável.
+
+**Desbloqueado por consequência:** T-P06-004 (agendar semanal) não depende mais da Q-040.
+Falta rodar `scripts\agendar.ps1` sem `-WhatIf` e conferir com `schtasks /Query`.
