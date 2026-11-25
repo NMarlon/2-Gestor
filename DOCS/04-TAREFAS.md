@@ -595,7 +595,50 @@ servido — o botão segue azul, como estava.
 Ressalva de copy (não é falha técnica): o rótulo do submenu é "Projeto" (singular),
 o cartão diz "Projetos" e o `h1` é "Projeto de arquitetura e interiores".
 
+---
 
+## T-P05-001 · P-05: coletor do Painel Hermes — kickoff do projeto 🟡
+
+**Brief:** `briefs/2026-11-24-p05-t001-kickoff-coletor.md`
+**Dir:** `C:\MarlonScripts\5-Painel-Hermes` (criado 2026-11-24, vazio, antes do despacho)
+**Executor:** OpenCode via `scripts/oc-brief.ps1`
+**Gestor:** perfil `p05-gestor` — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
+
+**Escopo:** repo do zero (`git init`, `AGENTS.md` + `DOCS/00`…`05`, `README.md`) e
+**só o coletor**. Sem UI, sem agendador instalado, sem remote (GitHub bloqueado por
+`Q-034`).
+
+**O coletor entrega:** Hermes vivo/funcional (processo + heartbeat do `state.db`),
+tokens/dia por perfil e por sessão do OpenCode lidos em modo somente leitura, cota do
+OpenCode Go por três caminhos (CLI → endpoint com UA de navegador → `indisponivel`
+com motivo), série append-only em `stats.jsonl`, saída 0 mesmo com cota indisponível.
+
+**Critério de aceite (medido pelo gestor, não pelo relatório):** duas execuções
+consecutivas saem 0; a segunda acrescenta **exatamente 1** linha na série; ≥2
+registros reais; cota `indisponivel` ou número com fonte provada; `git grep -iE
+"sk-|token|secret|password"` limpo; primeiro commit com autoria `P05-EXECUTOR`.
+
+**Não autorizado:** cron do Hermes, serviço do Windows, porta pública, `git push`,
+mexer em outro projeto, inventar cota.
+
+**Resolução de escopo desta entrega:** `relatorio-semanal.py` e a UI são tarefas
+posteriores (backlog do repo). O brief lista os dois na seção "Cadência" mas fecha o
+escopo em "o coletor e nada além dele" — vale o escopo.
+
+**Estado:** 🟢 **concluída em 2026-11-24 21:27**, medida pelo gestor na fonte.
+Três commits `P05-EXECUTOR`, árvore limpa, 0 remotes. `python scripts/coletor.py`
+duas vezes: exit 0 nas duas, série 5→6→7 (+1 por execução); de outro cwd também
+(+1, exit 0). Contagem independente em `mode=ro` bate com o JSON: 336/31/7/2 sessões
+por perfil, `conversa` sem `state.db` sai como `null`, `opencode.session_v2=193`.
+Cota `indisponivel` com motivo técnico e sem percentual. `git grep` de segredo sem
+valor real. Nenhuma tarefa agendada no Windows.
+
+**Descoberta registrada em `DOCS/03` do projeto:** `opencode stats` mede token, não
+cota; a cota vem de `opencode api GET /api/experimental/usage/limits`, hoje com
+`data:null` porque nenhum workspace do OpenCode Console está conectado. A chave
+`oc_…` do banco dá 401 — `indisponivel` é o dado correto, não falha do coletor.
+
+**Próxima:** `T-P05-002` (UI `127.0.0.1:8787`) — brief próprio.
 
 ---
 
