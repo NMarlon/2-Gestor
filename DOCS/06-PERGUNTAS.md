@@ -654,3 +654,41 @@ perguntar — e então as 4 páginas continuam sem falar de entrega nem de forma
 **Default:** (c). Não pergunto nada à cliente por conta própria — nem para ela, nem
 sobre ela.
 
+## Q-037 · P-03 · O preview do link da /chave-na-mao/ ficou com o texto antigo
+
+**Medido hoje no HTML servido** (25/11, URL limpa): a `/chave-na-mao/` tem
+
+```
+<meta property="og:description" content="Do projeto à entrega, com a tranquilidade de cuidar de cada etapa.">
+```
+
+É exatamente a frase do **M1 antes** da troca. O corpo da página já diz "com cada etapa
+conduzida pelo escritório". O `twitter:description` acompanha. As outras três páginas
+estão com o texto próprio delas — o problema é só nessa.
+
+**Por que não foi corrigido:** o Yoast não grava por MCP. O `wp_update_post_meta`
+devolve `ignored_keys` + aviso de integração desligada, e não existe tool de Yoast nas
+117. Não é bug da execução; é limite da ferramenta.
+
+**Opções:** (a) você edita no wp-admin — Yoast → página chave-na-mão → *Descrição*; é um
+campo e leva um minuto, e eu te digo o texto exato; (b) habilitar a integração Yoast em
+*Easy MCP AI → Tools → Plugins* e eu mando por MCP, junto com o resto; (c) deixar — o
+corpo está certo e só o preview de link fica desatualizado.
+
+**Default:** (a). É o único texto de SEO do site que contradiz a página, e preview de
+link é o que a cliente vê quando manda o site no WhatsApp.
+
+## Q-038 · P-03 · Texto pré-preenchido do WhatsApp desalinhado do botão
+
+O C4 trocou o botão da `/consultoria/` para "Fale sobre o seu caso". O link do WhatsApp
+das **4 páginas** (5 ocorrências por página) continua abrindo com o texto pronto
+"Olá! Quero saber mais sobre os serviços de Arquitetura de Jessica Haguiwara" — que
+serve bem as outras três e mal a consultoria, que agora fala com quem *não* tem projeto.
+
+**Opções:** (a) trocar por um texto neutro para as quatro: "Olá! Quero falar sobre o meu
+caso com a Jessica Haguiwara."; (b) deixar como está — é texto que a cliente vê e não
+estava no escopo aprovado; (c) você escreve o texto e eu aplico.
+
+**Default:** (b). Não troco texto visível ao cliente sem sua palavra, e o link é o mesmo
+nas quatro páginas — mexer nele atinge todas de uma vez.
+
