@@ -1195,3 +1195,41 @@ altura 900. Cartões com rótulos conferidos no print (`@media max-width:600px`)
 `git check-ignore` — já estava aplicada, nenhum commit extra. Risco anotado: duas execuções
 reais caíram em timeout de **listagem** (rede fria, `TIMEOUT = 30`) antes de a terceira
 reproduzir a recusa do Google; detalhe no caderno do projeto.
+
+---
+
+## T-P06-008 · P-06: listagem com 60 s e 1 retentativa (código 2) + `agendar.ps1` sem instalar ✅
+
+**Origem:** M-019 do Gerente, itens 1 e 2. **Brief:**
+`briefs/2026-11-25-p06-t008-timeout-listagem-e-agendador.md`. **Executor:** OpenCode, commit
+`a60414e` (5 arquivos, +227/−14).
+
+**Escopo único:** (1) listagem com `TIMEOUT = 60`, `LISTAGEM_TENTATIVAS = 2` e
+`LISTAGEM_ESPERA = 3`, exceção `FalhaListagem` saindo **2** — inclusive listagem vazia e
+"nenhum PDF no padrão"; (2) `scripts/agendar.ps1` cria/atualiza a tarefa semanal, provado
+com `-WhatIf`, **sem instalar** (Q-040 aberta). Nada mais.
+
+**Medido por mim (não pelo executor), em 25/11:**
+
+| comando | esperado | medido |
+|---|---|---|
+| `verificar.py --config <pasta inexistente>` | 2, com retentativa | **2** em **3,9 s** (2 tentativas, 1 linha de aviso na stderr, mensagem "não consegui listar a pasta (2 tentativas, 60 s cada, 3 s entre elas)") |
+| `verificar.py` (Drive real) | 1 | **1**, recusa do Google por extenso, listagem achou `POR6.4.pdf` |
+| `--dry-run --fonte local` | 10 e nada gravado | **10**, sem `historico-local.json`, md5 dos relatórios igual ao HEAD |
+| `--fonte local` 1ª / 2ª | 10 / 0 | **10** / **0** |
+| `agendar.ps1 -WhatIf` | 0, PLANO, nada instalado | **0**; `What if: … registrar tarefa semanal`; `schtasks /Query` → "O sistema não pode encontrar o arquivo", exit 1 |
+| `agendar.ps1 -WhatIf -Dia Friday -Hora 19:30` | PLANO com Friday 19:30 | **0**, PLANO correto |
+| `agendar.ps1 -Executar` | roda e loga | exit **1** (recusa real), linha anexada em `logs/agendador-202611.txt` |
+| `agendar.ps1 -Remover -WhatIf` | não remove | **0**, só o "What if" |
+| `-Hora 25:99` | rejeitado | rejeitado pelo `ValidatePattern` |
+
+`historico.json` md5 `d751713988987e9331980363e24189ce` antes e depois; PowerShell
+**5.1.26100.9818**; `agendar.ps1` em UTF-8 **com BOM** (EF BB BF). Os acentos quebrados em
+`a��o` na captura são do console cp850, não do arquivo.
+
+**Não testado:** o `Register-ScheduledTask` de verdade e o `-Remover` sem `-WhatIf` (proibido
+pelo brief, Q-040 aberta); o estouro real dos 60 s (o caminho de retentativa foi provado por
+HTTP 404, que também espera 3 s); execução pelo Agendador.
+
+**Estado:** ✅ fechada em 25/11 (código). T-P06-004 continua aberta só na instalação:
+rodar o script sem `-WhatIf` quando a Q-040 liberar.
