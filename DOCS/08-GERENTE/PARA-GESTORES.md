@@ -210,6 +210,40 @@ você tentou.
 
 ---
 
+## M-007 · P-05 · 2026-11-25 01:50 · prazo 26/11
+
+Para o gestor do P-05. **T-P05-002 conferida na fonte — fecha. Autorizo a T-P05-003.**
+
+1. **Prova independente da T-P05-002.** Rodei `Get-ScheduledTaskInfo`: `LastRunTime`
+   01:40:47, `LastTaskResult` **0**, `NextRunTime` 01:55:46, `NumberOfMissedRuns` **0**;
+   ação `python.exe C:\MarlonScripts\5-Painel-Hermes\scripts\coletor.py` com
+   `WorkingDirectory` correto. `dados/stats.jsonl`: **13 linhas**, e as duas últimas
+   (01:25:49 e 01:40:50) estão a 15 min 01 s — quem escreveu foi a tarefa, não a mão.
+   Bom trabalho, e obrigado por ter testado a remoção numa sonda em vez de zerar a prova.
+2. **S4U: não instale.** Vira decisão do Marlon (Q-039), por dois motivos que você mesmo
+   levantou: exige elevação e o S4U **não carrega o perfil do usuário** — o coletor lê
+   `opencode.db` e caminhos do perfil; adotar sem testar troca "buraco quando deslogado"
+   por "coleta que falha calada". Se ele autorizar, o teste vem antes da troca, com
+   comparação de duas amostras S4U contra duas interativas.
+3. **Autorizo a T-P05-003 (UI), com escopo fechado:** escuta **só** em `127.0.0.1:8787`,
+   lê `dados/stats.jsonl` e nada mais, sem serviço público, sem cron de IA, sem imprimir
+   ou versionar `.env`/`auth.json`/`opencode.db`. Cota ausente aparece como
+   **"indisponível" com o motivo técnico** — nunca zero, nunca estimativa.
+4. **Junto na T-P05-003:** corrigir a lista de perfis em `DOCS/02-ARQUITETURA.md` do
+   projeto (`p03-gestor`/`p05-gestor` → `p03-jessica`/`p05-painel`; o perfil `conversa`
+   não é deste workspace, não invente papel para ele).
+5. **Também na T-P05-003:** export diário de `dados/stats.jsonl` para `backups/` com a
+   data no nome. A série vive em um disco só; sem cópia, um disco ruim apaga o histórico
+   que é o motivo de o projeto existir.
+6. **Critério de aceite da UI:** `curl -s http://127.0.0.1:8787/` devolve 200 e o número
+   da última amostra bate com a última linha do `stats.jsonl`; `netstat`/`Get-NetTCPConnection`
+   mostra o bind em `127.0.0.1` e **não** em `0.0.0.0`; commit no repo do projeto.
+7. **Push segue proibido** (`Q-034`). Repo do P-05 continua sem remote — não crie um.
+
+**O que não estou pedindo:** S4U, serviço público, e qualquer número de cota inventado.
+
+---
+
 ## M-006 · P-03 · 2026-11-25 01:30 · prazo 26/11
 
 Para o gestor do P-03. **Resposta ao relatório da T-P03-026, que eu conferi na fonte.**

@@ -692,3 +692,30 @@ estava no escopo aprovado; (c) você escreve o texto e eu aplico.
 **Default:** (b). Não troco texto visível ao cliente sem sua palavra, e o link é o mesmo
 nas quatro páginas — mexer nele atinge todas de uma vez.
 
+## Q-039 · P-05 · O coletor só coleta com você logado na máquina
+
+**Medido agora** (`Get-ScheduledTaskInfo` + `Get-ScheduledTask`): a tarefa
+`PainelHermes-Coletor` existe, `LastTaskResult = 0`, próxima execução 01:55:46, zero
+execuções perdidas, ação `python.exe scripts\coletor.py` com `WorkingDirectory` correto.
+A série está em 13 amostras, e as duas últimas caíram a 15 min 01 s uma da outra —
+foi a tarefa que escreveu, não a mão.
+
+**O limite:** `LogonType = Interactive` e `RunLevel = Limited`. Traduzindo: a tarefa
+roda **enquanto a sua sessão está aberta**. Se você fecha o Windows, o próprio Windows
+não executa — a série ganha buraco exatamente no período em que você está fora, que é
+quando o painel mais interessa.
+
+**Opções:** (a) deixar como está — série com buraco nos períodos deslogado;
+(b) você roda **uma vez, elevado**, `.\scripts\instalar-agendador.ps1 -IUnderstand -LogonType S4U`,
+e eu comparo duas amostras S4U contra duas interativas antes de adotar; (c) virar serviço
+do Windows — mais trabalho e mais superfície para um painel local.
+
+**Por que não fiz (b) sozinho:** S4U exige elevação (o gestor tentou e recebeu "Acesso
+negado") e **não carrega o perfil do usuário** — o coletor lê `opencode.db` e caminhos do
+perfil. Trocar sem medir seria substituir "buraco" por "coleta que falha calada".
+
+**Default:** (a). Série com buraco é melhor que série que mente.
+
+**Risco irmão, já endereçado:** a série vive em **um disco só** (o repo do P-05 não tem
+remote, `Q-034`). Pedi export diário de `dados/stats.jsonl` para `backups/` na T-P05-003.
+
