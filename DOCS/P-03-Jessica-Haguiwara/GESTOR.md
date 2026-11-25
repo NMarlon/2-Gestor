@@ -73,6 +73,16 @@ custaram caro:
 
 ## Decisões tomadas
 
+- **2026-11-25 (executada e medida por mim)** — **T-P03-031** (M-016 B): o `text=` do
+  link de WhatsApp dentro do `post_content` das 4 páginas de serviço passou a ser o
+  texto próprio de cada uma. Header/rodapé continuam com o genérico antigo, por
+  instrução. Prova dupla: `wp_get_cpt_item` 226–229 → **0** antigo / **1** novo / **0**
+  de outra página; HTML servido (UA Chrome/131, sem query string, 2 leituras
+  idênticas) `/consultoria/` 149.741 B · `/projetos/` 149.709 B · `/gestao-de-obra/`
+  149.632 B · `/chave-na-mao/` 149.598 B, com **0 antigo / 1 novo próprio** na fatia
+  `entry-content`. O `+45 B` de `/projetos/` é o marcador de **46 B** do WPFC (§38):
+  normalizado, −1 B. `phone=5511983236422` e o rótulo do botão intactos. Nenhum
+  arquivo do projeto tocado, sem commit no repo do site.
 - **2026-11-25 (M-011: parte A e parte B)** — **T-P03-028**: o rótulo do submenu
   `Projeto` virou **`Projetos`** em `wp_navigation` **ID 6** (o menu vive no banco, não
   no tema). Executor devolveu delta **+1 byte** e `relido_igual_ao_enviado: true`; repo

@@ -1171,6 +1171,52 @@ arquivo (`git show --stat`). Cabeçalhos no arquivo: `## 37.` e `## 38.`, arquiv
 
 ---
 
+## T-P03-031 · M-016 B: texto de WhatsApp próprio em cada página de serviço ✅
+
+**Origem:** M-016 parte B. **Brief:** `briefs/2026-11-25-p03-t031-whatsapp-por-pagina.md`.
+**Escopo:** só o `text=` do link de WhatsApp dentro do `post_content` das 4 páginas
+(226 `/consultoria/`, 227 `/projetos/`, 228 `/gestao-de-obra/`, 229 `/chave-na-mao/`),
+via MCP `wp_replace_in_post`. Header/rodapé mantêm o texto genérico antigo — fora do
+escopo por instrução.
+
+**Medido antes (25/11, leitura MCP):** exatamente **1** ocorrência do encoded antigo
+em cada `post_content` (2.761 / 2.596 / 2.529 / 2.460 caracteres), e **nenhum** outro
+valor de `text=` nas 4 páginas. Serve de prova de que a busca do brief é exata.
+
+**Medido depois (25/11, por mim):** `wp_get_cpt_item` (226–229): **0** antigo, **1**
+novo próprio e **0** de outra página em cada `post_content`. HTML servido, UA
+Chrome/131, sem query string, 2 leituras idênticas por URL: `/consultoria/` **200**
+149.741 B `8637a765…` · `/projetos/` **200** 149.709 B `0bc4ac42…` ·
+`/gestao-de-obra/` **200** 149.632 B `12153f7a…` · `/chave-na-mao/` **200**
+149.598 B `6072af38…`. Na fatia `entry-content` → `</main>`: **0 antigo, 1 novo
+próprio, 0 de outra página**; href segue `api.whatsapp.com` com
+`phone=5511983236422` e o rótulo do botão inalterado. O **+45 B** de `/projetos/`
+sobre a tabela é o marcador do WPFC (§38, **46 B**) que a página ganhou desde o
+baseline: 149.709 − 46 = 149.663, **−1 B** do esperado. `/consultoria/` também deu
+**−1 B**; as outras duas bateram exatos. Rodapé continua com o texto genérico
+antigo (2× por página) — fora de escopo por instrução. Repo do projeto **sem
+commit desta tarefa** (nenhum arquivo tocado; `git status` limpo fora do
+`DEPOIMENTOS - PROXY.md` pré-existente).
+
+**Estado:** ✅ feita e medida (25/11).
+
+## T-P03-032 · M-016 A: 404 personalizada no child theme (arquivo, termina no dry-run) 🟢
+
+**Origem:** M-016 parte A. **Brief:** `briefs/2026-11-25-p03-t032-404-personalizada.md`.
+**Escopo:** criar `jessica-haguiwara-child/templates/404.html` (template de bloco:
+header + faixa de título tertiary + h1 + copy + 4 links de serviço + botão WhatsApp +
+footer), bump 1.3.10 → 1.3.11 em `style.css`/`functions.php`. **Sem CSS novo** e sem
+deploy real — a publicação é do gestor.
+
+**Verificado antes:** `404.php` não resolve neste tema (block template do pai vence);
+a pasta `templates/` do child **não existia** em produção e foi criada pelo gestor em
+25/11 pela API 2 (`Fileman::mkdir`) — UAPI não tem mkdir/rmdir/unlink. Pasta já no ar,
+vazia. `parts/header.html` e `parts/footer.html` presentes no child.
+
+**Estado:** 🟢 despachada.
+
+---
+
 ## T-P06-007 · P-06: histórico local separado do real + HTML legível em 390 ✅
 
 **Origem:** M-017 do Gerente, itens 1 e 3. **Brief:**
