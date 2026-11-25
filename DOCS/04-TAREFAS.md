@@ -768,7 +768,7 @@ mecanismo não confirmado). Sobraram **3 defeitos de rótulo em 390** → `T-P05
 
 ---
 
-## T-P05-006 · P-05: rótulos de eixo sem colisão e sem corte em 390 px 🟡
+## T-P05-006 · P-05: rótulos de eixo sem colisão e sem corte em 390 px ✅
 
 **Origem:** medição do gestor em 2026-11-25 sobre `94b87f7` (T-P05-004).
 **Brief:** `briefs/2026-11-25-p05-t006-rotulos-eixo-390.md`, despachado 08:58.
@@ -782,7 +782,72 @@ e **0** textos fora do SVG; em 1440 os três SVGs continuam 1318×458 com 0 over
 `janelas.5h.inicio` = `coletado_em` da amostra base e soma dos buckets = totais da janela;
 `py_compile` exit 0; `curl /` 200; commit `P05-EXECUTOR` por caminho explícito.
 
-**Estado:** 🟡 despachado em 2026-11-25 08:58. Aguardando commit para medir.
+**Estado:** ✅ medida em 2026-11-25 09:07 sobre `b286467` (árvore limpa). CDP: em
+**390×844** os três SVGs com **0 sobreposições de texto** (antes: 1 par de 5×6 px em
+`grafico-5h`) e **0 textos fora do SVG** (antes: "25/11" 2 px além da borda em
+`grafico-30d`); 28 textos de 13 px, `overflow` vazio. Em **1440×900** idêntico ao
+aprovado: 3 SVGs 1318×458, 27 px, 0 overflow, 0 fora. `janelas.5h.inicio` passou a ser
+a amostra-base (`05:10:49`) — mas essa correção **expôs** que a janela "5 h" cobre
+3 h 50 (bug de corte por contagem) → `T-P05-007`.
+Dois commits: `2b1b632` (escopo do brief) e `b286467`, este rotulado pelo executor como
+`T-P05-005` para o ajuste do rótulo do topo — número já reservado no backlog ao
+`relatorio-semanal.py`; o conteúdo está dentro do escopo da 006, a etiqueta é que saiu
+trocada (registrado, não vale reescrever histórico).
+
+---
+
+## T-P05-007 · P-05: janela 5 h real, zero no eixo Y e fim dos cortes ✅
+
+**Origem:** medição do gestor em 2026-11-25 sobre `b286467` (quatro defeitos, todos com
+comando).
+1. Eixo Y sem o rótulo `0` em todas as larguras (`painel.py:355-356` apagou o zero para
+   resolver a colisão em 390 — workaround, não conserto).
+2. Janela "5 h" com **3 h 50**: `coletor.py:833-836` corta para os últimos 20 *pares*
+   de amostra; com coletas extras o span encolhe e um par descartado com token > 0
+   sumiria do total (latente hoje, zero por sorte).
+3. Em 1440 a `.rolagem` da tabela por perfil estoura **117 px** (409 contra 292) — único
+   elemento cortado da página.
+4. Cartão da cota com dump cru (`HTTP 401 … data=null`).
+
+**Brief:** `briefs/2026-11-25-p05-t007-janela-5h-eixo-zero-e-cortes.md`, despachado
+09:16.
+
+**Critério de aceite (medido pelo gestor):** `len(fluxo_5h)==20`, span ≥ 4 h 45,
+soma dos buckets = janela; 1440 com **0** elementos cortados; 390 com 0 sobreposições e
+o `0` presente; `curl /` 200; `py_compile` exit 0; servidor reiniciado com pid novo;
+commit `P05-EXECUTOR`.
+
+**Estado:** ✅ medida em 2026-11-25 09:33 sobre `67c4bb2` (`P05-EXECUTOR`, árvore
+limpa, servidor pid 53564). Dados (`dados/grafico.json`, amostra 09:26:01): **20
+buckets**, `04:30 → 09:15`, `inicio=04:25:49` (12 s antes do corte de 5 h) e
+`fim=09:26:01` → **span 5,00 h** (antes: 3,84 h); soma dos buckets = janela em
+input/output/cache (`2.276.832 / 212.022 / 22.226.048`); 14 fatias zeradas (madrugada
+sem uso). Eixo Y: `<text>0</text>` presente nos três SVGs (1 cada) — antes não existia.
+Em 1440: **0 elementos cortados** (antes: `.rolagem` +117 px), 3 SVGs 1318×458, 0
+sobreposições, 0 textos fora. Em 390: 31 textos de 13 px, 0 sobreposições, 0 fora,
+0 cortados. `curl /` 200 (28.653 B); `py_compile` exit 0. Cota: selo
+`OFICIAL · INDISPONIVEL`, motivo em frase e detalhe técnico em `<details>` fechado —
+sem chamada ao provedor (0 `src`/`href` externo, 1 `fetch('/api/stats')` de polling
+local). Revisão visual independente: **aceitável com ressalva** — sobra a grade de 1440
+(linha 2 com `c-opencode` sozinho, 1.026 px vazios) → `T-P05-008`.
+
+---
+
+## T-P05-008 · P-05: equilíbrio da grade em 1440 🟡
+
+**Origem:** medição CDP do gestor em 2026-11-25 (1440×900, container 1.352 px, 4
+colunas): `c-opencode` sozinho na segunda linha (1.026 px vazios) e `c-plano` +
+`c-oficial` com 700 px vazios na linha seguinte.
+
+**Brief:** `briefs/2026-11-25-p05-t008-grade-1440.md`, despachado 09:36. Escopo de uma
+regra: `#c-opencode { grid-column: span 2 }` no `@media (min-width: 1200px)`; mobile
+intocado.
+
+**Critério de aceite:** em 1440 `c-opencode` ≥ 650 px e `c-plano`/`c-oficial` na mesma
+`y`; em 390 geometria preservada (0 sobreposições, 0 fora, 0 cortados); `curl` 200;
+`py_compile` 0; servidor reiniciado; commit `T-P05-008`.
+
+**Estado:** 🟡 despachado em 2026-11-25 09:36.
 
 ---
 
