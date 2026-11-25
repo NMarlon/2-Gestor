@@ -63,7 +63,18 @@ while IFS= read -r f; do
   fi
 done < <(git diff --cached --name-only)
 
-git add -- "${PATHS[@]}"
+# SEM_ADD=1: o chamador ja encenou o que quer (ex.: git apply --cached de um arquivo
+# compartilhado, para nao varrer o trabalho de outro agente). Nesse modo nao se adiciona
+# nada — commita-se exatamente o stage, que a guarda acima ja validou.
+if [ "${SEM_ADD:-0}" = "1" ]; then
+  if [ -z "$(git diff --cached --name-only)" ]; then
+    echo "erro: SEM_ADD=1 mas o stage esta vazio"
+    exit 2
+  fi
+  echo "-- SEM_ADD: commitando so o que ja estava no stage"
+else
+  git add -- "${PATHS[@]}"
+fi
 
 git -c user.name="$NOME" -c user.email="$EMAIL" commit -m "${MSG[@]}"
 echo "== depois =="

@@ -768,3 +768,25 @@ havia `scripts/`. Aí li a saída inteira do processo em background, em vez do `
 
 **Regra que fica.** Despacho só é despacho quando existe sinal no destino (arquivo novo,
 log, `git log`). Saída 0 do PowerShell não é sinal de nada.
+
+## E-037 · Arquivo compartilhado + `git add` do arquivo inteiro = varrer o vizinho (2026-11-25)
+
+**O que quase aconteceu.** O gestor do P-06 precisou commitar quatro linhas suas em
+`DOCS/04-TAREFAS.md` — o mesmo arquivo em que o gestor do P-03 tinha acabado de registrar
+T-031/T-032. `scripts/commit-agent.sh` fazia `git add --` no arquivo inteiro: as linhas do
+P-03 teriam entrado no commit do P-06, com a assinatura errada. Ele percebeu, contornou com
+`git apply --cached` e avisou.
+
+**Por que a guarda de E-027 não pegou.** Ela compara *quais arquivos* estão no stage com os
+nomeados — e o arquivo estava nomeado. O que ela não vê é que **pedaços de outro autor**
+viajam dentro do mesmo arquivo.
+
+**Como corrigi.** `commit-agent.sh` ganhou o modo `SEM_ADD=1`: o chamador encena o que quer
+(`git apply --cached`), o script **não adiciona nada**, valida o stage e commita. Teste em
+repo descartável: dois arquivos sujos, um encenado, `SEM_ADD=1` → commitou só o encenado e
+deixou o outro `M` na árvore. Stage vazio → `erro: SEM_ADD=1 mas o stage esta vazio`.
+
+**Lição.** Em workspace com vários escritores, **arquivo compartilhado é território
+disputado**: a unidade de commit não é o arquivo, é o pedaço. Quem precisa de precisão usa
+`git apply --cached` + `SEM_ADD=1`; quem usa `git add` de arquivo inteiro está apostando que
+ninguém mexeu nele no mesmo minuto.
