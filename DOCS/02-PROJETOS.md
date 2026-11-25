@@ -87,28 +87,35 @@ Commit `79013d5`. Verificação independente depois do commit:
 
 ## P-03 · Site Jessica Haguiwara Arquitetura
 
-> **Medição do GERENTE · 2026-11-24, 20:51:** publicação **1.3.9** no ar. Home
-> `https://jessicahaguiwara.arq.br/` → `200`, **181.138 bytes** de HTML (UA Chrome,
-> URL limpa, sem query string), `style.css?ver=1.3.9` no child. As **4 páginas de
-> serviço estão publicadas e medidas**: `/consultoria/` 149.338 B, `/projetos/`
-> 149.167 B, `/gestao-de-obra/` 149.132 B, `/chave-na-mao/` 149.054 B — todas `200`,
-> com submenu SOLUÇÕES de **4 filhos** e os **4 cartões da home** ligados. Repo do
-> projeto em `a2394e0` (`T-P03-024`). Aberto: `T-P03-023` (cor do botão do banner de
-> cookies, travada em `Q-032`) e `T-011` (dados da cliente). Detalhe:
-> `08-GERENTE/AUDITORIA-2026-11-23.md` e o bloco de verificação da `T-P03-024` em
-> `04-TAREFAS.md`. Depoimentos fictícios: mantidos como `EXEMPLO` por decisão do
+> **Medição do GERENTE · 2026-11-25, 01:25:** publicação **1.3.10** no ar. As 4 páginas
+> de serviço respondem `200` com duas leituras iguais cada (UA Chrome, URL limpa):
+> `/consultoria/` **149.392 B** (md5 `6bbd90df`), `/projetos/` **149.300 B** (`e8532940`),
+> `/gestao-de-obra/` **149.244 B** (`6dfc674c`), `/chave-na-mao/` **149.178 B**
+> (`e7a75bf3`). `style.css` servido: `Version: 1.3.10`.
+> **Fechado nesta rodada:** `T-P03-025` — o título das páginas internas deixou de ficar
+> atrás do header fixo (`padding-top: calc(var(--jhw-header-altura) + 1.5rem)` na seção
+> 11 do CSS; repo do projeto em `df38099`). `T-P03-026` — **9 das 10 trocas editoriais
+> aprovadas** estão no ar (C1-C4, P1, G1, G2, M1-M3), a **P2 foi vetada** e segue
+> intacta; C3 virou `<ul class="wp-block-list">` com 3 `<li>` (markup conferido).
+> **Aberto:** `Q-037` (a `og:description` da `/chave-na-mao/` ficou presa no Yoast com o
+> texto antigo do M1), `Q-038` (texto pré-preenchido do WhatsApp desalinhado do CTA novo),
+> `Q-035` (rótulo Projeto/Projetos), `Q-036` (duas lacunas do questionário da cliente),
+> `T-P03-023` (cor do botão do banner de cookies, em `Q-032`) e `T-011` (dados da
+> cliente). Detalhe: `08-GERENTE/AUDITORIA-2026-11-23.md`,
+> `P-03-Jessica-Haguiwara/REVISAO-EDITORIAL-2026-11-24.md` e `08-GERENTE/PARA-GESTORES.md`
+> (`M-004`/`M-006`). Depoimentos fictícios: mantidos como `EXEMPLO` por decisão do
 > Marlon (`Q-025`).
 
 
 | Campo | Valor |
 |---|---|
 | Caminho | `C:\MarlonScripts\Jessica Haguiwara` |
-| Repo | Próprio (git), último commit `a2394e0` — 2026-11-24 (só `planejamento/` modificado, fora do tema) |
+| Repo | Próprio (git), último commit `df38099` — 2026-11-25 (1.3.10, título das páginas internas abaixo do header fixo) |
 | Objetivo do Marlon | Site institucional no ar, editorial, sem dado inventado; base técnica que aguente cliente real |
 | Estado | 🟢 **No ar e aprovado pela cliente**; faltam dados que dependem dela |
 | Site | `https://jessicahaguiwara.arq.br` |
 | Peso servido (2026-11-20, 22h) | HTML 178.559 B · CSS 5 folhas 420.591 B · JS 21 scripts 1.275.704 B → **481 KB gzip/visita** em 27 requisições (HTML + CSS + JS) |
-| Stack | WordPress + tema pai `extendable` + child `jessica-haguiwara-child` (**1.3.9 no ar**), Spectra, Forminator, Complianz, WP Fastest Cache |
+| Stack | WordPress + tema pai `extendable` + child `jessica-haguiwara-child` (**1.3.10 no ar**), Spectra, Forminator, Complianz, WP Fastest Cache |
 | Papel do gestor | Decide prioridade, aprova publicação, verifica no ar. **Não escreve no repo** — o OpenCode escreve |
 | Doc do projeto | `DOCS/00-INDICE.md` → `AGENTS.md` é o contrato; `DOCS/12-PLANO-EXECUCAO.md` é o plano vigente |
 
