@@ -516,3 +516,28 @@ aprovação antes, não porque eu conferi.
 depois. Barato porque ele perguntou de novo; caro se ele tivesse agido — autorizado
 reescrever dois `SOUL.md` que já estavam certos.
 
+## E-027 · O commit levou arquivo de outro agente (2026-11-24)
+
+**O que aconteceu.** Commitei a ordem `M-005` com `scripts/commit-agent.sh GERENTE -m "..."
+-- DOCS/08-GERENTE/PARA-GESTORES.md` e o commit saiu com **6 arquivos**: além do meu,
+o caderno do P-05, dois briefs do P-05 e os dois registros compartilhados. O `git add`
+por caminho explícito estava certo; o problema é que **o stage já vinha carregado** do
+trabalho de outro gestor, e `git commit` leva o stage inteiro, não só o que foi nomeado.
+O commit `75da404` assinava como GERENTE cinco arquivos que não são meus.
+
+**Como descobri.** Não confiei na mensagem de sucesso: `git show --stat` mostrou 6
+arquivos onde eu esperava 1. Se eu tivesse lido só a primeira linha (`[master 75da404]`),
+o erro passava — e o `git log` diria para sempre que o Gerente escreveu o caderno do P-05.
+
+**O que fiz.** `git reset --soft HEAD~1`, devolvi os 5 arquivos ao estado anterior
+(untracked/modified), recommitei só o meu (`e092d35`, 1 arquivo) e tranquei a porta:
+`scripts/commit-agent.sh` agora **recusa** o commit quando o stage tem arquivo não
+nomeado, e roda a checagem **antes** do `git add` — na primeira versão eu chequei depois,
+e a recusa deixava lixo no stage; o commit seguinte falhava e eu não entendia por quê.
+Testado com dois arquivos descartáveis: recusou e o HEAD não andou.
+
+**Lição.** Num workspace com vários escritores, **o stage é memória compartilhada**. O
+comando que você digita não define o que o commit leva — o índice define. Antes de
+commitar, o único número que importa é `git diff --cached --name-only`. E a verificação
+que salvou o caso foi `--stat` depois do commit, não a mensagem de sucesso.
+
