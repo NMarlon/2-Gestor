@@ -686,11 +686,47 @@ não é elevada. Em modo interativo a coleta **não roda com o usuário deslogad
 isso é preciso registrar elevado com `-LogonType S4U`. Efeito na UI: última coleta com
 mais de ~20 min significa tarefa parada ou máquina deslogada, não ausência de uso.
 
-**Pendência menor (vai no próximo brief):** `DOCS/02-ARQUITETURA.md` do projeto ainda
-lista os perfis com os nomes velhos (`p03-gestor`, `p05-gestor`, `conversa`) — hoje são
-`p03-jessica` e `p05-painel`, e `conversa` não existe mais.
+**Pendência menor (resolvida na T-P05-003):** `DOCS/02-ARQUITETURA.md` do projeto ainda
+listava os perfis com os nomes velhos (`p03-gestor`, `p05-gestor`, `conversa`) — hoje são
+`p03-jessica` e `p05-painel`, e `conversa` existe no diretório de perfis, mas sem
+`state.db` e sem papel neste workspace (corrigido em 25/11 02:04; ver `E-029`).
 
-**Próxima:** `T-P05-003` (UI local `http://127.0.0.1:8787`, só lê a série) — brief próprio.
+**Próxima:** `T-P05-003` (UI local `http://127.0.0.1:8787`, só lê a série) — entregue em
+25/11 02:04; ver bloco abaixo.
+
+---
+
+## T-P05-003 · P-05: UI local + perfis da arquitetura + export diário da série 🟢
+
+**Brief:** `briefs/2026-11-25-p05-t003-ui-local.md`
+**Dir:** `C:\MarlonScripts\5-Painel-Hermes`
+**Executor:** OpenCode via `scripts/oc-brief.ps1`
+**Gestor:** perfil `p05-painel` — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
+**Ordem:** M-007 do Gerente (`DOCS/08-GERENTE/PARA-GESTORES.md`) — autoriza a UI em
+`127.0.0.1:8787`, a correção da lista de perfis em `DOCS/02-ARQUITETURA.md` do projeto
+e o export diário de `dados/stats.jsonl` para `backups/` com a data no nome.
+
+**Escopo:** `scripts/painel.py` (Python stdlib, escuta **só** em `127.0.0.1:8787`, lê
+**só** `dados/stats.jsonl`, dashboard escuro com polling); correção dos nomes de perfil
+no doc de arquitetura; export diário da série para `backups/` executado pelo coletor já
+agendado (sem agendador novo, sem cron do Hermes).
+
+**Não autorizado:** S4U, serviço do Windows, agendador novo, porta pública, `git push`,
+`pip install`, UI lendo banco alheio, número de cota inventado, segredo em log/print/commit.
+
+**Critério de aceite (medido pelo gestor):** `curl` em `http://127.0.0.1:8787/` devolve
+**HTTP 200** e o número de amostras/última coleta bate com `wc -l`/`tail -1` de
+`dados/stats.jsonl`; `netstat` mostra **127.0.0.1:8787**, nunca `0.0.0.0:8787`; backup do
+dia existe em `backups/stats-AAAA-MM-DD.jsonl` e é prefixo exato da série; doc de perfis
+corrigido; commit `P05-EXECUTOR` por caminho explícito.
+
+**Estado:** 🟢 entregue em 2026-11-25 02:04 — commit `3ce9186` (`P05-EXECUTOR`), medido
+pelo gestor às 02:12: `curl` em `/` e `/api/stats` **200**, `/nao-existe` 404, `POST` 405;
+API `amostras=17` = `wc -l` e última `02:10:50` = `tail -1`; `netstat` só
+`127.0.0.1:8787` (LAN `192.168.0.17:8787` e `[::1]:8787` recusam, exit 7); backup
+`backups/stats-2026-11-25.jsonl` com 15 linhas, sha256 idêntico ao `head -15` da série;
+tarefa agendada `PainelHermes-Coletor` rodou 02:10:47 com `LastTaskResult=0` e a UI
+refletiu a 17ª amostra sem reiniciar. Detalhe e limites no caderno do gestor.
 
 ---
 

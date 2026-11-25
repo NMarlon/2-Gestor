@@ -190,3 +190,76 @@ Duas decisões sobem para o Gerente/Marlon; nenhuma bloqueia a T-P05-003.
    vez, **elevado**: `.\scripts\instalar-agendador.ps1 -IUnderstand -LogonType S4U`
    (hoje o script tenta S4U, cai para interativo e avisa). Sem isso, a série tem buraco
    sempre que a máquina fica deslogada.
+
+### 2026-11-25 01:44– · T-P05-003 despachada (UI local + perfis + export diário)
+
+**Ordem:** M-007 do Gerente, em nome do Marlon. Três itens autorizados: UI em
+`127.0.0.1:8787` lendo só `dados/stats.jsonl`; correção da lista de perfis em
+`DOCS/02-ARQUITETURA.md` (repo do projeto); export diário de `dados/stats.jsonl` para
+`backups/` com a data no nome. **S4U proibido nesta rodada** — nada de elevação, nada de
+agendador novo.
+
+**Plano (antes de executar):**
+
+- `git status` do `2-Gestor` tinha só `Definições Oficiais Manuais/Dos GERENTES.md`
+  modificado (não é caminho meu; não vai no commit). Repo do P-05 limpo em `e5046f4`.
+- Registrar `T-P05-003` em `DOCS/04-TAREFAS.md` antes de despachar (feito).
+- Brief `briefs/2026-11-25-p05-t003-ui-local.md` com escopo único, contexto verificado,
+  proibições, aceite verificável e contrato de retorno (feito).
+- Decisão de engenharia: o export diário **não** ganha agendador próprio — pega carona na
+  tarefa `PainelHermes-Coletor` que já roda a cada 15 min. Isso respeita "sem agendador
+  novo" e mantém um único escritor da série.
+- Medição do gestor: `curl` 200 em `http://127.0.0.1:8787/`, `amostras` vs `wc -l`,
+  `coletado_em` vs `tail -1`, `netstat` só `127.0.0.1:8787`, backup prefixo exato da
+  série, commit `P05-EXECUTOR`, segredo nenhum.
+
+**Despacho:** `powershell -NoProfile -ExecutionPolicy Bypass -File
+C:\MarlonScripts\2-Gestor\scripts\oc-brief.ps1 -Dir "C:\MarlonScripts\5-Painel-Hermes"
+-Brief "C:\MarlonScripts\2-Gestor\briefs\2026-11-25-p05-t003-ui-local.md"`, em
+background (sessão `proc_3d4e2770438b`, 01:47).
+
+### 2026-11-25 02:04–02:12 · T-P05-003 entregue e medida na fonte
+
+**Entrega:** commit `3ce9186` do `P05-EXECUTOR` — 8 arquivos, +1.112/−42:
+`scripts/painel.py` (798 linhas), `scripts/backup_serie.py` (131), `scripts/coletor.py`
+(+14), `.gitignore` (+1), `DOCS/02-ARQUITETURA.md`, `DOCS/04-TAREFAS.md`,
+`DOCS/05-BACKLOG.md`, `README.md`. Árvore limpa, repo sem remote (0).
+
+**Medição do gestor (não é o relatório do executor; é o que eu rodei):**
+
+| O que | Comando | Resultado |
+|---|---|---|
+| HTTP da UI | `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8787/` | **200**; `/api/stats` 200; `/nao-existe` 404; `POST /` 405 |
+| Amostras na tela | API vs `wc -l dados/stats.jsonl` | 16 = 16 (coleta manual 02:08:48); depois 17 = 17 (agendada 02:10:50) |
+| Última coleta | API vs `tail -1` | `2026-11-25T02:08:48-03:00` = mesma; depois `02:10:50`, `idade_s=57`, `ao_vivo` |
+| Bind | `netstat -ano \| grep ':8787'` | só `127.0.0.1:8787 LISTENING 42216`; nenhum `0.0.0.0` nem `[::]` |
+| Fora do loopback | `curl http://192.168.0.17:8787/` e `http://[::1]:8787/` | `000`, exit 7 nos dois — recusa, como devia |
+| Cota | HTML da página | selo `INDISPONIVEL`, motivo triplo (cli `data=null`, http 401, http 404) e "Sem percentual estimado"; único `%` do HTML é CSS `width:100%` |
+| Backup do dia | `backups/stats-2026-11-25.jsonl` | 15 linhas, sha256 `3ef6b45d…` **idêntico** ao `head -15` da série |
+| Backup idempotente | `python scripts/backup_serie.py` de novo | "já existe … (use --forcar)", mesma sha256, exit 0 |
+| Integração com o coletor | `python scripts/coletor.py` | exit 0; série 15→16; backup "já existe" (não reescreveu) |
+| Integração com o agendador | tarefa 02:10:47 | `LastTaskResult=0`, `NextRunTime=02:25:46`; série 16→17; UI refletiu sem reiniciar |
+| Commit/segredo | `git show --stat HEAD`; `git grep` por chave/segredo | só caminhos do escopo; nenhum valor de segredo; `backups/` no `.gitignore` |
+
+**Achado e correção:** a nota anterior em `04-TAREFAS.md` dizia que `conversa` "não
+existe mais". Errado: o diretório existe (`…\hermes\profiles\conversa`), não tem
+`state.db` e não tem papel neste workspace. O executor manteve o perfil na lista como
+"sem state.db" — correto. Corrigi a nota e registrei em `E-029`.
+
+**Decisões e limites que ficam valendo:**
+
+- A UI é **só leitura**: não serve arquivo do repo, não abre `auth.json`, `.env` nem
+  `.db`; `POST` responde 405. O único arquivo aberto é `dados/stats.jsonl`.
+- O backup diário é o **primeiro** do dia, idempotente; `--forcar` reescreve. Hoje ficou
+  com 15 linhas enquanto a série já tem 17 — é o desenho. Risco aceito: se a série
+  corromper depois do snapshot, perde-se o resto do dia; o de amanhã terá tudo.
+- Retenção: nenhuma. Medido 82.424 B / 15 linhas ≈ 5,5 KB por linha; 96 linhas/dia ⇒
+  ~0,5 MB/dia, ~190 MB/ano. Vira item de backlog antes de doer.
+- UI não sobe sozinha — autostart exigiria serviço/agendador novo, não autorizado.
+  Está rodando agora em `http://127.0.0.1:8787` (PID 42216); se o Hermes fechar, subir
+  com `python scripts\painel.py` no diretório do projeto.
+- Coleta continua só com sessão aberta (S4U não instalado, proibido nesta ordem).
+  `idade_s > 1200` na UI significa coleta parada ou máquina deslogada — não "sem uso".
+
+**Próximo:** backlog do projeto (`DOCS/05-BACKLOG.md`) já recebeu rotação/compactação da
+série; autostart e `Q-034` (push) só com ordem escrita do Marlon.

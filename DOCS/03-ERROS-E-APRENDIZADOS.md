@@ -566,3 +566,22 @@ writer não funciona" — quando o defeito era meu, no texto do brief.
 
 **Efeito colateral bom:** exit 0 do dispatcher **não** é prova de execução. Vale a
 regra de sempre — conferir `git status` do repo e o `tail` do log antes de reportar.
+
+## E-029 · Declarei perfil inexistente sem listar o diretório (2026-11-25)
+
+**O que aconteceu.** Ao registrar a pendência da T-P05-002, escrevi em `04-TAREFAS.md`
+que o perfil `conversa` “não existe mais”. A T-P05-003 mostrou o contrário:
+`C:\Users\Marlon\AppData\Local\hermes\profiles\conversa` existe — só não tem
+`state.db`. Se o brief tivesse mandado “remover perfil inexistente”, teria apagado da
+documentação um perfil real.
+
+**Por que aconteceu.** Confundi “não aparece na série” com “não existe”. O coletor conta
+`perfis_com_state_db` (4) e `perfis_total` (5); o quinto é justamente o `conversa`. Não
+rodei `ls` no diretório antes de afirmar.
+
+**Lição.** Para dizer que arquivo ou perfil sumiu, **listar a fonte** primeiro.
+`perfis_com_state_db < perfis_total` quer dizer “sem banco”, não “inexistente”; a
+documentação lista todos os diretórios e marca a ausência de dado como “sem dado”.
+
+**Custo.** Uma frase errada em `04-TAREFAS.md`, corrigida às 02:04, e uma linha a mais
+no doc de arquitetura do projeto — que o executor já tinha feito certo.

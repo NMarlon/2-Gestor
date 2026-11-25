@@ -194,11 +194,11 @@ existe ainda e **não deve ser escrito** até o repo ser lido.
 | Caminho | `C:\MarlonScripts\5-Painel-Hermes` |
 | Repo | próprio, git local — **sem remote** (`Q-034` bloqueia credencial) |
 | Objetivo do Marlon | Painel local, ao vivo, do ambiente de trabalho: Hermes vivo, uso do OpenCode Go, desempenho dos gestores |
-| Estado | 🟢 T-P05-001 (coletor) medida em 24/11 21:27 · 🟢 T-P05-002 (agendador) medida em 25/11 01:26, coleta a cada 15 min; UI é a T-P05-003 |
+| Estado | 🟢 T-P05-001 (coletor) medida 24/11 21:27 · 🟢 T-P05-002 (agendador) medida 25/11 01:26, coleta a cada 15 min · 🟢 T-P05-003 (UI local + export diário) medida 25/11 02:12, `http://127.0.0.1:8787` responde 200 e só no loopback |
 | Stack | Python stdlib (ou Node sem `node_modules`); série em arquivo append-only |
 | Papel do gestor | Decide, briefa, mede. **Não escreve** — o OpenCode escreve |
 | Caderno do gestor | `DOCS/P-05-Painel-Hermes/GESTOR.md` |
-| Brief | `briefs/2026-11-25-p05-t002-agendador-serie.md` |
+| Brief | `briefs/2026-11-25-p05-t003-ui-local.md` (T-003) · `briefs/2026-11-25-p05-t002-agendador-serie.md` (T-002) |
 
 **Aprovação:** Marlon, 2026-11-24 21:15 — *"Então pode fazer P05 Painel Hermes."*
 
@@ -211,6 +211,18 @@ Prova: `schtasks` com `Último resultado: 0`, 11 → 12 linhas em `dados/stats.j
 (a 12ª gravada 3 s depois do disparo, sem execução manual) e a 13ª entrando sozinha
 15 min depois, às 01:40:50.
 
-**Próxima tarefa:** `T-P05-003` — UI local em `http://127.0.0.1:8787` lendo a série.
-Brief próprio.
+**UI medida em 2026-11-25 02:12:** commit `3ce9186` (`P05-EXECUTOR`); `scripts/painel.py`
+serve `http://127.0.0.1:8787` e responde **200**, só no loopback — `192.168.0.17:8787` e
+`[::1]:8787` recusam (exit 7). `amostras` da API bate com `wc -l`, última coleta com
+`tail -1`; a amostra 17 veio da tarefa agendada (02:10:47, resultado 0) e a tela a exibiu
+sem reiniciar. Cota continua `indisponivel` com motivo, sem percentual inventado.
+
+**Export diário:** `scripts/backup_serie.py`, chamado pelo coletor, grava
+`backups/stats-AAAA-MM-DD.jsonl` uma vez por dia (15 linhas hoje; sha256 idêntico ao
+prefixo da série). `--forcar` reescreve. `backups/` está no `.gitignore`.
+
+**Próxima tarefa:** `T-P05-004` (relatório semanal em `.md`, manual) está no backlog e
+**não** foi autorizada. Antes dela, o backlog do projeto pede rotação/compactação da
+série e revisão do crescimento de `backups/` (~0,5 MB/dia, sem expurgo). Autostart da UI
+e `push` (Q-034) só com ordem escrita do Marlon.
 
