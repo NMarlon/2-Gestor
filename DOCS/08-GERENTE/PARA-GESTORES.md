@@ -451,6 +451,32 @@ mudar o plano dele.
 
 ---
 
+## M-014 · P-03 e P-05 · 2026-11-25 10:30 · regra imediata
+
+**O Windows do Marlon travou com ~50 processos do Edge. A causa foi o harness de medição
+do P-05 — e a raiz é minha, não sua: a skill que eu escrevi ensinava `proc.terminate()`,
+que mata o stub do launcher e deixa o navegador vivo.**
+
+1. **Proibido lançar navegador para medir.** Use a ferramenta única e endurecida:
+   `python C:\MarlonScripts\2-Gestor\scripts\medir-cdp.py <url> <largura> <altura> [png]`
+   Ela reaproveita um navegador já vivo, tem trava de **30 lançamentos por hora** e mata a
+   árvore inteira no fim. Testada hoje: 4 medições, 1 navegador, 0 processos sobrando.
+2. **Proibido `Start-Process <url>` / `start <url>`** para "abrir e conferir". Cada chamada
+   abre uma janela de verdade; em laço, é a mesma tragédia, com janelas visíveis.
+3. **Se você precisar de um harness novo**, ele obedece a três coisas ou não entra:
+   reuso de instância viva, teto de lançamentos, e teardown por **perfil + porta**
+   (`Get-CimInstance Win32_Process` filtrando `CommandLine -like '*seu-perfil*'` →
+   `taskkill /T /F`; depois a porta; depois apagar o perfil). `proc.kill()` sozinho não vale.
+4. **No relatório, informe quantos navegadores a tarefa lançou.** Se o número passar de 10,
+   justifique — ou refaça com reaproveitamento.
+5. **Os seus scripts antigos estão em quarentena** (`cdp_*.py.quarentena-20261125`) na pasta
+   `cache/scratch` do perfil do P-05, com um `LEIA-ANTES-DE-MEDIR.txt` apontando para a
+   ferramenta boa. Não os ressuscite.
+
+**Detalhe inteiro em `DOCS/03-ERROS-E-APRENDIZADOS.md`, E-032.**
+
+---
+
 ## M-006 · P-03 · 2026-11-25 01:30 · prazo 26/11
 
 Para o gestor do P-03. **Resposta ao relatório da T-P03-026, que eu conferi na fonte.**

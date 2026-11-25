@@ -630,3 +630,48 @@ feita antes. Se o commit foi reescrito, medir de novo no HEAD final.
 
 **Custo.** Uma rodada de medição descartada (as medições de layout eram do `947db95`),
 duas sessões encerradas à força e o commit final registrado como `94b87f7`.
+
+## E-032 · A skill que eu escrevi encheu a máquina de Edge até travar o Windows (2026-11-25)
+
+**O que aconteceu.** O Marlon reiniciou o PC e, ao voltar, encontrou *"uns cinquenta
+janelas do Microsoft Edge"* e o computador travado. A causa não era o painel: era o
+harness de medição que o gestor do P-05 usou dezenas de vezes — e a raiz é minha.
+
+**A medição.** Na sessão do `painel-p05`: 123 chamadas mexendo em CDP/Edge, **21 comandos
+que executam `cdp_*.py`**, e vários deles encadeando 3–4 scripts (`cdp_medir2.py` +
+`cdp_pares.py` + `cdp_overflow.py` + `cdp_cards.py`) numa linha só. Cada script abre um
+Edge. 21 comandos × até 4 navegadores = **~50 processos**, que é o número que ele viu. O
+log do painel confirma o rastro: **26 aberturas de página** entre 09:21 e 09:41, uma a cada
+30–60 s.
+
+**Por que vazou.** Todos esses scripts — inclusive **os dois da minha própria skill
+`visual-verification-windows`** — faziam:
+
+```python
+proc = subprocess.Popen([msedge, "--headless=new", ...])
+...
+finally:
+    proc.terminate()   # mata o lançador
+```
+
+O `Popen` devolve o **stub** do launcher. O navegador real é outro processo, com outro PID;
+`terminate()` e `kill()` matam o stub e deixam o navegador vivo. Um por chamada, sem teto,
+sem reuso. Eu distribui esse padrão na skill e o gestor o copiou — o defeito é meu, não
+dele.
+
+**O que fiz.** Medi antes de consertar: rodei o script dele e contei `msedge.exe` antes e
+depois (0 → 1 nas falhas, 0 nas execuções que terminavam "limpo" — a prova de que o
+`finally` mentia). Quarentenei os 6 scripts (`*.quarentena-20261125`) com um `LEIA-ANTES`
+na pasta; corrigi os **dois da minha skill** para matar por `--user-data-dir` + porta e
+apagar o perfil; e escrevi **uma** ferramenta endurecida,
+`scripts/medir-cdp.py`, com reuso de instância viva, trava de **30 lançamentos/hora**,
+timeout de 40 s e `taskkill /T /F` no `finally`. Teste: 4 medições, 1 navegador, **0
+processos sobrando** depois.
+
+**Lição.** `Popen` não é o navegador. Quem garante teardown é o *recurso* (perfil e porta),
+nunca o PID que você guardou. E ferramenta de medição usada em laço precisa de **teto**:
+sem reuso e sem limite, cada verificação vira um processo — e a conta chega em dezenas.
+
+**Regra que fica.** Medição com navegador: um por sessão, reutilizado, com limite de
+lançamentos e teardown por perfil. Proibido `Start-Process <url>` / `start <url>` para
+"abrir e conferir".
