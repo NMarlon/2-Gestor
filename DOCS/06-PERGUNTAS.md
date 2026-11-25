@@ -627,3 +627,30 @@ que não fecha. Inconsistência visível ao visitante, não falha técnica.
 
 **Default:** (c) — não mexo em rótulo visível sem sua palavra. A página está no ar e
 funcional; isso é acabamento.
+
+---
+
+## Q-036 · P-03 · Duas lacunas de conteúdo que o questionário não cobre
+
+A revisão editorial das 4 páginas (Q-033, `DOCS/P-03-Jessica-Haguiwara/REVISAO-EDITORIAL-2026-11-24.md`,
+11 citações conferidas contra o HTML servido) achou duas perguntas que **faltam no
+`QUESTIONARIO-CLIENTE.md`** — não é resposta em falta, é pergunta que ninguém fez:
+
+1. **O que a cliente recebe no fim de uma consultoria?** Relatório, planta marcada,
+   ata de encontro, ou é um encontro único? A `/consultoria/` descreve o que o
+   escritório analisa, mas não o formato da entrega. É a lacuna que mais pesa na
+   decisão de quem contrata.
+2. **A consultoria é presencial, online, ou as duas?** Nenhuma das 4 páginas diz —
+   e é a primeira dúvida de quem mora longe.
+
+Também continuam abertas, já no questionário: Q 10.1 (consultoria avulsa?), Q 10.2
+(frequência de visita à obra), Q 10.3 (quem executa no chave na mão), Q 11 (prazos)
+e Q 12 (faixas de orçamento).
+
+**O que preciso de você:** (a) autorizo incluir as duas no questionário e mandar para
+a cliente junto com as outras; (b) você mesmo pergunta; (c) ficam abertas sem
+perguntar — e então as 4 páginas continuam sem falar de entrega nem de formato.
+
+**Default:** (c). Não pergunto nada à cliente por conta própria — nem para ela, nem
+sobre ela.
+
