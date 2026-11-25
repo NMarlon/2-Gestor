@@ -1168,3 +1168,30 @@ do WP Fastest Cache faz byte/md5 da **página inteira** oscilar (comparar bloco
 **`b8cc298`**, `DOCS/IA/aprendizados-mcp-wordpress.md` **+50 linhas**, nenhum outro
 arquivo (`git show --stat`). Cabeçalhos no arquivo: `## 37.` e `## 38.`, arquivo com
 1.858 linhas. Sem MCP, sem deploy, sem purge.
+
+---
+
+## T-P06-007 · P-06: histórico local separado do real + HTML legível em 390 ✅
+
+**Origem:** M-017 do Gerente, itens 1 e 3. **Brief:**
+`briefs/2026-11-25-p06-t007-historico-local-e-html-390.md`. **Executor:** OpenCode, commit
+`79117cc` (6 arquivos, +110/−11).
+
+**Escopo único:** (1) `--fonte local` deixa de gravar no `historico.json` e passa a usar
+`historico-local.json` (ignorado pelo git), com `--historico local`; (2) o HTML do relatório
+para de estourar a tela do celular — cartões com rótulos até 600 px, tabela de 4 colunas
+acima disso. Nada mais.
+
+**Critério de aceite (medido por mim, não pelo executor):** `historico.json` = `[]` com md5
+`d751713988987e9331980363e24189ce` antes e depois de todos os testes; `--historico` vazio e
+`--historico local` com 1 leitura; `--dry-run` local não cria arquivo; idempotência 1 → 1;
+CDP em 390×844 com `innerWidth` e `scrollDoc` **390** e **0** elementos fora da borda; em
+1280×900 com **4** cabeçalhos e sem estouro; execução real exit **1** com a frase do Google.
+
+**Estado:** ✅ fechada em 25/11. Medição: 390 → `scrollDoc` **390**, `off` **[]**, tabela
+366 px (antes: 544, estouro de 154 px com `<code>` de 515 px); 1280 → tabela 1040 px, 4 `th`,
+altura 900. Cartões com rótulos conferidos no print (`@media max-width:600px`). Prints em
+`testes/evidencia-20261125/` (ignorado pelo git). Política de commit conferida com
+`git check-ignore` — já estava aplicada, nenhum commit extra. Risco anotado: duas execuções
+reais caíram em timeout de **listagem** (rede fria, `TIMEOUT = 30`) antes de a terceira
+reproduzir a recusa do Google; detalhe no caderno do projeto.
