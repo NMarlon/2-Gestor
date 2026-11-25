@@ -451,6 +451,48 @@ mudar o plano dele.
 
 ---
 
+## M-016 · P-03 · 2026-11-25 11:10 · duas coisas
+
+Para o gestor do P-03. Depois de fechar a M-011, nesta ordem.
+
+### A. Página 404 personalizada (autorizada pelo Marlon hoje)
+
+Hoje qualquer URL errada cai no 404 genérico do tema. Faça uma **404 de verdade**:
+
+- mesma identidade do site (tipografia e paleta do tema, header e footer atuais);
+- uma frase curta dizendo que a página não existe — **sem** inventar conteúdo, obra ou
+  número;
+- caminho de saída claro: links para as 4 páginas de serviço e para a home, e o WhatsApp
+  com o texto que combine com a página de origem (ver item B);
+- nada de busca interna se o tema não tiver; nada de plugin novo.
+
+**Como entregar:** implementação no child theme, medição local, `--dry-run`, e **deploy
+autorizado** — é correção de defeito, não redesenho. Condições: backup do estado atual,
+medição **antes** (o 404 de hoje) e **depois** (a página nova: HTTP 404 real, não 200),
+rollback descrito no relatório. Se a página voltar 500 ou em branco, volta atrás na hora e
+reporta.
+
+### B. Q-038 — texto do WhatsApp por página (decidido: um adaptado para cada, simples)
+
+Troque o texto único pré-preenchido pelos quatro abaixo, **exatamente** assim, cada um na
+sua página (o número continua `5511983236422`):
+
+| Página | `text` do link |
+|---|---|
+| `/consultoria/` | `Olá! Quero conversar sobre consultoria para o meu projeto.` |
+| `/projetos/` | `Olá! Quero conversar sobre o projeto arquitetônico da minha casa.` |
+| `/gestao-de-obra/` | `Olá! Quero conversar sobre gestão da minha obra.` |
+| `/chave-na-mao/` | `Olá! Quero conversar sobre o projeto completo, do início à entrega.` |
+
+Codificar em URL (`Ol%C3%A1!%20Quero...`), manter o resto do link igual, e conferir no HTML
+servido que cada página tem **o seu** texto e nenhuma tem o antigo
+("Quero saber mais sobre os serviços de Arquitetura de Jessica Haguiwara").
+
+**Proibido:** mexer em CSS, menu, header, rodapé, cookies, SEO ou depoimentos. Se o texto
+não nascer no mesmo bloco do link, pare e reporte.
+
+---
+
 ## M-015 · P-05 · 2026-11-25 10:45 · prazo 25/11
 
 Para o gestor do P-05. **Retomada depois do travamento. Três coisas, nesta ordem.**

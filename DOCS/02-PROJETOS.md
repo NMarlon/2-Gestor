@@ -263,3 +263,19 @@ lida a cada rodada do coletor com a chave do `.env` do Hermes; grava `cota_ofici
 deram **5 h 10% · semanal 21% · mensal 37%**; falha vira motivo legível (testado com
 chave inválida → `HTTP 401`), nunca zero. O cartão mantém a última leitura válida com a
 hora visível se a mais nova falhar. Percentual é **do plano**, não consumo de tokens.
+
+---
+
+## P-06 · Alerta de Planejamento Missionário (CTM)
+
+| Campo | Valor |
+|---|---|
+| Caminho | `C:\MarlonScripts\81 - Alerta Planejamento Missionario CTM` |
+| Repo | git local — **sem remote** |
+| Objetivo do Marlon | Saber **o que mudou** no planejamento dos missionários a cada semana, e poder apresentar a mudança a eles |
+| Fonte | pasta pública do Drive `1-7w0EpMvo8mIWlFcLSjVJEgwaWR5bYdJ`, hoje com `POR6.4.pdf` |
+| Estado | 🟡 25/11 — motor em construção (T-P06-001) e **bloqueio externo**: o dono desativou o download (`Q-040`). Pasta lista, preview entrega PNG, `uc?export=download` recusa |
+| Stack | Python 3.11 + pymupdf 2.1; diff por página/linha/palavra; snapshot + histórico em JSON |
+| Papel do gestor | Ainda não tem perfil próprio; o Gerente briefa o OpenCode direto até o projeto ter rotina |
+| Docs do projeto | `DOCS/00-INDICE.md`, `01-ESCOPO.md`, `02-ARQUITETURA.md`, `03-TAREFAS.md` |
+| Brief | `briefs/2026-11-25-p06-t001-motor-diff-planejamento.md` |

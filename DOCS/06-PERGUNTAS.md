@@ -730,3 +730,37 @@ perfil. Trocar sem medir seria substituir "buraco" por "coleta que falha calada"
 **Risco irmão, já endereçado:** a série vive em **um disco só** (o repo do P-05 não tem
 remote, `Q-034`). Pedi export diário de `dados/stats.jsonl` para `backups/` na T-P05-003.
 
+---
+
+## Q-040 · P-06 · O PDF do planejamento está com download desativado
+
+**Pergunta:** o dono do arquivo precisa liberar o download — ou você prefere outro caminho?
+
+**Medido em 25/11/2026, 13:40.** A pasta é pública e lista normalmente (1 arquivo:
+`POR6.4.pdf`). O download, não:
+
+```
+https://drive.google.com/uc?export=download&id=1M_xdtXz-rkScXMg-i3rS57Kq7HmXrY5O
+→ "Sorry, the owner hasn't given you permission to download this file.
+   Only the owner and editors can download this file."
+```
+
+Mesma resposta com cookie de sessão e com `gdown`. A página `/preview` abre e entrega
+**PNG renderizado** da página — não o PDF. Ou seja: dá para *ver*, não dá para *baixar*.
+
+**Por que isso trava o projeto:** sem os bytes não há texto, e sem texto não há diff
+confiável ("o que mudou" viraria comparação de imagem).
+
+**Opções:**
+
+- **(a) Pedir ao dono do arquivo que permita download** ("Qualquer pessoa com o link →
+  Leitor" + *Permitir download*). É 30 segundos para eles e destrava tudo. **Recomendada.**
+- **(b) Você baixa e deixa em `dados/`** — funciona, mas mata a automação: alguém precisa
+  lembrar toda semana.
+- **(c) OCR das páginas renderizadas** — funciona sem permissão, mas é frágil (erro de
+  OCR vira "mudança" falsa) e caro. Só como último recurso.
+
+**Default enquanto você decide:** construir e provar o motor com PDFs de teste (é o que o
+OpenCode está fazendo agora), e deixar a execução real falhando de propósito com a frase do
+Google — nunca "sem alterações".
+
