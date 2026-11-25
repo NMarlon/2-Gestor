@@ -647,7 +647,7 @@ cota; a cota vem de `opencode api GET /api/experimental/usage/limits`, hoje com
 **Brief:** `briefs/2026-11-25-p05-t002-agendador-serie.md`
 **Dir:** `C:\MarlonScripts\5-Painel-Hermes`
 **Executor:** OpenCode via `scripts/oc-brief.ps1`
-**Gestor:** perfil `p05-painel` — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
+**Gestor:** perfil `painel-p05` (M-010, 25/11) — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
 **Ordem:** M-005 do Gerente (`DOCS/08-GERENTE/PARA-GESTORES.md`), em nome do Marlon —
 é o pedido escrito que o `AGENTS.md` do projeto exigia para instalar o agendador.
 
@@ -701,7 +701,7 @@ listava os perfis com os nomes velhos (`p03-gestor`, `p05-gestor`, `conversa`) �
 **Brief:** `briefs/2026-11-25-p05-t003-ui-local.md`
 **Dir:** `C:\MarlonScripts\5-Painel-Hermes`
 **Executor:** OpenCode via `scripts/oc-brief.ps1`
-**Gestor:** perfil `p05-painel` — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
+**Gestor:** perfil `painel-p05` (M-010, 25/11) — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
 **Ordem:** M-007 do Gerente (`DOCS/08-GERENTE/PARA-GESTORES.md`) — autoriza a UI em
 `127.0.0.1:8787`, a correção da lista de perfis em `DOCS/02-ARQUITETURA.md` do projeto
 e o export diário de `dados/stats.jsonl` para `backups/` com a data no nome.
@@ -727,6 +727,38 @@ API `amostras=17` = `wc -l` e última `02:10:50` = `tail -1`; `netstat` só
 `backups/stats-2026-11-25.jsonl` com 15 linhas, sha256 idêntico ao `head -15` da série;
 tarefa agendada `PainelHermes-Coletor` rodou 02:10:47 com `LastTaskResult=0` e a UI
 refletiu a 17ª amostra sem reiniciar. Detalhe e limites no caderno do gestor.
+
+---
+
+## T-P05-004 · P-05: gráficos das três janelas + cota oficial `INDISPONIVEL` 🟡
+
+**Brief:** `briefs/2026-11-25-p05-t004-graficos-tres-janelas.md`
+**Dir:** `C:\MarlonScripts\5-Painel-Hermes`
+**Executor:** OpenCode via `scripts/oc-brief.ps1`
+**Gestor:** perfil `painel-p05` (M-010, 25/11) — caderno em `DOCS/P-05-Painel-Hermes/GESTOR.md`
+**Ordem:** M-009 do Gerente (`DOCS/08-GERENTE/PARA-GESTORES.md`), em nome do Marlon,
+prazo 25/11 — gráficos das janelas **5 h, 7 d e 30 d** com tokens **medidos localmente**;
+cartão oficial do provedor **`INDISPONIVEL`** com motivo e ação; cartão do plano
+US$ 10/mês sem inventar preço nem percentual.
+
+**Escopo:** `scripts/coletor.py` (grava `dados/grafico.json` derivado + campos
+`total`/`total_por_perfil` na amostra), `scripts/painel.py` (três SVG inline, dois
+cartões novos, responsivo 1440/390), `.gitignore` (`dados/*.json`), docs do projeto
+(`02-ARQUITETURA`, `04-TAREFAS` — backlog `T-P05-004` renumerado para `T-P05-005` — e
+`05-BACKLOG`).
+
+**Não autorizado:** API externa/credencial do Marlon, preço ou câmbio inventado,
+percentual de cota estimado, dependência nova, CDN, porta/serviço/agendador novo,
+`git push`, segredo em log/print/commit.
+
+**Critério de aceite (medido pelo gestor):** `curl /` **200** com 3 SVGs
+(`grafico-5h`, `grafico-7d`, `grafico-30d`), `INDISPONIVEL` e `US$ 10` presentes;
+`POST` 405; `/scripts/painel.py` 404; totais de 30 d do `grafico.json` batem com
+consulta independente nos bancos; print headless em **1440×900** e **390×844** sem
+corte; commit `P05-EXECUTOR` por caminho explícito.
+
+**Estado:** 🟡 brief escrito e despachado em 2026-11-25 (tarde). Aguardando entrega do
+executor para medição.
 
 ---
 
