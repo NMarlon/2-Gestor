@@ -79,5 +79,57 @@ header, no desktop **e** no mobile.
 ## Contrato de retorno
 
 `RESULTADO / status / arquivos_alterados / comandos_executados / evidencia /
-nao_testado / riscos / proximo_passo`, com números medidos. Se algo do diagnóstico
+`nao_testado / riscos / proximo_passo`, com números medidos. Se algo do diagnóstico
 acima estiver errado, diga — o brief é hipótese, a medição é o fato.
+
+---
+
+## Adendo do GESTOR-P03 (24/11, medição de abertura — vale como parte do contrato)
+
+Medi antes de despachar, no HTML servido + CDP headless (Edge/Chromium, `dSF=1`):
+
+- `@1440×900`: header `0 → 80`; primeiro grupo com `padding-top: 32px`;
+  `h1.top = 32` → **48 px cobertos**.
+- `@390×844`: header `0 → 64`; `padding-top` real **24 px** (o brief dizia 32 — é 24,
+  spacing--30 no clamp inferior); `h1.top = 24` → **40 px cobertos**.
+- Estrutura igual nas 4 internas (`page-id` 226–229), `h1` Marcellus 64 px @1440 /
+  40 px @390.
+
+**Correção 1 — escopo.** `body.page` **também** vale na home (`page-template-no-title`,
+`page-id-38`). Regra presa só a `body.page`/`<main>` atinge a home. Escopo correto:
+`body.page-template-page-with-title` (as 4 internas têm essa classe) **ou**
+`main:has(> .wp-block-group .wp-block-post-title)`.
+
+**Correção 2 — inline style.** O `padding-top: var(--wp--preset--spacing--30)` do grupo
+é inline (editor). Portanto: (a) só pega com `!important` — permitido, **diga no
+comentário o motivo**; (b) no `<main>` funciona sem `!important` porque `<main>` só tem
+`margin` inline. Se escolher (b), atenção: o `<main>` não tem fundo e a faixa
+`rgb(237,227,214)` do grupo começaria abaixo do padding — confira que não sobra tarja
+de outra cor sob o header. Escolha uma, e escreva o porquê no comentário.
+
+**Ordem de execução (não pule etapa, não publique):**
+
+1. Ajuste na seção 11 (`PAGINAS INTERNAS`) do `jessica-haguiwara-child/style.css`,
+   comentado no padrão do arquivo (antes/depois).
+2. Bump **1.3.10** em `jessica-haguiwara-child/style.css` (`Version:`) e
+   `jessica-haguiwara-child/functions.php` (`JHW_CHILD_VERSION`).
+   **Não toque em `scripts/release.json`** — o baseline só é regravado com `--record`
+   na publicação; mexer nele torna o gate tautológico.
+3. `node scripts/validate-theme.mjs` — limpo (o bump é o que mantém o gate verde).
+4. `node scripts/deploy-theme.mjs --dry-run` — exit 0; liste os divergentes.
+5. **Prova visual pré-publicação**, já que a regra ainda não está no ar: injete o CSS
+   candidato por CDP na página viva (`Runtime.evaluate` criando um `<style>` — mesmo
+   caminho do probe 11 da T-P03-022), meça
+   `h1.top − header.bottom` (exige ≥16) e capture PNG a `dSF=1` em **1440×900** e
+   **390×844** de `/gestao-de-obra/` → `backups/t025-1440.png` e `backups/t025-390.png`.
+   Reporte os caminhos e os dois números.
+6. **Pare.** Deploy real é do gestor. Sem `deploy-theme.mjs` de verdade, sem purge.
+7. Commit no repo do projeto com assinatura própria:
+   `git -c user.name="EXECUTOR-P03" -c user.email="executor@jhw.local" commit`, com
+   caminhos explícitos. Não inclua
+   `planejamento/Obsidian Pages/DEPOIMENTOS - PROXY.md` (é de outro trabalho) nem
+   arquivos de `DOCS/` do projeto — o registro documental é meu.
+
+Se o inline style impedir a correção de um jeito que só template resolveria, **pare e
+reporte** com a medição; não invente gambiarra de JS.
+

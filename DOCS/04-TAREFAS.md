@@ -596,3 +596,43 @@ Ressalva de copy (não é falha técnica): o rótulo do submenu é "Projeto" (si
 o cartão diz "Projetos" e o `h1` é "Projeto de arquitetura e interiores".
 
 
+
+---
+
+## T-P03-025 · título das páginas internas atrás do header fixo 🟡
+
+**Origem:** print do Marlon em 24/11 21:05 (**/gestao-de-obra/**) + brief do Gerente
+`briefs/2026-11-24-p03-t025-titulo-atras-do-header.md`.
+**Dono:** GESTOR-P03 decide e mede; OpenCode escreve.
+**Escopo único:** espaçamento vertical do topo das páginas internas — **uma** regra na
+seção 11 de `jessica-haguiwara-child/style.css`. Nada de copy, home, menu, plugins.
+
+**Critério de aceite:** (1) `node scripts/validate-theme.mjs` limpo;
+(2) `node scripts/deploy-theme.mjs --dry-run` exit 0, divergentes explicados;
+(3) publicado com `style.css?ver=1.3.10` e a regra nova presente no CSS **servido**;
+(4) prova visual headless de `/gestao-de-obra/` em 1440×900 e 390×844 com
+`deviceScaleFactor` **1**, `<h1>` inteiro abaixo do header com ≥16 px de folga;
+(5) as 5 URLs em 200 com bytes registrados antes/depois;
+(6) home inalterada (rodapé 3.498 B UTF-8, md5 `d0a615c449b20f2f3fb403056b5a1884`);
+(7) rollback escrito: versão 1.3.9 + commit `a2394e0`.
+
+**Medição de abertura (gestor, 24/11 22:xx, Chrome/131, sem query string, 2 leituras):**
+`/` 200 **181.138 B**; `/consultoria/` 149.338; `/projetos/` 149.167;
+`/gestao-de-obra/` 149.132; `/chave-na-mao/` 149.054 — duas leituras idênticas.
+Header `position: fixed`, **80 px** @1440 e **64 px** @390. Primeiro grupo do `<main>`
+com `padding-top` **32 px** @1440 e **24 px** @390 (o brief dizia 32 no mobile: é 24).
+`<h1>` em `top 32` @1440 → **48 px cobertos**; `top 24` @390 → **40 px cobertos**.
+Fonte do `h1`: 64 px @1440 / 40 px @390 (Marcellus).
+
+**Achado que condiciona o ajuste:** a home **também** é `body.page` (classe
+`page-template-no-title`, `page-id-38`); as internas usam `page-template-page-with-title`.
+Regra em `body.page` + `<main>` sem escopo acerta a home — o escopo tem de ser
+`page-template-page-with-title` ou `:has(.wp-block-post-title)`.
+
+**Nota de medição:** a home carrega `<!-- WP Fastest Cache file was created in … -->`
+no fim do HTML; esse comentário muda a cada geração de cache e sozinho explica a
+diferença de md5/tamanho entre medições (181.138 B agora × 181.139 B na T-P03-024).
+O md5 normalizado (comentário removido) é a base de comparação: `/` =
+`94cec06703284bafe92293375f640b53`.
+
+
