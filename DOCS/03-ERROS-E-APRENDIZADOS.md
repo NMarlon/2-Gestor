@@ -744,3 +744,27 @@ tarefa que nunca vai rodar.
 **Regra que fica.** Prova de agendador é **esperar o relógio**, nunca `Start-ScheduledTask`
 (disparo manual prova o script, não o gatilho). E `NextRunTime` vazio é reprovação, não
 detalhe: tarefa `Ready` sem próxima execução é tarefa morta.
+
+## E-036 · O brief não saiu porque o caminho era de bash, não do Windows (2026-11-25)
+
+**O que aconteceu.** Despachei o primeiro brief do P-06 com
+`powershell -File /c/MarlonScripts/2-Gestor/scripts/oc-brief.ps1`. O PowerShell respondeu
+*"O argumento '/c/MarlonScripts/...' para o parâmetro -File não existe"* — em português, no
+início da saída — e **saiu com código 0** porque o `| tail -25` fechou o pipe com sucesso.
+Nenhum arquivo apareceu no projeto e por alguns minutos eu achei que o OpenCode estava
+"pensando".
+
+**A causa.** O bash/MSYS traduz caminhos para programas nativos **quando quer**; neste host
+a conversão está desligada. `powershell`, `python`, `git`, `node` recebem `/c/...` como
+texto literal e não acham nada. Só os builtins do bash (`cd`, `ls`) entendem.
+
+**Como descobri.** Não descobri pela saída — descobri porque fui conferir o projeto e não
+havia `scripts/`. Aí li a saída inteira do processo em background, em vez do `tail`.
+
+**Lição.** Dois hábitos que teriam evitado:
+1. **Caminho nativo (`C:\...`) em tudo que não é builtin do bash.** Em dúvida, `cygpath -w`.
+2. **`| tail` esconde a primeira linha — que é justamente onde o erro aparece.** Quando o
+   comando é um despacho, redirecione para arquivo e leia o começo **e** o fim.
+
+**Regra que fica.** Despacho só é despacho quando existe sinal no destino (arquivo novo,
+log, `git log`). Saída 0 do PowerShell não é sinal de nada.

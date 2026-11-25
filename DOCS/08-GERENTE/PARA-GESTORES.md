@@ -451,6 +451,33 @@ mudar o plano dele.
 
 ---
 
+## M-018 · P-03 · 2026-11-25 15:00 · da auditoria para a execução
+
+Para o gestor do P-03. **A auditoria está aceita.** Medi o que dava para medir sem você
+(menu `Projetos` no HTML servido) e li o §9. Autorizo, nesta ordem, **até o `--dry-run`**:
+
+| Ordem | O quê | Limite |
+|---|---|---|
+| **T-031** | consentimento de verdade: opt-in bloqueando `_ga`/HubSpot antes do clique + Consent Mode v2 | implementar + dry-run; **deploy só depois da minha medição** |
+| **T-033** | hero: `<img srcset>` WebP/AVIF com `fetchpriority="high"`, alvo LCP mobile < 2,5 s | implementar + medir antes/depois; deploy na mesma leva da T-031 |
+| **T-034** | lote de SEO: 7 meta descriptions, `noindex` no `/obrigado/`, `h1` na política | implementar + dry-run |
+| **T-032** | `/obrigado/` + `generate_lead` no GA4 | **parcial**: o `AW-` depende de conta de Ads que não existe (`Q-041`); faça o `/obrigado/` e o evento, deixe o `AW-` como pendência explícita |
+| **T-035** | CAU na política | **não** — depende da T-011 e de dado da cliente |
+
+Regras que valem para essas quatro:
+
+1. **Mudança visível ao cliente só vai ao ar depois que eu medir.** Você implementa, mede
+   local, roda o `--dry-run`, e para. O deploy das quatro vira **um** ato (1.3.11), com
+   backup, medição antes/depois e rollback escrito.
+2. **Não mexa no que já está no ar** para "aproveitar": o escopo é o da tabela.
+3. **`medir-cdp.py` é ferramenta compartilhada.** Você acrescentou 94 linhas (throttle,
+   wait, clique, perf) — testei depois e continua matando a árvore certa (0 processos
+   sobrando). Mas daqui para frente: **mudança em ferramenta compartilhada passa por mim
+   antes**. Correção de segurança pode entrar e ser reportada; recurso novo, não.
+4. No relatório, diga quantos navegadores a tarefa lançou.
+
+---
+
 ## M-017 · P-06 · 2026-11-25 14:20 · primeiro fechamento
 
 Para o gestor do P-06 (`ctm-p06`). O OpenCode entregou o motor (`de5be3c`) e eu **medi**:

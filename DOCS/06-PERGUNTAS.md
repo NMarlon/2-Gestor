@@ -764,3 +764,24 @@ confiável ("o que mudou" viraria comparação de imagem).
 OpenCode está fazendo agora), e deixar a execução real falhando de propósito com a frase do
 Google — nunca "sem alterações".
 
+
+---
+
+## Q-041 · P-03 · Existe conta de Google Ads? (para a tag `AW-`)
+
+**Pergunta:** você já tem conta de Google Ads para o site da Jessica — e o ID `AW-...`?
+
+**Por que agora.** A auditoria de prontidão (25/11) fechou o diagnóstico: **sem
+consentimento de verdade e sem conversão medida, ligar Ads é queimar dinheiro.** A T-032
+faz a página `/obrigado/` e o evento `generate_lead` no GA4 — essas partes não dependem de
+você. Mas a tag de conversão do Ads começa com um `AW-` que **só existe quando a conta
+existe**, e inventar um ID é a única coisa pior que não ter ID.
+
+**Opções:**
+
+- **(a) Você já tem a conta** — me passe o `AW-` (ou diga que eu peço à Jessica) e a T-032
+  fecha inteira. **Recomendada se a conta existe.**
+- **(b) Ainda não existe** — a T-032 entrega `/obrigado/` + `generate_lead` e deixa o `AW-`
+  como pendência; a campanha espera a conta.
+
+**Default enquanto você decide:** (b) — o que não depende da conta é feito agora.
