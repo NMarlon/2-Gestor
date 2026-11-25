@@ -83,3 +83,47 @@ Para o gestor do P-03. Três correções de rumo; uma delas revoga item do `M-00
    commit -m "..."`, com `git add` por caminho. Nunca `--amend` em commit alheio.
 
 **O que não estou pedindo:** deploy. Nada visível ao cliente sem ok por escrito.
+
+---
+
+## M-004 · P-03 · 2026-11-24 21:40 · prazo 26/11
+
+Para o gestor do P-03. **Ordem de execução: T-P03-026.** O Marlon aprovou a revisão
+editorial (Q-033) com uma exceção. **Fila:** só depois de T-P03-025 fechar — um
+escritor por vez no repo do projeto.
+
+1. **Aplicar 10 das 11 mudanças** de `DOCS/P-03-Jessica-Haguiwara/REVISAO-EDITORIAL-2026-11-24.md`,
+   nas 4 páginas de serviço: C1, C2, C3, C4 (consultoria), P1 (projetos), G1, G2
+   (gestão de obra), M1, M2, M3 (chave na mão).
+2. **P2 está vetada.** Não toque em "Briefing e conceito: entendimento da rotina, do
+   estilo e das necessidades." A proposta troca informação por poesia; o Marlon
+   decidiu manter o original. Se o executor "melhorar" essa linha, é erro de escopo.
+3. **Texto exato vem do documento.** Não reescreva as frases por conta própria nem
+   invente terceira versão. O documento tem o "depois" literal para cada item — o
+   OpenCode aplica aquela string. Se uma string não casar com o que está no banco,
+   **pare e reporte**, não adapte.
+4. **Proibido nesta tarefa:** mexer em CSS, JS, `functions.php`, menu, header, rodapé,
+   banner de cookies, título/SEO, depoimentos, formulário. É troca de copy dentro de
+   `post_content` das 4 páginas. Se o texto estiver em bloco, altere o bloco; se
+   estiver em template do tema, **pare e reporte** — isso muda o escopo.
+5. **C4 tem risco próprio:** o texto pré-preenchido do WhatsApp ("Olá! Quero saber
+   mais sobre os serviços de Arquitetura de Jessica Haguiwara") aparece 5× por página
+   no HTML servido. Confirme onde ele nasce antes de tocar: se não for no mesmo
+   bloco do botão, **deixe C4 de fora** e reporte — os outros 9 seguem.
+6. **Medição obrigatória, antes e depois**, com o protocolo do `AGENTS.md`: URL sem
+   query string, duas leituras iguais, registrar UA e comando. Baseline medido por
+   mim em 24/11: `/consultoria/` 149.338 B · `/projetos/` 149.167 B · `/gestao-de-obra/`
+   149.132 B · `/chave-na-mao/` 149.054 B. **Esses bytes vão mudar** (o texto muda);
+   o que não pode mudar é o HTTP 200 nas 4 e o resto da página.
+7. **Critério de aceite:** as 10 strings novas presentes no HTML servido, as 10
+   antigas ausentes, 4× HTTP 200, e o "antes" de C1/C2/P1/G1/M2 verificável contra a
+   medição de hoje. Rollback = reverter o commit no repo do projeto.
+8. **`--dry-run` e para.** Deploy não está autorizado por esta ordem.
+
+**Contexto já verificado (não re-investigue):** 11 de 11 citações "antes" conferidas
+por mim no HTML servido hoje. Não existe `<article class="jhw-service">` nas páginas
+no ar — a copy está em `main` → `h1` → `div.entry-content`. O documento está commitado
+(`51ade5d`, GESTOR-P03).
+
+**O que não estou pedindo:** deploy, mudança de layout, e a P2.
+
