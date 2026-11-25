@@ -106,3 +106,52 @@ o índice), para não varrer trabalho alheio.
 - Instalação do agendador pode exigir elevação (`-LogonType Interactive`); como o agendador
   roda a tarefa só com o usuário logado, `-StartWhenAvailable` cobre o caso de PC desligado
   na hora marcada.
+
+## 25/11/2026, 18:20 — o bloqueio caiu: leitura pelo visualizador (medido por mim)
+
+**Q-040 morreu.** O Marlon disse que não há como liberar o download e que o bloqueio é
+intencional (os PDFs mudam toda semana). Mandou contornar. Contornei medindo o que a página
+de preview pede ao servidor:
+
+```
+/viewer/meta       → {"pages":7,"maxPageWidth":3200}
+/viewer/presspage  → texto de cada página com coordenada de cada palavra
+/viewer/img        → renderização a 3200 px (não usada)
+```
+
+O token (`ACFrOg…`) e a sessão (`fssid`) nascem no JavaScript do viewer — não estão no HTML.
+Por isso a leitura abre **um** navegador headless para colhê-los; o resto é Python puro.
+Nada de download, nada de burlar permissão: é o que o viewer entrega a qualquer visitante com
+o link.
+
+**T-P06-009 entregue pelo OpenCode. Medi os quatro critérios, na fonte:**
+
+| Critério | Resultado real |
+|---|---|
+| 1ª execução real | 7 páginas · 868 linhas · 5.796 palavras · sha256 `69538f8f…`; relatório com `Origem: viewer/presspage`, `Navegadores lançados: 1` |
+| Execução seguinte | **exit 0**, "sem mudanças", **0 navegadores** (`msedge` 0 → 0) |
+| Mudança simulada (removi 1 linha do snapshot) | **exit 10**, página 4, `1 linha adicionada`, com o texto exato |
+| Token no repo | nenhum — só o padrão `id=...&fssid=...` na documentação |
+| Determinismo | 4 execuções independentes → mesmo sha256 |
+
+**O que o código faz melhor do que eu pedi:** ao encontrar o snapshot adulterado por mim, o
+relatório **avisou** — "Snapshot anterior inconsistente: não confere com o sha256 registrado"
+— e refez a leitura do zero em vez de comparar maçã com laranja. Isso é a diferença entre
+relatório e propaganda.
+
+**O que ainda não serve:** o documento é uma **grade de horários** e a reconstrução de linha
+junta palavras de linhas diferentes da mesma célula. A mudança simulada saiu como
+`6:30 and Cafeteria 9:30 Study 13:30 15:00 19:00 Activity Go your off` — o dado está certo,
+a leitura é ruim. Para avisar missionário, não passa. Brief **T-P06-010** despachado
+(tolerância por altura de palavra + separador ` | ` entre colunas + formato de snapshot
+versionado).
+
+## Aberto (atualizado)
+
+- **T-P06-010** — linha legível (em execução).
+- **T-P06-004** — agendar semanal: `scripts\agendar.ps1` pronto e provado com `-WhatIf`;
+  falta rodar sem `-WhatIf` e conferir com `schtasks /Query`. **Q-040 não bloqueia mais.**
+- **T-P06-005** — acabamento visual do HTML para os missionários.
+- Risco vivo: `modifiedTime` público é só rótulo ("19 de nov.", sem hora). Edição no mesmo
+  dia pode escapar do atalho; existe `--forcar` para isso.
+- Dependência: `C:\MarlonScripts\2-Gestor\scripts\medir-cdp.py` (pode virar `P06_MEDIR_CDP`).
