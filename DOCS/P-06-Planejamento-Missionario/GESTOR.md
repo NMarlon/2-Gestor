@@ -184,3 +184,35 @@ Fica para um T-011 se o Marlon quiser o relatório impecável.
 
 **Desbloqueado por consequência:** T-P06-004 (agendar semanal) não depende mais da Q-040.
 Falta rodar `scripts\agendar.ps1` sem `-WhatIf` e conferir com `schtasks /Query`.
+
+## 25/11/2026, 20:10 — a grade: sim, a estrutura existe (pergunta do Marlon)
+
+Ele mandou um print da página 1 e perguntou se eu tenho estrutura/metadado para separar as
+caixas em colunas e linhas. **Tenho.** O `presspage` dá cada palavra como
+`[y, x, altura, largura]` — nessa ordem, e isso é decisivo:
+
+`Wednesday` = `[70, 95, 10, 45]`, `Thursday` = `[70, 240, 10, 36]`, `Friday` = `[70, 394, 10, 25]`
+→ mesmo `y` (linha do cabeçalho), `x` crescente (colunas), largura proporcional ao texto.
+
+**Protótipo rodado hoje** (`C:\MarlonScripts\2-Gestor\.scratch\grid.py`): acha o cabeçalho,
+fatia as 5 colunas, acha os **80** rótulos de hora da coluna esquerda e agrupa as caixas.
+Saída real da coluna Wednesday, que bate com o print do Marlon:
+
+```
+Getting up, Pray, Physical Activity, Getting / Shower, Breakfast / Personal Study
+District Class 1 / 11:00 - 14:00
+WORKSHOP - Welcome to the MTC ... / Lunch / 45 minutos / Preparation
+District Class 2 / 16:00 - 19:00
+Dinner - 45 minutes / Companionship Study - 60 minutes ...
+Prepare to go to Bed / (Your Local Time) - 21:00 - 22:30hrs
+```
+
+**4 defeitos do protótipo, todos meus, nenhum do Drive:** banner de largura total cai
+dentro das colunas; rótulo de hora é `6:30`+`AM` em duas palavras; fronteira de coluna com
+folga fixa deixa caixa vazar para a vizinha ("Make your Sabbath..." apareceu em Saturday);
+artefato `4 | 4 | 4 …` nas páginas 4–6.
+
+**Decisão:** o relatório passa a falar em célula (`dia + faixa de horário + texto`), não em
+linha solta, e o HTML embute a imagem da página que mudou (o `viewer/img` já entrega 3200 px).
+Brief **T-P06-011** despachado com o print dele como gabarito: se a grade da página 1 não
+reproduzir as caixas da imagem, não passa.
