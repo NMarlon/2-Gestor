@@ -324,6 +324,101 @@ inclusive em `DOCS/02-ARQUITETURA.md` do P-05.
 
 ---
 
+## M-011 · P-03 · 2026-11-25 08:40 · prazo 26/11
+
+Para o gestor do P-03. **Duas coisas: um rótulo que o Marlon decidiu, e a auditoria que
+ele pediu para decidir o deploy.**
+
+### A. Q-035 — decidido: padronizar "Projetos"
+
+1. **Submenu do menu:** `Projeto` → **`Projetos`**. É o único rótulo que muda.
+2. **Não tocar no `h1`** "Projeto de arquitetura e interiores": ali ele nomeia o serviço, no
+   singular, e é isso que a página entrega. Mudar viraria erro de sentido.
+3. O cartão da home já está no plural. Medir que os três continuam levando aos mesmos links.
+
+### B. Auditoria de prontidão para deploy oficial + Google Ads
+
+O Marlon perguntou, literalmente: *"o que faltaria para o site ficar pronto, redondinho?"* —
+supondo que a cliente já respondeu todas as perguntas abertas e que o que depende dela está
+resolvido. Ele quer rodar **ADS** em cima do site. Isto é uma **auditoria com medição**, não
+um plano genérico: cada linha com URL, comando e número.
+
+**O que eu já medi (25/11, não re-investigue):**
+- Home `200`, **180.829 B** de HTML; `canonical` presente; `og:image` presente
+  (`/wp-content/uploads/2026/09/background-hero.webp`).
+- `robots.txt` 200 (bloco Yoast). **Dois sitemaps respondendo:** `/sitemap_index.xml`
+  (Yoast, 1 sub: `page-sitemap.xml` com **8 páginas**) **e** `/wp-sitemap.xml` (nativo do
+  WordPress). Isso precisa de decisão: um dos dois deve ser desligado ou redirecionado.
+- Páginas no sitemap: `/`, `/privacy-policy/`, `/obrigado/`, `/politica-de-cookies/`,
+  `/consultoria/`, `/projetos/`, `/gestao-de-obra/`, `/chave-na-mao/`.
+- **`/contato/` → 404.** Não existe página de contato. O formulário está embutido na home.
+- GA4 via Google Tag `GT-TBVGGKRR` (`gtag/js`) na home; **Microsoft Clarity** também
+  aparece no HTML (`clarity` 4× — confirme o ID e se é intencional).
+- Forminator presente na home; `/obrigado/` existe (é o destino natural de conversão).
+- `/favicon.ico` 200 (PNG); **não há página 404 personalizada** (status 404 correto).
+
+**O que a auditoria tem que responder, com prova:**
+1. **Conversão rastreável.** O formulário leva a `/obrigado/`? Existe evento de conversão?
+   Sem isso, Ads não mede nada. Diga qual é o caminho hoje: submit → redirect → `/obrigado/`.
+2. **Consentimento × Ads (LGPD).** O Complianz bloqueia GA e o tag do Ads antes do aceite?
+   Teste: abrir a home com cookies limpos e ver o que carrega antes do "Aceito". Se o Ads
+   disparar sem consentimento, é risco jurídico, não detalhe.
+3. **Tag do Google Ads.** Não vi `AW-` no HTML. Se ele vai rodar Ads, precisa da tag de
+   conversão e de uma ação de conversão configurada — hoje não existe.
+4. **Peso e velocidade.** HTML 180 KB + 481 KB gzip/visita medido em 20/11. Meça **LCP, CLS
+   e INP** em 4G simulado na home e em uma página de serviço; diga o que passa e o que não.
+   O hero usa `.webp` de que tamanho? Tem `srcset`?
+5. **SEO de entrada.** Título e meta das 8 páginas (uma tabela), canônico, `h1` único,
+   dados estruturados (`application/ld+json` aparece 2× na home — o que declara?). O
+   `og:description` do M1 é o Q-037, já em tratamento: não misture.
+6. **Conteúdo que falta para anunciar.** Página de contato (hoje 404), "sobre" (existe?),
+   CAU da arquiteta visível — **verifique se a legislação do CAU exige o número no site**;
+   se exigir, é bloqueio de lançamento, não melhoria.
+7. **Formulário que entrega.** O e-mail do Forminator chega onde? Tem confirmação para quem
+   preencheu? Tem anti-spam? Um formulário que engole lead é pior que não ter formulário.
+8. **WhatsApp como canal.** O CTA já é o canal principal; com Ads, o clique precisa ser
+   contado. Proponha como medir (evento no GA4), sem inventar número de cliques.
+9. **Operação.** Backup do site (existe? onde?), uptime, HTTPS, e o que acontece se o
+   formulário cair.
+10. **Veredito em três listas:** (i) **bloqueia o lançamento**, (ii) **deve entrar antes da
+    primeira campanha**, (iii) **pode ficar para depois**. Cada item com dono: cliente,
+    Marlon, OpenCode ou gestor.
+
+**Formato:** uma tabela por bloco, um veredito no fim, e "não testado" explícito. Nada de
+"recomendo melhorar a performance" sem número. Se algum item exigir acesso que você não tem
+(conta do Google Ads, servidor, e-mail), diga isso e pare nele.
+
+**O que não estou pedindo:** implementar as correções, contratar nada, e gastar com Ads.
+
+---
+
+## M-012 · P-05 · 2026-11-25 08:45 · prazo 26/11
+
+Para o gestor do P-05. **A tabela oficial existe — e o Marlon mandou os números.**
+
+1. **Leitura do Console, 25/11 08:24** (print do próprio Marlon): **5 h — 1% usados**;
+   **semanal — 18%**; **mensal — 35%**, *on pace for 86%*, renovação em **13/dez**,
+   média **2,9% ao dia**, **10.480 requests**. Modelos no período: **DeepSeek V4.1 Flash
+   1017 — 92%**, **MiMo-V2.6-Flash — 8%**, **Qwen3.8 Flash — <1%**. Extra usage **off**,
+   crédito **US$ 0,00**. Plano **Go, US$ 10/mês**.
+2. **Crie `dados/oficial.jsonl`** — uma linha por leitura, com `lido_em` (ISO), `origem`
+   (`print-marlon`, `console`, etc.), `janela_5h`, `janela_semanal`, `janela_mensal`,
+   `renovacao`, `requests`, `modelos` e quem leu. A primeira linha é a de cima.
+3. **No painel:** dois blocos separados e com rótulo próprio — **"Medido localmente
+   (tokens)"** e **"Console (leitura manual, 25/11 08:24)"**. O percentual do Console é do
+   **plano**, não do site nem dos meus tokens: não converta um no outro, não some.
+4. **Gráfico:** a série local dá a curva contínua; as leituras manuais entram como pontos
+   com data. Se só houver um ponto, mostre o número com a data ao lado — um ponto não é
+   gráfico, e fingir que é seria pior.
+5. **Nada de scraping.** Não abra o Console com credencial dele, não automatize login. Se um
+   dia o CLI passar a devolver a tabela, você troca a fonte e diz que trocou.
+6. **Prova:** `curl` 200, print do bloco novo, e o valor de cada janela batendo com o
+   `oficial.jsonl` que você gravou.
+
+**O que não estou pedindo:** login no Console, adivinhação de preço por token, e UI pública.
+
+---
+
 ## M-006 · P-03 · 2026-11-25 01:30 · prazo 26/11
 
 Para o gestor do P-03. **Resposta ao relatório da T-P03-026, que eu conferi na fonte.**
