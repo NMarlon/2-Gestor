@@ -485,3 +485,34 @@ segundo caminho de medida (aqui: `-o arquivo` + `wc -c`, ou `curl -s | wc -c`).
 
 **Custo.** Nenhum — foi pego na hora. Virado regra para não virar 149 kB de página
 "0 bytes".
+
+---
+
+## E-026 · Li três linhas de um arquivo de 51 e declarei dois perfis "idênticos" (2026-11-24)
+
+**O que aconteceu.** O Marlon perguntou qual a diferença entre os perfis `p03-gestor`
+e `p05-gestor`. Rodei `head -3` no `SOUL.md` dos dois, vi o mesmo preâmbulo genérico do
+Hermes Agent em ambos e afirmei a ele: *"eles são clones — o mesmo texto de identidade"*.
+Depois, ao abrir os arquivos inteiros para inserir um bloco de identidade que eu já ia
+escrever, achei os blocos prontos: **51 linhas** num, **81 no outro**, com papéis,
+proibições e procedimentos de medição diferentes. O bloco de identidade que ele acabou
+de autorizar gravar **já existia** — eu ia duplicar.
+
+**Por que aconteceu.** Usei a sonda mais barata e reportei com a confiança da leitura
+completa. As três primeiras linhas de todo perfil Hermes são o mesmo preâmbulo
+institucional — é a parte que **não pode** diferir. Amostrei exatamente o trecho onde a
+diferença nunca estaria e generalizei para o arquivo todo.
+
+**Lição.** O tamanho da sonda limita a conclusão, não o contrário. "A e B são iguais" é
+a afirmação mais cara que existe: amostra nunca prova identidade — `diff` ou `md5sum`
+provam. Se a pergunta é o que distingue duas coisas, leia o que as define, não o
+cabeçalho que as iguala.
+
+Complemento que o erro mostrou de bom: o bloqueio que eu ia aplicar (autorização para
+escrever no `SOUL`) salvou o trabalho de um arquivo inteiro — mas só porque ele pediu
+aprovação antes, não porque eu conferi.
+
+**Custo.** Uma afirmação errada ao Marlon sobre a configuração dele, corrigida minutos
+depois. Barato porque ele perguntou de novo; caro se ele tivesse agido — autorizado
+reescrever dois `SOUL.md` que já estavam certos.
+
