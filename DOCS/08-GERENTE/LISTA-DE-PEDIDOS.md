@@ -61,6 +61,10 @@
 | 22 | **"Histórico no site" do consumo** | ✅ pesquisado 24/11 | **não existe API de série temporal** (feature request aberto no repo do OpenCode) | série só sai de coleta própria |
 | 23 | **Dados da cliente Jéssica** | ⏳ ele já cobrou o cliente | "só estou aguardando o retorno" | esperar; não inventar |
 | 24 | **Ele atualizou `Dos GERENTES.md`** | ✅ lido 24/11 | novo item: pedir aprovação antes de editar `AGENTS.md`, e deixar para o fim | respeitar: edição de `AGENTS.md` só com o "pode" |
+| 25 | **PAT para os agentes darem `push`** | 🟡 **falta só a chave dele** | `git push` testado 25/11: *"could not read Username"* — não há credencial. Escrevi `scripts/push.sh` + `scripts/git-askpass.sh`: leem `GITHUB_PAT` do `.env`, nunca imprimem o token, e falham com instrução clara quando falta | **ele cria** o token fine-grained (Contents: read/write em `NMarlon/2-Gestor`) e cola `GITHUB_PAT=...` no `.env` do 2-Gestor; depois é só `bash scripts/push.sh` |
+| 26 | **Projeto do planejamento missionário (P-06)** | 🟢 criado 25/11 | pasta `81 - Alerta Planejamento Missionario CTM`, docs `00-INDICE/01-ESCOPO/02-ARQUITETURA/03-TAREFAS`, git local, brief `2026-11-25-p06-t001` | **bloqueio externo:** dono do PDF desativou download (`Q-040`); motor em construção com PDFs de teste |
+| 27 | **Página 404 personalizada** | 🟢 autorizada por ele 25/11 | `M-016-A`; hoje a URL errada cai no 404 genérico (148 KB, medido) | gestor do P-03 executa, com deploy medido antes/depois |
+| 28 | **Texto do WhatsApp por página (Q-038)** | ✅ decidido: um adaptado para cada | `M-016-B`, 4 textos literais na tabela | gestor do P-03 aplica e confere no HTML servido |
 
 ## Regras que ele deu e valem sempre
 
