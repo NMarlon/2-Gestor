@@ -7,20 +7,21 @@
 
 | # | Tarefa | Onde | O que se espera |
 |---|---|---|---|
-| 1 | **M-016** — P-03: página 404 personalizada + 4 textos de WhatsApp por página | `jessica-p03` | deploy medido antes/depois; cada página com seu texto |
-| 2 | **M-017** — P-06: histórico do teste separado + HTML do relatório medido em 390/1280 | `ctm-p06` | `historico-local.json`; prints e alturas do HTML |
+| 1 | **M-016** — P-03: 404 personalizada + 4 textos de WhatsApp | `jessica-p03` | deploy medido; cada página com seu texto |
+| 2 | **M-019** — P-06: timeout 60 s + retentativa, código 2 para "não listei"; `agendar.ps1` com `-WhatIf` | `ctm-p06` | três modos rodados, códigos reais |
 
-## Fechado hoje (medido por mim)
+## Fechado (medido por mim)
 
-- ✅ **P-05 · M-015** (`7cb057d`): cota oficial ao vivo — painel mostra `5h 0% · semanal 22%
-  · mensal 37%`, fonte `GET /zen/go/v1/usage`, "lido às 13:55"; autostart `PainelHermes-Painel`
-  existe e está *Ready*; série em 13:55:52.
-- ✅ **P-03 · M-011** (`dd751d2`): menu da home mostra `Projetos` (1 ocorrência) e nenhum
-  `Projeto</a>` — conferido no HTML servido.
-- ✅ **P-06 · T-P06-001** (`de5be3c`): motor entregue; medi os 3 critérios — diff local com
-  página adicionada + linha alterada + removida; `--dry-run` sem escrita (md5 igual);
-  execução real sai **1** com a recusa do Google. Idempotência 1 → 1.
-- ✅ **T-P05-008** (`fa2f949`), **E-032** (Edge), painel de pé.
+- ✅ **P-06 · T-P06-007** (`79117cc`): histórico real em **0 entradas**, teste em
+  `historico-local.json` (1); HTML medido por mim — **390 → 1902 px**, **1280 → 900 px**,
+  0 navegadores sobrando.
+- ✅ **P-05 · M-015** (`7cb057d`): cota `5h 0% · 22% · 37%` ao vivo; tarefa
+  `PainelHermes-Painel` *Ready*. Reboot real: **não testado**.
+- ✅ **P-03 · M-011** (`dd751d2`): menu `Projetos` confirmado no HTML servido.
+- ✅ **P-06 · T-P06-001** (`de5be3c`): 3/3 no aceite; Q-040 bloqueia a leitura real.
+- ✅ **E-032** (Edge), **E-036** (caminho MSYS), **M-018** (T-031/033/034 até dry-run),
+  **Q-041** (AW-), **bundle** `backups/2-Gestor-20261125-1430.bundle` (8,8 MB, histórico
+  completo verificado).
 
 ## Esperando o Marlon
 
