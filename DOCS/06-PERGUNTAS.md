@@ -734,7 +734,25 @@ remote, `Q-034`). Pedi export diário de `dados/stats.jsonl` para `backups/` na 
 
 ## Q-040 · P-06 · O PDF do planejamento está com download desativado
 
-**Pergunta:** o dono do arquivo precisa liberar o download — ou você prefere outro caminho?
+**FECHADA em 25/11/2026 — resolvida por mim, não pelo dono.** O Marlon respondeu que não
+tem como liberar e que o bloqueio é intencional (os PDFs mudam toda semana). Ele mandou
+contornar.
+
+**A solução, medida na fonte.** O Drive não entrega o PDF, mas o **visualizador** entrega o
+documento em dois pedaços que qualquer visitante com o link recebe:
+
+```
+/viewer/meta      → {"pages":7,"maxPageWidth":3200}
+/viewer/presspage → camada de TEXT0 por página, com coordenadas de cada palavra
+/viewer/img       → imagem da página em até 3200 px (não usada: texto é melhor)
+```
+
+O token (`ACFrOg...`) e a sessão (`fssid`) são criados pelo JavaScript do viewer — por isso
+a leitura abre um navegador headless uma vez e colhe as URLs de `performance.getEntries`.
+Provado: 7 páginas lidas, texto coerente (grade de horários, "Wednesday", "Day 1", etc.).
+
+**Consequência:** o projeto não depende mais de ninguém. Brief `T-P06-009` despachado.
+O bloqueio de download deixou de ser bloqueio.
 
 **Medido em 25/11/2026, 13:40.** A pasta é pública e lista normalmente (1 arquivo:
 `POR6.4.pdf`). O download, não:
@@ -769,7 +787,14 @@ Google — nunca "sem alterações".
 
 ## Q-041 · P-03 · Existe conta de Google Ads? (para a tag `AW-`)
 
-**Pergunta:** você já tem conta de Google Ads para o site da Jessica — e o ID `AW-...`?
+**RESPONDIDA em 25/11/2026:** *"Sim, existe uma conta do Google ADS. Eu vou ter que procurar
+depois, vai ser um processo manual."*
+
+**Estado:** a conta existe; o **ID `AW-...` ainda não foi passado** — entra no digest das
+6h30 até ele trazer. Enquanto isso vale o default: a T-032 entrega `/obrigado/` e o evento
+`generate_lead`, e a tag do Ads fica como pendência explícita.
+
+**Pergunta original:** você já tem conta de Google Ads para o site da Jessica — e o ID `AW-...`?
 
 **Por que agora.** A auditoria de prontidão (25/11) fechou o diagnóstico: **sem
 consentimento de verdade e sem conversão medida, ligar Ads é queimar dinheiro.** A T-032
