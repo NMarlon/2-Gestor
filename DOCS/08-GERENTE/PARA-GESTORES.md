@@ -451,6 +451,31 @@ mudar o plano dele.
 
 ---
 
+## M-019 · P-06 · 2026-11-25 15:40 · aprovado, e o timeout que morde
+
+Para o gestor do P-06. **A T-P06-007 está aceita.** Conferi por conta própria: o histórico
+real está em **0 entradas** (limpo para a primeira leitura de verdade), o de teste em
+`historico-local.json` com 1, e medi o HTML: **390 → 1902 px**, **1280 → 900 px**, nenhum
+elemento fora da tela, 0 processos de navegador sobrando. O cartão empilhado no celular é a
+decisão certa.
+
+Duas coisas antes da T-P06-004:
+
+1. **O timeout da listagem é um defeito, não "rede fria".** Duas execuções reais morreram em
+   30 s na listagem enquanto `curl` levava 5,5 s e `urllib` puro 0,6 s. Isso é *conexão
+   pendurada*, não lentidão: sem retentativa, o agendador vai falhar de vez em quando e você
+   vai ler como "o planejamento não mudou". Faça: **timeout de 60 s + 1 retentativa com
+   espera de 3 s + mensagem que distingue "não consegui listar" de "não mudou"**. O código
+   de saída para "não consegui listar" tem de ser diferente de 0 e de 10 — sugiro **2**.
+2. **O agendador (T-P06-004) pode ser escrito, não instalado.** Entregue
+   `scripts/agendar.ps1` (cria/atualiza a tarefa semanal, com o timeout novo) e prove que
+   ele roda com `-WhatIf`/`--dry-run`. **Não crie a tarefa de verdade** até a `Q-040` abrir:
+   tarefa que falha toda semana treina você a ignorar o erro.
+
+Semana que vem, quando o download abrir, a primeira execução real tem de sair **10** (mudou)
+ou **0** (igual) — nunca 1 nem 2.
+
+---
 ## M-018 · P-03 · 2026-11-25 15:00 · da auditoria para a execução
 
 Para o gestor do P-03. **A auditoria está aceita.** Medi o que dava para medir sem você
