@@ -833,7 +833,7 @@ local). Revisão visual independente: **aceitável com ressalva** — sobra a gr
 
 ---
 
-## T-P05-008 · P-05: equilíbrio da grade em 1440 🟡
+## T-P05-008 · P-05: equilíbrio da grade em 1440 ✅
 
 **Origem:** medição CDP do gestor em 2026-11-25 (1440×900, container 1.352 px, 4
 colunas): `c-opencode` sozinho na segunda linha (1.026 px vazios) e `c-plano` +
@@ -847,7 +847,101 @@ intocado.
 `y`; em 390 geometria preservada (0 sobreposições, 0 fora, 0 cortados); `curl` 200;
 `py_compile` 0; servidor reiniciado; commit `T-P05-008`.
 
-**Estado:** 🟡 despachado em 2026-11-25 09:36.
+**Estado:** ✅ medido pelo gestor em 2026-11-25 10:36, com
+`python scripts/medir-cdp.py http://127.0.0.1:8787/ 1440 900` (1 navegador):
+`main.grade` = `326px 326px 326px 326px`, gap 16 px; `#c-opencode` **668 px** de largura
+= 2 colunas + gap (antes: 326 px sozinho na linha); `#c-plano` e `#c-oficial` na **mesma
+`y` = 491**, ambos 326×352; `scrollWidth` 1.425 ≤ 1.440 (sem overflow horizontal);
+0 filhos fora do cartão oficial. Print:
+`C:\Users\Marlon\AppData\Local\hermes\profiles\painel-p05\cache\scratch\p05-1440-t008-t010.png`.
+
+---
+
+## T-P05-009 · P-05: autostart do painel ✅ (com correção em T-P05-011)
+
+**Origem:** item 3 da M-015 do Gerente — o painel tem de voltar sozinho no boot e
+depois de uma queda, sem navegador e sem console.
+
+**Brief:** `briefs/2026-11-25-p05-t009-autostart-painel.md`, despachado 10:33.
+Escopo: supervisor `scripts/garantir_painel.py` (idempotente: se `GET /` responde 200,
+sai 0 sem subir segundo processo; senão trava, sobe `pythonw.exe scripts/painel.py`
+destacado e confirma em até 20 s) + instalador `scripts/instalar-painel-auto.ps1`
+(tarefa `PainelHermes-Painel`, `-IUnderstand`, `-IntervaloMinutos 5`, `-Remover`).
+
+**Primeira medição do gestor (10:39–10:45) reprovou:** matei o PID 13348 e esperei
+6 min em poll de 15 s — `http=000` nas 24 leituras, nenhuma linha nova no
+`logs/painel-auto.log`. `Get-ScheduledTaskInfo` mostrava `NextRunTime` **vazio** e
+`LastTaskResult 267011` (0x41303, "nunca executou"). Causa: a repetição de 5 min estava
+pendurada num gatilho **AtLogOn**, que fica ancorado no evento de logon — sem logon
+desde o registro, não existe próxima execução. O que o executor provou foi
+`Start-ScheduledTask`, que é disparo manual.
+
+**Correção:** T-P05-011 (abaixo). **Aceite final medido pelo gestor (10:52–10:55):**
+matei o PID 8016 às 10:52:27 → `http=000` até 10:55:16 → **200 às 10:55:31**, PID novo
+**23716**, `netstat` `127.0.0.1:8787 LISTENING 23716`, log
+`2026-11-25T10:55:19 inicio pid=23716 ok=sim`, Agendador `LastRunTime 10:55:15`,
+`LastTaskResult 0`, `NextRunTime 11:00:14`. Nenhum navegador aberto pela tarefa
+(`Get-Process msedge,chrome,firefox` vazio).
+
+**Limite declarado:** a tarefa é `InteractiveToken` — com o Marlon deslogado ela não
+roda (nem logon, nem relógio). O gatilho de relógio tem duração `P3650D` (~10 anos)
+porque o Agendador recusa `TimeSpan.MaxValue`; o AtLogOn continua valendo depois disso.
+
+---
+
+## T-P05-010 · P-05: cota oficial ao vivo do OpenCode Go (M-013) ✅
+
+**Origem:** M-013 do Gerente (`DOCS/08-GERENTE/API-USAGE-OPENCODE-GO.md`). O cartão
+oficial mostrava `INDISPONIVEL` desde a T-P05-004 porque o coletor batia em rotas mortas
+(`/api/experimental/usage/limits` → 401/404) e a rota do CLI devolvia `data=null`.
+
+**Brief:** `briefs/2026-11-25-p05-t010-cota-oficial-ao-vivo.md`, despachado 10:29.
+Escopo: `medir_cota_oficial()` lendo `GET https://opencode.ai/zen/go/v1/usage` com
+`OPENCODE_GO_API_KEY` do `.env` do Hermes (lida sem imprimir), chave nova `cota_oficial`
+em `stats.jsonl`, bloco `oficial` do `grafico.json` derivado dela, e o cartão mostrando
+as três janelas. Legado (`medir_cota`, chave `cota`) intocado.
+
+**Medição do gestor (independente do relatório):**
+- `python scripts/coletor.py` **duas vezes** → `cota oficial: 5h 10% | semanal 21% |
+  mensal 37% (lida 10:30)` nas duas; as duas últimas amostras de `stats.jsonl` com
+  `cota_oficial.status = "disponivel"` e os três percentuais.
+- Falha testada por mim: `OPENCODE_GO_API_KEY=chave_invalida_de_teste python
+  scripts/coletor.py` → `cota oficial: indisponivel | motivo: chave inválida ou revogada
+  (HTTP 401)`, gravado como motivo, **sem zero**. Rodada seguinte volta a `disponivel`.
+- Cartão servido (`curl 127.0.0.1:8787/`, 200): `OFICIAL · AO VIVO`, `5 horas 10% renova
+  25/11 13:03`, `Semanal 21% renova 29/11 21:00`, `Mensal 37% renova 12/12 21:45`,
+  nota `percentual do plano oficial, lido às 10:30 — não é o consumo de tokens medido
+  aqui`, e o endpoint em `<details>`.
+- CDP 1440 e 390 (2 lançamentos): cartão 326×352 em 1440 e 366×219 em 390, sem overflow
+  horizontal nem vertical, 0 filhos fora; valores `10% / 21% / 37%`.
+- `git grep -nE "oc_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}"` → nada; `git ls-files` sem
+  `.env`, `auth.json`, `*.db`, `dados/`.
+
+**Commit:** `555d175 T-P05-010: cota oficial ao vivo do OpenCode Go (3 janelas, erro como motivo)`.
+
+**Comportamento conhecido:** se a leitura mais nova falhar, o cartão mantém a **última
+leitura válida** e mostra a hora dela (`lido às HH:MM`) — não vira `INDISPONIVEL` por
+uma falha isolada. O motivo da falha fica na amostra do `stats.jsonl`.
+
+---
+
+## T-P05-011 · P-05: repetição por relógio no autostart ✅
+
+**Origem:** reprovação da T-P05-009 na medição do gestor.
+
+**Brief:** `briefs/2026-11-25-p05-t011-repeticao-autostart.md`, despachado 10:47.
+Escopo: segundo gatilho ancorado no relógio (`MSFT_TaskTimeTrigger`, início no registro,
+`Repetition.Interval = PT5M`, duração `P3650D`), mantendo o AtLogOn; e **portão no
+instalador** — `exit 5` se `NextRunTime` ficar vazio ou longe demais, para não terminar
+"sucesso" com tarefa que nunca roda.
+
+**Medição do gestor:** `Get-ScheduledTask` com **2 gatilhos** — `MSFT_TaskLogonTrigger`
+(delay `PT30S`, rep `PT5M`) e `MSFT_TaskTimeTrigger` (start `2026-11-25T10:50:14-03:00`,
+rep `PT5M`, dur `P3650D`); `NextRunTime 10:55:14` preenchido; teste do relógio passou
+(ver T-P05-009). Instalador idempotente (2ª instalação exit 0, sem duplicar) e
+`-Remover` remove de fato.
+
+**Commit:** `9dcdbe8 T-P05-011: repetição por relógio no autostart (portão de NextRunTime + prova real)`.
 
 ---
 

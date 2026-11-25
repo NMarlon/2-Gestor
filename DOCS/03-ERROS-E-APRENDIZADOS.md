@@ -717,3 +717,30 @@ com 5 eventos**, CLS 0,244 estável em 5 leituras.
 **Regra que fica.** Medição de interação prova três coisas ou não vale: **qual elemento**
 foi atingido (o `tag` no retorno), **que houve evento** (contagem > 0) e **que o número
 repetiu**. `INP: None` com 0 eventos é falha do harness, nunca "não se aplica".
+
+---
+
+## E-035 · Repetição pendurada em gatilho AtLogOn nunca dispara sem logon (2026-11-25)
+
+**O que aconteceu.** O autostart do P-05 (T-P05-009) foi entregue com a tarefa
+`PainelHermes-Painel` tendo **um** gatilho `AtLogOn` com `Repetition.Interval = PT5M`.
+O executor provou com `Start-ScheduledTask` e relatou `LastTaskResult: 0` — passou por
+entregue. A medição do gestor matou o painel e esperou **6 minutos** em poll de 15 s:
+`http=000` nas 24 leituras, nenhuma linha no log. `Get-ScheduledTaskInfo` entregava o
+sintoma que ninguém tinha lido: **`NextRunTime` vazio** e `LastTaskResult 267011`
+(0x41303, "nunca executou").
+
+**Por que acontece.** A repetição de um gatilho de logon é ancorada no **evento de
+logon**. Registrada a tarefa no meio da sessão, não há logon posterior — logo não há
+"próxima execução" e o Agendador não repete nada. A tarefa fica `Ready`, sem erro, sem
+log, e o `Start-ScheduledTask` funciona: tudo parece certo até alguém esperar o relógio.
+
+**O que consertou.** Segundo gatilho `MSFT_TaskTimeTrigger` ancorado no relógio
+(`-Once -At (agora+1min) -RepetitionInterval 5min`, duração `P3650D` porque o Agendador
+recusa `TimeSpan.MaxValue`), mantendo o AtLogOn para o boot; e **portão no instalador**:
+`exit 5` se `NextRunTime` vier vazio ou longe demais, para não declarar sucesso com
+tarefa que nunca vai rodar.
+
+**Regra que fica.** Prova de agendador é **esperar o relógio**, nunca `Start-ScheduledTask`
+(disparo manual prova o script, não o gatilho). E `NextRunTime` vazio é reprovação, não
+detalhe: tarefa `Ready` sem próxima execução é tarefa morta.

@@ -325,3 +325,51 @@ conferidos e não há overflow). Os três defeitos de rótulo vão para T-P05-00
 executor não entregar, o aceite de T-P05-004 continua valendo — o defeito é cosmético e
 está documentado.
 
+
+---
+
+## Sessão 2026-11-25 (retomada pós-travamento) — M-015 inteira
+
+**Ordem:** M-015 do Gerente em três itens: fechar o que ficou solto, M-013 (cota
+oficial ao vivo), T-P05-009 (autostart). Medição **só** com
+`python C:/MarlonScripts/2-Gestor/scripts/medir-cdp.py` (M-014); dizer quantos
+navegadores a tarefa lançou.
+
+**Item 1 — soltos.** Commit `4803cdf` no 2-Gestor: `DOCS/04-TAREFAS.md` (T-P05-006 e
+T-P05-007 ✅, T-P05-008 🟡) + briefs `t007` (5.547 B) e `t008` (2.554 B). Os arquivos de
+`Definições Oficiais Manuais/` ficaram de fora de propósito — não são do P-05.
+
+**Item 2 — M-013, cota oficial.** O endpoint morto era o problema, não a credencial:
+`GET https://opencode.ai/zen/go/v1/usage` com `OPENCODE_GO_API_KEY` (do `.env` do
+Hermes, 51 chars) e UA de navegador responde **200 em 0,48 s**. Brief `t010` despachado
+10:29, commit do executor `555d175`. Medido por mim: duas coletas seguidas com
+`cota_oficial` **10% / 21% / 37%** (5 h / semanal / mensal), falha com chave inválida
+vira `motivo: chave inválida ou revogada (HTTP 401)` — nunca zero —, cartão servido com
+`OFICIAL · AO VIVO`, horas de renovação em horário de Brasília, e nada de segredo no
+repo (`git grep` de `oc_…`/`sk-…` vazio).
+
+**Item 3 — T-P05-009, autostart.** O executor entregou e a minha medição **reprovou**:
+6 minutos sem o painel voltar, `NextRunTime` vazio, `LastTaskResult 267011`. A repetição
+estava pendurada num gatilho AtLogOn, que só existe quando há logon. Brief `t011`
+(10:47) acrescentou gatilho de relógio e um portão no instalador que falha se
+`NextRunTime` vier vazio. Refeito: matei o PID 8016 às 10:52:27, o Agendador trouxe o
+PID 23716 às 10:55:19 (`LastTaskResult 0`, próxima 11:00:14). Lição em E-035.
+
+**Números do dia (coletor, 10:30):** Hermes ABERTO+FUNCIONAL, 8 processos, heartbeat
+2 s; perfis 4/5 com `state.db`; 84 sessões hoje (in 5,96 M / out 623,0 k / cache
+80,32 M); OpenCode 206 sessões na base, 13 hoje (in 1,17 M / out 205,2 k).
+
+**T-P05-008 fechada** na mesma sessão: em 1440, `#c-opencode` 668 px (2 colunas),
+`#c-plano` e `#c-oficial` em `y=491`, sem overflow. Em 390 o cartão oficial fica
+366×219, sem estouro.
+
+**Decisões e limites registrados:**
+- Cartão oficial guarda a **última leitura válida** quando a mais nova falha, com a hora
+  visível; não pisca para `INDISPONIVEL` por falha isolada.
+- A tarefa `PainelHermes-Painel` é `InteractiveToken`: **não roda com o usuário
+  deslogado**. Cobrir isso exigiria S4U elevado ou serviço — decisão do Marlon, fora do
+  escopo.
+- Cota oficial é **percentual do plano**, não consumo de tokens; a UI diz isso na nota.
+
+**Navegadores lançados nesta tarefa: 2** (um print em 1440×900 e um em 390×844, ambos
+com `medir-cdp.py`, sem `Start-Process` de URL e sem script CDP próprio).

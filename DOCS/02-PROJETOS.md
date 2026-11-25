@@ -214,7 +214,7 @@ existe ainda e **não deve ser escrito** até o repo ser lido.
 | Caminho | `C:\MarlonScripts\5-Painel-Hermes` |
 | Repo | próprio, git local — **sem remote** (`Q-034` bloqueia credencial) |
 | Objetivo do Marlon | Painel local, ao vivo, do ambiente de trabalho: Hermes vivo, uso do OpenCode Go, desempenho dos gestores |
-| Estado | 🟢 T-P05-001 (coletor) medida 24/11 21:27 · 🟢 T-P05-002 (agendador) medida 25/11 01:26, coleta a cada 15 min · 🟢 T-P05-003 (UI local + export diário) medida 25/11 02:12, `http://127.0.0.1:8787` responde 200 e só no loopback |
+| Estado | 🟢 T-P05-001 (coletor) medida 24/11 21:27 · 🟢 T-P05-002 (agendador) medida 25/11 01:26, coleta a cada 15 min · 🟢 T-P05-003 (UI local + export diário) medida 25/11 02:12, `http://127.0.0.1:8787` responde 200 e só no loopback · 🟢 T-P05-008 medida 25/11 10:36 (grade 1440) · 🟢 T-P05-010 medida 25/11 10:31 (**cota oficial ao vivo**: 10% / 21% / 37%) · 🟢 T-P05-009 medida 25/11 10:55 (autostart por Agendador, volta sozinho em ≤5 min) |
 | Stack | Python stdlib (ou Node sem `node_modules`); série em arquivo append-only |
 | Papel do gestor | Decide, briefa, mede. **Não escreve** — o OpenCode escreve |
 | Caderno do gestor | `DOCS/P-05-Painel-Hermes/GESTOR.md` |
@@ -246,3 +246,20 @@ prefixo da série). `--forcar` reescreve. `backups/` está no `.gitignore`.
 série e revisão do crescimento de `backups/` (~0,5 MB/dia, sem expurgo). Autostart da UI
 e `push` (Q-034) só com ordem escrita do Marlon.
 
+
+**Autostart entregue em 2026-11-25 (M-015, item 3):** tarefa `\PainelHermes-Painel`
+com **dois** gatilhos — AtLogOn +30 s (boot) e relógio a cada 5 min, duração `P3650D`
+(queda do processo). Ação: `pythonw.exe scripts\garantir_painel.py`, que só sobe o painel
+se `GET http://127.0.0.1:8787/` não responder 200 (idempotente, trava em
+`logs/painel-auto.lock`). Medido pelo gestor: PID 8016 morto às 10:52:27, painel de volta
+às 10:55:19 (PID 23716), `LastTaskResult 0`, `NextRunTime 11:00:14`, nenhum navegador
+aberto. **Limite:** tarefa `InteractiveToken` — não roda com o usuário deslogado.
+Remover: `powershell -File scripts\instalar-painel-auto.ps1 -Remover`.
+
+**Cota oficial ao vivo (M-013) medida em 2026-11-25 10:31:** o cartão deixou de ser
+`INDISPONIVEL`. Fonte: `GET https://opencode.ai/zen/go/v1/usage` (HTTP 200 em 0,48 s),
+lida a cada rodada do coletor com a chave do `.env` do Hermes; grava `cota_oficial` em
+`stats.jsonl` e o bloco `oficial` do `grafico.json` deriva dela. Duas coletas seguidas
+deram **5 h 10% · semanal 21% · mensal 37%**; falha vira motivo legível (testado com
+chave inválida → `HTTP 401`), nunca zero. O cartão mantém a última leitura válida com a
+hora visível se a mais nova falhar. Percentual é **do plano**, não consumo de tokens.
