@@ -166,6 +166,10 @@ Amostra 12 da série: `2026-11-25T01:25:49-03:00`, `duracao_ms=1562`,
 `coletor=1.0.0 (python 3.11.9)`, `host=DESKTOP-P05PR2E`. Gravada **3 s depois** do
 horário agendado (01:25:46) e sem o gestor rodar o coletor — é a tarefa que escreve.
 
+**Repetição medida também:** às 01:40:50 entrou a amostra 13 (`2026-11-25T01:40:50-03:00`),
+no horário previsto `01:40:46` — exatos 15 min depois da anterior, sem ninguém mandar.
+Série em **13 linhas**; próxima `01:55:46`.
+
 **Limitação que fica registrada:** S4U recusado com `Acesso negado` (sessão não
 elevada); a tarefa é **Interativo apenas**, então **não coleta com o usuário
 deslogado**. Para isso: registrar elevado com `-LogonType S4U`. Consequência para a

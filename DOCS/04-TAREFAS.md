@@ -674,7 +674,8 @@ C:\MarlonScripts\5-Painel-Hermes`, repetição **15 min**, `Último resultado: 0
 última execução `01:25:46`, próxima `01:40:46`.
 **Prova da série:** 11 → **12 linhas**; a 12ª (`2026-11-25T01:25:49-03:00`,
 `dur_ms=1562`, `coletor 1.0.0 (python 3.11.9)`) foi gravada **3 s** depois do disparo
-da tarefa, sem execução manual.
+da tarefa, sem execução manual. E a **repetição** foi medida: às 01:40:50 entrou a
+amostra 13, no horário previsto `01:40:46` — 15 min depois, sozinha.
 Sequência medida pelo gestor: exit 1 (sem `-IUnderstand`), exit 2 (intervalo 3),
 exit 0 (instalar, `MODO=INTERATIVO`), exit 0 (remover a sonda
 `PainelHermes-SONDA-GESTOR` → `schtasks` passa a não achar); tarefa real intacta

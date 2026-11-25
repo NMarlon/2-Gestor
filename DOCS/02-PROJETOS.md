@@ -207,8 +207,9 @@ token de LLM) e só se instala quando o Marlon pedir — pedido feito na M-005 d
 
 **Agendador instalado em 2026-11-25 01:26:** tarefa `\PainelHermes-Coletor`, a cada
 15 min, modo **interativo** (S4U exige elevação; não coleta com o usuário deslogado).
-Prova: `schtasks` com `Último resultado: 0` e 11 → 12 linhas em `dados/stats.jsonl`,
-a 12ª gravada 3 s depois do disparo, sem execução manual.
+Prova: `schtasks` com `Último resultado: 0`, 11 → 12 linhas em `dados/stats.jsonl`
+(a 12ª gravada 3 s depois do disparo, sem execução manual) e a 13ª entrando sozinha
+15 min depois, às 01:40:50.
 
 **Próxima tarefa:** `T-P05-003` — UI local em `http://127.0.0.1:8787` lendo a série.
 Brief próprio.
