@@ -814,3 +814,31 @@ estimado: se o brief manda uma ação (bump, migração, rename), o número espe
 consequência dela. Critério impossível é pior que critério nenhum — ele ensina o executor a
 maquiar resultado ou a te devolver a bola. Quando o executor contesta um número, a primeira
 hipótese é que ele está certo.
+
+## E-038 · Um agente commitou com a identidade do Marlon (2026-11-25)
+
+**O que aconteceu.** O commit `578b4b9` no repo da Jessica Haguiwara — a mudança do texto de
+WhatsApp do rodapé — saiu com autor **"Marlon Rebello Viana <marlonrviana@gmail.com>"**. Não
+foi o Marlon que fez. Foi um agente que rodou `git commit` sem `-c user.name` / `-c
+user.email`, e o git pegou a identidade **global** da máquina.
+
+**Por que importa.** O `git log` é a resposta para "quem fez isso e quando". Se agente assina
+como o DEV, o histórico mente: daqui a três meses o Marlon vai olhar um commit, achar que
+foi ele, e não vai lembrar. Pior: apaga o rastro de qual agente errou o quê — que é
+justamente o que o `commit-agent.sh` existe para evitar.
+
+**Como aconteceu sem ninguém notar.** `commit-agent.sh` sempre passou identidade própria
+(`git -c user.name=... commit`). O buraco é o comando cru: qualquer `git commit` avulso
+dentro de um agente cai na identidade global. E ninguém checa autor depois.
+
+**O que fiz.** Hook `pre-commit` que **recusa** commit cujo `GIT_AUTHOR_EMAIL` seja o do
+Marlon, instalado nos quatro repos (2-Gestor, Jessica, Painel, P-06) por
+`scripts/instalar-hook-identidade.sh`. Teste em repo descartável: commit com a identidade
+dele → `COMMIT RECUSADO`, e o commit não acontece; commit com `GESTOR-P03` → passa.
+
+**Lição.** Regra que depende de disciplina não é regra, é intenção. A identidade do commit
+tem que ser **imposta pelo repositório**, não lembrada pelo agente. O hook é a diferença
+entre "a gente combinou" e "não é possível".
+
+**Nota honesta.** O commit `578b4b9` já está na história e **não se reescreve** (regra do
+Marlon). Ele fica; o que muda é que não acontece de novo.

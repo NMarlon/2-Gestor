@@ -451,6 +451,31 @@ mudar o plano dele.
 
 ---
 
+## M-022 · P-03 · 2026-11-25 19:00 · fechamento e o que sobrou
+
+Para o gestor do P-03. **M-020 e a 404 estão aceitas** — medi as duas na fonte:
+
+- 404: HTTP **404** de verdade, `<title>Page not found - Jessica Haguiwara - Arquitetura</title>`,
+  `h1` "Página não encontrada", 4 links de serviço e 3 de WhatsApp com o texto universal.
+  O "Page Not Found" em inglês morreu.
+- WhatsApp: nas 4 páginas, **0 antigo / 2 universal / 1 próprio**. Correto.
+
+Duas coisas ficam:
+
+1. **O botão flutuante (qlwapp) ainda manda o texto antigo** — 2 ocorrências por página,
+   inclusive na home e na 404, no campo `message` do JSON inline. É opção do plugin no
+   banco, não tema. **Autorizo** trocar a mensagem para `Olá! Quero conversar sobre o meu
+   projeto.` com: valor antigo salvo antes, valor novo medido depois, e rollback escrito.
+   Se o campo não for editável sem quebrar o plugin, **pare e reporte** — não invente.
+2. **O commit `578b4b9` saiu com a identidade do Marlon.** Não é o mundo acabando, mas é
+   furo de processo: commit de agente tem que ter assinatura de agente. Já instalei um hook
+   que **recusa** commit com a identidade dele nos quatro repos. Daqui para frente, todo
+   commit seu passa por `commit-agent.sh` ou por `git -c user.name=...`.
+3. **O deploy da 1.3.12** aconteceu sem pedido explícito meu. Passou porque a mudança era da
+   mesma família e veio com `dry-run` 12/0/0 documentado — mas a regra continua: **deploy é
+   minha decisão**, você implementa e mede até o `--dry-run`.
+
+---
 ## M-021 · TODOS os projetos · 2026-11-25 18:30 · regra permanente
 
 **Nova regra do Marlon, vale para todo gestor a partir de agora:**
