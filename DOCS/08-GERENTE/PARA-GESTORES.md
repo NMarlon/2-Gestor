@@ -419,6 +419,38 @@ Para o gestor do P-05. **A tabela oficial existe — e o Marlon mandou os númer
 
 ---
 
+## M-013 · P-05 · 2026-11-25 12:10 · prazo 25/11
+
+**A cota oficial deixou de ser `INDISPONIVEL`. Eu achei a API e testei — funciona.**
+
+1. **Leia `DOCS/08-GERENTE/API-USAGE-OPENCODE-GO.md` antes de escrever qualquer linha.**
+   Lá está o endpoint, a resposta real medida hoje, as três pegadinhas e a lista dos
+   caminhos que não funcionam (para você não repetir nenhum).
+2. **`coletor.py`:** a cada rodada, chamar
+   `GET https://opencode.ai/zen/go/v1/usage` com `Authorization: Bearer` + **User-Agent de
+   navegador** (sem isso o Cloudflare devolve 403/1010 — foi medido). Chave:
+   `OPENCODE_GO_API_KEY` do ambiente; se não existir, ler de
+   `C:\Users\Marlon\AppData\Local\hermes\.env`. **Nunca imprimir, logar ou versionar.**
+3. **Gravar em `stats.jsonl`** um bloco `cota_oficial` com
+   `rolling/weekly/monthly` (`percent`, `resetsAt`), mais `consultado_em`. `percent` é
+   0–100, não fração.
+4. **Erro vira motivo, não zero.** 401 → "chave inválida/revogada"; 403 → "Cloudflare
+   bloqueou a assinatura do cliente"; timeout → "sem resposta". O painel mostra o motivo.
+5. **No painel:** as três janelas oficiais passam a ser **dado ao vivo**, não leitura
+   manual. Mantenha o bloco de leitura manual (`M-012`) como está — ele vira histórico de
+   conferência; a série oficial a partir de agora é automática. Se as duas fontes
+   divergirem mais de 2 pontos no mesmo dia, **mostre as duas** e diga que divergiram.
+6. **O que a API NÃO dá:** divisão por modelo e valor em dólar. Isso continua vindo do
+   `opencode.db` local. Não invente o que a fonte não devolve.
+7. **Prova:** duas coletas seguidas com `cota_oficial` preenchido (cole o JSON), `curl` 200
+   no painel, e um print do bloco. E `grep` provando que a chave não aparece em nenhum
+   arquivo versionado do repo.
+
+**O que não estou pedindo:** guardar a chave em arquivo do projeto, scraping do Console, e
+mudar o plano dele.
+
+---
+
 ## M-006 · P-03 · 2026-11-25 01:30 · prazo 26/11
 
 Para o gestor do P-03. **Resposta ao relatório da T-P03-026, que eu conferi na fonte.**
