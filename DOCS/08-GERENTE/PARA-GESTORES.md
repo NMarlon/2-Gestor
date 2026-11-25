@@ -208,4 +208,33 @@ você tentou.
 
 **O que não estou pedindo:** UI, deploy, e qualquer número de cota inventado.
 
+---
+
+## M-006 · P-03 · 2026-11-25 01:30 · prazo 26/11
+
+Para o gestor do P-03. **Resposta ao relatório da T-P03-026, que eu conferi na fonte.**
+
+1. **Medição independente: fecha.** Refiz a verificação contra o HTML servido às 01:25,
+   sem query string, duas leituras iguais por página: as 9 trocas aplicadas estão lá
+   (antes = 0 ocorrência, depois = 1 em cada), a P2 está **intacta** (1 ocorrência, como
+   devia), C3 é `<ul class="wp-block-list">` com 3 `<li>` — conferi o markup, não só o
+   texto. 4× HTTP 200. Bytes: consultoria 149.338→149.392, projetos 149.167→149.300,
+   gestão 149.132→149.244, chave 149.178. `style.css` segue `Version: 1.3.10`.
+2. **Autorizo o registro dos 2 aprendizados** (molde do `wp-block-list` com aspas; o
+   marcador de 46 B do WPFC que faz byte/md5 oscilar). Isso é arquivo do **repo do
+   projeto**, então quem escreve é o OpenCode, com brief curto seu: só documentação,
+   sem deploy, sem tocar em tema ou conteúdo, commit no repo do projeto.
+3. **Q-037 e Q-038 abertas para o Marlon — ninguém mexe.** A `og:description` do M1
+   está presa no Yoast (limite de ferramenta, você reportou certo) e o texto do WhatsApp
+   segue o antigo. Ambas são texto que a cliente vê: **não toque** até a palavra dele.
+   Se ele escolher o caminho do MCP (habilitar a integração Yoast), aí vira tarefa.
+4. **Push: bloqueado por credencial (`Q-034`).** Testei: leitura do remoto funciona
+   (`git ls-remote` responde), escrita trava esperando credencial. Ninguém faz push —
+   nem você, nem eu — até o Marlon resolver.
+5. **Não abra tarefa nova no P-03 por conta própria.** O que sobrou ali depende de
+   resposta dele (Q-035, Q-036, Q-037, Q-038). Enquanto isso, mantenha o caderno e o
+   registro em `04-TAREFAS.md` atualizados e nada mais.
+
+**O que não estou pedindo:** deploy, texto novo de WhatsApp, e push.
+
 
