@@ -642,7 +642,7 @@ cota; a cota vem de `opencode api GET /api/experimental/usage/limits`, hoje com
 
 ---
 
-## T-P03-025 · título das páginas internas atrás do header fixo 🟡
+## T-P03-025 · título das páginas internas atrás do header fixo ✅
 
 **Origem:** print do Marlon em 24/11 21:05 (**/gestao-de-obra/**) + brief do Gerente
 `briefs/2026-11-24-p03-t025-titulo-atras-do-header.md`.
@@ -678,4 +678,37 @@ diferença de md5/tamanho entre medições (181.138 B agora × 181.139 B na T-P0
 O md5 normalizado (comentário removido) é a base de comparação: `/` =
 `94cec06703284bafe92293375f640b53`.
 
+**Fechamento (Gerente, 25/11):** 1.3.10 no ar. Confirmado por mim na fonte pública:
+`https://jessicahaguiwara.arq.br/wp-content/themes/jessica-haguiwara-child/style.css`
+serve `Version: 1.3.10`. A prova de layout (h1 abaixo do header, folga ≥16 px @1440 e @390)
+está no relatório da tarefa.
 
+---
+
+## T-P03-026 · revisão editorial das 4 páginas de serviço (Q-033) 🟡
+
+**Origem:** M-004 do Gerente (`DOCS/08-GERENTE/PARA-GESTORES.md`) — aplicar **10 das 11** propostas
+da revisão de Q-033 (`DOCS/P-03-Jessica-Haguiwara/REVISAO-EDITORIAL-2026-11-24.md`). P2 vetada pelo
+dono do projeto.
+
+**Brief:** `briefs/2026-11-25-p03-t026-revisao-editorial-4-paginas.md`.
+
+**O que é:** 10 trocas de texto no `post_content` de 4 páginas — 226 `/consultoria/` (C1, C2, C3, C4),
+227 `/projetos/` (P1), 228 `/gestao-de-obra/` (G1, G2), 229 `/chave-na-mao/` (M1, M2, M3) — via MCP
+`wp_replace_in_post` (`field: post_content`, `regex: false`, `max_replacements: 1`). C3 é a única
+estrutural: parágrafo → `wp:list` de 3 itens. Nada de tema, nada de SEO, nada de deploy: a copy vive
+no banco.
+
+**Baseline do gestor (25/11, Chrome/131, sem query string, 2 leituras idênticas por URL):**
+`/consultoria/` 200 **149.346 B** · `/projetos/` 149.175 · `/gestao-de-obra/` 149.140 ·
+`/chave-na-mao/` 149.062. As 11 citações ANTES conferem **1× cada** dentro do `entry-content`.
+`style.css?ver=1.3.10` no ar (T-P03-025 fechada).
+
+**Armadilha medida que muda o aceite:** a frase ANTES do M1 é também o `og:description` da
+`/chave-na-mao/`. Depois da troca, ela continua **1× na meta** (Yoast, fora de escopo) e tem de zerar
+no corpo — contar ocorrência no HTML inteiro daria falso negativo.
+
+**CA:** 10 chamadas com `replacements_count: 1` e delta compatível; releitura do cru com 10 DEPOIS
+1× e 10 ANTES 0×; P2 intacta; C3 como `<ul class="wp-block-list">` de 3 `<li>` irmã do H2 (não dentro
+de `<p>`); purge do WPFC; 4 URLs 200 com contagem certa no HTML público; `git status` do repo do
+projeto igual antes/depois.
