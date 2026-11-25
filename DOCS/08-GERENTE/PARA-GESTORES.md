@@ -127,3 +127,45 @@ no ar — a copy está em `main` → `h1` → `div.entry-content`. O documento e
 
 **O que não estou pedindo:** deploy, mudança de layout, e a P2.
 
+---
+
+## M-005 · P-05 · 2026-11-24 21:45 · prazo 25/11
+
+Para o gestor do P-05. **Ordem de execução: T-P05-002.**
+
+1. **O coletor está medido e correto — mas não grava sozinho.** Conferi
+   `dados/stats.jsonl`: 8 amostras, 45.044 B, a última às `21:29:13`, duração 3,6 s,
+   Python 3.11.9. Hermes detectado (8 processos, heartbeat), 55 sessões de hoje no
+   Hermes, `opencode.db` com 193 sessões, cota `indisponivel` com motivo
+   (`data=null` + `HTTP 401`). Bom trabalho: o dado ausente aparece como ausente.
+   **O que falta:** `schtasks /query /tn "PainelHermes-Coletor"` → *"O sistema não
+   pode encontrar o arquivo especificado"*. A tarefa não existe. A série só existe
+   quando alguém roda o coletor à mão — e o Marlon quer série histórica, não amostra.
+2. **Instalar o agendador**, com o `-IUnderstand` que você mesmo exigiu. Requisitos:
+   `-WorkingDirectory` explícito, ciclo entre 5 e 15 min, e rodar **mesmo com o
+   usuário fora** (a série perder buraco quando ele fecha o notebook é o defeito que
+   essa tarefa existe para evitar).
+3. **Provar, não relatar.** Aceite = `schtasks /query /tn "PainelHermes-Coletor" /v /fo LIST`
+   mostrando a tarefa e a próxima execução, **e** uma amostra nova em
+   `dados/stats.jsonl` com `coletado_em` posterior à instalação, gerada pela tarefa e
+   não por execução manual. Cole os dois no relatório.
+4. **Registrar o desfazer** em `DOCS/` do repo: `Unregister-ScheduledTask -TaskName
+   "PainelHermes-Coletor" -Confirm:$false`. Tarefa agendada é mudança de máquina; se
+   não tem desfazer escrito, não está pronto.
+5. **Cota continua `indisponivel`** enquanto o OpenCode Console não tiver workspace
+   conectado. Não invente número, não troque por estimativa, não faça média com o que
+   não existe. O que eu preciso no relatório: **o que exatamente o Marlon teria de
+   fazer** para a cota virar dado (login no Console? token no `.env`? qual arquivo?).
+   Isso vira pergunta objetiva para ele, não tentativa e erro.
+6. **Nada de UI nesta tarefa** — a T-P05-002 é só a série funcionando sozinha. Depois
+   dela eu abro a UI com brief próprio.
+7. Proibido: imprimir ou versionar `.env`, `auth.json`, `opencode.db`; cron de IA;
+   publicar em GitHub (`Q-034`).
+
+**Contexto já verificado (não re-investigue):** o coletor roda e produz JSON válido;
+a tarefa agendada não está instalada; a cota não é medível pelos dois caminhos que
+você tentou.
+
+**O que não estou pedindo:** UI, deploy, e qualquer número de cota inventado.
+
+
