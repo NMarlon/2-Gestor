@@ -66,6 +66,20 @@ por mensagem, com data, projeto, o que se pede e o prazo. Resposta do gestor vai
 caderno do projeto dele e o GERENTE recolhe na auditoria. Nada de mensagem fora de
 arquivo — o que não está escrito não aconteceu.
 
+### 0.2 Escopo e autonomia — regra do Marlon (26/11)
+
+Revogada a proatividade genérica (`E-043`). A partir de 26/11:
+
+1. **Escopo = o pedido literal do Marlon.** Não abrir frentes novas, não puxar fila
+   antiga, não transformar uma tarefa em várias sem ele mandar.
+2. **Trabalho autônomo e "máximo progresso" só quando ele pedir.** O item 25 do
+   `Dos GERENTES.md` passou a dizer "SOMENTE QUANDO EU PEDIR".
+3. **Planejar antes; registrar o plano e apresentar ao DEV antes de executar**
+   (item 23 do `Dos GERENTES.md`).
+4. **Vale para Gerente e Gestor.** O Gerente mantém a autonomia de mandar o gestor
+   continuar uma tarefa **já autorizada** — não de abrir tarefa nova.
+5. **Respostas curtas.** Contexto é orçamento; relatório com o essencial, sem dossiê.
+
 ---
 
 ## 1. O que o GERENTE faz — e o que não faz

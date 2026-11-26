@@ -923,3 +923,22 @@ sha256 local = servidor.
 sempre é o servidor respondendo a uma requisição vazia. E o teste que prova o conserto
 tem de **importar a função do deploy**, não uma cópia: cópia passa e o deploy segue
 quebrado.
+
+## E-043 — Proatividade revogada por consumo excessivo de tokens (2026-11-26)
+
+**Data.** 2026-11-26, decisão do Marlon.
+
+**O erro.** A persona do Gerente (`SOUL.md`, seção "Postura") mandava "esgotar as opções
+seguras e reversíveis", "esperar é um modo de falha" e "cuida do máximo que puder, sem
+precisar ser mandado duas vezes". O item 22 do `Dos GERENTES.md` (à época) mandava "máximo
+progresso na minha ausência". Juntos, transformaram um pedido pontual — resolver commits
+multiparalelo — numa fila paralela de tarefas do P-03, briefs, perguntas e commits.
+Consumo alto de tokens sem pedido.
+
+**A causa.** Proatividade genérica virou mandato de expandir escopo. Faltava a âncora:
+**o escopo é o pedido literal do Marlon**.
+
+**Lição.** Trabalho autônomo e máximo progresso **somente quando o Marlon pedir**.
+Planejar, registrar o plano e apresentar ao DEV **antes** de executar. Não puxar fila
+antiga por conta própria. Vale para Gerente e Gestor; o Gerente mantém a autonomia de
+mandar o gestor continuar tarefa já autorizada. Respostas curtas.

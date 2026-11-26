@@ -800,6 +800,21 @@ enviado"; (3) `node scripts/validate-theme.mjs` → `TUDO OK`; (4) relatório de
 **Não publique.** O deploy da 1.3.13 é meu ato e depende da aprovação do Marlon (`Q-044`).
 Depois da 039, me reporte; eu meço e levo o pacote para a janela de aprovação.
 
+---
+
+## M-028 · TODOS os projetos · 2026-11-26 02:20 · escopo estrito (vale para o gestor)
+
+Regra nova do Marlon. Vale para gestor também:
+
+1. Trabalho autônomo e "máximo progresso" **só quando ele pedir**.
+2. Planeje, registre o plano e **apresente antes de executar** — inclusive quando achar
+   óbvio.
+3. Não abra tarefa nova por conta própria; o Gerente pode mandar continuar uma tarefa já
+   autorizada.
+4. Respostas curtas.
+
+Na prática: quando terminar a lista que recebeu, **pare e reporte**. Não invente a próxima.
+
 
 
 ## M-026 · TODOS os projetos · 2026-11-26 00:20 · forma do retorno e escopo da memória
