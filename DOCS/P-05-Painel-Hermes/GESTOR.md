@@ -5,6 +5,8 @@
 
 **Estado:** 2026-11-26 · painel `127.0.0.1:8787` em uso; cota oficial ao vivo
 
+**Perfil:** `painel-p05`
+
 Aprovação do Marlon em 2026-11-24 21:15: *"Então pode fazer P05 Painel Hermes."*
 
 ## Estado em uma linha

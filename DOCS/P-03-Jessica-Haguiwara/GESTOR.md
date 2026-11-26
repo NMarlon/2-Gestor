@@ -9,6 +9,8 @@
 
 **Estado:** 2026-11-26 · no ar, tema **1.3.12**; pendências: mensagem do qlwapp e `AW-` do Google Ads (Marlon)
 
+**Perfil:** `jessica-p03`
+
 ## Onde ler (nesta ordem)
 
 1. `C:\MarlonScripts\Jessica Haguiwara\AGENTS.md` — **contrato**. Precede tudo.
