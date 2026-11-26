@@ -4,22 +4,23 @@
 > medir o progresso **individual e geral** dos gestores e manter o registro de
 > tarefas do próprio Gerente, para que outro Gerente continue daqui sem
 > redescobrir nada. Fila de pedidos do Marlon: `LISTA-DE-PEDIDOS.md` (ao lado).
-> Última medição: **24/11/2026**. Toda linha tem o comando que a
+> Última medição: **25/11/2026, 23:50**. Toda linha tem o comando que a
 > produziu; número sem comando não entra.
 
 ## Quem existe hoje
 
-| Projeto | Gestor (quem decide) | Escritor (quem digita) | Estado medido |
+| Projeto | Gestor (quem decide) | Escritor (quem digita) | Estado medido (25/11 23:50) |
 |---|---|---|---|
-| P-03 Jessica Haguiwara | **perfil `jessica-p03`** | OpenCode, sessão do P-03 | 🟢 ativo — 1.3.10 no ar, 4 páginas publicadas e verificadas |
-| P-05 Painel Hermes | **perfil `painel-p05`** | OpenCode, sessão do P-05 | 🟢 ativo — T-P05-001 entregue (coletor rodando); agendador pendente |
-| P-04 Portfólio | **sem dono** (`Q-024`) | — | 🟡 construído em 20/11, não publicado |
-| P-02 Reconhecedor | **sem dono** (`Q-024`) | — | 🟡 serviço de pé, sem repo em `MarlonScripts/` |
-| P-01 Hermes-Mobile | — | — | 🔵 arquivado (API parada em 23/11) |
+| P-03 Jessica Haguiwara | **perfil `jessica-p03`** | OpenCode, sessão do P-03 | 🟢 ativo — **1.3.12** no ar (style.css servido, `Version: 1.3.12`), 404 personalizada e WhatsApp por página medidos; parado em M-018/M-022 desde 15h |
+| P-05 Painel Hermes | **perfil `painel-p05`** | OpenCode, sessão do P-05 | 🟢 ativo — painel `http://127.0.0.1:8787` **200**, autostart com repetição por relógio, cota oficial ao vivo |
+| P-06 CTM | **perfil `ctm-p06`** | OpenCode, sessão do P-06 | 🟢 ativo — repo `7622ebe` limpo; painel do vigia (`127.0.0.1:8788`) fechado ponta a ponta |
+| P-04 Portfólio | **sem dono** (`Q-024`) | — | ⛔ congelado por decisão do Marlon (24/11); repo parado em `047be25`, sem remote |
+| P-02 Reconhecedor | **sem dono** (`Q-024`) | — | ⛔ congelado por decisão do Marlon (24/11) |
+| P-01 Hermes-Mobile | — | — | 🔵 arquivado |
 
-Consequência prática: **dois projetos com gestor próprio (P-03 ativo, P-05 parado),
-dois órfãos (P-02, P-04).** Abrir gestor novo é decisão do Marlon; o Gerente lembra,
-não abre por conta própria (`07-GESTORES.md`, "Fim de projeto").
+Consequência prática: **três projetos com gestor próprio e dois órfãos congelados.** Abrir
+gestor novo é decisão do Marlon; o Gerente lembra, não abre por conta própria
+(`07-GESTORES.md`, "Fim de projeto").
 
 ## Primeira tarefa do gestor de P-03 — o que ele entregou
 
@@ -45,9 +46,11 @@ e `git -C <repo> log -1 --format="%h %ad %s" --date=short`.
 
 | Projeto | Commits 7 dias | Último commit | O que prova |
 |---|---|---|---|
-| P-03 Jessica | **45** | `ed5990a` 23/11 — WebP na home | ritmo alto; entrega publicada 1.3.8 |
-| P-04 Portfólio | **4** | `047be25` 20/11 — idiomas do autor | parado há 4 dias, sem publicação |
-| 2-Gestor (workspace) | ver `git log` | `14d9d77` 24/11 — brief T-P03-023 | documentação em movimento |
+| P-03 Jessica | **45** | `19c84d3` 25/11 — release 1.3.12 | ritmo alto; entrega publicada e medida |
+| P-05 Painel Hermes | **13** | `9dcdbe8` 25/11 — repetição do autostart | painel no ar com autostart provado |
+| P-06 CTM | **18** | `7622ebe` 25/11 — T-P06-019 | painel do vigia ponta a ponta |
+| P-04 Portfólio | **4** | `047be25` 20/11 | parado (congelado por decisão do Marlon) |
+| 2-Gestor (workspace) | **143** | ver `git log` | documentação em movimento |
 
 ## Consumo por projeto — 30 dias
 
@@ -109,28 +112,24 @@ Nenhum deles sobrevive à pergunta "o que foi publicado".
 
 ## Registro do próprio Gerente — onde parei
 
-**Atualizado: 2026-11-24, 21:10.**
+**Atualizado: 2026-11-25, 23:55** (medição: `date`; `git log -1` nos quatro repos;
+`curl` no site e no painel).
 
-- **P-03 entregue e medido no ar** — 1.3.9, 4 páginas de serviço `200`, submenu
-  SOLUÇÕES com 4 filhos, 4 cartões da home ligados. `T-P03-024` fechada pelo
-  `jessica-p03`, com bloco de verificação em `04-TAREFAS.md`.
-- **Fechado hoje:** `Q-031` (publicação das páginas), `Q-030` (relatório vira
-  script, sem cron), `T-P03-022` (marcada como feita na prática), `backups/` no
-  `.gitignore`. Item 17 da lista do Marlon respondido: era minha proposta de
-  enxugar o `AGENTS.md`; hoje se contradiz — recomendo riscar.
-- **Aberto comigo:** `Q-032` (cor do botão do banner — espera "pode"), `Q-034`
-  (credencial do GitHub: commits locais sem push), `Q-035` (rótulo
-  "Projeto"/"Projetos" — default: não mexer), e a prova de onde vivem os 4 itens
-  do submenu (tema × `wp_navigation`), que decide se o rollback de tema basta.
-- **Não começou:** **P-05 Painel Hermes** — pasta `C:\MarlonScripts\5-Painel-Hermes`
-  inexistente, sem repo, sem doc pelo padrão de projeto novo, sem coletor de cota,
-  sem UI. O papel do `painel-p05` está escrito (81 linhas) e aguarda aprovação.
-- **Também pendente:** revisão editorial das 4 páginas com antes/depois (`Q-033`).
-- Regra em vigor: **Gerente não escreve código de projeto de próprio punho**
-  (item 3 do `Dos GERENTES.md`). Script que precisar existir vira brief para o
-  OpenCode; `consumo.py`, `commit-agent.sh` e `oc-brief.ps1` ficam como estão e
-  são mantidos por brief.
-- Regras novas do Marlon (itens 17-22 do `Dos GERENTES.md`, 24/11): entregar
-  resumo do que foi feito, manter a doc própria atualizada, registrar todo erro,
-  **plano antes de executar**, e **delegar a execução ao gestor** em vez de
-  executar com as próprias mãos.
+- **Estado medido hoje 23:45–23:50:** P-03 no ar em **1.3.12** (`style.css` servido,
+  `Version: 1.3.12`; home `200`); P-05 `127.0.0.1:8787` **200**, tarefas
+  `PainelHermes-Coletor` e `PainelHermes-Painel` *Pronto*; P-06 `7622ebe`, árvore limpa;
+  P-04 parado em `047be25`; workspace com 3 arquivos do Marlon pendentes
+  (`Dos GERENTES.md`, `Principais Regras`, `Específicos/` — não são meus, não comito).
+- **Aberto comigo:** M-025 despachada ao `jessica-p03` (T-P03-034…038); o deploy das de
+  tema (1.3.13) é meu ato depois de medir o dry-run.
+- **Corrigido nesta sessão:** fila `04-TAREFAS.md` ganhou o registro retroativo
+  T-P06-009…019 (estava só no caderno do gestor) e os blocos T-P03-034…038; as ordens
+  M-023/M-024, que só existiam no caderno do P-06, foram registradas no canal
+  (`PARA-GESTORES.md`) — com a regra de que ordem passa pelo arquivo antes do despacho.
+- **Não começou:** nada aberto no P-05; relatório semanal segue no backlog, não autorizado.
+  `T-P06-004` (agendador semanal) parece absorvida pelo painel vigia — confirmar.
+- Regra em vigor: **Gerente não escreve código de projeto de próprio punho** (item 3 do
+  `Dos GERENTES.md`). Script que precisar existir vira brief para o OpenCode.
+- Regras novas do Marlon (itens 17-22 do `Dos GERENTES.md`, 24/11): entregar resumo do que
+  foi feito, manter a doc própria atualizada, registrar todo erro, **plano antes de
+  executar**, e **delegar a execução ao gestor** em vez de executar com as próprias mãos.

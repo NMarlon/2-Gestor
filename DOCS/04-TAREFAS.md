@@ -1382,3 +1382,49 @@ HTTP 404, que também espera 3 s); execução pelo Agendador.
 
 **Estado:** ✅ fechada em 25/11 (código). T-P06-004 continua aberta só na instalação:
 rodar o script sem `-WhatIf` quando a Q-040 liberar.
+
+---
+
+## Registro retroativo · P-06 · T-P06-009 … T-P06-019 (25/11, Gerente)
+
+> Trabalho executado e medido no repo do projeto entre 13:40 e 22:30, com brief em `briefs/`,
+> mas sem bloco na fila deste workspace — falha de registro que este bloco corrige em uma
+> linha por tarefa (regra §2.1 do `REGRAS.md`). Estado do repo: `7622ebe` (25/11 22:30),
+> árvore limpa; caderno `DOCS/P-06-Planejamento-Missionario/GESTOR.md`.
+
+| Tarefa | Entrega | Estado |
+|---|---|---|
+| T-P06-009 | ler o planejamento **sem baixar** (camada de texto do `viewer/presspage` + sessão em navegador headless) | 🟢 |
+| T-P06-010 | linha do tempo legível no relatório | 🟢 |
+| T-P06-011 | grade de horários por dia/faixa | 🟢 |
+| T-P06-012 | caixas de célula (posição e tamanho) | 🟢 |
+| T-P06-013 | buracos de leitura explícitos (não inventar horário) | 🟢 |
+| T-P06-014 | teto de 60 min por célula para não inventar horário grande | 🟢 |
+| T-P06-015 | vários links, com histórico/snapshots/relatórios separados | 🟢 |
+| T-P06-016 | painel local do vigia (`127.0.0.1:8788`, tarefa `VigiaP06`) + migração do legado | 🟢 |
+| T-P06-017 | fim de célula lido na borda da tabela (38 células; 2 estimadas com ressalva) | 🟢 |
+| T-P06-018 | `Referrer-Policy: same-origin`, CSRF em todo POST, motivo no 403 | 🟢 |
+| T-P06-019 | alvo de toque ≥44 px e aviso de remoção condicional | 🟢 |
+
+**Aceite do Gerente:** M-023 e M-024 aceitas por medição independente (ver nota em
+`08-GERENTE/PARA-GESTORES.md`); painel do vigia fechado ponta a ponta — 7 itens medidos,
+390 px sem estouro, repo limpo. **Sobra conhecida e aceita:** o log do motor ainda escreve
+"dados preservados" na remoção sem a condicional da tela (cosmético).
+
+## T-P03-034 … T-P03-038 · P-03: as tarefas da M-018 e da M-022 (abertas 25/11 23:55)
+
+**Ordem:** M-025 (`08-GERENTE/PARA-GESTORES.md`). **Dono:** gestor `jessica-p03`; executor
+OpenCode. **Autorização:** M-018 (25/11 15:00) e M-022 item 1 (19:00). **Nenhuma publica:**
+deploy é ato do Gerente depois de medir.
+
+| Tarefa | Escopo | Onde | Limite |
+|---|---|---|---|
+| **T-P03-034** | consentimento: opt-in bloqueia `_ga`/HubSpot antes do clique + Consent Mode v2 | tema | implementar + `--dry-run` + medição local |
+| **T-P03-035** | hero com `srcset` WebP/AVIF + `fetchpriority="high"`; alvo LCP mobile < 2,5 s | tema | implementar + medir antes/depois |
+| **T-P03-036** | lote SEO: 7 meta descriptions, `noindex` no `/obrigado/`, `h1` na política | banco | aplicar + medir no HTML servido |
+| **T-P03-037** | `/obrigado/` + `generate_lead` no GA4 | tema/medição | `AW-` fica pendência (`Q-041`) |
+| **T-P03-038** | qlwapp: mensagem do botão flutuante → `Olá! Quero conversar sobre o meu projeto.` | banco | valor antigo salvo, rollback escrito; se não for editável, parar e reportar |
+
+**Critério de aceite:** por tarefa, relatório com os 8 campos do contrato, medição no HTML
+servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
+`scripts/medir-cdp.py`. O Gerente mede de novo na fonte antes de qualquer deploy.
