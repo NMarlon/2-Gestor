@@ -236,3 +236,61 @@ reproduzir as caixas da imagem, não passa.
 **Correção de registro:** o OpenCode relatou que `relatorios/pagina-1.png` "sumiu do disco sem
 comando de exclusão dele". Fui eu — `rm -f` na limpeza do teste simulado. Não foi mistério nem
 perda de dado; o arquivo era artefato do meu teste, e ele restaurou uma cópia de `testes/`.
+
+## 26/11/2026, 00:30 — T-018: o 403 de todo formulário, corrigido e medido
+
+**Causa raiz (medida pelo Gerente, confirmada por mim antes de briefar):** o painel respondia
+`Referrer-Policy: no-referrer`; por especificação o navegador serializa `Origin: null` no POST e
+`_host_ok()` recusava. Não era o navegador do Marlon. Meu baseline, no painel velho e antes do
+brief: `POST` com `Origin: null` → **403** "Host/Origin não permitido"; com
+`Origin: http://127.0.0.1:8788` → **303**; `name="_csrf"` no HTML → **0**.
+
+**Correção — commit `f846044`, 1 arquivo** (`scripts/vigia.py`, +76/−14, autor `OPENCODE-P06`):
+
+- `Referrer-Policy: same-origin` em toda resposta (200, 403 e 404 conferidos).
+- Token CSRF por processo (`secrets.token_urlsafe(32)`, só memória) em **todos** os 3 formulários
+  de cada página, validado com `compare_digest`; ausente/errado → 403 "formulário expirado".
+- `Host` segue loopback (`127.0.0.1:8788`, `localhost:8788`, `[::1]:8788`); `Origin` estranho → 403.
+- Todo 403 vai ao `logs/vigia.log` com `host=`, `origin=`, `motivo=`.
+
+**Decisão sobre a contradição do brief:** a linha 51 diz "não aceite `Origin: null` como atalho"
+e o critério 1 exige `null` + token → 303. Vale o critério: `null` **nunca** autoriza sozinho
+(sem token → 403; GET com `null` → 403); com token válido, passa. O token é o portão, não o
+cabeçalho. Anotado aqui para não se re-litigar.
+
+**Os 7 critérios, medidos por mim no painel real (`:8788`, PID 25572):**
+
+| # | O que fiz | Medido |
+|---|---|---|
+| 1 | `POST` `Origin: null` + `_csrf` do HTML, 1440→90 | **303** e `links.json` foi a 90; restaurei 1440, sha256 **idêntico** ao de antes (`f1e47d1e…`) |
+| 2 | mesmo POST sem `_csrf` / com `_csrf` errado | **403 / 403**, frequência intacta (1440) |
+| 3 | `Origin: http://evil.example` + token válido | **403** |
+| 4 | `Host: evil.example` + token válido | **403** |
+| 5 | `GET /` e `GET /link/por6` | **200 / 200**, 3 campos `_csrf` em cada página |
+| 6 | traversal no caminho real `/link/por6/relatorio/` | `..%2F` e `..%5C` e `%2e%2e%2f` → **403**; `....//` → **404**; arquivo legítimo → **200**; corpo não traz `leituras` |
+| 7 | `logs/vigia.log` | `403 POST … host='127.0.0.1:8788' origin='null' motivo=formulário expirado…`, `origin='http://evil.example'`, `host='evil.example'`, `motivo=arquivo não permitido…` |
+
+**Extras que medi:** `Origin: http://127.0.0.1:9999` + token → 403; `GET /` com `Origin: null` →
+403; `POST /verificar/nao-existe` com token → **404** (passou o portão, a rota recusou) e sem token
+→ **403**. O token não aparece em `logs/`, `dados/` nem `links.json` (grep: 0 arquivos).
+
+**Navegador de verdade — 1 lançamento** (`medir-cdp.py`, contador 18/30): Edge headless 1280×900,
+`http://127.0.0.1:8788/link/por6`, clique no botão Salvar de `section#editar` → caiu em
+`?aviso=link+por6+atualizado`, sem "expirado". É o mesmo POST que, com o código velho, dava 403.
+`msedge` vivo depois: **0**.
+
+**Estado deixado:** painel PID 25572 (`pythonw.exe`) pela tarefa `VigiaP06`, status *Em execução*;
+`links.json` com sha256 igual ao de antes dos meus POSTs. O diff pendente de `links.json`
+(`nome` "POR6" no disco × "POR6 — Planejamento Missionário" no HEAD) **é anterior a esta tarefa** —
+meu primeiro `cat`, às 21:56 e antes do despacho, já mostrava "POR6". Não é meu, não mexi.
+
+**Colisão de escritores (registro de risco, não dano):** o commit `850d208` (T-P06-017) entrou às
+**21:57:42**, cerca de **1 minuto** depois de eu despachar a T-018 (21:56:41) no mesmo repo — e
+levou exatamente os arquivos que o meu brief mandava não tocar. Não foi o meu executor: o commit
+dele (`f846044`, 22:00:22) tem só `scripts/vigia.py`. Mas houve **dois OpenCode escrevendo no mesmo
+repo ao mesmo tempo**; por sorte as áreas não se cruzaram. O Gerente precisa não despachar T-017 e
+T-018 no mesmo repo na mesma janela.
+
+**Não testado:** clique real em "Verificar agora" (dispara verificação de verdade e escreveria em
+`logs/vigia.jsonl`; o portão é o mesmo, provado pelo 404 com token); `POST /links` e `/remover`
+(mesma checagem central).
