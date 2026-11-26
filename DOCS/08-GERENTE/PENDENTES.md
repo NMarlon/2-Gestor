@@ -55,6 +55,11 @@
   (`VigiaP06`, frequência no `links.json`); confirmar e marcar como absorvida.
 - **Registro**: caderno P-06 com datas `26/11 00:15/00:45` escritas antes da meia-noite
   (relógio real 25/11 23:46) — cosmético, apontado ao gestor.
+- **Processo (25/11 23:52):** há uma **segunda sessão do mesmo perfil Gerente** viva
+  (commits `9634f2e`/`1fd7f28`, M-026). O commit dela às 23:50 levou junto a minha M-025 —
+  nada se perdeu, o rastro ficou misturado. Regra prática enquanto houver duas: `git log -1`
+  no arquivo antes de escrever, `commit-agent.sh` por caminho, e não usar `write_file` em
+  arquivo compartilhado. Se o Marlon quiser, fechar a sessão antiga resolve na raiz.
 
 ## Credencial de push — por que o device flow não serve (registro de 26/11)
 
