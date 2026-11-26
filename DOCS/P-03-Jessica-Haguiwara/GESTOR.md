@@ -7,7 +7,7 @@
 > passou por `p03-jessica`; apelido de linha de comando: `jessica`). Perfil ativo
 > confirmado no runtime desta sessão.
 
-**Estado:** 2026-11-26 · no ar, tema **1.3.12**; no repo, **1.3.13** com T-037 (form → /obrigado/ + `generate_lead`) e T-034 em execução; sem deploy. Pendências: mensagem do qlwapp e `AW-` do Google Ads (Marlon)
+**Estado:** 2026-11-26 · no ar, tema **1.3.12**; no repo, **1.3.13** com T-037 (form → /obrigado/ + `generate_lead`), T-034 (consentimento) e T-035 (hero AVIF/WebP); sem deploy, e o deploy do tema está **bloqueado** até a T-P03-039 (o script corrompe binário). Pendências: mensagem do qlwapp e `AW-` do Google Ads (Marlon)
 
 **Perfil:** `jessica-p03`
 
@@ -80,6 +80,13 @@ custaram caro:
 
 ## Decisões tomadas
 
+- **2026-11-26 (T-P03-035, M-025) — código no repo, não publicado.** Hero vira
+  `<picture>` com AVIF/WebP 768/1024/1440, JPEG derivado no fallback, `fetchpriority=high`
+  e `preload` AVIF no `<head>`; `scripts/make-hero-srcset.mjs` gera os 6 binários.
+  Commit `cb90b6c`, tema 1.3.13, `release.json` 21 arquivos. **Medi eu:** dimensões
+  768×512/1024×683/1440×960; validador `TUDO OK`; `--dry-run` 11 arquivos, `nada foi
+  enviado`. **Não publicável ainda:** `deploy-theme.mjs` envia `content` como
+  `buf.toString('utf8')` e não lista `.avif` — binário corromperia. Vira T-P03-039.
 - **2026-11-26 (T-P03-034, M-025) — código no repo, não publicado.** Consent Mode v2
   `default` (4 sinais `denied`) no `wp_head` prioridade 0; HubSpot sai do PHP e só entra
   por `consent.js` com `marketing` = granted; `consent/update` em `cmplz_status_change`.

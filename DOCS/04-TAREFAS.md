@@ -1424,6 +1424,7 @@ deploy é ato do Gerente depois de medir.
 | **T-P03-036** | lote SEO: 7 meta descriptions, `noindex` no `/obrigado/`, `h1` na política | banco | aplicar + medir no HTML servido |
 | **T-P03-037** | `/obrigado/` + `generate_lead` no GA4 | tema/medição | `AW-` fica pendência (`Q-041`) |
 | **T-P03-038** | qlwapp: mensagem do botão flutuante → `Olá! Quero conversar sobre o meu projeto.` | banco | valor antigo salvo, rollback escrito; se não for editável, parar e reportar |
+| **T-P03-039** ⚪ | `deploy-theme.mjs` não envia binário: `content=buf.toString('utf8')` corrompe e `.avif` fora de `BINARIOS` | ferramenta/scripts | descoberta + teste; bloqueia o deploy da T-035 |
 
 **Critério de aceite:** por tarefa, relatório com os 8 campos do contrato, medição no HTML
 servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
@@ -1470,7 +1471,18 @@ servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
   enviaria 5, `nada foi enviado`. **Risco aberto:** visitante que já consentiu antes não
   recebe evento `cmplz_status_change` no load — o `init()` no `DOMContentLoaded` cobre
   isso *se* `cmplz_has_consent` já estiver disponível; medir no deploy.
-- **T-P03-035 ⚪** — em execução; brief `2026-11-26-p03-t035-hero-srcset.md`.
+- **T-P03-035 🟡 código pronto, dry-run medido, não publicado — e com bloqueio de
+  ferramenta** — hero virou `<picture class="jhw-hero__bg">` com AVIF/WebP em
+  768/1024/1440 (`hero-*.{avif,webp}`, **22.595/34.069/60.766 B** AVIF e
+  **36.746/57.002/101.774 B** WebP), JPEG `-768x512`/`-1024x683` no fallback,
+  `fetchpriority="high"`, `width/height`, e `preload` AVIF no `wp_head` prioridade 2.
+  Commit `cb90b6c`, `functions.php` 19.525 B, `style.css` +13 linhas (54.806 B),
+  `scripts/make-hero-srcset.mjs` (4.809 B), `release.json` 21 arquivos, tema **1.3.13**.
+  **Medi eu:** 6 arquivos com as dimensões certas (1024×683, igual ao derivado do WP);
+  validador `TUDO OK`; `--dry-run` lista os
+  11 arquivos e `nada foi enviado`. **Bloqueio:** `deploy-theme.mjs` manda `content` como
+  `buf.toString('utf8')` e não conhece `.avif` — publicar os 6 binários corromperia o
+  arquivo. Corrigir antes de qualquer deploy do tema (vira T-P03-039).
 
 **Medição do Gerente (26/11 00:55, independente do relatório):**
 
