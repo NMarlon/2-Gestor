@@ -121,6 +121,26 @@ trap limpar EXIT
 echo "== antes =="
 git status --short | sed -n '1,20p'
 
+# mtime do lock em epoch. `date -r` e GNU e portavel no MSYS/Git-bash; o
+# `stat -c %Y` do MSYS imprime o relatorio inteiro (varias linhas) em vez do
+# epoch, entao o resultado so vale se for puramente numerico. Qualquer outra
+# coisa vira 0 (lock sem lease) e nunca chega ao `[` como texto.
+mtime_epoch() {
+  local f="$1" m=""
+  m=$(date -r "$f" +%s 2>/dev/null || true)
+  case "$m" in ''|*[!0-9]*) m="" ;; esac
+  if [ -z "$m" ]; then
+    m=$(stat -c %Y -- "$f" 2>/dev/null || true)
+    case "$m" in ''|*[!0-9]*) m="" ;; esac
+  fi
+  if [ -z "$m" ]; then
+    m=$(stat -f %m -- "$f" 2>/dev/null || true)
+    case "$m" in ''|*[!0-9]*) m="" ;; esac
+  fi
+  case "$m" in ''|*[!0-9]*) m=0 ;; esac
+  printf '%s' "$m"
+}
+
 # ---- lock de commit (mkdir e atomico no NTFS) --------------------------------
 adquirir_lock() {
   local seg_inicio=$SECONDS espera_ms agora mtime mtime2 jitter
@@ -134,10 +154,10 @@ adquirir_lock() {
     agora=$(( epoch_base + SECONDS - secs_base ))
     if [ -d "$lock" ]; then
       # lease: lock com mtime > 30 s e considerado orfao e pode ser removido.
-      mtime=$(stat -c %Y -- "$lock" 2>/dev/null || stat -f %m -- "$lock" 2>/dev/null || echo 0)
+      mtime=$(mtime_epoch "$lock")
       if [ "$mtime" -gt 0 ] && [ $((agora - mtime)) -gt 30 ]; then
         # recheca imediatamente antes de remover, para nao roubar lock recem-criado
-        mtime2=$(stat -c %Y -- "$lock" 2>/dev/null || stat -f %m -- "$lock" 2>/dev/null || echo 0)
+        mtime2=$(mtime_epoch "$lock")
         if [ "$mtime2" -gt 0 ] && [ $((agora - mtime2)) -gt 30 ]; then
           rm -rf -- "$lock" 2>/dev/null || true
           continue
