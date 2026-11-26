@@ -73,3 +73,39 @@ apresentar o plano ao DEV**, e restringir o trabalho autônomo a quando ele mand
 3. **Uma medição por pergunta.** Repetir comando para "confirmar" custa 200 k por repetição.
 4. **Brief nunca vai no prompt.** Vai em arquivo; o prompt é o caminho.
 5. **Relatório ao Marlon: cinco campos** (M-026), sem repetir o que já está no arquivo.
+
+## 7. Aplicado em 26/11, 02:10 — só nos gestores
+
+Decisão do Marlon: aplicar os limites **apenas nos perfis de gestor**, deixando o Gerente com o
+limite alto para não perder evidência na verificação.
+
+| Perfil | `tool_output.max_bytes` | `max_lines` | `file_read_max_chars` |
+|---|---|---|---|
+| `ctm-p06` | 20.000 | 800 | 30.000 |
+| `jessica-p03` | 20.000 | 800 | 30.000 |
+| `painel-p05` | 20.000 | 800 | 30.000 |
+| `pdf-tts` | 20.000 | 800 | 30.000 |
+| **`manager-developer-hermes` (Gerente)** | **75.000 (inalterado)** | 5.000 | **100.000** |
+
+Comando usado (repetido por perfil):
+
+```
+hermes -p <perfil> config set tool_output.max_bytes 20000
+hermes -p <perfil> config set tool_output.max_lines 800
+hermes -p <perfil> config set file_read_max_chars 30000
+```
+
+**Prova de runtime (não só de config).** Sessão de teste no `pdf-tts` lendo um arquivo de
+52.609 B:
+
+```
+truncated=true, truncated_by="bytes", next_offset=554,
+~30.000 caracteres entregues (limite atingido após 553 de 944 linhas)
+```
+
+O limite de 30.000 chars está **em vigor** no perfil do gestor. O arquivo de 52,6 KB passaria
+inteiro antes (100.000 chars) e agora entra pela metade.
+
+**O que isso NÃO resolve:** o Gerente continua em 172 k de contexto por chamada. As ações A1
+(sessão por tarefa), A4 (background review barato) e A5 (uma medição por pergunta) continuam
+abertas — são elas que atacam os 95 % do tráfego.
