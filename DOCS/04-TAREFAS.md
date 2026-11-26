@@ -1460,7 +1460,17 @@ servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
   → `10 igual(is), 2 divergente(s), 2 novo(s), 0 orfao(s)`, enviaria 4 arquivos e
   `nada foi enviado`. A prova de comportamento (redirect e evento) só existe **depois**
   do deploy — que segue como decisão do gestor.
-- **T-P03-034 e T-P03-035 ⚪** — na fila, briefs prontos; executam depois da 037.
+- **T-P03-034 🟡 código pronto, dry-run medido, não publicado, com 1 risco aberto** —
+  `gtag('consent','default')` com os 4 sinais `denied` sai no `wp_head` prioridade 0
+  (antes do Site Kit); o handle PHP do HubSpot (`leadin-script-loader-js`) sai da fila e
+  `assets/js/consent.js` (4.081 B) injeta `hs-script-loader` só com `marketing`
+  autorizado, além de `consent/update` em cada `cmplz_status_change`. Commit `0b6bb24`,
+  `functions.php` 14.986 B, tema **1.3.13**, `release.json` 15 arquivos. **Medi eu:**
+  validador `TUDO OK`; `--dry-run` `10 igual(is), 2 divergente(s), 3 novo(s), 0 orfao(s)`,
+  enviaria 5, `nada foi enviado`. **Risco aberto:** visitante que já consentiu antes não
+  recebe evento `cmplz_status_change` no load — o `init()` no `DOMContentLoaded` cobre
+  isso *se* `cmplz_has_consent` já estiver disponível; medir no deploy.
+- **T-P03-035 ⚪** — em execução; brief `2026-11-26-p03-t035-hero-srcset.md`.
 
 **Medição do Gerente (26/11 00:55, independente do relatório):**
 

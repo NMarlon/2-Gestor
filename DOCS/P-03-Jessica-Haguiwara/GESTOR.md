@@ -80,6 +80,13 @@ custaram caro:
 
 ## Decisões tomadas
 
+- **2026-11-26 (T-P03-034, M-025) — código no repo, não publicado.** Consent Mode v2
+  `default` (4 sinais `denied`) no `wp_head` prioridade 0; HubSpot sai do PHP e só entra
+  por `consent.js` com `marketing` = granted; `consent/update` em `cmplz_status_change`.
+  Commit `0b6bb24`, tema 1.3.13. **Medi eu:** validador `TUDO OK`; `--dry-run`
+  `10 igual(is), 2 divergente(s), 3 novo(s), 0 orfao(s)`, 5 arquivos, `nada foi enviado`.
+  Risco de aceite: consentimento já existente no load pode não emitir evento — medir no
+  deploy.
 - **2026-11-26 (T-P03-037, M-025) — código no repo, não publicado.** Forminator 168
   passa a levar a `/obrigado/` (`form-redirect.js`) e a página dispara **um**
   `generate_lead` no GA4 (`lead.js`, dedupe 60 min, só com `jhw_form_sent` ou referrer
