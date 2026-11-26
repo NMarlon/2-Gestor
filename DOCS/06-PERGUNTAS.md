@@ -861,8 +861,10 @@ corromperia os AVIF); até lá, o deploy é tecnicamente impossível.
 **Pergunta:** posso publicar a 1.3.13 depois da 039 e da minha medição final?
 
 Opções: (a) **pode** — publico com backup e medição antes/depois, rollback escrito;
-(b) só depois de você ver um print do hero em 390 e 1280; (c) segurar o hero e publicar só o
-resto (não recomendo: o `release.json` já está em 1.3.13).
+(b) publicar em horário de baixo movimento (você escolhe a hora); (c) segurar.
 
-**Default:** (b) até o "pode" — mudança visível ao cliente exige aprovação. Prints do hero
-por `scripts/medir-cdp.py` ficam prontos para a sua janela das 06:30.
+**Default:** (c) até o "pode" — mudança visível ao cliente exige aprovação. Não existe
+staging: o print do hero só pode ser tirado **depois** do deploy. A aprovação é sobre o pacote
+medido — 11 arquivos, sha256 dos AVIF igual local × servidor, dry-run limpo, `TUDO OK` — com
+rollback pronto. Se preferir, publico e tiro o print em minutos; se algo destoar, restauro o
+backup. O plano de deploy está em `08-GERENTE/PENDENTES.md`.

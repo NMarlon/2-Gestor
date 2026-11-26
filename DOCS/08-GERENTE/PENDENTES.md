@@ -19,11 +19,36 @@
 
 | # | Tarefa | Onde | O que se espera |
 |---|---|---|---|
-| 1 | **T-P03-039** — corrigir envio binário do `deploy-theme.mjs` (AVIF) | `jessica-p03` | sha256 local × servidor igual num AVIF; dry-run 11 arquivos; sem publicar |
-| 2 | **P-03 · 037/034/035** — código pronto, `--dry-run` medido | fila | aguardando a 039 e a `Q-044` para o deploy da 1.3.13 |
+| 1 | **P-03 · tema 1.3.13** — pacote pronto (11 arquivos), `--dry-run` limpo, sha256 dos AVIF igual local × servidor | fila | **aguardando `Q-044`** (aprovação do Marlon) para o deploy medido |
+| 2 | **P-03 · T-P03-036b** — Yoast | `wp-admin` | **aguardando o Marlon logar** no perfil Edge e habilitar a integração |
+
+## Pacote de deploy — P-03 tema 1.3.13 (pronto, aguardando `Q-044`)
+
+**Estado:** implementado e medido, não publicado. Commits do site: `eec91a3` (037),
+`0b6bb24` (034), `cb90b6c` (035), `8683b4b` (039, ferramenta). `release.json` já em 1.3.13.
+
+**Antes:** backup do tema no ar (1.3.12) — `functions.php` 10.114 B e `style.css` 54.419 B
+servidos; guardar os 2 arquivos e a lista dos 9 novos.
+
+**Deploy (só com o "pode"):**
+1. `node scripts/deploy-theme.mjs` (sem `--dry-run`) — esperar **`11 iguais, 0 divergente,
+   0 novo, 0 orfao`**.
+2. Purge do WPFC; medir o HTML servido em duas leituras: home (`<picture class="jhw-hero__bg">`,
+   AVIF 200, `fetchpriority="high"`, preload), 404, `/obrigado/`, banner de consentimento.
+3. Prova de comportamento: cookies `_ga`/`__hstc` **ausentes** antes do aceite; depois do
+   aceite, `generate_lead` no GA4 e redirect do form 168. Só existe pós-deploy.
+4. **Rollback:** reenviar `functions.php` e `style.css` 1.3.12 (backup acima), remover os 9
+   novos e purgar o cache; aí medir de novo e registrar.
+
+**Riscos aceitos:** `functions.php` dobra de tamanho (10.114 → 19.525 B) no HTML? Não — é
+arquivo; o impacto é o preload condicional na home. O preload é incondicional: num deploy
+parcial (PHP sem as imagens) geraria 404; por isso o deploy é dos 11 de uma vez.
 
 ## Fechado (medido por mim)
 
+- ✅ **P-03 · T-P03-039** (`8683b4b`): deploy binário por multipart; teste reexecutado por mim —
+  AVIF 22.595 B, sha256 local = servidor `105454c1…`, limpeza OK, 404. `BINARIOS` com `.avif`.
+  Causa raiz do E-042: não era a API mentindo, era GET com o arquivo na query.
 - ✅ **commit-agent v2.1** (`6f93b6b`): suíte **12/12**, T4 40/40 sem mistura, T6 6.881 ms
   (teto 15 s), `integer expected` zero. Uso real comprovado em `9e31611` e no commit do
   aceite. Documento: `08-GERENTE/COMMITS-MULTISSESSAO.md`. `v1` preservado para rollback.

@@ -1511,3 +1511,14 @@ servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
   Privacidade</h1>`. A parte do Yoast segue bloqueada: `ignored_keys` enquanto a integração
   não for ligada em wp-admin; retomada pronta em `briefs/2026-11-26-p03-t036b-yoast.md`.
 - **T-P03-034/035/037** seguem abertas — nova sessão do gestor despachada às 00:56.
+
+**Medição do Gerente (26/11 01:40, independente do relatório):**
+
+- **T-P03-037/034/035 aceitas como código pronto, não publicado.** `validate-theme.mjs` →
+  `TUDO OK`; `deploy-theme.mjs --dry-run` → **10 iguais, 2 divergentes, 9 novos, 0 órfãos**,
+  11 arquivos, `nada foi enviado`. O deploy segue pendente da `Q-044`.
+- **T-P03-039 aceita.** Reexecutei `scripts/test-binary-upload.mjs` às 02:05: `hero-768.avif`
+  (22.595 B) subiu como `__t039-binario.avif`; sha256 local = servidor
+  `105454c1f975c6f57a4e7e81ee26237bc4f20538132be106e4405c5bd875aebc` (**IGUAL**); limpeza OK,
+  URL do teste **404**; commit `8683b4b` (2 arquivos); `BINARIOS` inclui `.avif`; upload por
+  multipart em `Fileman::upload_files`.
