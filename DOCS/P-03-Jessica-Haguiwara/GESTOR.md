@@ -7,7 +7,7 @@
 > passou por `p03-jessica`; apelido de linha de comando: `jessica`). Perfil ativo
 > confirmado no runtime desta sessão.
 
-**Estado:** 2026-11-26 · no ar, tema **1.3.12**; pendências: mensagem do qlwapp e `AW-` do Google Ads (Marlon)
+**Estado:** 2026-11-26 · no ar, tema **1.3.12**; no repo, **1.3.13** com T-037 (form → /obrigado/ + `generate_lead`) e T-034 em execução; sem deploy. Pendências: mensagem do qlwapp e `AW-` do Google Ads (Marlon)
 
 **Perfil:** `jessica-p03`
 
@@ -80,6 +80,12 @@ custaram caro:
 
 ## Decisões tomadas
 
+- **2026-11-26 (T-P03-037, M-025) — código no repo, não publicado.** Forminator 168
+  passa a levar a `/obrigado/` (`form-redirect.js`) e a página dispara **um**
+  `generate_lead` no GA4 (`lead.js`, dedupe 60 min, só com `jhw_form_sent` ou referrer
+  próprio; sem `AW-`). Commit `eec91a3`, tema 1.3.13. **Medi eu:** validador `TUDO OK`;
+  `--dry-run` `10 igual(is), 2 divergente(s), 2 novo(s), 0 orfao(s)`, enviaria 4 e
+  `nada foi enviado`. Falta o deploy (decisão minha) e, depois, medir em produção.
 - **2026-11-26 (T-P03-036, M-025) — parcial, bloqueio humano.** O `h1` de
   `/privacy-policy/` não era bloco faltando: a página estava no template `default`,
   enquanto as páginas de conteúdo usam `page-with-title`. `wp_update_page

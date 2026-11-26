@@ -1451,7 +1451,16 @@ servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
   `Easy MCP AI → Tools → Plugins`, e ligar exige wp-admin logado — o perfil Edge
   `wp-admin-profile` está **sem sessão** (`reauth=1`, 3 provas, 00:48). Retomada pronta em
   `briefs/2026-11-26-p03-t036b-yoast.md`; **o bloqueio é humano** (Marlon logar no perfil).
-- **T-P03-034, T-P03-035, T-P03-037 ⚪** — não iniciadas; próximas sessões.
+- **T-P03-037 🟡 código pronto, dry-run medido, não publicado** — Form 168 passa a
+  navegar para `/obrigado/` (`assets/js/form-redirect.js`, 1.708 B) e `/obrigado/`
+  dispara `generate_lead` no GA4 por `_googlesitekit.gtagEvent` (`assets/js/lead.js`,
+  3.214 B, dedupe de 60 min por sessão, sem `AW-`). `functions.php` para 12.082 B e
+  `style.css` em **1.3.13**; commit `eec91a3`. **Medido por mim**, no repo:
+  `node scripts/validate-theme.mjs` → `TUDO OK`; `node scripts/deploy-theme.mjs --dry-run`
+  → `10 igual(is), 2 divergente(s), 2 novo(s), 0 orfao(s)`, enviaria 4 arquivos e
+  `nada foi enviado`. A prova de comportamento (redirect e evento) só existe **depois**
+  do deploy — que segue como decisão do gestor.
+- **T-P03-034 e T-P03-035 ⚪** — na fila, briefs prontos; executam depois da 037.
 
 **Medição do Gerente (26/11 00:55, independente do relatório):**
 
