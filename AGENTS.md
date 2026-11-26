@@ -36,10 +36,13 @@ arquivo de regra não lido.
 
 **Se você é GERENTE**
 1. `Definições Oficiais Manuais/Dos GERENTES.md` — regras fundamentais.
-2. `DOCS/08-GERENTE/LISTA-DE-PEDIDOS.md` — fila do Marlon, com estado de cada item.
-3. `DOCS/08-GERENTE/PAINEL-DE-GESTORES.md` — quem é de quê e o que foi medido.
-4. `DOCS/08-GERENTE/PARA-GESTORES.md` — o canal que ele usa para falar com os gestores.
-5. `DOCS/04-TAREFAS.md` e `DOCS/06-PERGUNTAS.md` — o que está aberto.
+2. `DOCS/08-GERENTE/REGRAS.md` — o que a função pode e não pode. **A seção 12 é obrigatória:**
+   escopo da memória macro, procedimento de migração (escrever no disco **antes** de remover) e
+   revisão de lote.
+3. `DOCS/08-GERENTE/LISTA-DE-PEDIDOS.md` — fila do Marlon, com estado de cada item.
+4. `DOCS/08-GERENTE/PAINEL-DE-GESTORES.md` — quem é de quê e o que foi medido.
+5. `DOCS/08-GERENTE/PARA-GESTORES.md` — o canal que ele usa para falar com os gestores.
+6. `DOCS/04-TAREFAS.md` e `DOCS/06-PERGUNTAS.md` — o que está aberto.
 
 **Se você é GESTOR de projeto**
 1. `Definições Oficiais Manuais/Dos GERENTES.md` — **o pulo deste arquivo é o erro
