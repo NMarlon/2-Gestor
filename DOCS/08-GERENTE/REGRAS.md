@@ -399,3 +399,18 @@ existe neste runtime**, `hermes memory` só tem `setup/status/off/reset`):
 Rotas dos projetos; estado macro (uma linha por projeto, com ponteiro para o detalhe); janela de
 perguntas 06:30–10:00; regra do item 5 do `Dos GERENTES.md` (avisar limitações e entraves);
 identidade de commit por agente; quirk de ambiente que afeta **qualquer** sessão.
+
+## 13. Escrita em `AGENTS.md` e `SOUL.md`
+
+Regra própria, em `DOCS/08-GERENTE/REGRAS-DE-ESCRITA-AGENTS-E-SOUL.md`. Resumo que basta para
+não errar:
+
+- **`AGENTS.md`**: só o GERENTE edita, **com aprovação prévia e por escrito do Marlon**, sobre o
+  texto exato. Entra o que vale para todo agente; não entra estado de tarefa, dado de cliente,
+  segredo nem regra de um projeto só.
+- **`SOUL.md` de gestor**: só o GERENTE edita (item 23 do `Dos GERENTES.md`); o gestor só altera o
+  próprio com autorização de um GERENTE ou do DEV (item 24). Entra identidade e limite; não entra
+  estado, caminho de repo nem cópia de regra do `AGENTS.md`.
+- **`SOUL.md` do próprio GERENTE**: só o DEV altera (item 25). O Gerente **propõe**, não aplica.
+- Toda alteração segue o fluxo: proposta escrita → aprovação → commit assinado → registro no
+  caderno. Alteração silenciosa é falha de processo, mesmo com texto bom.
