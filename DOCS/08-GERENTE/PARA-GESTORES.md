@@ -714,4 +714,100 @@ Para o gestor do P-03. **Resposta ao relatório da T-P03-026, que eu conferi na 
 
 **O que não estou pedindo:** deploy, texto novo de WhatsApp, e push.
 
+---
 
+## Nota do Gerente · P-06 · 2026-11-25 23:55 · M-023 e M-024 não passaram por este canal
+
+As ordens **M-023** e **M-024** (P-06, painel do vigia) foram dadas **fora** deste arquivo — o
+caderno `DOCS/P-06-Planejamento-Missionario/GESTOR.md` as cita, mas aqui elas não existiam.
+É falha de protocolo minha, não do gestor: *o que não está escrito não aconteceu*. Registro
+retroativo, sem reescrever histórico:
+
+- **M-023** — CSRF em todo POST + `Referrer-Policy: same-origin` + motivo no 403. Aceita por
+  medição independente: 303 com token, 403 sem token e com `Origin: null` cruzado.
+- **M-024** — painel do vigia fechado ponta a ponta (adicionar/remover/editar/desligar, falha
+  visível, 390 px sem estouro, alvos de toque ≥44 px). Aceita por medição independente.
+
+Daqui em frente, ordem a gestor **passa por este arquivo antes do despacho**. O caderno do
+gestor registra a execução; não substitui a ordem.
+
+---
+
+## M-025 · P-03 · 2026-11-25 23:55 · prazo 26/11 (janela 06:30–10:00)
+
+Para o gestor do P-03. **Ordem de execução: o que a M-018 autorizou até o dry-run, mais a M-022
+(qlwapp).** Está tudo autorizado desde 15:00/19:00 e o seu caderno não registra execução — esta
+é a ordem de tirar do papel. A autorização já existe; não peça de novo.
+
+**Numeração — leia antes de abrir tarefa.** Na M-018 eu chamei estas tarefas de `T-031`,
+`T-033`, `T-034` e `T-032`. Aqueles números **não existem na fila** e colidem com
+`T-P03-031/032/033` (WhatsApp por página, 404, rodapé), que você já fechou. Na fila elas entram
+com ID novo:
+
+| Tarefa | O que é | Onde vive |
+|---|---|---|
+| **T-P03-034** | consentimento de verdade: opt-in bloqueando `_ga`/HubSpot **antes** do clique + Consent Mode v2 | tema |
+| **T-P03-035** | hero: `<img srcset>` WebP/AVIF com `fetchpriority="high"`, alvo LCP mobile < 2,5 s | tema |
+| **T-P03-036** | lote de SEO: 7 meta descriptions, `noindex` no `/obrigado/`, `h1` na política | banco (Yoast/MCP) |
+| **T-P03-037** | `/obrigado/` + evento `generate_lead` no GA4; o `AW-` fica pendência (`Q-041`) | tema/medição |
+| **T-P03-038** | qlwapp: mensagem do botão flutuante → `Olá! Quero conversar sobre o meu projeto.` | banco (opção do plugin) |
+
+**Ordem deexecução:** 038 e 036 primeiro (banco, rápidas), depois 037, e por fim 034 e 035
+(tema). As de tema terminam no `--dry-run` + medição local; **não publique** — o deploy (1.3.13)
+é meu ato, depois que eu medir. As de banco podem ser aplicadas, com valor antigo salvo, valor
+novo medido no HTML servido e rollback escrito.
+
+**Regras que não mudam:**
+
+1. **Um escritor por vez.** Antes de cada brief, `git log -1` e `git status` no repo do site; se
+   houver commit novo que não é seu, pare e reporte.
+2. **Commit do executor com assinatura de agente** (`EXECUTOR-P03`), nunca a do Marlon — o
+   `578b4b9` saiu com a identidade dele; não se reescreve, mas não se repete.
+3. Medição no protocolo: URL limpa, UA Chrome, duas leituras iguais; navegador só pelo
+   `scripts/medir-cdp.py` (M-014), e diga **quantos** lançou no relatório.
+4. Relatório com o contrato de 8 campos: `RESULTADO / status / arquivos_alterados /
+   comandos_executados / evidencia / nao_testado / riscos / proximo_passo`.
+5. Se um item exigir acesso que você não tem (conta de Ads, painel do Yoast), **pare nele** e
+   reporte — não invente contorno.
+
+**Contexto já verificado (não re-investigue):** auditoria de prontidão em
+`DOCS/P-03-Jessica-Haguiwara/AUDITORIA-PRONTIDAO-2026-11-25.md`; tema no ar **1.3.12**, medido
+por mim hoje 23:47 (`style.css` servido); home `200`; o relatório da M-018 é a especificação.
+
+**O que não estou pedindo:** deploy, tocar no que já está no ar, `AW-` (`Q-041`), CAU (`T-011`)
+e o texto do CTA no corpo da home.
+
+
+
+## M-026 · TODOS os projetos · 2026-11-26 00:20 · forma do retorno e escopo da memória
+
+Duas regras de arquitetura que valem para todos os gestores. Não pedem tarefa nova — pedem
+**forma**. A partir do próximo relatório, é assim.
+
+### 1. Retorno executivo — cinco campos, nesta ordem
+
+```
+Projeto / Frente:
+Status: CONCLUÍDO | EM_ANDAMENTO | BLOQUEADO | AGUARDANDO_DECISÃO
+Resumo executivo: o que mudou, em termos práticos (não o passo a passo)
+Limitações / Entraves / Pontos de atenção: o que o Marlon precisa saber
+Próximo passo: a ação recomendada, de quem é, e o que trava
+```
+
+Evidência (comando, código HTTP, número) continua obrigatória — mas **abaixo** desses cinco
+campos, não no lugar deles. O Gerente repassa o topo ao Marlon; o detalhe fica aqui.
+
+### 2. Memória do gestor — escopo
+
+- **Detalhe técnico não mora na sua memória.** IDs, comandos internos, caminhos de arquivo,
+  estrutura de banco, histórico de debug: isso vai para o **seu caderno** (`DOCS/P-XX/GESTOR.md`)
+  e para o `DOCS/` do projeto.
+- Na memória: o **seu** projeto, o repo, o estado macro em uma linha, e as regras que valem
+  sempre.
+- **Antes de tirar qualquer coisa da memória, escreva no disco.** Remover sem ter gravado é
+  perda de conhecimento com cara de limpeza.
+- Se a memória estourar, se o contexto se perder, se duas regras se contradisserem ou se a
+  hierarquia travar: **avise o Gerente**. Gargalo silencioso é pior que erro visível.
+
+**Origem:** prompt de arquitetura do Jimmy Nar/Gemini, aplicado em 26/11 (Marlon). O Gerente
+já migrou a própria memória e documentou o procedimento em `REGRAS.md` §12.
