@@ -369,3 +369,23 @@ isso está certo). Ficou registrado no jsonl (5→7 linhas) o histórico dos tes
 `7622ebe` foi o **único** escritor no repo durante a T-019 (conferi `git log` e `git status` antes e
 depois); (c) sobra conhecida: o log do motor ainda escreve "dados preservados" na remoção, sem a
 mesma condicional da tela — cosmético, fica para quando houver outra tarefa no arquivo.
+
+## 26/11/2026, 00:45 — Gerente: M-024 aceita (painel fechado ponta a ponta)
+
+O gestor rodou a lista inteira com 1 ciclo de OpenCode (`7622ebe`) e 4 navegadores. Conferi na fonte:
+
+| Item | Medido por mim |
+|---|---|
+| `links.json` final | só `por6`, **1440 min**, `ativo: true` — sem resíduo de teste |
+| `logs/vigia.jsonl` | `por6-teste` exit **10** (primeira leitura), `por6-ruim` exit **2** com a mensagem da listagem 404 |
+| Remoção | código (`vigia.py`) **não** apaga `dados/links/<id>/`; só tira do `links.json` e o aviso é condicional à pasta existir |
+| `/` a 390 px | `innerWidth 390`, `scrollWidth 390`, **estouro 0**, 3 formulários |
+| `/link/por6` a 390 px | **estouro 0**, 3 formulários (o gestor não tinha medido esta página) |
+| Repo do projeto | `7622ebe`, `git status` vazio |
+
+**Ressalva honesta:** a pasta `dados/links/por6-teste/` não está no disco. O código preserva; a
+pasta foi apagada na limpeza do teste. Não é defeito, mas também não é prova — quem quiser a
+prova roda um link, remove e confere a pasta.
+
+**Ruído conhecido, aceito:** a mensagem do motor ao remover ainda diz "(dados preservados)"
+sem a condicional da tela. Cosmético.
