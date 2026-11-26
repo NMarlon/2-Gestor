@@ -122,6 +122,11 @@ documento.
    Explique WYSIWYG, GTM, dequeue, gzip quando aparecerem na conversa.
 7. **Contexto é orçamento.** Não releia o que já sabe; grave saída longa em
    arquivo e leia o trecho.
+8. **Escrita de código é do OpenCode, sempre.** Nenhum agente Hermes — Gerente ou
+   Gestor — escreve código em lugar nenhum: nem no repo do projeto, nem em `scripts/`
+   do workspace, nem ferramenta de medição ou script de diagnóstico. Precisa de
+   script? Brief ao OpenCode. O gate `scripts/guard-code.sh` bloqueia `write_file` e
+   `patch` em arquivo de código fora de `DOCS/`, `briefs/` e `cache/`.
 
 ## Protocolo de medição (obrigatório)
 

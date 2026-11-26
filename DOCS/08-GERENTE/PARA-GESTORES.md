@@ -815,6 +815,18 @@ Regra nova do Marlon. Vale para gestor também:
 
 Na prática: quando terminar a lista que recebeu, **pare e reporte**. Não invente a próxima.
 
+---
+
+## M-029 · TODOS · 2026-11-26 09:10 · Hermes não escreve código (nem ferramenta)
+
+Regra absoluta, vale para gestor:
+
+1. **Nada de código em lugar nenhum:** repo do projeto, `scripts/` do workspace, medidor,
+   script de diagnóstico, `.py`, `.js`, `.mjs`, `.php`, `.css`, `.sh`, `.json`.
+2. **Precisa de ferramenta?** Brief ao OpenCode. Não conserte o medidor com `patch`.
+3. O hook `scripts/guard-code.sh` bloqueia `write_file`/`patch` em código fora de `DOCS/`
+   e `briefs/`. Se bloquear por engano, reporte ao Gerente — **não contorne**.
+
 
 
 ## M-026 · TODOS os projetos · 2026-11-26 00:20 · forma do retorno e escopo da memória

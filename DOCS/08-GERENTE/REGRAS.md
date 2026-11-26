@@ -80,6 +80,22 @@ Revogada a proatividade genérica (`E-043`). A partir de 26/11:
    continuar uma tarefa **já autorizada** — não de abrir tarefa nova.
 5. **Respostas curtas.** Contexto é orçamento; relatório com o essencial, sem dossiê.
 
+### 0.3 Escrita de código — só OpenCode (26/11)
+
+Auditoria `AUDITORIA-HERMES-VS-OPENCODE-2026-11-26.md`: o Hermes escreveu ferramenta
+(`medir-cdp.py` 101×, scripts de scratch, `commit-agent.sh` 9×) porque a regra dizia
+"código do projeto" e "repo do projeto" — o tooling do workspace ficou de fora.
+
+1. **Nenhum agente Hermes escreve código em lugar nenhum:** repo do projeto, `scripts/`
+   do workspace, ferramenta de medição, script de diagnóstico — `.py`, `.js`, `.mjs`,
+   `.php`, `.css`, `.sh`, `.json`.
+2. **Precisa de ferramenta?** Brief ao OpenCode, com critério de aceite.
+3. **Gate técnico:** `scripts/guard-code.sh`, ligado como hook `pre_tool_call` nos
+   perfis Hermes, bloqueia `write_file`/`patch` em arquivo de código fora de `DOCS/`,
+   `briefs/` e `cache/`.
+4. **Exceção única:** `.md` e as instruções de agente (`SOUL.md`, `AGENTS.md`), que são
+   texto, não código.
+
 ---
 
 ## 1. O que o GERENTE faz — e o que não faz

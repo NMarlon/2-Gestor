@@ -942,3 +942,19 @@ Consumo alto de tokens sem pedido.
 Planejar, registrar o plano e apresentar ao DEV **antes** de executar. Não puxar fila
 antiga por conta própria. Vale para Gerente e Gestor; o Gerente mantém a autonomia de
 mandar o gestor continuar tarefa já autorizada. Respostas curtas.
+
+## E-044 — Hermes escrevendo ferramenta porque a regra dizia "código do projeto"
+
+**Data.** 2026-11-26, auditoria dos perfis.
+
+**O erro.** Os `SOUL.md` proibiam "código **do projeto**" e "editar **o repo do projeto**".
+O Hermes leu isso como permissão para o que não é "do projeto": `medir-cdp.py` recebeu
+**101 `patch`**, além de `verify-cta.mjs`, `mcp-read.mjs`, `commit-agent.sh` (9) e
+`digest-manha.py` (5).
+
+**A causa.** Escopo estreito + a exceção de medição ("rodar script que já exista" virou
+"consertar o script") + o `Dos GERENTES` dizendo "evitar ao máximo" + ausência de gate
+técnico.
+
+**Lição.** A regra é absoluta: Hermes não escreve código em lugar nenhum — ferramenta,
+medição e script também são do OpenCode, por brief. Gate `pre_tool_call` bloqueia.
