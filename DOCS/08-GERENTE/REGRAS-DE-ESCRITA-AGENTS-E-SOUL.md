@@ -8,6 +8,30 @@ entrar** em cada arquivo.
 
 ---
 
+## 0. A origem desta regra — as duas falas do Marlon
+
+**24/11/2026, 14:27** — mensagem enviada no meio do expediente dele (verbatim):
+
+> *"Não faça alterações no soul.md nem no agentes.md até eu voltar e solicitar, porque estou no
+> trabalho agora e não tenho como autorizar isso."*
+
+**24/11/2026, 20:50** — ao chegar em casa (verbatim):
+
+> *"Ok, cheguei em casa, me passe o relatório do que foi feito enquanto eu estava fora. Se
+> quiser, pode alterar o Soul.md e o agent.md que agora eu tô aqui pra poder autorizar."*
+
+**O que isso significa, e não é burocracia:** o Marlon trabalha fora e **não consegue autorizar
+durante o dia**. Autorizar exige ele ler o texto — e ele não está na frente do computador. Então
+"pedir aprovação" não é uma formalidade que eu contorno esperando: é esperar de fato, até ele
+poder ler.
+
+**Estado verificado:** nenhuma escrita em `AGENTS.md` nem em `SOUL.md` aconteceu entre as duas
+mensagens. `AGENTS.md` só voltou a ser tocado em 25/11 23:39 (com autorização de hoje), e os
+`SOUL.md` de `jessica-p03` (24/11 12:08) e `painel-p05` (24/11 14:26) foram escritos **antes**
+das 14:27.
+
+---
+
 ## 1. `AGENTS.md` — o mapa por papel
 
 **O que é.** O contrato de leitura do workspace. Todo agente que abre sessão neste diretório lê
