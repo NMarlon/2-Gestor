@@ -1,6 +1,6 @@
 # P-06 · Alerta de Planejamento Missionário (CTM) — caderno do gestor
 
-**Estado:** 2026-11-26 · funcional ponta a ponta; repo `7622ebe` limpo; painel 8788 pela tarefa `VigiaP06`
+**Estado:** 2026-11-26 · plano de retomada (3 etapas) apresentado ao Marlon — **aguardando aprovação**; repo `7622ebe` limpo; painel 8788 pela tarefa `VigiaP06`
 
 **Perfil:** `ctm-p06` · **Repo:** `C:\MarlonScripts\81 - Alerta Planejamento Missionario CTM`
 (git local, sem remote) · **Criado:** 25/11/2026
@@ -391,3 +391,48 @@ prova roda um link, remove e confere a pasta.
 
 **Ruído conhecido, aceito:** a mensagem do motor ao remover ainda diz "(dados preservados)"
 sem a condicional da tela. Cosmético.
+
+## 26/11/2026 — Plano de retomada, para aprovação do Marlon
+
+Deveres lidos (`Dos GERENTES.md`, `PARA-GESTORES.md`, `07-GESTORES.md`) e estado medido por
+mim **antes** de planejar. Nada foi executado: o pedido é plano primeiro, aprovação, execução
+depois (E-043; itens 6–7 e 17 do `Dos GERENTES.md`).
+
+**Medido hoje (26/11):**
+
+| Fato | Medida |
+|---|---|
+| Repo do projeto | HEAD `7622ebe`, `git status` vazio |
+| Painel | `GET http://127.0.0.1:8788/` → **200**; tarefa `VigiaP06` **em execução** (iniciada 25/11 22:32:55, `pythonw.exe scripts\vigia.py`) |
+| Frequência | `links.json`: 1 link (`por6`), **1440 min**, `ativo: true` |
+| Última leitura | 25/11 21:54, sha `14dfb168…`, 7 páginas, 472 células — **6 leituras** no histórico |
+| Último ciclo | 25/11 22:16, exit **0** pelo atalho (nome + `modifiedTime` iguais) → próxima verificação ~26/11 22:16 |
+| Relatório real | `dados/links/por6/relatorios/ultima-alteracao.html` (6.020 B) — **primeira leitura**, sem mudança; tabela só de "fins estimados" (2 linhas) |
+| Formato do snapshot | código em `grade-v7` (`scripts/verificar.py:70`); docs do projeto ainda dizem **v6** |
+
+**Aberto no projeto:** T-P06-004 (agendador — o Gerente registrou na fila que o painel cobre:
+confirmar e marcar como absorvida), T-P06-005 (HTML "bonito" — falta conteúdo real de mudança),
+T-P06-006 (`--avisar`, backlog não autorizado). A primeira mudança real do PDF **ainda não
+aconteceu**: todas as leituras têm o mesmo sha.
+
+**Plano em 3 etapas:**
+
+1. **Fechar a contabilidade (só docs; 1 brief pequeno ao OpenCode).** Provar a cobertura da
+   T-P06-004 com os números acima; brief docs-only no repo do projeto para marcar a T-004
+   absorvida pelo painel, registrar T-P06-017/018/019 em `DOCS/03-TAREFAS.md` e corrigir
+   `grade-v6` → `grade-v7` em `DOCS/02-ARQUITETURA.md`. **Aceite:** tabela 001–019 completa,
+   nenhum arquivo de código tocado, repo limpo.
+2. **T-P06-005 com conteúdo real.** Medir o HTML real a 390 e 1280 com `medir-cdp.py` (estouro,
+   altura, tabela/cartões); gerar um **exemplo de mudança** com o motor atual e os PDFs de
+   teste (marcado como exemplo, histórico local) e medir o mesmo. Mostrar os dois ao Marlon e
+   só depois briefar o acabamento que ele escolher. **Aceite:** números medidos e decisão dele
+   registrada — "bonito" não se decide por adjetivo.
+3. **Operação contínua (sem código).** A vigia roda a cada 1440 min; quando o PDF mudar (nome ou
+   `modifiedTime`), o painel registra exit 10 e escreve o relatório; eu leio, meço e entrego o
+   pacote de apresentação.
+
+**Não faço sem pedido:** OCR, download, `--avisar`, tarefa nova, código escrito por mim.
+Deploy não se aplica (ferramenta local).
+
+**Decisão pedida:** aprovar as etapas 1 e 2 (a 3 é automática e sem custo).
+
