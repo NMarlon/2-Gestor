@@ -80,6 +80,18 @@ custaram caro:
 
 ## Decisões tomadas
 
+- **2026-11-26 (T-P03-036, M-025) — parcial, bloqueio humano.** O `h1` de
+  `/privacy-policy/` não era bloco faltando: a página estava no template `default`,
+  enquanto as páginas de conteúdo usam `page-with-title`. `wp_update_page
+  { template: "page-with-title" }` resolveu sem tocar conteúdo; medido 2× na URL servida,
+  1 `<h1>` `wp-block-post-title` = `Política de Privacidade`, body
+  `page-template-page-with-title`. As 7 descriptions e o `noindex` da `/obrigado/` **não
+  entraram**: `wp_update_post_meta` recusa key Yoast (`ignored_keys`) com a integração
+  desligada em `Easy MCP AI → Tools → Plugins`; para ligar é preciso wp-admin logado, e o
+  perfil Edge `wp-admin-profile` está com `reauth=1` (sessão expirada). Lição: **antes de
+  briefar tarefa de meta Yoast, checar se a integração está ligada** — o bloqueio já tinha
+  histórico (aprendizados §36.1) e eu não conferi. Retomada: `briefs/2026-11-26-p03-t036b-yoast.md`,
+  itens 1–6 intactos.
 - **2026-11-26 (T-P03-038, M-025)** — mensagem do botão flutuante do WhatsApp trocada para
   `Olá! Quero conversar sobre o meu projeto.` **sem** tocar telefone, nome, `response` nem o
   resto do contato. A option do brief (`qlwapp`) **não existe** no wp-whatsapp-chat 8.6.5:

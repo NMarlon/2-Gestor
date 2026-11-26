@@ -1440,3 +1440,15 @@ servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
   Rollback: `backups/qlwapp-option-2026-11-26.json` (serializado md5 `be0f49ad…`, commit
   `16e325f`). **Erro de processo meu:** dois executores despachados para o mesmo brief
   (E-041) — o segundo parou sem escrever; o primeiro aplicou.
+
+- **T-P03-036 🟡 parcial** — o **`h1` da política está feito**: `wp_update_page
+  { template: "page-with-title" }` no post 3 (o conserto era template, não bloco de
+  conteúdo). Medido por mim, 2 leituras na URL servida: body `page-template-page-with-title`
+  e **1 `<h1>`** `wp-block-post-title` = `Política de Privacidade`; script
+  `scripts/diagnostics/measure-seo-t-p03-036.mjs`, commit `2bcdbd6`. **As 7 descriptions e o
+  `noindex` da 219 não foram gravados:** `wp_update_post_meta` devolve
+  `ignored_keys: ["_yoast_wpseo_metadesc"]` enquanto a integração Yoast não é ligada em
+  `Easy MCP AI → Tools → Plugins`, e ligar exige wp-admin logado — o perfil Edge
+  `wp-admin-profile` está **sem sessão** (`reauth=1`, 3 provas, 00:48). Retomada pronta em
+  `briefs/2026-11-26-p03-t036b-yoast.md`; **o bloqueio é humano** (Marlon logar no perfil).
+- **T-P03-034, T-P03-035, T-P03-037 ⚪** — não iniciadas; próximas sessões.
