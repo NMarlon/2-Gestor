@@ -240,3 +240,19 @@ custaram caro:
 - Levar à cliente a lista de dados reais (T-011).
 - ~~Decidir se o `logs/` do projeto entra no `.gitignore`~~ — **resolvido**: conferido em
   25/11, `logs/` e `backups/` já estão no `.gitignore` do projeto. Nada de `??` por isso.
+
+## Comandos do repositório do site (migrados da memória do Gerente, 26/11)
+
+Regra do Jimmy Nar: detalhe técnico mora no repositório, não na memória macro. Estes comandos
+saíram da memória e passam a morar aqui.
+
+- `node scripts\validate-theme.mjs` — valida o child theme antes de qualquer deploy.
+- `node scripts\deploy-theme.mjs --dry-run` — mostra o que subiria. Deploy real só com
+  autorização escrita e medição antes/depois.
+- `node scripts\check-live-footer.mjs` — confere o rodapé na URL pública servida.
+- `node scripts\build-opencode-config.mjs` — gera o `opencode.json` do projeto (`opencode.json`
+  e `.env` nunca entram no git).
+- Gate de versão: bump em `style.css` + `functions.php` + `scripts\release.json`, senão o deploy
+  recusa.
+- Regras de conteúdo: nunca inventar CAU, área, preço, prazo, obra ou depoimento; `EXEMPLO` só
+  com a marca visível na tela.
