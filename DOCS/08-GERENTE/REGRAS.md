@@ -414,3 +414,26 @@ não errar:
 - **`SOUL.md` do próprio GERENTE**: só o DEV altera (item 25). O Gerente **propõe**, não aplica.
 - Toda alteração segue o fluxo: proposta escrita → aprovação → commit assinado → registro no
   caderno. Alteração silenciosa é falha de processo, mesmo com texto bom.
+
+### 12.4 Nada de projeto específico na memória (Marlon, 26/11)
+
+**Regra, verbatim:** *"não é pra você ter dentro da sua memória coisas de projetos específicos,
+se algo é do projeto do PAINEL, então fica nos arquivos do projeto do painel"*.
+
+Isso é **mais estreito** que o prompt de arquitetura do Jimmy Nar, que permitia guardar "mapa de
+roteamento" e "estado macro" na memória. Vale a regra do Marlon: **memória = ponteiro, nunca
+conteúdo de projeto**.
+
+| Proibido na memória | Onde mora |
+|---|---|
+| Nome de projeto, perfil de gestor, caminho de repositório | `PAINEL-DE-GESTORES.md`, seção *Roteamento* |
+| Estado de projeto (versão no ar, pendência do cliente, o que falta) | `PAINEL-DE-GESTORES.md`, seção *Estado macro* |
+| Comando, ID, caminho de arquivo, número medido | caderno `DOCS/P-XX/GESTOR.md` ou `DOCS/` do projeto |
+| Segredo, token, `.env` | `.env` do projeto; nunca em documento nem em memória |
+
+**O que pode ficar:** onde está o mapa (`PAINEL-DE-GESTORES.md`), as regras transversais do
+Marlon, a janela de perguntas, a mecânica de commit/push e quirk de ambiente que afeta qualquer
+sessão.
+
+**Custo aceito:** uma leitura a mais no começo da sessão. É mais barato que carregar estado
+vencido em toda sessão.

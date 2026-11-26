@@ -133,3 +133,30 @@ Nenhum deles sobrevive à pergunta "o que foi publicado".
 - Regras novas do Marlon (itens 17-22 do `Dos GERENTES.md`, 24/11): entregar resumo do que
   foi feito, manter a doc própria atualizada, registrar todo erro, **plano antes de
   executar**, e **delegar a execução ao gestor** em vez de executar com as próprias mãos.
+
+## Roteamento — perfil, repositório e como abrir sessão
+
+Migrado da memória do Gerente em 26/11 (regra do Marlon: nada de projeto específico na memória).
+
+| Projeto | Perfil Hermes | Repositório |
+|---|---|---|
+| P-03 Jessica Haguiwara | `jessica-p03` | `C:\MarlonScripts\Jessica Haguiwara` |
+| P-04 Portfólio | — (sem gestor) | `C:\MarlonScripts\4-Portfolio` |
+| P-05 Painel Hermes | `painel-p05` | `C:\MarlonScripts\5-Painel-Hermes` |
+| P-06 Alerta CTM | `ctm-p06` | `C:\MarlonScripts\81 - Alerta Planejamento Missionario CTM` |
+| PDF TTS (Pathway) | `pdf-tts` | `C:\MarlonScripts\1-Mini-Projetos\PDF TTS` |
+
+- Abrir sessão de gestor: `hermes -p <perfil> -z "<ordem>"`. Wrappers em
+  `C:\Users\Marlon\.local\bin`.
+- Briefs antigos citam `p03-gestor` / `p05-gestor` de propósito: são os nomes velhos.
+- Nome do perfil começa pelo projeto porque o ícone do Hermes usa a primeira letra.
+
+## Estado macro por projeto (26/11)
+
+| Projeto | Estado |
+|---|---|
+| P-03 | no ar, tema **1.3.12**; pendências: mensagem do plugin qlwapp e `AW-` do Google Ads (Marlon) |
+| P-04 | congelado por decisão do Marlon; repo sem remote |
+| P-05 | painel local em uso; cota oficial ao vivo |
+| P-06 | funcional ponta a ponta (leitura sem baixar, grade, bordas, diff, painel, agendador) |
+| PDF TTS | auditado e liberado para alunos; avisos: precisa internet, ~27 s até a primeira tela, só PDF com texto |

@@ -43,6 +43,20 @@ def main() -> int:
     print("")
     print("_Janela combinada: perguntas que exigem ação manual só entre 06h30 e 10h. "
           "Fora disso, os gestores seguem sozinhos._")
+
+    # Auditoria da memória do Gerente (regra de 26/11: nada de projeto específico aqui).
+    # Script puro, sem IA — se acusar, o procedimento está em REGRAS.md §12.
+    try:
+        import subprocess
+        chk = os.path.join(BASE, "scripts", "check-memory.py")
+        if os.path.exists(chk):
+            saida = subprocess.run([sys.executable, chk], capture_output=True,
+                                   text=True, encoding="utf-8", errors="replace", timeout=20)
+            if saida.stdout.strip():
+                print("")
+                print(saida.stdout.strip())
+    except Exception as erro:  # nunca derrubar o digest por causa da auditoria
+        print(f"\n_Memória: auditoria indisponível ({type(erro).__name__})._")
     return 0
 
 
