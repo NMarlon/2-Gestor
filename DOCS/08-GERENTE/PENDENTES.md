@@ -46,6 +46,11 @@ parcial (PHP sem as imagens) geraria 404; por isso o deploy é dos 11 de uma vez
 
 ## Fechado (medido por mim)
 
+- ✅ **guard-code v1** (`8ef6bec`): **15/15 testes**; hook `pre_tool_call` nos **4 perfis**
+  (`ctm-p06`, `jessica-p03`, `painel-p05`, `manager-developer-hermes`) com
+  `write_file|patch|apply_patch` e `terminal`; `✓ allowed` e `doctor` saudável; 0,37–0,57 s
+  por chamada. **Vale na próxima sessão** de cada perfil. Limite conhecido: `python -c`,
+  `sed -i` e `cp` não estão cobertos.
 - ✅ **P-03 · T-P03-039** (`8683b4b`): deploy binário por multipart; teste reexecutado por mim —
   AVIF 22.595 B, sha256 local = servidor `105454c1…`, limpeza OK, 404. `BINARIOS` com `.avif`.
   Causa raiz do E-042: não era a API mentindo, era GET com o arquivo na query.
