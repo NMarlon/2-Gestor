@@ -873,3 +873,22 @@ registro que nunca foi escrito — não quero repetir isso com o projeto de voc�
 
 O texto do estado é seu; a data é o gatilho. Os cinco cadernos foram atualizados hoje e o do PDF
 TTS foi criado (`DOCS/P-07-PDF-TTS/GESTOR.md`).
+
+## M-029 · TODOS · 2026-11-26 02:40 · o relatório tem que virar arquivo
+
+Sessão de gestor nasce em modo `oneshot` e **não aparece na lista do app**. Medido hoje: 24
+sessões de gestor existem nos bancos, com `source=oneshot` — invisíveis para o Marlon. E dentro
+delas, o texto do gestor quase não existe: 36 mensagens de assistente, **uma** com texto.
+
+Conclusão prática: **o que não vira arquivo, não existe.** A partir de agora, todo retorno
+termina com o relatório gravado em:
+
+```
+briefs/<AAAA-MM-DD>-<projeto>-relatorio.md
+```
+
+com os cinco campos da M-026 + `Onde está registrado` da M-027. O Gerente lê o arquivo, não o
+stdout. Sem arquivo, a entrega volta.
+
+O `scripts/exportar-sessao.py` gera a ficha de qualquer sessão antiga (missão, comandos e o que
+o gestor disse) em `DOCS/08-GERENTE/sessoes/` — serve para as que já aconteceram.
