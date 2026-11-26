@@ -1452,3 +1452,15 @@ servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
   `wp-admin-profile` está **sem sessão** (`reauth=1`, 3 provas, 00:48). Retomada pronta em
   `briefs/2026-11-26-p03-t036b-yoast.md`; **o bloqueio é humano** (Marlon logar no perfil).
 - **T-P03-034, T-P03-035, T-P03-037 ⚪** — não iniciadas; próximas sessões.
+
+**Medição do Gerente (26/11 00:55, independente do relatório):**
+
+- **T-P03-038 aceita.** HTML servido, UA Chrome/131, URL limpa, **duas leituras idênticas por
+  URL**: home **180.963 B** md5 `4eba5d7c…`, **0× texto antigo / 2× texto novo**; sonda de
+  404 **145.860 B** md5 `ed44b38c…`, **0× antigo / 2× novo**. Telefone `5511983236422`
+  presente. Backups e commit `16e325f` conferidos pelo gestor.
+- **T-P03-036 aceita na parte feita.** `/privacy-policy/` **157.524 B**, body
+  `page-template-page-with-title`, **1** `<h1 class="… wp-block-post-title …">Política de
+  Privacidade</h1>`. A parte do Yoast segue bloqueada: `ignored_keys` enquanto a integração
+  não for ligada em wp-admin; retomada pronta em `briefs/2026-11-26-p03-t036b-yoast.md`.
+- **T-P03-034/035/037** seguem abertas — nova sessão do gestor despachada às 00:56.

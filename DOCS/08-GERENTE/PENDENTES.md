@@ -10,6 +10,7 @@
 | **P-03** | Colar a `og:description` da `/chave-na-mao/` no Yoast | O preview do link no WhatsApp/Instagram mostra o texto antigo | wp-admin → página 229 → Yoast |
 | **P-03** | Liberar a conta de Google Ads e me passar o `AW-...` | Sem o ID não existe tag de conversão; campanha sem conversão é dinheiro no lixo | conta Ads |
 | **P-03** | Levar à cliente as perguntas 21/22 e os dados da T-011 | É conteúdo que só ela sabe; sem isso as páginas ficam sem entrega/prazo/CAU | `QUESTIONARIO-CLIENTE.md` |
+| **P-03** | Logar no wp-admin (perfil Edge `wp-admin-profile`) e habilitar **Yoast SEO** em `Easy MCP AI → Tools → Plugins` | Sem isso o MCP recusa as 8 metas (`ignored_keys`); o gestor não pode fazer login | brief `2026-11-26-p03-t036b-yoast.md` |
 | **P-06** | Nada — o bloqueio de download foi contornado e o painel está fechado ponta a ponta | — | — |
 <!-- DIGEST:FIM -->
 
@@ -17,7 +18,7 @@
 
 | # | Tarefa | Onde | O que se espera |
 |---|---|---|---|
-| 1 | **M-025** — P-03: T-P03-034…038 (consentimento, hero, SEO, conversão, qlwapp) | `jessica-p03` | T-P03-038 **fechada** (`16e325f`); 036 em diagnóstico (`2bcdbd6`); segue 037 e depois 034/035 |
+| 1 | **M-025 (2ª sessão)** — P-03: T-P03-037 (conversão), 034 (consentimento) e 035 (hero) | `jessica-p03` | por tarefa: execução + medição; tema para no `--dry-run` |
 
 ## Fechado (medido por mim)
 
