@@ -860,3 +860,24 @@ ninguém está escrevendo.
 
 **Corolário.** O gestor do P-06 detectou a colisão sozinho, pelo horário dos commits. O
 sistema funcionou na detecção — o erro foi do Gerente na origem.
+
+## E-040 · A lista de processos do agente não é a verdade (2026-11-26)
+
+**O que aconteceu.** Despachei o gestor do PDF TTS em background (sessão `proc_1f0f49acd7c9`).
+Minutos depois, o `process_manage` respondeu `not_found` e a lista não trazia a sessão — concluí
+que ela tinha morrido e despachei de novo. **A primeira continuava rodando**: árvore
+`bash 22904 → hermes.exe 22896 → python 13884`, viva, com 224 mensagens gravadas. Duas sessões
+de gestor trabalhando no mesmo projeto ao mesmo tempo, de novo.
+
+**Por que importa.** "O executor disse" e "minha ferramenta disse" são as duas fontes que já me
+traíram. O `not_found` do rastreador pode significar: processo morto, sessão expirada do
+registro, ou troca de gateway. **Nenhuma delas prova morte.**
+
+**Lição.** Antes de re-despachar: `Get-CimInstance Win32_Process | Where CommandLine -like '*<perfil>*'`.
+Se aparecer árvore viva, **não é morte** — é sessão órfã do rastreador. Matar com
+`taskkill /PID <raiz> /T /F` e só então re-despachar.
+
+**Onde a sessão mora.** `profiles/<perfil>/state.db` (SQLite: `sessions`, `messages` + FTS).
+A pasta `sessions/` fica vazia; `runtime/active_sessions.json` só registra sessão interativa —
+one-shot (`hermes -z`) não aparece lá. O app de desktop lista as sessões do **perfil ativo**;
+sessão de outro perfil só se vê com `hermes -p <perfil> --resume`.
