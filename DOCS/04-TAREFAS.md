@@ -1424,7 +1424,7 @@ deploy é ato do Gerente depois de medir.
 | **T-P03-036** | lote SEO: 7 meta descriptions, `noindex` no `/obrigado/`, `h1` na política | banco | aplicar + medir no HTML servido |
 | **T-P03-037** | `/obrigado/` + `generate_lead` no GA4 | tema/medição | `AW-` fica pendência (`Q-041`) |
 | **T-P03-038** | qlwapp: mensagem do botão flutuante → `Olá! Quero conversar sobre o meu projeto.` | banco | valor antigo salvo, rollback escrito; se não for editável, parar e reportar |
-| **T-P03-039** ⚪ | `deploy-theme.mjs` não envia binário: `content=buf.toString('utf8')` corrompe e `.avif` fora de `BINARIOS` | ferramenta/scripts | descoberta + teste; bloqueia o deploy da T-035 |
+| **T-P03-039** 🟢 | `deploy-theme.mjs` não envia binário: `content=buf.toString('utf8')` corrompe e `.avif` fora de `BINARIOS` | ferramenta/scripts | **feito:** multipart + teste sha256 local × servidor; sem deploy |
 
 **Critério de aceite:** por tarefa, relatório com os 8 campos do contrato, medição no HTML
 servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
@@ -1483,6 +1483,22 @@ servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
   11 arquivos e `nada foi enviado`. **Bloqueio:** `deploy-theme.mjs` manda `content` como
   `buf.toString('utf8')` e não conhece `.avif` — publicar os 6 binários corromperia o
   arquivo. Corrigir antes de qualquer deploy do tema (vira T-P03-039).
+- **T-P03-039 🟢 resolvida e medida, sem deploy** — causa raiz confirmada no código
+  (linha 231, `content = buf.toString('utf8')`, e `.avif` fora de `BINARIOS`). Correção:
+  `enviarBinario(remoteDir, nome, buf)` faz POST **multipart** em `Fileman::upload_files`
+  (`file-0` + nome no corpo; `dir`/`overwrite` na query) e valida
+  `status`/`failed`/`uploads[0].status`; `enviarUm` despacha binário para ele e mantém
+  `save_file_content` para texto; o módulo só roda `main()` quando chamado direto.
+  Commit `8683b4b` — só `scripts/deploy-theme.mjs` e `scripts/test-binary-upload.mjs`.
+  **Medi eu, refazendo os comandos (26/11 01:5x):** `test-binary-upload.mjs` enviou
+  `hero-768.avif` (**22.595 B**) como `__t039-binario.avif`; resposta
+  `succeeded:1, failed:0`; sha256 local **e** servidor
+  `105454c1f975c6f57a4e7e81ee26237bc4f20538132be106e4405c5bd875aebc` (`IGUAL`);
+  `fileop op=trash` + `list_files` → `limpeza: OK`, URL do teste → **404**; `--dry-run` →
+  **12 arquivos no servidor**, `10 igual(is), 2 divergente(s), 9 novo(s), 0 orfao(s)`,
+  11 arquivos, `nada foi enviado`, exit 0; validador → `TUDO OK`. O commit não toca
+  `functions.php`, `style.css` nem `scripts/release.json`. **O deploy da 1.3.13 segue não
+  feito.**
 
 **Medição do Gerente (26/11 00:55, independente do relatório):**
 

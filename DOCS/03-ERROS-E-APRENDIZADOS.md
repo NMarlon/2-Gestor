@@ -900,3 +900,26 @@ apliquei. Num brief com escrita, o segundo executor poderia ter sobrescrito o pr
 -like '*opencode*'`; (2) olhar o log do OpenCode em `logs/oc-*.log` (o wrapper só escreve o
 cabeçalho; o CLI escreve no arquivo dele); (3) se houver dúvida, **esperar** o
 `notify_on_complete` em vez de abrir uma segunda sessão. Um brief, um escritor, um commit.
+
+## E-042 — "A API mentiu" era GET com o arquivo na query (2026-11-26)
+
+**Data.** 2026-11-26, T-P03-039.
+
+**O erro.** Por semanas o `deploy-theme.mjs` carregou o comentário de que
+`Fileman::upload_files` "mentia por omissão": devolvia `succeeded: 3, failed: 0` e não
+gravava nada. A conclusão virou premissa no código, o script passou a mandar binário como
+texto (`buf.toString('utf8')`) e o AVIF chegava corrompido — foi o que bloqueou o deploy
+da T-035.
+
+**A causa.** A primeira tentativa mandava **todos** os parâmetros por query string,
+inclusive o arquivo, que virava um parâmetro chamado `content`. O cPanel descarta
+parâmetro de query com prefixo `file-`: nunca houve arquivo no corpo. A API respondeu ao
+que recebeu (uma requisição sem arquivo). Upload é POST `multipart/form-data` com
+`file-0`/`file-1` + nome no corpo e `dir`/`overwrite` na query — medido na T-039 com
+sha256 local = servidor.
+
+**Lição.** Antes de concluir que uma API "mente", conferir o transporte: método,
+`Content-Type` e onde cada parâmetro vai. Sucesso para operação que não aconteceu quase
+sempre é o servidor respondendo a uma requisição vazia. E o teste que prova o conserto
+tem de **importar a função do deploy**, não uma cópia: cópia passa e o deploy segue
+quebrado.

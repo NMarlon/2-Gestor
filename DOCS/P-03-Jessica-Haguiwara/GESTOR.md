@@ -7,7 +7,7 @@
 > passou por `p03-jessica`; apelido de linha de comando: `jessica`). Perfil ativo
 > confirmado no runtime desta sessão.
 
-**Estado:** 2026-11-26 · no ar, tema **1.3.12**; no repo, **1.3.13** com T-037 (form → /obrigado/ + `generate_lead`), T-034 (consentimento) e T-035 (hero AVIF/WebP); sem deploy, e o deploy do tema está **bloqueado** até a T-P03-039 (o script corrompe binário). Pendências: mensagem do qlwapp e `AW-` do Google Ads (Marlon)
+**Estado:** 2026-11-26 · no ar, tema **1.3.12**; no repo, **1.3.13** com T-037 (form → /obrigado/ + `generate_lead`), T-034 (consentimento) e T-035 (hero AVIF/WebP). A T-P03-039 (upload de binário corrompido) está **resolvida e medida**: `deploy-theme.mjs` manda AVIF por multipart e o sha256 local = servidor. O deploy do tema **não** foi feito — decisão do Gerente. Pendências do Marlon: `AW-` do Google Ads (Q-041) e ligar a integração Yoast no wp-admin (T-036b).
 
 **Perfil:** `jessica-p03`
 
@@ -80,6 +80,18 @@ custaram caro:
 
 ## Decisões tomadas
 
+- **2026-11-26 (T-P03-039) — ferramenta corrigida e provada; nada publicado.**
+  `deploy-theme.mjs` ganhou `enviarBinario(remoteDir, nome, buf)`: POST **multipart** em
+  `Fileman::upload_files`, `file-0` + nome no corpo e `dir`/`overwrite` na query, com
+  checagem de `status`/`failed`/`uploads[0].status`; `.avif` entrou em `BINARIOS`; o
+  caminho de texto (`save_file_content`) ficou intacto. Causa raiz registrada: a tentativa
+  antiga mandava tudo por query string, então nunca houve arquivo no corpo — a API não
+  mentia (E-042). **Medi eu, rodando de novo:** `test-binary-upload.mjs` enviou
+  `hero-768.avif` (22.595 B) e devolveu sha256 **`105454c1…aebc`** igual no local e na URL
+  pública, `limpeza: OK`, teste → **404**; `--dry-run` → `12 arquivos no servidor`,
+  `10 igual(is), 2 divergente(s), 9 novo(s), 0 orfao(s)`, 11 arquivos, `nada foi enviado`,
+  exit 0; validador `TUDO OK`. Commit `8683b4b`, só `scripts/deploy-theme.mjs` e
+  `scripts/test-binary-upload.mjs`. **Deploy do tema não feito** — segue decisão do Gerente.
 - **2026-11-26 (T-P03-035, M-025) — código no repo, não publicado.** Hero vira
   `<picture>` com AVIF/WebP 768/1024/1440, JPEG derivado no fallback, `fetchpriority=high`
   e `preload` AVIF no `<head>`; `scripts/make-hero-srcset.mjs` gera os 6 binários.
