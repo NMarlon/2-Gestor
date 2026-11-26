@@ -133,3 +133,30 @@ Marlon**, porque é edição de arquivo de instrução.
 - Aceite: T4 (40/40), T3 (índice da outra sessão intacto), T6 (lock), T7a documentado como
   limite, e o script antigo preservado como `commit-agent-v1.sh` (rollback de um `mv`).
 - Worktree (C) fica como ferramenta disponível, não como obrigação.
+
+### Aceite final — 26/11 00:50 (medido pelo Gerente)
+
+**v2.1 aceito.** Suíte inteira rodada de novo na fonte: **12 PASS, 0 FAIL**, exit 0.
+
+| Prova | Resultado |
+|---|---|
+| T4 concorrência | **40/40 commits, 0 misturados, 0 falhas** |
+| T6 lock | 4 commits concorrentes em **6.881 ms** (teto 15 s; carga de dois executores) |
+| T3 stage alheio | intacto depois do commit da outra sessão |
+| T7a mesmo arquivo | mistura avisada — limite conhecido, aceito pelo Marlon |
+| `integer expected` | **0 ocorrências** (bug de portabilidade do `stat` corrigido com `date -r` + validação numérica) |
+| Commit da entrega | `6f93b6b`, `OPENCODE-WORKSPACE`, 2 arquivos |
+| Uso real | `9e31611` (GERENTE, 2 docs) e este registro, ambos pelo v2 |
+
+**Duas decisões de implementação, registradas:**
+1. O v2 **atualiza o índice compartilhado** depois do `update-ref`, só para os caminhos que
+   ele mesmo commitou — `read-tree` quando o índice está limpo; com stage alheio, mexe apenas
+   nos caminhos nomeados. Sem isso, o stage de outra sessão ficaria apontando para o HEAD
+   antigo (arquivo commitado apareceria "staged ao contrário"). Nenhum arquivo de outra sessão
+   entra no commit.
+2. O T6 passou a medir **serialização, não carga da máquina**: teto de 15 s, com o tempo
+   impresso em cada execução.
+
+**O que continua valendo:** partição de arquivos (B) é a única coisa que resolve duas sessões
+no mesmo arquivo. A regra em `AGENTS.md` depende do "pode" do Marlon (`Q-042`); até lá, vale
+como recomendação e prática do Gerente. Worktree (C) segue documentado (`Q-043`).

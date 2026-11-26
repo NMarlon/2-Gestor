@@ -17,10 +17,13 @@
 
 | # | Tarefa | Onde | O que se espera |
 |---|---|---|---|
-| 1 | **M-025** — P-03: T-P03-034…038 (consentimento, hero, SEO, conversão, qlwapp) | `jessica-p03` | T-P03-038 **entregue 00:20** (`16e325f`); segue para 036/037 e depois 034/035 |
-| 2 | **commit-agent v2** — índice temporário + lock + CAS + testes | OpenCode no workspace | brief `2026-11-26-commit-agent-v2-multissessao.md`; v1 preservado |
+| 1 | **M-025** — P-03: T-P03-034…038 (consentimento, hero, SEO, conversão, qlwapp) | `jessica-p03` | T-P03-038 **fechada** (`16e325f`); 036 em diagnóstico (`2bcdbd6`); segue 037 e depois 034/035 |
 
 ## Fechado (medido por mim)
+
+- ✅ **commit-agent v2.1** (`6f93b6b`): suíte **12/12**, T4 40/40 sem mistura, T6 6.881 ms
+  (teto 15 s), `integer expected` zero. Uso real comprovado em `9e31611` e no commit do
+  aceite. Documento: `08-GERENTE/COMMITS-MULTISSESSAO.md`. `v1` preservado para rollback.
 
 - ✅ **P-06 · M-023/M-024** (`7622ebe`): painel do vigia ponta a ponta — 7 itens medidos,
   390 px sem estouro, alvos ≥44 px, repo limpo. T-P06-009…019 registradas na fila (bloco
