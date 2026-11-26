@@ -294,3 +294,34 @@ T-018 no mesmo repo na mesma janela.
 **Não testado:** clique real em "Verificar agora" (dispara verificação de verdade e escreveria em
 `logs/vigia.jsonl`; o portão é o mesmo, provado pelo 404 com token); `POST /links` e `/remover`
 (mesma checagem central).
+
+## 26/11/2026, 00:15 — Gerente: M-023 aceita, e duas correções de fato
+
+**Aceite da M-023 (painel).** Rodei os testes por conta própria, no painel reiniciado com o
+código novo:
+
+| Teste | Resultado |
+|---|---|
+| `Referrer-Policy` | **same-origin** (era `no-referrer`, a causa raiz) |
+| `POST` com `Origin: null` + `_csrf` válido | **303** |
+| `POST` sem `_csrf` / com `_csrf` errado | **403 / 403** |
+| `POST` com `Origin: http://evil.example` + token válido | **403** |
+| **Navegador real** (Edge, formulário submetido) | **303** e `links.json` mudou de verdade |
+
+A causa era um cabeçalho que **nós** mandávamos: `no-referrer` faz o navegador serializar
+`Origin: null`, e o check recusava. Não era o navegador do Marlon.
+
+**Correção 1 — a Q-040 não está aberta.** O gestor reportou "produto parado na Q-040 (dono não
+liberou download)". Desatualizado: a Q-040 foi fechada em 25/11, o download deixou de ser
+necessário e o motor lê pelo `viewer/presspage` desde então. Guie-se pelo `06-PERGUNTAS.md`.
+
+**Correção 2 — o T-P06-017 também entrou** (`850d208`), commitado 61 s depois do despacho da
+T-018. Não foi trabalho perdido: o kill do Gerente matou o **wrapper** do `oc-brief.ps1`, não o
+`opencode-cli` — que seguiu, terminou e commitou. Lição registrada em `E-039`. A partir de
+agora, parar executor é matar o processo do `opencode-cli`, e conferir `git log` antes de
+despachar outro.
+
+**Estado medido do T-017:** 38 células com fim lido na borda; página 1 `Getting up`
+6:30–11:00 `borda`, `Sacrament` 11:00–15:00 `borda`; página 3 `Preparation Day`
+**12:45–17:15** `borda`; restam 2 fins estimados (p2 Tuesday e p7 Wednesday) porque a escala
+daquelas páginas não fecha (resíduo 12,5 min) — o motor diz isso em vez de fingir.

@@ -842,3 +842,21 @@ entre "a gente combinou" e "não é possível".
 
 **Nota honesta.** O commit `578b4b9` já está na história e **não se reescreve** (regra do
 Marlon). Ele fica; o que muda é que não acontece de novo.
+
+## E-039 · Matar o wrapper não mata o executor (2026-11-26)
+
+**O que aconteceu.** Matei o processo `oc-brief.ps1` no meio da T-P06-017 para liberar o repo
+e despachar a correção do painel (T-P06-018). O `opencode-cli` **não morreu com o pai**: seguiu
+trabalhando, terminou e commitou (`850d208`) **61 segundos depois** de o segundo executor
+começar. Dois escritores no mesmo repo, na mesma janela.
+
+**Por que importa.** A regra "um escritor por vez" não é etiqueta: dois agentes no mesmo
+diretório podem commitar arquivo um do outro, ou `git checkout` em cima de trabalho alheio.
+Nesta vez as áreas não se cruzaram por sorte, não por controle.
+
+**Lição.** Para parar um executor: `taskkill /PID <pid do opencode-cli> /F`, não o wrapper.
+E antes de despachar outro brief no mesmo repo, `git log -1` + `tasklist` para confirmar que
+ninguém está escrevendo.
+
+**Corolário.** O gestor do P-06 detectou a colisão sozinho, pelo horário dos commits. O
+sistema funcionou na detecção — o erro foi do Gerente na origem.
