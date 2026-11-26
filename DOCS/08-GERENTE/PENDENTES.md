@@ -11,6 +11,7 @@
 | **P-03** | Liberar a conta de Google Ads e me passar o `AW-...` | Sem o ID não existe tag de conversão; campanha sem conversão é dinheiro no lixo | conta Ads |
 | **P-03** | Levar à cliente as perguntas 21/22 e os dados da T-011 | É conteúdo que só ela sabe; sem isso as páginas ficam sem entrega/prazo/CAU | `QUESTIONARIO-CLIENTE.md` |
 | **P-03** | Logar no wp-admin (perfil Edge `wp-admin-profile`) e habilitar **Yoast SEO** em `Easy MCP AI → Tools → Plugins` | Sem isso o MCP recusa as 8 metas (`ignored_keys`); o gestor não pode fazer login | brief `2026-11-26-p03-t036b-yoast.md` |
+| **P-03** | Aprovar o deploy do tema **1.3.13** (hero + consentimento + conversão) depois da T-P03-039 | É mudança visível: imagem do hero, banner de cookies e redirect do formulário | `Q-044`, prints às 06:30 |
 | **P-06** | Nada — o bloqueio de download foi contornado e o painel está fechado ponta a ponta | — | — |
 <!-- DIGEST:FIM -->
 
@@ -18,7 +19,8 @@
 
 | # | Tarefa | Onde | O que se espera |
 |---|---|---|---|
-| 1 | **M-025 (2ª sessão)** — P-03: T-P03-037 (conversão), 034 (consentimento) e 035 (hero) | `jessica-p03` | por tarefa: execução + medição; tema para no `--dry-run` |
+| 1 | **T-P03-039** — corrigir envio binário do `deploy-theme.mjs` (AVIF) | `jessica-p03` | sha256 local × servidor igual num AVIF; dry-run 11 arquivos; sem publicar |
+| 2 | **P-03 · 037/034/035** — código pronto, `--dry-run` medido | fila | aguardando a 039 e a `Q-044` para o deploy da 1.3.13 |
 
 ## Fechado (medido por mim)
 

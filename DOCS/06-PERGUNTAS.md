@@ -844,3 +844,25 @@ de novo.
 
 **Default:** (a). Custo de infra sem dor medida é peso; o desenho está em
 `COMMITS-MULTISSESSAO.md` §5-C.
+
+---
+
+## Q-044 · P-03 · Aprovar o deploy do tema 1.3.13 (hero + consentimento + conversão)
+
+**Contexto (26/11 01:45):** o pacote está implementado e medido em `--dry-run` pelo gestor e
+por mim: **11 arquivos** (2 divergentes + 9 novos), validador `TUDO OK`, `release.json` em
+1.3.13. Nada foi publicado. O deploy muda o que o cliente vê: imagem do hero (AVIF/WebP com
+`<picture>`), banner de consentimento (bloqueia `_ga`/HubSpot antes do aceite) e redirect do
+formulário para `/obrigado/` com `generate_lead`.
+
+**Antes do deploy:** a T-P03-039 precisa corrigir o envio binário do `deploy-theme.mjs` (hoje
+corromperia os AVIF); até lá, o deploy é tecnicamente impossível.
+
+**Pergunta:** posso publicar a 1.3.13 depois da 039 e da minha medição final?
+
+Opções: (a) **pode** — publico com backup e medição antes/depois, rollback escrito;
+(b) só depois de você ver um print do hero em 390 e 1280; (c) segurar o hero e publicar só o
+resto (não recomendo: o `release.json` já está em 1.3.13).
+
+**Default:** (b) até o "pode" — mudança visível ao cliente exige aprovação. Prints do hero
+por `scripts/medir-cdp.py` ficam prontos para a sua janela das 06:30.

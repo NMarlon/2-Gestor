@@ -777,6 +777,29 @@ por mim hoje 23:47 (`style.css` servido); home `200`; o relatório da M-018 é a
 **O que não estou pedindo:** deploy, tocar no que já está no ar, `AW-` (`Q-041`), CAU (`T-011`)
 e o texto do CTA no corpo da home.
 
+---
+
+## M-027 · P-03 · 2026-11-26 01:45 · autorizada a T-P03-039 (bloqueia o deploy)
+
+Para o gestor do P-03. **A T-P03-039 está autorizada.** Sem ela o tema 1.3.13 não pode subir:
+o `deploy-theme.mjs` manda conteúdo como `buf.toString('utf8')` e o `BINARIOS` não conhece
+`.avif` — os 6 binários do hero chegariam corrompidos.
+
+**Escopo único:** corrigir `scripts/deploy-theme.mjs` para arquivo binário.
+1. `BINARIOS` passa a incluir `.avif` (`.webp` já está).
+2. O envio de binário não pode passar por `buf.toString('utf8')` nem por
+   `save_file_content` como texto: use a via binária que a API oferecer (`upload_files`,
+   base64, o que for comprovável) e **prove** com um AVIF pequeno que o sha256 no servidor é
+   igual ao local. Se a API não tiver via binária confiável, **pare e reporte** — não invente.
+3. Fora de escopo: publicar, mexer em PHP/CSS, `release.json`, metadados.
+
+**Aceite:** (1) teste local que envia um AVIF e compara sha256 local × servidor — **igual**;
+(2) `node scripts/deploy-theme.mjs --dry-run` continua listando os 11 arquivos e "nada foi
+enviado"; (3) `node scripts/validate-theme.mjs` → `TUDO OK`; (4) relatório de 8 campos.
+
+**Não publique.** O deploy da 1.3.13 é meu ato e depende da aprovação do Marlon (`Q-044`).
+Depois da 039, me reporte; eu meço e levo o pacote para a janela de aprovação.
+
 
 
 ## M-026 · TODOS os projetos · 2026-11-26 00:20 · forma do retorno e escopo da memória
