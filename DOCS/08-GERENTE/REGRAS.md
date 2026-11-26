@@ -486,3 +486,24 @@ sozinha.
 **Limite honesto:** a auditoria vê *forma*, não *verdade*. Um gestor pode escrever `**Estado:**`
 protocolar ("tudo ok") e a auditoria passa. Quem pega isso é a medição do Gerente na fonte, não
 o script. As duas camadas são necessárias.
+
+## 15. Consumo de token — regras operacionais (26/11)
+
+Plano completo e medição: `PLANO-CONSUMO-TOKENS-2026-11-26.md`. Aqui, o que vira hábito.
+
+**O número que explica tudo:** o Gerente carrega **172 k de contexto por chamada**; um gestor,
+46 k. O custo não é o modelo — é `contexto × número de chamadas`. Cada resposta nova reenvia a
+conversa inteira.
+
+1. **Sessão é descartável, documento é permanente.** Tarefa nova = sessão nova. Gravar o estado
+   em `DOCS/` ao fechar, não "continuar de onde parei" na mesma sessão.
+2. **Saída de ferramenta não entra no contexto sem recorte.** Acima de ~100 linhas: salvar em
+   arquivo e ler o trecho. Nunca colar `git log`, `diff`, JSON ou página inteira no chat.
+3. **Uma medição por pergunta.** Repetir comando para "confirmar" custa o contexto inteiro de
+   novo. Medir duas vezes só quando houver suspeita concreta de que o primeiro número está errado.
+4. **Brief nunca vai no prompt.** Vai em `briefs/<data>-<projeto>-<tema>.md`; o prompt é
+   `leia <caminho> e execute`.
+5. **Relatório ao Marlon em cinco campos** (M-026), sem recontar o que já está no arquivo.
+6. **Agrupar chamadas independentes** numa rodada só — cada rodada extra é um reenvio de contexto.
+7. **Proatividade não é autonomia.** "Esgotar as opções" multiplica chamadas; a regra do Marlon
+   de planejar antes e esperar o "pode" corta isso na origem.
