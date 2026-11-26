@@ -10,6 +10,7 @@ escapou. Regra que só existe no papel decai; regra que aparece na tela de manh�
 
 Código de saída: 0 memória limpa · 2 achou algo suspeito · 1 erro de leitura.
 """
+import glob
 import os
 import re
 import sys
@@ -57,11 +58,68 @@ def auditar():
     return resumo, achados
 
 
+def perfis_dos_cadernos():
+    """Lê `**Perfil:** \`x\`` dos cadernos em DOCS/P-*/GESTOR.md — só audita quem é gestor de projeto."""
+    base = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "DOCS")
+    nomes = []
+    for caminho in glob.glob(os.path.join(base, "P-*", "GESTOR.md")):
+        texto = open(caminho, encoding="utf-8", errors="replace").read()
+        m = re.search(r"\*\*Perfil:\*\*\s*`([a-z0-9-]+)`", texto)
+        if m:
+            nomes.append(m.group(1))
+    return nomes
+
+
+def perfis_hermes():
+    raiz = os.path.dirname(PERFIL)  # ...\hermes\profiles
+    alvos = perfis_dos_cadernos()
+    achados, sem = [], []
+    for d in sorted(glob.glob(os.path.join(raiz, "*"))):
+        if not os.path.isdir(d) or os.path.basename(d) == os.path.basename(PERFIL):
+            continue
+        # só conta como perfil quem tem SOUL.md
+        if not os.path.exists(os.path.join(d, "SOUL.md")):
+            continue
+        if alvos and os.path.basename(d) not in alvos:
+            continue
+        arq = os.path.join(d, "memories", "MEMORY.md")
+        if not os.path.exists(arq):
+            sem.append(os.path.basename(d))
+            continue
+        texto = open(arq, encoding="utf-8", errors="replace").read()
+        for n, linha in enumerate(texto.splitlines(), 1):
+            if not linha.strip():
+                continue
+            for rotulo, rx, acao in REGRAS:
+                if rx.search(linha):
+                    achados.append((os.path.basename(d), n, rotulo, linha.strip()[:80], acao))
+    return achados, sem
+
+
+def main_perfis() -> int:
+    achados, sem = perfis_hermes()
+    print(f"**Memória dos gestores:** {len(perfis_dos_cadernos())} perfil(is) declarado(s) "
+          f"· {len(sem)} sem memória · {len(achados)} achado(s)")
+    if sem:
+        print("- sem memória (nada a auditar): " + ", ".join(sem[:8]))
+    for perfil, n, rotulo, trecho, acao in achados[:6]:
+        visivel = "[linha omitida: contém segredo]" if rotulo == "segredo" else trecho
+        print(f"- **{perfil}** linha {n} — {rotulo}: {visivel}")
+        print(f"  → {acao}")
+    if achados:
+        print("Regra: detalhe de projeto vai para o caderno do projeto (REGRAS §12.4).")
+        return 2
+    return 0
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")
     except Exception:
         pass
+
+    if "--perfis" in sys.argv:
+        return main_perfis()
 
     resumo, achados = auditar()
     if not resumo:

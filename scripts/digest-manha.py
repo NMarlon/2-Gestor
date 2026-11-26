@@ -44,19 +44,27 @@ def main() -> int:
     print("_Janela combinada: perguntas que exigem ação manual só entre 06h30 e 10h. "
           "Fora disso, os gestores seguem sozinhos._")
 
-    # Auditoria da memória do Gerente (regra de 26/11: nada de projeto específico aqui).
-    # Script puro, sem IA — se acusar, o procedimento está em REGRAS.md §12.
-    try:
-        import subprocess
-        chk = os.path.join(BASE, "scripts", "check-memory.py")
-        if os.path.exists(chk):
-            saida = subprocess.run([sys.executable, chk], capture_output=True,
-                                   text=True, encoding="utf-8", errors="replace", timeout=20)
+    # Auditorias da governança (regra de 26/11). Script puro, sem IA.
+    # 1) memória do Gerente · 2) memória dos gestores · 3) estado dos cadernos.
+    # Se algo acusar, o procedimento é REGRAS.md §12 (memória) e §14 (caderno).
+    import subprocess
+    auditorias = [
+        ("Memória do Gerente", ["check-memory.py"]),
+        ("Memória dos gestores", ["check-memory.py", "--perfis"]),
+        ("Cadernos", ["check-cadernos.py"]),
+    ]
+    for titulo, args in auditorias:
+        script = os.path.join(BASE, "scripts", args[0])
+        if not os.path.exists(script):
+            continue
+        try:
+            saida = subprocess.run([sys.executable, script] + args[1:], capture_output=True,
+                                   text=True, encoding="utf-8", errors="replace", timeout=25)
             if saida.stdout.strip():
                 print("")
                 print(saida.stdout.strip())
-    except Exception as erro:  # nunca derrubar o digest por causa da auditoria
-        print(f"\n_Memória: auditoria indisponível ({type(erro).__name__})._")
+        except Exception as erro:  # nunca derrubar o digest por causa de auditoria
+            print(f"\n_{titulo}: auditoria indisponível ({type(erro).__name__})._")
     return 0
 
 

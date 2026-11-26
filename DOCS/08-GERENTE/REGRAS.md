@@ -437,3 +437,38 @@ sessão.
 
 **Custo aceito:** uma leitura a mais no começo da sessão. É mais barato que carregar estado
 vencido em toda sessão.
+
+## 14. Convenção do caderno e gate de aceite
+
+**Convenção (habilita a auditoria automática).** Todo `DOCS/P-XX/GESTOR.md` começa, abaixo do
+título, com uma linha exata:
+
+```
+**Estado:** AAAA-MM-DD · uma frase
+```
+
+A cada sessão, o gestor atualiza **a data e o texto** — mesmo sem mudança ("sem mudança desde X").
+A data é o gatilho; o texto é o conteúdo. Os cinco cadernos existentes seguem a convenção desde
+26/11, e o PDF TTS ganhou caderno próprio (`DOCS/P-07-PDF-TTS/GESTOR.md`) — projeto com gestor e
+sem caderno é projeto sem onde registrar.
+
+**Gate de aceite (imposto, não combinado).** Retorno de gestor sem o campo
+**`Onde está registrado: <arquivo>:<seção>`** não é aceito: volta com uma linha pedindo o caminho.
+Entrega que só existe no chat morre com a sessão.
+
+**Auditoria (no digest das 6h30, script puro):**
+
+| Script | O que confere | Código 2 quando |
+|---|---|---|
+| `scripts/check-memory.py` | memória do Gerente — nada de projeto, nada de segredo | acha item proibido |
+| `scripts/check-memory.py --perfis` | memória dos gestores declarados nos cadernos (`**Perfil:**`) | acha item proibido |
+| `scripts/check-cadernos.py` | linha `**Estado:**` presente e com data ≤ 7 dias | caderno ausente, sem data ou atrasado |
+
+**Por que script e não IA:** o Marcus não precisa que uma IA julgue "isso é detalhe técnico?" —
+o padrão é objetivo (caminho, ID, perfil, segredo). Script custa zero token, roda sem falhar e
+aparece na tela de manhã. Regra que só existe no papel decai; regra que aparece no digest cobra
+sozinha.
+
+**Limite honesto:** a auditoria vê *forma*, não *verdade*. Um gestor pode escrever `**Estado:**`
+protocolar ("tudo ok") e a auditoria passa. Quem pega isso é a medição do Gerente na fonte, não
+o script. As duas camadas são necessárias.

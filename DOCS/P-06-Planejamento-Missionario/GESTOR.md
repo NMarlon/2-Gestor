@@ -1,5 +1,7 @@
 # P-06 · Alerta de Planejamento Missionário (CTM) — caderno do gestor
 
+**Estado:** 2026-11-26 · funcional ponta a ponta; repo `7622ebe` limpo; painel 8788 pela tarefa `VigiaP06`
+
 **Perfil:** `ctm-p06` · **Repo:** `C:\MarlonScripts\81 - Alerta Planejamento Missionario CTM`
 (git local, sem remote) · **Criado:** 25/11/2026
 

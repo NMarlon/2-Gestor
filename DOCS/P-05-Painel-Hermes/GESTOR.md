@@ -3,6 +3,8 @@
 > Só o que é **exclusivo do gestor** neste projeto. O que é do projeto mora no repo
 > dele (`C:\MarlonScripts\5-Painel-Hermes`) e é a fonte de verdade.
 
+**Estado:** 2026-11-26 · painel `127.0.0.1:8787` em uso; cota oficial ao vivo
+
 Aprovação do Marlon em 2026-11-24 21:15: *"Então pode fazer P05 Painel Hermes."*
 
 ## Estado em uma linha
@@ -324,7 +326,6 @@ configurado — não convertemos token em % do plano". **Nenhum percentual inven
 conferidos e não há overflow). Os três defeitos de rótulo vão para T-P05-006; se o
 executor não entregar, o aceite de T-P05-004 continua valendo — o defeito é cosmético e
 está documentado.
-
 
 ---
 

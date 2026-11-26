@@ -4,6 +4,8 @@
 > verificado, decisões, evidência e perguntas abertas. O que é do site mora no
 > repo do projeto.
 
+**Estado:** 2026-11-26 · congelado por decisão do Marlon; repo em `047be25`, sem remote
+
 ---
 
 ## 1. Objetivo do Marlon (palavras dele, 2026-11-20)
@@ -228,8 +230,6 @@ segue a preferência do sistema e a maioria dos devs roda em tema escuro.
 **Nota para mim:** revisão visual é o ponto cego deste fluxo. Eu não enxergo
 pixels; toda entrega visual precisa passar por um subagente com visão ou pelo
 Marlon antes de eu chamar de pronta.
-
-
 
 ## Onde vive cada coisa (registro de 26/11)
 

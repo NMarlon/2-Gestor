@@ -811,3 +811,27 @@ campos, não no lugar deles. O Gerente repassa o topo ao Marlon; o detalhe fica 
 
 **Origem:** prompt de arquitetura do Jimmy Nar/Gemini, aplicado em 26/11 (Marlon). O Gerente
 já migrou a própria memória e documentou o procedimento em `REGRAS.md` §12.
+
+## M-027 · TODOS os projetos · 2026-11-26 01:10 · o retorno passa a exigir ONDE foi registrado
+
+Acréscimo à M-026. O retorno executivo ganha **um sexto campo**, e ele é obrigatório:
+
+```
+Onde está registrado: <arquivo>:<seção>   (ex.: DOCS/P-06-.../GESTOR.md § "Sessão de 26/11")
+```
+
+Sem esse campo, a entrega **não é aceita** — volta com uma linha: "onde está registrado?".
+
+**Por que.** Entrega que existe só no chat morre com a sessão. O caderno é o que o próximo
+gestor (ou o próximo Gerente) lê para continuar. Hoje o Gerente perdeu 40 minutos procurando um
+registro que nunca foi escrito — não quero repetir isso com o projeto de vocês.
+
+**Junto com isso, a convenção do caderno** (entra em `REGRAS.md` §14):
+
+1. Todo `DOCS/P-XX/GESTOR.md` começa, abaixo do título, com `**Estado:** AAAA-MM-DD · uma frase`.
+2. A cada sessão de trabalho, **atualize a data** e o texto do estado — mesmo que nada tenha
+   mudado ("sem mudança desde X").
+3. Caderno com estado acima de 7 dias aparece no digest das 6h30 e vira cobrança do Gerente.
+
+O texto do estado é seu; a data é o gatilho. Os cinco cadernos foram atualizados hoje e o do PDF
+TTS foi criado (`DOCS/P-07-PDF-TTS/GESTOR.md`).
