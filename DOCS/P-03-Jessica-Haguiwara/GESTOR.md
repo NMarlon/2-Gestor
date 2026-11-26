@@ -80,6 +80,19 @@ custaram caro:
 
 ## Decisões tomadas
 
+- **2026-11-26 (T-P03-038, M-025)** — mensagem do botão flutuante do WhatsApp trocada para
+  `Olá! Quero conversar sobre o meu projeto.` **sem** tocar telefone, nome, `response` nem o
+  resto do contato. A option do brief (`qlwapp`) **não existe** no wp-whatsapp-chat 8.6.5:
+  o dado mora em **`qlwapp_contacts[0].message`** (é o `contacts[*].message` do HTML). O
+  executor 1 achou o nome real, aplicou com backup e purge no mesmo request; o executor 2,
+  despachado por engano em paralelo, parou no gate `existe=false` sem escrever. **Medição
+  minha:** home `200 / 180.963 B / md5 814a2f12…`, 404 `404 / 145.861 B`, 2 leituras iguais
+  por URL, **2× novo / 0× antigo** em ambas, `Escreva sua mensagem` 1× e
+  `5511983236422` 5× (links + JSON). Commit do site `16e325f` (5 arquivos, `EXECUTOR-P03`),
+  backup `backups/qlwapp-option-2026-11-26.json` (serializado `be0f49ad…`). **Erro meu de
+  processo (E-041):** o despacho em background parecia morto (log vazio, `ps` sem PID) e
+  re-despachei em foreground — dois escritores no mesmo brief. A lição do E-040 era
+  exatamente essa e eu não apliquei.
 - **2026-11-25 (M-020 executada e medida por mim)** — **T-P03-033**: 1.3.12 no ar (executor
   `578b4b9`, 4 arquivos, +5/−5). O `text=` dos 2 links do rodapé e do botão da 404 passou a
   `Olá! Quero conversar sobre o meu projeto.` — **0** ocorrências do texto antigo nos

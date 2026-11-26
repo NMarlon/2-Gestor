@@ -881,3 +881,22 @@ Se aparecer árvore viva, **não é morte** — é sessão órfã do rastreador.
 A pasta `sessions/` fica vazia; `runtime/active_sessions.json` só registra sessão interativa —
 one-shot (`hermes -z`) não aparece lá. O app de desktop lista as sessões do **perfil ativo**;
 sessão de outro perfil só se vê com `hermes -p <perfil> --resume`.
+
+## E-041 — Dois executores no mesmo brief porque o background parecia morto
+
+**Data.** 2026-11-26, T-P03-038.
+
+**O erro.** Despachei o brief em background; o log do wrapper ficou vazio e o `ps` não
+mostrou o PID. Concluí "morreu" e re-despachei o mesmo brief em foreground. Os dois
+rodaram: o primeiro aplicou a mudança e commitou `16e325f`; o segundo bateu no gate
+`existe=false` e parou sem escrever, mas commitou `e11942c` (docs) e relatou BLOQUEADO.
+Resultado: dois escritores no mesmo brief, dois commits, dois relatórios contraditórios.
+
+**Por que importa.** O E-040 diz literalmente que `not_found`/log vazio não prova morte e
+manda checar `Get-CimInstance Win32_Process` antes de re-despachar. Eu li a lição e não a
+apliquei. Num brief com escrita, o segundo executor poderia ter sobrescrito o primeiro.
+
+**Lição.** Antes de re-despachar: (1) `Get-CimInstance Win32_Process | Where CommandLine
+-like '*opencode*'`; (2) olhar o log do OpenCode em `logs/oc-*.log` (o wrapper só escreve o
+cabeçalho; o CLI escreve no arquivo dele); (3) se houver dúvida, **esperar** o
+`notify_on_complete` em vez de abrir uma segunda sessão. Um brief, um escritor, um commit.

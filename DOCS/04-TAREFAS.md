@@ -1428,3 +1428,15 @@ deploy é ato do Gerente depois de medir.
 **Critério de aceite:** por tarefa, relatório com os 8 campos do contrato, medição no HTML
 servido (duas leituras iguais) e, nas de tema, `--dry-run` limpo + print por
 `scripts/medir-cdp.py`. O Gerente mede de novo na fonte antes de qualquer deploy.
+
+**Estado medido (26/11, GESTOR-P03):**
+
+- **T-P03-038 🟢** — `qlwapp_contacts[0].message` passou a `Olá! Quero conversar sobre o
+  meu projeto.` (a option `qlwapp` do brief não existe no plugin 8.6.5; o contato mora em
+  `qlwapp_contacts`). Medido por mim na URL servida: home **200 / 180.963 B / md5
+  `814a2f12…`** e 404 **404 / 145.861 B**, cada uma com **2× texto novo, 0× antigo**,
+  `Escreva sua mensagem` 1× e telefone `5511983236422` intacto; 2 leituras iguais por URL.
+  O tamanho da home varia ±46 B porque o `data-uid` do Forminator nasce por render.
+  Rollback: `backups/qlwapp-option-2026-11-26.json` (serializado md5 `be0f49ad…`, commit
+  `16e325f`). **Erro de processo meu:** dois executores despachados para o mesmo brief
+  (E-041) — o segundo parou sem escrever; o primeiro aplicou.
