@@ -233,7 +233,7 @@ Marlon antes de eu chamar de pronta.
 
 ## Onde vive cada coisa (registro de 26/11)
 
-Migrado da memória macro. Repo `C:\MarlonScripts-Portfolio` (site estático, sem build:
+Migrado da memória macro. Repo `C:/MarlonScripts/4-Portfolio` (site estático, sem build:
 HTML + 1 CSS + 1 JS, 6 cases em `projetos/`). Briefs emitidos em
 `2-Gestorriefs6-11-20-p04-*.md`. Caderno: este arquivo. **Commits locais, sem remote e
 sem push.** Não tem gestor Hermes dedicado — o Gerente briefa o OpenCode direto neste projeto.

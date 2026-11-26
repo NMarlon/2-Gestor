@@ -362,3 +362,40 @@ workspace até o Marlon dizer sim. As perguntas estão em `06-PERGUNTAS.md`.
 - Achado desta auditoria, sem vazamento: o token MCP do WordPress foi escrito em
   `Jessica Haguiwara/opencode.json` — arquivo ignorado pelo git, nunca commitado.
   Fica o registro: segredo fora do `.env` é dívida de segurança, mesmo ignorado.
+
+## 12. Memória do GERENTE: escopo, migração e o que nunca fica aqui
+
+**Regra (Marlon, 26/11 — veio no prompt de arquitetura do Jimmy Nar/Gemini).** A memória de
+longo prazo do GERENTE é **macro**: rotas (projeto → gestor → repositório), estado macro em uma
+linha por projeto, e regras globais. **Detalhe técnico de projeto** — IDs de página, comandos
+internos, tokens, estrutura de arquivos, histórico de debug — mora no **repositório** e nos
+cadernos `DOCS/P-XX/GESTOR.md`. Nunca na memória.
+
+**Por quê.** A memória tem orçamento fixo e é injetada em toda sessão. Detalhe técnico nela:
+(a) estoura o orçamento e empurra regra para fora; (b) envelhece sem ninguém corrigir;
+(c) faz *override* em fato novo — e o Gerente passa a agir por memória velha em vez de medir.
+
+### 12.1 Procedimento de migração — nesta ordem, nunca invertida
+
+1. Localizar onde aquele detalhe deve morar (caderno do projeto, DOCS do repo, skill).
+2. Escrever ou confirmar que está escrito no disco.
+3. **Só então** remover da memória.
+4. Registrar no caderno que a informação migrou — para o próximo Gerente não achar que se perdeu.
+
+Migração sem o passo 2 é perda de conhecimento com aparência de limpeza.
+
+### 12.2 Revisão de lote de memória
+
+Quando aparecer uma fila de propostas de memória (`/memory pending` ou equivalente — **não
+existe neste runtime**, `hermes memory` só tem `setup/status/off/reset`):
+
+- Lote que mistura **regra global** com **detalhe de projeto** é **rejeitado e refeito em dois**.
+  Aprovar o pacote apagaria a regra junto do detalhe.
+- Antes de aprovar qualquer remoção, rodar o procedimento 12.1 e registrar **onde** o conteúdo
+  foi salvo.
+
+### 12.3 O que fica na memória do GERENTE
+
+Rotas dos projetos; estado macro (uma linha por projeto, com ponteiro para o detalhe); janela de
+perguntas 06:30–10:00; regra do item 5 do `Dos GERENTES.md` (avisar limitações e entraves);
+identidade de commit por agente; quirk de ambiente que afeta **qualquer** sessão.
