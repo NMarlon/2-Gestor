@@ -46,3 +46,19 @@
 - P-06: agendar semanal (T-P06-004) só depois da Q-040.
 - Perfil fantasma `p05-painel` no painel — limpar.
 - Série do painel: buraco `21:29 → 01:17` — investigar suspensão da máquina.
+
+## Credencial de push — por que o device flow não serve (registro de 26/11)
+
+Migrado da memória macro para cá. **Sem segredo nesta nota.**
+
+- O `gh auth login` por **device flow** falhou **3 vezes**: o fluxo exige abrir
+  `https://github.com/login/device` e digitar um código de 8 caracteres em poucos minutos, e o
+  Marlon não recebe o código no app — ele espera notificação que nunca chega. O código expira
+  antes.
+- **Fallback combinado:** PAT *fine-grained*, escopo só neste repositório, permissão
+  `Contents: read and write`, colado em `GITHUB_PAT=` no `.env` do `2-Gestor`. O token em si
+  nunca aparece em markdown, commit, print ou chat.
+- **Consequência prática:** com `credential.helper=helper-selector` e sem o PAT no `.env`,
+  `GIT_TERMINAL_PROMPT=0 git push` falha. Push só sai interativo (Marlon digitando) ou via
+  `scripts/push.sh` lendo o PAT.
+- Repositórios privados de terceiros (`FileFuse`, `Bot Creator`) seguem ilegíveis a este agente.
