@@ -325,3 +325,47 @@ despachar outro.
 6:30–11:00 `borda`, `Sacrament` 11:00–15:00 `borda`; página 3 `Preparation Day`
 **12:45–17:15** `borda`; restam 2 fins estimados (p2 Tuesday e p7 Wednesday) porque a escala
 daquelas páginas não fecha (resíduo 12,5 min) — o motor diz isso em vez de fingir.
+
+## 25/11/2026, 22:40 — T-019: o painel fechado de ponta a ponta (7 itens, medidos um a um)
+
+Missão: fechar o painel até funcionar de ponta a ponta. Tudo abaixo foi medido por mim, com
+`urllib` (POST lido como **303 literal**, sem seguir redirect), `curl` e o painel real em
+`127.0.0.1:8788` rodando pela tarefa `VigiaP06`. Zero `Start-Process` de URL; navegador só pelo
+`medir-cdp.py` (**4 lançamentos** no total: 1 perdeu o PNG por caminho MSYS, 3 valeram).
+
+| Item | O que provei | Evidência |
+|---|---|---|
+| 1. Adicionar link | `POST /links` → **303**; card na home; **"Links vigiados · 2"**; roda e grava | `por6-teste` **exit 10** em **29,1 s**, jsonl 4→5 linhas; `dados/links/por6-teste/` com 4 arquivos; `sha256` do `historico.json` do por6 **inalterado** (`a08c1ab0…`) |
+| 2. Remover link | `POST /link/por6-teste/remover` → **303**; sai do `links.json`; dados ficam | aviso `…removido de links.json; os dados continuam em dados/links/por6-teste/`; 4 arquivos ainda em disco; home volta a 1 card |
+| 3. Editar nome + desligar/ligar | persiste; agendador respeita | `nome "POR6 teste DESLIGADO"`, `frequencia_min 90`, `ativo false` no `links.json`; ciclo seguinte: **"por6-teste: desligado"** e jsonl **sem** linha nova; `_form=alternar&ativo=1` → 303 e `ativo true` de volta, nome/frequência preservados |
+| 4. Falha visível | link com pasta inexistente falha e aparece | `por6-ruim`: **exit 2** em 3,9 s, jsonl com `listagem respondeu HTTP 404: …embeddedfolderview?id=0000PastaInexistenteP06#list`; card mostra **"exit 2"** e o ERRO completo (truncado na tela) |
+| 5. Celular 390 px | **overflow 0** e formulários usáveis | `medir-cdp.py` 390×844, 3 cartões: `scrollDoc 390`, `scrollBody 390`, `estouro []`, **7 formulários** |
+| 6. Corrigir defeito medido | T-019 (1 ciclo) | alvos de toque: botões/inputs **40 px** e link do título **27 px**, abaixo de 44; e o aviso de remoção dizia "os dados continuam" para link que nunca criou dado (`Test-Path` **False**) |
+| 7. Repos limpos | sim | projeto: `git status` **vazio**, HEAD `7622ebe`; `links.json` byte a byte igual ao backup (`6600966b…`) |
+
+**O defeito do item 5, com número.** Antes da correção, a home a 390 px não estourava
+(`390 = 390`), mas a lista de alvos `< 44 px` vinha cheia: **40 px** em `button`, `.botao` e
+`input[type=text|number]`, **27 px** no `<h3><a>` do cartão. Brief `T-P06-019` mandou subir para
+**≥ 44 px** e tornar o aviso de remoção **condicional** (`dados/links/<id>/` existe?). O executor
+entregou só o `scripts/vigia.py` (`7622ebe`). Medição depois, painel reiniciado pelo `schtasks`:
+
+- **390×844, 3 cartões**: `scrollDoc 390`, `estouro []`, `alvosPequenos []` (era 26 alvos < 44);
+- **1280×900**: `scrollDoc 1265`, `estouro []`, 3 cartões — sem regressão;
+- `GET /` **200**, `GET /link/por6` **200**, 7 formulários intactos;
+- remover `por6-teste` (com dados) → **303** e frase presente; remover `por6-ruim` (sem dados) →
+  **303** e frase **ausente**. Nenhum diretório apagado.
+
+**Não testei:** checkbox "Ativo" clicado no navegador real (só via POST) e o layout da página
+`/link/<id>` a 390 px (só a home, que era o pedido). O "Verificar agora" do navegador foi medido
+pelo Gerente e por mim ficou no POST (303 + exit 10).
+
+**Higiene:** `links.json` é rastreado e é estado de execução — durante os testes ele apareceu
+modificado e foi restaurado do backup byte a byte; **não** foi commitado. `dados/links/por6-teste/`
+e `por6-ruim/` eram artefato de teste: apagados depois da prova (o produto não apaga sozinho, e
+isso está certo). Ficou registrado no jsonl (5→7 linhas) o histórico dos testes; `logs/` é ignorado.
+
+**Observações para o Gerente:** (a) às 22:22:41 alguém de fora mudou a frequência do por6 para
+**380 min** — não fui eu nem o executor; restaurei em seguida (o backup salvou); (b) o commit
+`7622ebe` foi o **único** escritor no repo durante a T-019 (conferi `git log` e `git status` antes e
+depois); (c) sobra conhecida: o log do motor ainda escreve "dados preservados" na remoção, sem a
+mesma condicional da tela — cosmético, fica para quando houver outra tarefa no arquivo.
