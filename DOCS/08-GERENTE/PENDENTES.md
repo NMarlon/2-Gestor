@@ -17,7 +17,8 @@
 
 | # | Tarefa | Onde | O que se espera |
 |---|---|---|---|
-| 1 | **M-025** — P-03: T-P03-034…038 (consentimento, hero, SEO, conversão, qlwapp) | `jessica-p03` | por tarefa: execução + medição; as de tema param no `--dry-run` |
+| 1 | **M-025** — P-03: T-P03-034…038 (consentimento, hero, SEO, conversão, qlwapp) | `jessica-p03` | T-P03-038 **entregue 00:20** (`16e325f`); segue para 036/037 e depois 034/035 |
+| 2 | **commit-agent v2** — índice temporário + lock + CAS + testes | OpenCode no workspace | brief `2026-11-26-commit-agent-v2-multissessao.md`; v1 preservado |
 
 ## Fechado (medido por mim)
 

@@ -810,3 +810,37 @@ existe**, e inventar um ID é a única coisa pior que não ter ID.
   como pendência; a campanha espera a conta.
 
 **Default enquanto você decide:** (b) — o que não depende da conta é feito agora.
+
+---
+
+## Q-042 · 2-Gestor · Regra de partição de arquivos + commit v2 no `AGENTS.md`
+
+**Contexto (25/11 00:11):** duas sessões do mesmo perfil Gerente se atropelaram no
+`PARA-GESTORES.md` — o commit `1fd7f28` de uma levou a M-025 da outra. Diagnóstico, prova e
+solução em `08-GERENTE/COMMITS-MULTISSESSAO.md`. O `commit-agent.sh` v2 (índice temporário +
+lock + CAS) está em implementação e resolve **arquivos diferentes**; o **mesmo arquivo** só
+se resolve com partição de arquivos por sessão (regra B).
+
+**Pergunta:** posso editar `AGENTS.md` e `REGRAS.md` com a regra B — cada sessão escreve em
+arquivo próprio (ou só faz append do seu bloco nos canônicos) e o commit leva só os caminhos
+que ela nomeou?
+
+Opções: (a) **pode** — aplico nos dois e torno o v2 o padrão; (b) só o v2 agora, regra de
+arquivos depois; (c) não mexer em `AGENTS.md` por enquanto.
+
+**Default:** (c) até o "pode" por escrito — edição de arquivo de instrução exige aprovação.
+A regra B fica registrada como recomendação em `COMMITS-MULTISSESSAO.md` e o v2 entra por
+brief, sem depender dela.
+
+## Q-043 · 2-Gestor · Worktree por sessão (camada C)
+
+Para o volume atual de docs, índice temporário + partição bastam. Worktree por sessão
+(`git worktree`, branch própria, merge no fim) isola até o working tree — útil se uma sessão
+for ficar horas escrevendo no mesmo workspace.
+
+Opções: (a) **não agora** — A+B bastam, worktree fica documentado; (b) criar
+`scripts/sessao-worktree.sh` e `scripts/merge-sessao.sh` já; (c) só quando um projeto doer
+de novo.
+
+**Default:** (a). Custo de infra sem dor medida é peso; o desenho está em
+`COMMITS-MULTISSESSAO.md` §5-C.
